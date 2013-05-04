@@ -474,4 +474,149 @@
         </property>
         <property name="accessType" value="local"/>
     </bean>
+    
+    <bean
+        id="sessionFactoryNewLocalDMS"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+        >
+        <property name="dataSource" ref="dataSourceNewLocalDMS" />
+        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+        <property name="configLocation">
+            <value>classpath:hibernate.new.cfg.xml</value>
+        </property>
+    </bean>
+    
+    <bean id="CvDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.CvDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="CvtermDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.CvtermDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="CvtermRelationshipDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.CvtermRelationshipDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="CvtermpropDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.CvtermpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="CvtermsynonymDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.CvtermsynonymDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdExperimentDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdExperimentPhenotypeDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentPhenotypeDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdExperimentProjectDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentProjectDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdExperimentStockDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentStockDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdExperimentpropDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdGeolocationDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdGeolocationDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="NdGeolocationpropDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.NdGeolocationpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+   
+    <bean id="PhenotypeDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.PhenotypeDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="ProjectDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.ProjectDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="ProjectRelationshipDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.ProjectRelationshipDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="ProjectpropDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.ProjectpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="StockDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.StockDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="StockpropDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.StockpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
+    <bean id="UtilityDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewLocalDMS" />
+        </property>
+        <property name="accessType" value="local"/>
+    </bean>
+    
 </beans>

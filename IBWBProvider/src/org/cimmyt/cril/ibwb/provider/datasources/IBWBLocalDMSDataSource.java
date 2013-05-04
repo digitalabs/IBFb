@@ -13,8 +13,8 @@ import org.openide.util.Exceptions;
  */
 public class IBWBLocalDMSDataSource extends IBWBDataSource {
 
-    public IBWBLocalDMSDataSource() {
-        super("dmslocal");
+    public IBWBLocalDMSDataSource(String dbConfigRelativePath) {
+        super("dmslocal",dbConfigRelativePath);
 
         try {
             DMSReaderProxy.getDefault().setDmsConnectionLocal(this.getConnection());

@@ -1,4 +1,4 @@
-package org.cimmyt.cril.ibwb.model;
+package org.cimmyt.cril.ibwb.domain;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -13,35 +13,38 @@ import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
  * @author mturiana
  */
 @Entity
-@Table(name = "nd_experiment_stock")
-public class NdExperimentStock extends BaseFilter implements Serializable {
+@Table(name = "stockprop")
+public class Stockprop extends BaseFilter implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "nd_experiment_stock_id")
-    private Integer ndexperimentstockid;
-    @Basic(optional = false)
-    @Column(name = "nd_experiment_id")
-    private Integer ndexperimentid;
+    @Column(name = "stockprop_id")
+    private Integer stockpropid;
     @Basic(optional = false)
     @Column(name = "stock_id")
     private Integer stockid;
     @Basic(optional = false)
     @Column(name = "type_id")
     private Integer typeid;
-    
-    public NdExperimentStock() {
+    @Basic(optional = true)
+    @Column(name = "value")
+    private String value;
+    @Basic(optional = false)
+    @Column(name = "rank")
+    private Integer rank;
+
+    public Stockprop() {
     	setDefault();
     }
 
-    public NdExperimentStock(boolean atrNulls) {
+    public Stockprop(boolean atrNulls) {
     	if(! atrNulls){
     		setDefault();
     	}
     }
     
     public void setDefault(){
-    	setNdexperimentstockid((Integer) 0);
+    	setStockpropid((Integer) 0);
     }
 
     @Override
@@ -52,8 +55,8 @@ public class NdExperimentStock extends BaseFilter implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final NdExperimentStock other = (NdExperimentStock) obj;
-        if (this.getNdexperimentstockid() != other.getNdexperimentstockid()) {
+        final Stockprop other = (Stockprop) obj;
+        if (this.getStockpropid() != other.getStockpropid()) {
             return false;
         }
         return true;
@@ -62,7 +65,7 @@ public class NdExperimentStock extends BaseFilter implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + this.getNdexperimentstockid();
+        hash = 53 * hash + this.getStockpropid();
         return hash;
     }
 
@@ -70,35 +73,21 @@ public class NdExperimentStock extends BaseFilter implements Serializable {
 
     @Override
     public String toString() {
-        return "org.cimmyt.cril.ibwb.model.NdExperimentStock[ndexperimentstockPK=" + getNdexperimentstockid() + "]";
+        return "org.cimmyt.cril.ibwb.domain.Stockprop[stockpropPK=" + getStockpropid() + "]";
     }
 
     /**
-     * @return the ndexperimentstockid
+     * @return the stockpropid
      */
-    public Integer getNdexperimentstockid() {
-        return ndexperimentstockid;
+    public Integer getStockpropid() {
+        return stockpropid;
     }
 
     /**
-     * @param ndexperimentstockid the ndexperimentstockid to set
+     * @param stockpropid the stockpropid to set
      */
-    public void setNdexperimentstockid(Integer ndexperimentstockid) {
-        this.ndexperimentstockid = ndexperimentstockid;
-    }
-
-    /**
-     * @return the ndexperimentid
-     */
-    public Integer getNdexperimentid() {
-        return ndexperimentid;
-    }
-
-    /**
-     * @param ndexperimentid the ndexperimentid to set
-     */
-    public void setNdexperimentid(Integer ndexperimentid) {
-        this.ndexperimentid = ndexperimentid;
+    public void setStockpropid(Integer stockpropid) {
+        this.stockpropid = stockpropid;
     }
 
     /**
@@ -127,6 +116,34 @@ public class NdExperimentStock extends BaseFilter implements Serializable {
      */
     public void setTypeid(Integer typeid) {
         this.typeid = typeid;
+    }
+
+    /**
+     * @return the value
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    /**
+     * @return the rank
+     */
+    public Integer getRank() {
+        return rank;
+    }
+
+    /**
+     * @param rank the rank to set
+     */
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
     
     

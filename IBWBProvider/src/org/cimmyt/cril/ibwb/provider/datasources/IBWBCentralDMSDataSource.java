@@ -13,8 +13,9 @@ import org.openide.util.Exceptions;
  * @author TMSANCHEZ
  */
 public class IBWBCentralDMSDataSource extends IBWBDataSource {
-    public IBWBCentralDMSDataSource() {
-        super("dmscentral");
+    
+    public IBWBCentralDMSDataSource(String dbConfigRelativePath) {
+        super("dmscentral",dbConfigRelativePath);
         
         try {
             DMSReaderProxy.getDefault().setDmsConnectionCentral(this.getConnection());

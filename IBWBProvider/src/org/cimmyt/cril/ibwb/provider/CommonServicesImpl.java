@@ -7,71 +7,11 @@ import org.cimmyt.cril.ibwb.api.*;
 import org.cimmyt.cril.ibwb.domain.*;
 
 import java.util.List;
-import org.cimmyt.cril.dmsreader.DMSReader;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
-import org.cimmyt.cril.ibwb.provider.dao.AtributsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.BibrefsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ChangesDAO;
-import org.cimmyt.cril.ibwb.provider.dao.CntryDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DMSReaderDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DataCDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DataNDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DataTDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DatattrDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DmsattrDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DudfldsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.EffectDAO;
-import org.cimmyt.cril.ibwb.provider.dao.FactorDAO;
-import org.cimmyt.cril.ibwb.provider.dao.GeorefDAO;
-import org.cimmyt.cril.ibwb.provider.dao.GermplsmDAO;
-import org.cimmyt.cril.ibwb.provider.dao.InstitutDAO;
-import org.cimmyt.cril.ibwb.provider.dao.InstlnDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LevelCDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LevelNDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LevelTDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LevelsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ListdataDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ListnmsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LocationDAO;
-import org.cimmyt.cril.ibwb.provider.dao.LocdesDAO;
-import org.cimmyt.cril.ibwb.provider.dao.MeasuredinDAO;
-import org.cimmyt.cril.ibwb.provider.dao.MethodsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.NamesDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ObsunitDAO;
-import org.cimmyt.cril.ibwb.provider.dao.OindexDAO;
-import org.cimmyt.cril.ibwb.provider.dao.PersonsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ProgntrsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ReprestnDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ScaleDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ScaleconDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ScaledisDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ScalesDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ScaletabDAO;
-import org.cimmyt.cril.ibwb.provider.dao.SndivsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.SteffectDAO;
-import org.cimmyt.cril.ibwb.provider.dao.StudyDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TmethodDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TmsMethodDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TmsScaleConDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TmsScaleDisDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TraitDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TraitsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.UdfldsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.UsersDAO;
-import org.cimmyt.cril.ibwb.provider.dao.VariateDAO;
-import org.cimmyt.cril.ibwb.provider.dao.VeffectDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ImsLabelInfoDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ImsLabelOtherInfoDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ImsLotDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ImsTransactionDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ContinuousConversionDAO;
-import org.cimmyt.cril.ibwb.provider.dao.ContinuousFunctionDAO;
-import org.cimmyt.cril.ibwb.provider.dao.DiscreteConversionDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TransformationsDAO;
-import org.cimmyt.cril.ibwb.provider.dao.TmsConsistencyChecksDAO;
+import org.cimmyt.cril.ibwb.provider.dao.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -144,6 +84,26 @@ public class CommonServicesImpl implements CommonServices {
     private DiscreteConversionDAO discreteConversionDAO;
     private TransformationsDAO transformationsDAO;
     private TmsConsistencyChecksDAO tmsConsistencyChecksDAO;
+    
+    private CvDAO cvDAO;
+    private CvtermDAO cvtermDAO;
+    private CvtermRelationshipDAO cvtermRelationshipDAO;
+    private CvtermpropDAO cvtermpropDAO;
+    private CvtermsynonymDAO cvtermsynonymDAO;
+    private NdExperimentDAO ndExperimentDAO;
+    private NdExperimentPhenotypeDAO ndExperimentPhenotypeDAO;
+    private NdExperimentProjectDAO ndExperimentProjectDAO;
+    private NdExperimentStockDAO ndExperimentStockDAO;
+    private NdExperimentpropDAO ndExperimentpropDAO;
+    private NdGeolocationDAO ndGeolocationDAO;
+    private NdGeolocationpropDAO ndGeolocationpropDAO;
+    private PhenotypeDAO phenotypeDAO;
+    private ProjectDAO projectDAO;
+    private ProjectRelationshipDAO projectRelationshipDAO;
+    private ProjectpropDAO projectpropDAO;
+    private StockDAO stockDAO;
+    private StockpropDAO stockpropDAO;
+    private UtilityDAO utilityDAO;
 
     public static CommonServices getCommonServices() {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -1931,7 +1891,10 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Study---------------------------
     @Override
     public void addStudy(Study study) {
-        this.studyDAO.create(study);
+        study = this.studyDAO.create(study);
+        this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+                "studyid","sname","title","objectiv",
+                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
     }
 
     @Override
@@ -3438,6 +3401,8 @@ public class CommonServicesImpl implements CommonServices {
     public void setTransformationsDAO(TransformationsDAO transformationsDAO) {
         this.transformationsDAO = transformationsDAO;
     }
+    
+    
 
     /**
      * @return the accessUrlDms
@@ -3492,4 +3457,272 @@ public class CommonServicesImpl implements CommonServices {
     public List <Udflds> getUdfldsList(final String tableName, final String fieldName) {
         return this.udfldsDAO.getUdfldsList(tableName, fieldName);
     }
+
+    /**
+     * @return the cvDAO
+     */
+    public CvDAO getCvDAO() {
+        return cvDAO;
+    }
+
+    /**
+     * @param cvDAO the cvDAO to set
+     */
+    public void setCvDAO(CvDAO cvDAO) {
+        this.cvDAO = cvDAO;
+    }
+
+    /**
+     * @return the cvtermDAO
+     */
+    public CvtermDAO getCvtermDAO() {
+        return cvtermDAO;
+    }
+
+    /**
+     * @param cvtermDAO the cvtermDAO to set
+     */
+    public void setCvtermDAO(CvtermDAO cvtermDAO) {
+        this.cvtermDAO = cvtermDAO;
+    }
+
+    /**
+     * @return the cvtermRelationshipDAO
+     */
+    public CvtermRelationshipDAO getCvtermRelationshipDAO() {
+        return cvtermRelationshipDAO;
+    }
+
+    /**
+     * @param cvtermRelationshipDAO the cvtermRelationshipDAO to set
+     */
+    public void setCvtermRelationshipDAO(CvtermRelationshipDAO cvtermRelationshipDAO) {
+        this.cvtermRelationshipDAO = cvtermRelationshipDAO;
+    }
+
+    /**
+     * @return the cvtermpropDAO
+     */
+    public CvtermpropDAO getCvtermpropDAO() {
+        return cvtermpropDAO;
+    }
+
+    /**
+     * @param cvtermpropDAO the cvtermpropDAO to set
+     */
+    public void setCvtermpropDAO(CvtermpropDAO cvtermpropDAO) {
+        this.cvtermpropDAO = cvtermpropDAO;
+    }
+
+    /**
+     * @return the cvtermsynonymDAO
+     */
+    public CvtermsynonymDAO getCvtermsynonymDAO() {
+        return cvtermsynonymDAO;
+    }
+
+    /**
+     * @param cvtermsynonymDAO the cvtermsynonymDAO to set
+     */
+    public void setCvtermsynonymDAO(CvtermsynonymDAO cvtermsynonymDAO) {
+        this.cvtermsynonymDAO = cvtermsynonymDAO;
+    }
+
+    /**
+     * @return the ndExperimentDAO
+     */
+    public NdExperimentDAO getNdExperimentDAO() {
+        return ndExperimentDAO;
+    }
+
+    /**
+     * @param ndExperimentDAO the ndExperimentDAO to set
+     */
+    public void setNdExperimentDAO(NdExperimentDAO ndExperimentDAO) {
+        this.ndExperimentDAO = ndExperimentDAO;
+    }
+
+    /**
+     * @return the ndExperimentPhenotypeDAO
+     */
+    public NdExperimentPhenotypeDAO getNdExperimentPhenotypeDAO() {
+        return ndExperimentPhenotypeDAO;
+    }
+
+    /**
+     * @param ndExperimentPhenotypeDAO the ndExperimentPhenotypeDAO to set
+     */
+    public void setNdExperimentPhenotypeDAO(NdExperimentPhenotypeDAO ndExperimentPhenotypeDAO) {
+        this.ndExperimentPhenotypeDAO = ndExperimentPhenotypeDAO;
+    }
+
+    /**
+     * @return the ndExperimentProjectDAO
+     */
+    public NdExperimentProjectDAO getNdExperimentProjectDAO() {
+        return ndExperimentProjectDAO;
+    }
+
+    /**
+     * @param ndExperimentProjectDAO the ndExperimentProjectDAO to set
+     */
+    public void setNdExperimentProjectDAO(NdExperimentProjectDAO ndExperimentProjectDAO) {
+        this.ndExperimentProjectDAO = ndExperimentProjectDAO;
+    }
+
+    /**
+     * @return the ndExperimentStockDAO
+     */
+    public NdExperimentStockDAO getNdExperimentStockDAO() {
+        return ndExperimentStockDAO;
+    }
+
+    /**
+     * @param ndExperimentStockDAO the ndExperimentStockDAO to set
+     */
+    public void setNdExperimentStockDAO(NdExperimentStockDAO ndExperimentStockDAO) {
+        this.ndExperimentStockDAO = ndExperimentStockDAO;
+    }
+
+    /**
+     * @return the ndExperimentpropDAO
+     */
+    public NdExperimentpropDAO getNdExperimentpropDAO() {
+        return ndExperimentpropDAO;
+    }
+
+    /**
+     * @param ndExperimentpropDAO the ndExperimentpropDAO to set
+     */
+    public void setNdExperimentpropDAO(NdExperimentpropDAO ndExperimentpropDAO) {
+        this.ndExperimentpropDAO = ndExperimentpropDAO;
+    }
+
+    /**
+     * @return the ndGeolocationDAO
+     */
+    public NdGeolocationDAO getNdGeolocationDAO() {
+        return ndGeolocationDAO;
+    }
+
+    /**
+     * @param ndGeolocationDAO the ndGeolocationDAO to set
+     */
+    public void setNdGeolocationDAO(NdGeolocationDAO ndGeolocationDAO) {
+        this.ndGeolocationDAO = ndGeolocationDAO;
+    }
+
+    /**
+     * @return the ndGeolocationpropDAO
+     */
+    public NdGeolocationpropDAO getNdGeolocationpropDAO() {
+        return ndGeolocationpropDAO;
+    }
+
+    /**
+     * @param ndGeolocationpropDAO the ndGeolocationpropDAO to set
+     */
+    public void setNdGeolocationpropDAO(NdGeolocationpropDAO ndGeolocationpropDAO) {
+        this.ndGeolocationpropDAO = ndGeolocationpropDAO;
+    }
+
+    /**
+     * @return the phenotypeDAO
+     */
+    public PhenotypeDAO getPhenotypeDAO() {
+        return phenotypeDAO;
+    }
+
+    /**
+     * @param phenotypeDAO the phenotypeDAO to set
+     */
+    public void setPhenotypeDAO(PhenotypeDAO phenotypeDAO) {
+        this.phenotypeDAO = phenotypeDAO;
+    }
+
+    /**
+     * @return the projectDAO
+     */
+    public ProjectDAO getProjectDAO() {
+        return projectDAO;
+    }
+
+    /**
+     * @param projectDAO the projectDAO to set
+     */
+    public void setProjectDAO(ProjectDAO projectDAO) {
+        this.projectDAO = projectDAO;
+    }
+
+    /**
+     * @return the projectRelationshipDAO
+     */
+    public ProjectRelationshipDAO getProjectRelationshipDAO() {
+        return projectRelationshipDAO;
+    }
+
+    /**
+     * @param projectRelationshipDAO the projectRelationshipDAO to set
+     */
+    public void setProjectRelationshipDAO(ProjectRelationshipDAO projectRelationshipDAO) {
+        this.projectRelationshipDAO = projectRelationshipDAO;
+    }
+
+    /**
+     * @return the projectpropDAO
+     */
+    public ProjectpropDAO getProjectpropDAO() {
+        return projectpropDAO;
+    }
+
+    /**
+     * @param projectpropDAO the projectpropDAO to set
+     */
+    public void setProjectpropDAO(ProjectpropDAO projectpropDAO) {
+        this.projectpropDAO = projectpropDAO;
+    }
+
+    /**
+     * @return the stockDAO
+     */
+    public StockDAO getStockDAO() {
+        return stockDAO;
+    }
+
+    /**
+     * @param stockDAO the stockDAO to set
+     */
+    public void setStockDAO(StockDAO stockDAO) {
+        this.stockDAO = stockDAO;
+    }
+
+    /**
+     * @return the stockpropDAO
+     */
+    public StockpropDAO getStockpropDAO() {
+        return stockpropDAO;
+    }
+
+    /**
+     * @param stockpropDAO the stockpropDAO to set
+     */
+    public void setStockpropDAO(StockpropDAO stockpropDAO) {
+        this.stockpropDAO = stockpropDAO;
+    }
+
+    /**
+     * @return the utilityDAO
+     */
+    public UtilityDAO getUtilityDAO() {
+        return utilityDAO;
+    }
+
+    /**
+     * @param utilityDAO the utilityDAO to set
+     */
+    public void setUtilityDAO(UtilityDAO utilityDAO) {
+        this.utilityDAO = utilityDAO;
+    }
+    
+    
 }

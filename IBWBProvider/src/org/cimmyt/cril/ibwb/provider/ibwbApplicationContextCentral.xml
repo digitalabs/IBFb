@@ -38,7 +38,7 @@
             <value>classpath:hibernat.cfg.xml</value>
         </property>
     </bean>
-
+    
     <bean
         id="sessionFactoryCentralGMS"
         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
@@ -473,6 +473,150 @@
     <bean id="TmsConsistencyChecksDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.TmsConsistencyChecksDAO">
         <property name="sessionFactory">
             <ref bean="sessionFactoryCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean
+        id="sessionFactoryNewCentralDMS"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+        >
+        <property name="dataSource" ref="dataSourceNewCentralDMS" />
+        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+        <property name="configLocation">
+            <value>classpath:hibernate.new.cfg.xml</value>
+        </property>
+    </bean>
+    
+    <bean id="CvDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.CvDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="CvtermDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.CvtermDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="CvtermRelationshipDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.CvtermRelationshipDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="CvtermpropDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.CvtermpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="CvtermsynonymDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.CvtermsynonymDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdExperimentDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdExperimentPhenotypeDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentPhenotypeDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdExperimentProjectDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentProjectDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdExperimentStockDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentStockDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdExperimentpropDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdExperimentpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdGeolocationDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdGeolocationDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="NdGeolocationpropDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.NdGeolocationpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+   
+    <bean id="PhenotypeDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.PhenotypeDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="ProjectDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.ProjectDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="ProjectRelationshipDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.ProjectRelationshipDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="ProjectpropDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.ProjectpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="StockDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.StockDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="StockpropDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.StockpropDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
+        </property>
+        <property name="accessType" value="central"/>
+    </bean>
+    
+    <bean id="UtilityDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactoryNewCentralDMS" />
         </property>
         <property name="accessType" value="central"/>
     </bean>

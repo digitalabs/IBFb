@@ -23,18 +23,29 @@
         <description>Custom Config Resource to Read properties from this module</description>
     </bean>
     
-    <bean id="dataSourceCentralDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralDMSDataSource">
+    <bean id="dataSourceNewCentralDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralDMSDataSource">
+        <constructor-arg value="modules/ext/databasenewconfig.properties" />
     </bean>
-
+    
+    <bean id="dataSourceNewLocalDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBLocalDMSDataSource">
+        <constructor-arg value="modules/ext/databasenewconfig.properties" />
+    </bean>
+    
+    <bean id="dataSourceCentralDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralDMSDataSource">
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
+    </bean>
+    
     <bean id="dataSourceCentralGMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralGMSDataSource">
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
     </bean>
     
     <bean id="dataSourceLocalDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBLocalDMSDataSource">
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
     </bean>
 
     <bean id="dataSourceLocalGMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBLocalGMSDataSource">
-    </bean>
-    
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
+    </bean>    
     
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">

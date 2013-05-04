@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">
+			sun.jdbc.odbc.JdbcOdbcDriver
+        </property>
+        <property name="connection.pool_size">10</property>
+        <property name="show_sql">false</property>
+        <property name="dialect">org.cimmyt.cril.ibwb.provider.MSAccessDialect</property>
+        <property name="hibernate.jdbc.batch_size">30</property>
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+		
+	<!-- Mapping files -->
+
+        <mapping class="org.cimmyt.cril.ibwb.domain.Cv" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Cvterm" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.CvtermRelationship" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Cvtermprop" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Cvtermsynonym" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdExperiment" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdExperimentPhenotype" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdExperimentProject" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdExperimentStock" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdExperimentprop" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdGeolocation" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.NdGeolocationprop" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Phenotype" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Project" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.ProjectRelationship" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Projectprop" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Stock" />
+        <mapping class="org.cimmyt.cril.ibwb.domain.Stockprop" />
+    </session-factory>
+</hibernate-configuration>

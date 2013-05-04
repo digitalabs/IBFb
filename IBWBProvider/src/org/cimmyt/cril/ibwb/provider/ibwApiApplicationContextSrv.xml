@@ -84,6 +84,27 @@
         <property name="continuousFunctionDAO" ref="ContinuousFunctionDAOLocal"/>
         <property name="continuousConversionDAO" ref="ContinuousConversionDAOLocal"/>
         <property name="tmsConsistencyChecksDAO" ref="TmsConsistencyChecksDAOLocal"/>
+        
+        <property name="cvDAO" ref="CvDAOLocal"/>
+        <property name="cvtermDAO" ref="CvtermDAOLocal"/>
+        <property name="cvtermRelationshipDAO" ref="CvtermRelationshipDAOLocal"/>
+        <property name="cvtermpropDAO" ref="CvtermpropDAOLocal"/>
+        <property name="cvtermsynonymDAO" ref="CvtermsynonymDAOLocal"/>
+        <property name="ndExperimentDAO" ref="NdExperimentDAOLocal"/>
+        <property name="ndExperimentPhenotypeDAO" ref="NdExperimentPhenotypeDAOLocal"/>
+        <property name="ndExperimentProjectDAO" ref="NdExperimentProjectDAOLocal"/>
+        <property name="ndExperimentStockDAO" ref="NdExperimentStockDAOLocal"/>
+        <property name="ndExperimentpropDAO" ref="NdExperimentpropDAOLocal"/>
+        <property name="ndGeolocationDAO" ref="NdGeolocationDAOLocal"/>
+        <property name="ndGeolocationpropDAO" ref="NdGeolocationpropDAOLocal"/>
+        <property name="phenotypeDAO" ref="PhenotypeDAOLocal"/>
+        <property name="projectDAO" ref="ProjectDAOLocal"/>
+        <property name="projectRelationshipDAO" ref="ProjectRelationshipDAOLocal"/>
+        <property name="projectpropDAO" ref="ProjectpropDAOLocal"/>
+        <property name="stockDAO" ref="StockDAOLocal"/>
+        <property name="stockpropDAO" ref="StockpropDAOLocal"/>
+        <property name="utilityDAO" ref="UtilityDAOLocal"/>
+        
     </bean>
 
     <bean name="serviciosCentral" class="org.cimmyt.cril.ibwb.provider.CommonServicesImpl">
@@ -151,6 +172,27 @@
         <property name="continuousFunctionDAO" ref="ContinuousFunctionDAOCentral"/>
         <property name="continuousConversionDAO" ref="ContinuousConversionDAOCentral"/>
         <property name="tmsConsistencyChecksDAO" ref="TmsConsistencyChecksDAOCentral"/>
+        
+        <property name="cvDAO" ref="CvDAOCentral"/>
+        <property name="cvtermDAO" ref="CvtermDAOCentral"/>
+        <property name="cvtermRelationshipDAO" ref="CvtermRelationshipDAOCentral"/>
+        <property name="cvtermpropDAO" ref="CvtermpropDAOCentral"/>
+        <property name="cvtermsynonymDAO" ref="CvtermsynonymDAOCentral"/>
+        <property name="ndExperimentDAO" ref="NdExperimentDAOCentral"/>
+        <property name="ndExperimentPhenotypeDAO" ref="NdExperimentPhenotypeDAOCentral"/>
+        <property name="ndExperimentProjectDAO" ref="NdExperimentProjectDAOCentral"/>
+        <property name="ndExperimentStockDAO" ref="NdExperimentStockDAOCentral"/>
+        <property name="ndExperimentpropDAO" ref="NdExperimentpropDAOCentral"/>
+        <property name="ndGeolocationDAO" ref="NdGeolocationDAOCentral"/>
+        <property name="ndGeolocationpropDAO" ref="NdGeolocationpropDAOCentral"/>
+        <property name="phenotypeDAO" ref="PhenotypeDAOCentral"/>
+        <property name="projectDAO" ref="ProjectDAOCentral"/>
+        <property name="projectRelationshipDAO" ref="ProjectRelationshipDAOCentral"/>
+        <property name="projectpropDAO" ref="ProjectpropDAOCentral"/>
+        <property name="stockDAO" ref="StockDAOCentral"/>
+        <property name="stockpropDAO" ref="StockpropDAOCentral"/>
+        <property name="utilityDAO" ref="UtilityDAOCentral"/>
+        
     </bean>
 
 

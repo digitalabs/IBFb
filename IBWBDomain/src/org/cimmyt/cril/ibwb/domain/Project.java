@@ -1,4 +1,4 @@
-package org.cimmyt.cril.ibwb.model;
+package org.cimmyt.cril.ibwb.domain;
 
 import org.cimmyt.cril.ibwb.domain.*;
 import java.io.Serializable;
@@ -68,7 +68,7 @@ public class Project extends BaseFilter implements Serializable {
 
     @Override
     public String toString() {
-        return "org.cimmyt.cril.ibwb.model.Project[projectPK=" + getProjectid() + "]";
+        return "org.cimmyt.cril.ibwb.domain.Project[projectPK=" + getProjectid() + "]";
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.cimmyt.cril.ibwb.model;
+package org.cimmyt.cril.ibwb.domain;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -70,7 +70,7 @@ public class CvtermRelationship extends BaseFilter implements Serializable {
 
     @Override
     public String toString() {
-        return "org.cimmyt.cril.ibwb.model.CvtermRelationship[cvtermrelationshipPK=" + getCvtermrelationshipid() + "]";
+        return "org.cimmyt.cril.ibwb.domain.CvtermRelationship[cvtermrelationshipPK=" + getCvtermrelationshipid() + "]";
     }
 
     /**

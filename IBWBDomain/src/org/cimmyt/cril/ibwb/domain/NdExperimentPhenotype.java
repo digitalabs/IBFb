@@ -1,4 +1,4 @@
-package org.cimmyt.cril.ibwb.model;
+package org.cimmyt.cril.ibwb.domain;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -67,7 +67,7 @@ public class NdExperimentPhenotype extends BaseFilter implements Serializable {
 
     @Override
     public String toString() {
-        return "org.cimmyt.cril.ibwb.model.NdExperimentPhenotype[ndexperimentphenotypePK=" + getNdexperimentphenotypeid() + "]";
+        return "org.cimmyt.cril.ibwb.domain.NdExperimentPhenotype[ndexperimentphenotypePK=" + getNdexperimentphenotypeid() + "]";
     }
 
     /**
