@@ -54,10 +54,8 @@ public final class NewTrialAction extends SystemAction implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-
         changeCursorWaitStatus(true);
         if (existeTrial(studyOBJ.getStudy())) {
-
             int opcion = JOptionPane.showConfirmDialog(null, bundle.getString("NewTrialAction.already"), bundle.getString("NewTrialAction.caution"), JOptionPane.YES_NO_OPTION);
             if (opcion == 0) {
                 StudyEditorTopComponent studyEditor = null;

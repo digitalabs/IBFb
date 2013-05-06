@@ -28,6 +28,8 @@ public class ObservationsTableModel extends AbstractTableModel {
     public static final String DESIG = "GERMPLASMIDDBCV";
     public static final String GID = "GERMPLASMIDDBID";
     public static final String CROSS = "CROSSHISTORYPEDIGREESTRING";
+    
+    public static final String CROSSNAME = "CROSSNAMENAME";    
     public static final String SOURCE = "SEEDSOURCENAME";
     public static final String PLOT = "FIELDPLOTNESTEDNUMBER";
     public static final String PLOT_NESTED = "PLOTNESTEDNUMBER";
@@ -159,6 +161,7 @@ public class ObservationsTableModel extends AbstractTableModel {
         // add headers from selected variates
         for (Variate variate : variateList) {
             headers.add(variate);
+            headerIndex.put(Workbook.getStringWithOutBlanks(variate.getProperty() + variate.getScale()), columnIndex);            
             // assisn column index to numeric header only if has a labelid
             if (variate.getVariateId() != null) {
                 numericHeaderIndex.put(VARIATE_PREFIX + variate.getVariateId(), columnIndex);
@@ -318,7 +321,7 @@ public class ObservationsTableModel extends AbstractTableModel {
      * @param colValues
      */
     public void addRow(Object[] colValues) {
-        values.add(Arrays.asList(colValues));
+        values.add(new ArrayList<Object>(Arrays.asList(colValues)));
         fireTableDataChanged();
     }
 
@@ -528,7 +531,7 @@ public class ObservationsTableModel extends AbstractTableModel {
 
                 }
             }
-            rowsPerTrial.put(trialNumber, trialRowCounter+1);
+            rowsPerTrial.put(trialNumber, trialRowCounter + 1);
             System.out.println("ROW: " + row + "   MAYORPLOT: " + mayorPlot);
         }
         return rowsPerTrial;
@@ -548,5 +551,33 @@ public class ObservationsTableModel extends AbstractTableModel {
         System.out.println("COLUMNA  NOOOO ENCONTRADA");
         return "";
 
+    }
+
+    /**
+     *
+     */
+    public void addNewTrait(Variate variateToAdd) {
+        // first add a new trait to headers
+        int columnIndex = headers.size();
+        headers.add(variateToAdd);
+        // assisn column index to numeric header only if has a labelid
+        if (variateToAdd.getVariateId() != null) {
+            numericHeaderIndex.put(VARIATE_PREFIX + variateToAdd.getVariateId(), columnIndex);
+        }
+        columnIndex++;
+        fireTableStructureChanged();
+        // after add a column for each row
+        for (int row = 0; row < values.size(); row++) {
+            List<Object> columnList = values.get(row);  
+            //List<Object> oldValues = new ArrayList<Object>();
+            //for (Object object: columnList) {
+            //    oldValues.add(object);
+            //}
+            //oldValues.add("");
+            //columnList.clear();
+            //columnList.addAll(oldValues);
+            columnList.add("");
+        }
+        fireTableDataChanged();
     }
 }

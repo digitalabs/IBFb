@@ -22,6 +22,8 @@ public class InventoryData {
     private Double ammount;
     private Integer scale;
     
+    private String cross;
+    
     private String locationName;
     private String scaleName;
     
@@ -123,6 +125,14 @@ public class InventoryData {
 
     public void setLotid(Integer lotid) {
         this.lotid = lotid;
+    }
+
+    public String getCross() {
+        return cross;
+    }
+
+    public void setCross(String cross) {
+        this.cross = cross;
     }
     
     

@@ -242,4 +242,5 @@ public class Study extends BaseFilter implements Serializable{
     public void setFactors(List<Factor> factors) {
         this.factors = factors;
     }
+
 }

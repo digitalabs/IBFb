@@ -123,7 +123,7 @@ public final class exportVisualPanel3 extends JPanel {
         if (this.opcionFiltro == 0) {
             selectorArchivo.addChoosableFileFilter(new ExcelFiltro());
         }
-        if (this.opcionFiltro == 1) {
+        if (this.opcionFiltro == 1 || this.opcionFiltro == 2) {
             selectorArchivo.addChoosableFileFilter(new CSVFiltro());
         }
 
@@ -140,7 +140,7 @@ public final class exportVisualPanel3 extends JPanel {
         }
 
 
-        if (this.opcionFiltro == 1) {
+        if (this.opcionFiltro == 1 || this.opcionFiltro == 2) {
             nombreArchivo = selectorArchivo.getSelectedFile().toString();
             this.jTextArea1.setText(nombreArchivo + ".csv");
         }

@@ -3,6 +3,7 @@ package ibfb.studyeditor.importwizard;
 import ibfb.studyeditor.core.StudyEditorTopComponent;
 import ibfb.studyeditor.core.model.GermplasmEntriesTableModel;
 import ibfb.studyeditor.core.model.ObservationsTableModel;
+import ibfb.studyeditor.roweditors.CSVFileManager;
 import ibfb.studyeditor.roweditors.CSVOziel;
 import org.cimmyt.cril.ibwb.commongui.DialogUtil;
 import java.awt.Component;
@@ -26,11 +27,11 @@ public class ImportData {
     private WizardDescriptor.Panel[] panels;
     private JTable observationsTable;
     private JTable germplasmTable;
-    private CSVOziel csv;
+    private CSVFileManager csv;
     private int instances;
     private File myFile;
 
-    public ImportData(JTable observationsTable, CSVOziel csv) {
+    public ImportData(JTable observationsTable, CSVFileManager csv) {
         this.observationsTable = observationsTable;
         this.csv = csv;
     }
@@ -40,7 +41,7 @@ public class ImportData {
 
     }
 
-    public ImportData(JTable observationsTable, CSVOziel csv, int instan) {
+    public ImportData(JTable observationsTable, CSVFileManager csv, int instan) {
         this.observationsTable = observationsTable;
         this.csv = csv;
         this.instances = instan;
@@ -186,6 +187,23 @@ public class ImportData {
 
         }
     }
+    
+     public void importFromCSV(File fileToImport) {
+        try {
+
+
+            //CSVOziel csv = new CSVOziel(new JTable(), new JList());
+            CSVFileManager csvFile = new CSVFileManager(this.observationsTable, new JList());
+
+            csvFile.readDATACapture(fileToImport);
+
+            DialogUtil.displayInfo(ImportData.class, "ImportData.importsuccess");
+        } catch (Exception e) {
+            e.printStackTrace();
+            DialogUtil.displayWarning(ImportData.class, "ImportData.importfail");
+
+        }
+    }  
 
     public void importFromExcel(File selectedFile) {
         System.out.println("Starting IMPORT FROM EXCEL");

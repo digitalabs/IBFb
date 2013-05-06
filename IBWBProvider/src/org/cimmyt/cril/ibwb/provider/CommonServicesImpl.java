@@ -7,11 +7,71 @@ import org.cimmyt.cril.ibwb.api.*;
 import org.cimmyt.cril.ibwb.domain.*;
 
 import java.util.List;
+import org.cimmyt.cril.dmsreader.DMSReader;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
-import org.cimmyt.cril.ibwb.provider.dao.*;
+import org.cimmyt.cril.ibwb.provider.dao.AtributsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.BibrefsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ChangesDAO;
+import org.cimmyt.cril.ibwb.provider.dao.CntryDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DMSReaderDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DataCDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DataNDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DataTDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DatattrDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DmsattrDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DudfldsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.EffectDAO;
+import org.cimmyt.cril.ibwb.provider.dao.FactorDAO;
+import org.cimmyt.cril.ibwb.provider.dao.GeorefDAO;
+import org.cimmyt.cril.ibwb.provider.dao.GermplsmDAO;
+import org.cimmyt.cril.ibwb.provider.dao.InstitutDAO;
+import org.cimmyt.cril.ibwb.provider.dao.InstlnDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LevelCDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LevelNDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LevelTDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LevelsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ListdataDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ListnmsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LocationDAO;
+import org.cimmyt.cril.ibwb.provider.dao.LocdesDAO;
+import org.cimmyt.cril.ibwb.provider.dao.MeasuredinDAO;
+import org.cimmyt.cril.ibwb.provider.dao.MethodsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.NamesDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ObsunitDAO;
+import org.cimmyt.cril.ibwb.provider.dao.OindexDAO;
+import org.cimmyt.cril.ibwb.provider.dao.PersonsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ProgntrsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ReprestnDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ScaleDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ScaleconDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ScaledisDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ScalesDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ScaletabDAO;
+import org.cimmyt.cril.ibwb.provider.dao.SndivsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.SteffectDAO;
+import org.cimmyt.cril.ibwb.provider.dao.StudyDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TmethodDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TmsMethodDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TmsScaleConDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TmsScaleDisDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TraitDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TraitsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.UdfldsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.UsersDAO;
+import org.cimmyt.cril.ibwb.provider.dao.VariateDAO;
+import org.cimmyt.cril.ibwb.provider.dao.VeffectDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ImsLabelInfoDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ImsLabelOtherInfoDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ImsLotDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ImsTransactionDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ContinuousConversionDAO;
+import org.cimmyt.cril.ibwb.provider.dao.ContinuousFunctionDAO;
+import org.cimmyt.cril.ibwb.provider.dao.DiscreteConversionDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TransformationsDAO;
+import org.cimmyt.cril.ibwb.provider.dao.TmsConsistencyChecksDAO;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -1584,7 +1644,19 @@ public class CommonServicesImpl implements CommonServices {
         return represtnDAO.getList(filter, start, pageSize, paged);
     }
 
+    /**
+     * Gests a Representation object for a Study
+     *
+     * @param studyId Study number
+     * @param represName Representation name to find
+     * @return
+     */
+    @Override
+    public Represtn getReprestnForStudyId(final Integer studyId, String represName) {
+        return represtnDAO.getReprestnForStudyId(studyId, represName);
+    }
 //-----------------------------------Scale---------------------------
+
     @Override
     public void addScale(Scale scale) {
         this.scaleDAO.create(scale);
@@ -3445,16 +3517,16 @@ public class CommonServicesImpl implements CommonServices {
     public void setTmsConsistencyChecksDAO(TmsConsistencyChecksDAO tmsConsistencyChecksDAO) {
         this.tmsConsistencyChecksDAO = tmsConsistencyChecksDAO;
     }
-    
-    
+
     /**
      * Gets a list of Udffields accoding to a table and a field related
+     *
      * @param tableName Table name
-     * @param fieldName Field name 
+     * @param fieldName Field name
      * @return List of Udflds objects
      */
     @Override
-    public List <Udflds> getUdfldsList(final String tableName, final String fieldName) {
+    public List<Udflds> getUdfldsList(final String tableName, final String fieldName) {
         return this.udfldsDAO.getUdfldsList(tableName, fieldName);
     }
 

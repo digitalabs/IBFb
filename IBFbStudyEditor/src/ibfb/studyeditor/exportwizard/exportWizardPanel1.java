@@ -91,6 +91,13 @@ public class exportWizardPanel1 implements WizardDescriptor.Panel {
             studyEditor.opcionFiltro = 0;
             studyEditor.opcionExport = 2;
         }
+        
+        if (component.getjRadioButtonDataKapture().isSelected()) {
+             
+            studyEditor.opcionFiltro = 2;
+            studyEditor.opcionExport = 3;
+        }
+        
 
        if(studyEditor.hasGY() ){
            

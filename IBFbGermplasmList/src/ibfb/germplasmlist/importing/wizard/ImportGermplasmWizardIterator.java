@@ -96,4 +96,30 @@ public class ImportGermplasmWizardIterator implements WizardDescriptor.Iterator<
     public void removeChangeListener(ChangeListener l) {
         
     }
+
+    public ImportGermplasmWizardPanel1 getImportGermplasmWizardPanel1() {
+        return importGermplasmWizardPanel1;
+    }
+
+    public void setImportGermplasmWizardPanel1(ImportGermplasmWizardPanel1 importGermplasmWizardPanel1) {
+        this.importGermplasmWizardPanel1 = importGermplasmWizardPanel1;
+    }
+
+    public ImportGermplasmWizardPanel2 getImportGermplasmWizardPanel2() {
+        return importGermplasmWizardPanel2;
+    }
+
+    public void setImportGermplasmWizardPanel2(ImportGermplasmWizardPanel2 importGermplasmWizardPanel2) {
+        this.importGermplasmWizardPanel2 = importGermplasmWizardPanel2;
+    }
+
+    public ImportGermplasmWizardPanel3 getImportGermplasmWizardPanel3() {
+        return importGermplasmWizardPanel3;
+    }
+
+    public void setImportGermplasmWizardPanel3(ImportGermplasmWizardPanel3 importGermplasmWizardPanel3) {
+        this.importGermplasmWizardPanel3 = importGermplasmWizardPanel3;
+    }
+    
+    
 }

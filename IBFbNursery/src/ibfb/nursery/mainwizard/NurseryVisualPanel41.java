@@ -5,6 +5,7 @@ import ibfb.domain.core.GermplasmList;
 import ibfb.domain.core.ListOfEntries;
 import ibfb.domain.core.Workbook;
 import ibfb.lists.core.SelectListDialog;
+import ibfb.lists.core.importwizard.ImportList;
 import ibfb.nursery.core.NurseryEditorTopComponent;
 import ibfb.nursery.filters.ExcelFiltro;
 import ibfb.nursery.models.GermplasmEntriesTableModel;
@@ -70,6 +71,15 @@ public final class NurseryVisualPanel41 extends JPanel {
             loadNamesForWheat();
             // loadQueryCenter();
         }
+        hideImportGermplasm();
+    }
+
+    private void hideImportGermplasm() {
+        radGermplasmFromTemplate.setVisible(false);
+        jLabel2.setVisible(false);
+        jScrollPane1.setVisible(false);
+        jButtonSearch.setVisible(false);
+        jButtonPreview.setVisible(false);
     }
 
     private void loadNamesForWheat() {
@@ -99,6 +109,7 @@ public final class NurseryVisualPanel41 extends JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButtonPreview = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
+        btnImportList = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEntries = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -191,6 +202,13 @@ public final class NurseryVisualPanel41 extends JPanel {
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(btnImportList, org.openide.util.NbBundle.getMessage(NurseryVisualPanel41.class, "NurseryVisualPanel41.btnImportList.text")); // NOI18N
+        btnImportList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -205,18 +223,20 @@ public final class NurseryVisualPanel41 extends JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch)))
+                        .addComponent(cboGermplasmList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnImportList)
+                    .addComponent(jButtonPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -233,7 +253,8 @@ public final class NurseryVisualPanel41 extends JPanel {
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearch))))
+                            .addComponent(btnSearch)
+                            .addComponent(btnImportList))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
@@ -269,7 +290,7 @@ public final class NurseryVisualPanel41 extends JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(578, Short.MAX_VALUE)
+                .addContainerGap(607, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldTotalEntries, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,14 +299,14 @@ public final class NurseryVisualPanel41 extends JPanel {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(437, Short.MAX_VALUE)
+                .addContainerGap(467, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldTotalEntries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -295,7 +316,7 @@ public final class NurseryVisualPanel41 extends JPanel {
                     .addContainerGap()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addGap(66, 66, 66)))
         );
 
@@ -385,6 +406,10 @@ public final class NurseryVisualPanel41 extends JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         searchList();
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnImportListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportListActionPerformed
+        importGermplasmList();
+    }//GEN-LAST:event_btnImportListActionPerformed
 
     public void fillComboListNames() {
         List<Listnms> germplasmList = AppServicesProxy.getDefault().appServices().getListnmsList();
@@ -501,16 +526,16 @@ public final class NurseryVisualPanel41 extends JPanel {
             selectorArchivo.removeChoosableFileFilter(filtro);
         }
 
-       
-       String customPath="";//NbPreferences.forModule(NurseryVisualPanel41.class).get("customPathNWVP41", "");        
-        File myDesktop=null;
-        if(!customPath.isEmpty()){
-            myDesktop = new File(customPath);    
-        }else{
-            myDesktop = new File(FieldbookSettings.getSetting(FieldbookSettings.GERMPLASM_LIST_DEFAULT_FOLDER));  
-        } 
-        
-        
+
+        String customPath = "";//NbPreferences.forModule(NurseryVisualPanel41.class).get("customPathNWVP41", "");        
+        File myDesktop = null;
+        if (!customPath.isEmpty()) {
+            myDesktop = new File(customPath);
+        } else {
+            myDesktop = new File(FieldbookSettings.getSetting(FieldbookSettings.GERMPLASM_LIST_DEFAULT_FOLDER));
+        }
+
+
         if (myDesktop.exists()) {
             selectorArchivo.setCurrentDirectory(myDesktop);
         } else {
@@ -643,6 +668,7 @@ public final class NurseryVisualPanel41 extends JPanel {
         col.setPreferredWidth(width);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImportList;
     private javax.swing.JButton btnSearch;
     private javax.swing.ButtonGroup buttonGroupGMS;
     private javax.swing.JComboBox cboGermplasmList;
@@ -937,5 +963,11 @@ public final class NurseryVisualPanel41 extends JPanel {
             }
         }
         GermplasmEntriesTableModel.setIsFromCrossInfo(false);
+    }
+
+    private void importGermplasmList() {
+        if (ImportList.listCreatedFromWizard()) {
+            fillComboListNames();
+        }
     }
 }

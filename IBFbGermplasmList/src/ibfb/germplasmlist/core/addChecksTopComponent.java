@@ -1027,6 +1027,7 @@ public final class addChecksTopComponent extends TopComponent {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel17, org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.jLabel17.text")); // NOI18N
 
         jTextFieldListName.setText(org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.jTextFieldListName.text")); // NOI18N
+        jTextFieldListName.setNextFocusableComponent(jTextFieldDescription);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel18, org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.jLabel18.text")); // NOI18N
 
@@ -1411,7 +1412,7 @@ public final class addChecksTopComponent extends TopComponent {
         listnms.setListuid(loggedUserid);
         listnms.setListdesc(this.jTextFieldDescription.getText());
         listnms.setLhierarchy(0);
-        listnms.setListstatus(1);
+        listnms.setListstatus(Listnms.LSSTATUS_OPEN_LIST);
 
         // add list to database
         AppServicesProxy.getDefault().appServices().addListnms(listnms);
@@ -1437,7 +1438,7 @@ public final class addChecksTopComponent extends TopComponent {
             }
             if (entryCD >= 0) {
                 int entryNumber = ConvertUtils.getValueAsInteger(this.jTableFinal.getValueAt(i, entryCD));
-                listdata.setEntrycd("E" + ConvertUtils.getZeroLeading(entryNumber, 4));
+                listdata.setEntrycd(Listdata.ENTRY_PREFIX + ConvertUtils.getZeroLeading(entryNumber, 4));
             } else {
                 listdata.setEntrycd("");
             }
@@ -1457,7 +1458,7 @@ public final class addChecksTopComponent extends TopComponent {
             listdata.setGrpname("");
 
 
-            listdata.setLrstatus(0);      //*
+            listdata.setLrstatus(Listdata.LRSTATUS_ACTIVE);      //*
             //d1.setLlrecid(0);
 
             if (gid > 0) {

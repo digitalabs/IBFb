@@ -16,9 +16,9 @@ import org.openide.modules.InstalledFileLocator;
  */
 public class IBWBDataSource extends BasicDataSource {
 
-    public IBWBDataSource(String databasePrefix, String dbconfigRelativePath) {
+    public IBWBDataSource(String databasePrefix) {
         InstalledFileLocator locator = InstalledFileLocator.getDefault();
-        File databaseConfigFile = locator.locate(dbconfigRelativePath, "org.cimmyt.cril.ibwb.provider", false);
+        File databaseConfigFile = locator.locate("modules/ext/databaseconfig.properties", "org.cimmyt.cril.ibwb.provider", false);
         Properties propertiesFile = new Properties();
         try {
             InputStream streamProperties = new FileInputStream(databaseConfigFile);

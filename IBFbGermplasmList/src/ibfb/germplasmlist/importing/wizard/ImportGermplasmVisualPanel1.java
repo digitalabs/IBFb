@@ -8,7 +8,9 @@ import ibfb.domain.core.Workbook;
 import ibfb.settings.core.FieldbookSettings;
 import ibfb.workbook.api.WorkbookExcelReader;
 import ibfb.workbook.core.WorkbookExcelReaderImpl;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -38,7 +40,7 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
     }
 
     private void openTemplate() {
-        
+
         FileFilter[] filtros = new FileFilter[10];
         filtros = fileChooser.getChoosableFileFilters();
         String path = "";
@@ -77,7 +79,7 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
 
             this.txtFilePath.setText(fileChooser.getSelectedFile().toString());
             //this.jButtonPreviewTemplate.setEnabled(true);
-           readExcelWorkbookTemplate(txtFilePath.getText());
+            readExcelWorkbookTemplate(txtFilePath.getText());
             //habilitaGSM();
 
 
@@ -87,7 +89,7 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
             this.txtFilePath.setText("");
             JOptionPane.showMessageDialog(this, bundle.getString("ImportGermplasmVisualPanel1.invalidGermplasmTempalte"), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-
+        checkEnablePreviewButton();
     }
 
     private void readExcelWorkbookTemplate(String fileName) {
@@ -115,8 +117,23 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
         this.workbook = workbook;
     }
 
-    
-    
+    private void previewFile(String path) {
+        Desktop desktop = null;
+        try {
+            if (Desktop.isDesktopSupported() == true) {
+                desktop = Desktop.getDesktop();
+                File archivo = new File(path);
+                desktop.open(archivo);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR e PROCSA_ARCHIVO");
+        }
+    }
+
+    private void checkEnablePreviewButton() {
+        btnTemplatePreview.setEnabled(!txtFilePath.getText().isEmpty());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,6 +145,7 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
         lblExcelFile = new javax.swing.JLabel();
         txtFilePath = new javax.swing.JTextField();
         btnBrowse = new javax.swing.JButton();
+        btnTemplatePreview = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(lblExcelFile, org.openide.util.NbBundle.getMessage(ImportGermplasmVisualPanel1.class, "ImportGermplasmVisualPanel1.lblExcelFile.text")); // NOI18N
 
@@ -145,6 +163,14 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(btnTemplatePreview, org.openide.util.NbBundle.getMessage(ImportGermplasmVisualPanel1.class, "ImportGermplasmVisualPanel1.btnTemplatePreview.text")); // NOI18N
+        btnTemplatePreview.setEnabled(false);
+        btnTemplatePreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTemplatePreviewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,10 +178,12 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblExcelFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBrowse)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTemplatePreview)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +191,8 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblExcelFile)
                     .addComponent(txtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBrowse))
+                    .addComponent(btnBrowse)
+                    .addComponent(btnTemplatePreview))
                 .addGap(0, 277, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -176,8 +205,12 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
         openTemplate();
     }//GEN-LAST:event_txtFilePathMousePressed
 
+    private void btnTemplatePreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTemplatePreviewActionPerformed
+        previewFile(txtFilePath.getText());
+    }//GEN-LAST:event_btnTemplatePreviewActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowse;
+    private javax.swing.JButton btnTemplatePreview;
     private javax.swing.JLabel lblExcelFile;
     private javax.swing.JTextField txtFilePath;
     // End of variables declaration//GEN-END:variables

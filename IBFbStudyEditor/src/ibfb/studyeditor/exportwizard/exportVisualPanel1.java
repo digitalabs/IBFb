@@ -3,6 +3,7 @@ package ibfb.studyeditor.exportwizard;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import org.openide.util.NbBundle;
 
 public final class exportVisualPanel1 extends JPanel {
@@ -29,6 +30,8 @@ public final class exportVisualPanel1 extends JPanel {
         lblImgFieldlog = new javax.swing.JLabel();
         lblImgR = new javax.swing.JLabel();
         lblImgExcel = new javax.swing.JLabel();
+        jRadioButtonDataKapture = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
 
         buttonGroupExport.add(jRadioButtonToFieldlog);
         jRadioButtonToFieldlog.setSelected(true);
@@ -97,6 +100,23 @@ public final class exportVisualPanel1 extends JPanel {
             }
         });
 
+        buttonGroupExport.add(jRadioButtonDataKapture);
+        org.openide.awt.Mnemonics.setLocalizedText(jRadioButtonDataKapture, org.openide.util.NbBundle.getMessage(exportVisualPanel1.class, "exportVisualPanel1.jRadioButtonDataKapture.text")); // NOI18N
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyeditor/images/dataKap.jpg"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(exportVisualPanel1.class, "exportVisualPanel1.jLabel1.text")); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,38 +126,50 @@ public final class exportVisualPanel1 extends JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(152, 152, 152)
-                        .addComponent(jRadioButtonToR)
-                        .addGap(140, 140, 140)
-                        .addComponent(jRadioButtonToExcel)
-                        .addContainerGap(55, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblImgFieldlog)
                         .addGap(66, 66, 66)
-                        .addComponent(lblImgR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(lblImgExcel)
-                        .addGap(57, 57, 57))))
+                        .addComponent(lblImgFieldlog))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRadioButtonToR)
+                        .addGap(82, 82, 82)
+                        .addComponent(lblImgR))
+                    .addComponent(jRadioButtonDataKapture)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRadioButtonToExcel)
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(lblImgExcel))))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jRadioButtonToFieldlog)
-                    .addComponent(jRadioButtonToExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jRadioButtonToR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(lblImgFieldlog))
+                        .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblImgFieldlog)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImgR)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(lblImgR))
+                        .addGap(19, 19, 19)
+                        .addComponent(jRadioButtonToR)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImgExcel)
+                    .addComponent(jRadioButtonToExcel))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(lblImgExcel)))
-                .addGap(59, 59, 59))
+                        .addGap(34, 34, 34)
+                        .addComponent(jRadioButtonDataKapture))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)))
+                .addGap(99, 99, 99))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -199,6 +231,18 @@ public final class exportVisualPanel1 extends JPanel {
          setIsForR();
     }//GEN-LAST:event_jRadioButtonToExcelActionPerformed
 
+    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
+            this.jLabel1.setIcon(new ImageIcon(getClass().getResource("/ibfb/studyeditor/images/dataKapB.jpg")));
+    }//GEN-LAST:event_jLabel1MouseEntered
+
+    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+        this.jLabel1.setIcon(new ImageIcon(getClass().getResource("/ibfb/studyeditor/images/dataKap.jpg")));
+    }//GEN-LAST:event_jLabel1MouseExited
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        jRadioButtonDataKapture.setSelected(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     
     private void setIsForR(){
         exportWizardIterator.isForR=this.jRadioButtonToR.isSelected();
@@ -207,6 +251,8 @@ public final class exportVisualPanel1 extends JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupExport;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JRadioButton jRadioButtonDataKapture;
     public javax.swing.JRadioButton jRadioButtonToExcel;
     public javax.swing.JRadioButton jRadioButtonToFieldlog;
     public javax.swing.JRadioButton jRadioButtonToR;
@@ -229,4 +275,14 @@ public final class exportVisualPanel1 extends JPanel {
            this.jRadioButtonToExcel.setSelected(true);
        }
     }
+
+    public JRadioButton getjRadioButtonDataKapture() {
+        return jRadioButtonDataKapture;
+    }
+
+    public void setjRadioButtonDataKapture(JRadioButton jRadioButtonDataKapture) {
+        this.jRadioButtonDataKapture = jRadioButtonDataKapture;
+    }
+    
+    
 }

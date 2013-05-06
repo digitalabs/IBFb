@@ -24,6 +24,11 @@ import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 @Entity
 @Table(name = "represtn")
 public class Represtn extends BaseFilter implements Serializable {
+    
+    public static String STEFFECTNAMESTUDY = "STUDY";
+    public static String STEFFECTNAMETRIAL = "TRIAL";
+    public static String STEFFECTNAMEMEASUREMENT = "MEASUREMENT EFECT";    
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)

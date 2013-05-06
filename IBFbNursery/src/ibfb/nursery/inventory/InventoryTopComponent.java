@@ -1,6 +1,7 @@
 package ibfb.nursery.inventory;
 
 import ibfb.domain.core.Factor;
+import ibfb.inventory.core.InventoryFactors;
 import ibfb.nursery.models.GermplasmEntriesTableModel;
 import ibfb.nursery.persons.SelectLocationPanel;
 import ibfb.settings.core.FieldbookSettings;
@@ -658,38 +659,7 @@ public final class InventoryTopComponent extends TopComponent {
     }
 
     private List<Factor> addColumnsForInventory(List<Factor> factores) {
-        List<Factor> losFactores = factores;
-
-        Factor factor = new Factor();
-        factor.setFactorName("LOCATION");
-        factor.setProperty("GERMPLASM ENTRY");
-        factor.setScale("TEXT");
-        factor.setDataType("C");
-        losFactores.add(factor);
-
-        factor = new Factor();
-        factor.setFactorName("COMMENT");
-        factor.setProperty("GERMPLASM ENTRY");
-        factor.setScale("TEXT");
-        factor.setDataType("C");
-        losFactores.add(factor);
-
-        factor = new Factor();
-        factor.setFactorName("AMOUNT");
-        factor.setProperty("GERMPLASM ENTRY");
-        factor.setScale("NUMBER");
-        factor.setDataType("N");
-        losFactores.add(factor);
-
-
-        factor = new Factor();
-        factor.setFactorName("SCALE");
-        factor.setProperty("GERMPLASM ENTRY");
-        factor.setScale("TEXT");
-        factor.setDataType("C");
-        losFactores.add(factor);
-
-        return losFactores;
+        return InventoryFactors.getInventoryFactors();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

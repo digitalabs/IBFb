@@ -77,27 +77,31 @@ public final class importingVisualPanel2 extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSelectSourcefile, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblImgFolders)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSelectSourcefile, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)))
+                        .addGap(35, 35, 35))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblImgFolders)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblImgFolders, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lblSelectSourcefile)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(lblSelectSourcefile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(43, 43, 43))
+                        .addComponent(lblImgFolders, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonSearch))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -120,8 +124,6 @@ public final class importingVisualPanel2 extends JPanel {
         selectorArchivo.setSelectedFile(archivoNulo);
         selectorArchivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-
-
         switch (opcionFiltro) {
             case 0:
                 selectorArchivo.addChoosableFileFilter(new ExcelFiltro());
@@ -130,22 +132,14 @@ public final class importingVisualPanel2 extends JPanel {
                 selectorArchivo.addChoosableFileFilter(new CSVFiltro());
                 break;
             case 2:
-                selectorArchivo.addChoosableFileFilter(new ExcelFiltro());
+                selectorArchivo.addChoosableFileFilter(new CSVFiltro());
                 break;
         }
-
-
-
-
-
 
         int resultado = selectorArchivo.showOpenDialog(null);
         if (resultado == JFileChooser.CANCEL_OPTION) {
             return;
         }
-
-
-
 
         switch (opcionFiltro) {
             case 0:
@@ -158,13 +152,9 @@ public final class importingVisualPanel2 extends JPanel {
                 break;
             case 2:
                 nombreArchivo = selectorArchivo.getSelectedFile();
-                this.jTextArea1.setText(nombreArchivo + ".xls");
+                this.jTextArea1.setText(nombreArchivo + ".csv");
                 break;
         }
-
-
-
-
 
         wizardDescriptor.doFinishClick();
 

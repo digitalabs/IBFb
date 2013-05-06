@@ -7,6 +7,7 @@ import ibfb.domain.core.SelectedStudy;
 import ibfb.domain.core.Variate;
 import ibfb.domain.core.Workbook;
 import ibfb.lists.core.SelectListDialog;
+import ibfb.lists.core.importwizard.ImportList;
 import ibfb.nursery.core.NurseryEditorTopComponent;
 import ibfb.nursery.filters.ExcelFiltro;
 import ibfb.nursery.models.GermplasmEntriesTableModel;
@@ -79,6 +80,14 @@ public class JDQuickCreation extends javax.swing.JDialog {
 
         ready = true;
 
+        hideImportGermplasm();
+    }
+    
+    private void hideImportGermplasm() {
+        radGermplasmFromTemplate.setVisible(false);
+        jScrollPane3.setVisible(false);
+        jButtonSearchGSM.setVisible(false);
+        jButtonPreviewGSM.setVisible(false);
     }
 
     private void loadNamesForWheat() {
@@ -127,6 +136,7 @@ public class JDQuickCreation extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextFieldTotalEntries = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        btnImportList = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jRadioButtonNormal = new javax.swing.JRadioButton();
         jRadioButtonRandom = new javax.swing.JRadioButton();
@@ -331,6 +341,13 @@ public class JDQuickCreation extends javax.swing.JDialog {
             }
         });
 
+        btnImportList.setText(org.openide.util.NbBundle.getMessage(JDQuickCreation.class, "JDQuickCreation.btnImportList.text")); // NOI18N
+        btnImportList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -338,20 +355,19 @@ public class JDQuickCreation extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(radGermplasmFromTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                        .addComponent(radGermplasmFromTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSearch)
-                        .addGap(21, 21, 21))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnImportList)))))
+                .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -372,9 +388,11 @@ public class JDQuickCreation extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(btnSearch)
-                .addGap(41, 41, 41)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearch)
+                    .addComponent(btnImportList))
+                .addGap(43, 43, 43)
                 .addComponent(radGermplasmFromTemplate)
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -677,6 +695,10 @@ public class JDQuickCreation extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cboGermplasmListActionPerformed
 
+    private void btnImportListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportListActionPerformed
+        importGermplasmList();
+    }//GEN-LAST:event_btnImportListActionPerformed
+
     private void fillStudyData(NurseryEditorTopComponent nurseryWindow) {
         nurseryWindow.setName("Nursery - " + SelectedStudy.selected.getStudy());
         nurseryWindow.jTextFieldStudy.setText(SelectedStudy.selected.getStudy());
@@ -949,6 +971,7 @@ public class JDQuickCreation extends javax.swing.JDialog {
         jTextAreaPathGSM.setEnabled(enabled);
         jButtonSearchGSM.setEnabled(enabled);
         cboGermplasmList.setEnabled(!enabled);
+        btnImportList.setEnabled(!enabled);
         GermplasmEntriesTableModel modeloTablaEntries = new GermplasmEntriesTableModel();
         this.jTableEntries.setModel(modeloTablaEntries);
 
@@ -1219,7 +1242,16 @@ public class JDQuickCreation extends javax.swing.JDialog {
         }
         GermplasmEntriesTableModel.setIsFromCrossInfo(false);
     }
+    
+
+    private void importGermplasmList() {
+        if (ImportList.listCreatedFromWizard()) {
+            fillComboListNames();
+        }
+    }    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImportList;
     private javax.swing.JButton btnSearch;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;

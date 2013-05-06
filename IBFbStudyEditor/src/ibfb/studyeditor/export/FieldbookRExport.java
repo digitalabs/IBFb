@@ -2,6 +2,7 @@ package ibfb.studyeditor.export;
 
 import com.csvreader.CsvWriter;
 import ibfb.studyeditor.core.model.ObservationsTableModel;
+import ibfb.studyeditor.roweditors.CSVFileManager;
 import ibfb.studyeditor.roweditors.CSVOziel;
 import java.awt.Desktop;
 import java.io.File;
@@ -18,7 +19,7 @@ public class FieldbookRExport {
 
     private static ResourceBundle bundle = NbBundle.getBundle(FieldbookRExport.class);
 
-    public static void exportToR(JTable jTableObservations, String trialFile, CSVOziel csv, int triallOption,
+    public static void exportToR(JTable jTableObservations, String trialFile, CSVFileManager csv, int triallOption,
             int trialStart, int trialEnd, int trialSelected,String stringTraitToEvaluate) {
 
         ObservationsTableModel modeloOriginal = (ObservationsTableModel) jTableObservations.getModel();
@@ -71,7 +72,7 @@ public class FieldbookRExport {
         }
     }
 
-    private static void Export_to_R(File file, ObservationsTableModel modeloFiltro, CSVOziel csv,String stringTraitToEvaluate) {
+    private static void Export_to_R(File file, ObservationsTableModel modeloFiltro, CSVFileManager csv,String stringTraitToEvaluate) {
         String outputFile = file.toString() + ".csv";
         boolean alreadyExists = new File(outputFile).exists();
         try {

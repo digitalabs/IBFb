@@ -24,7 +24,7 @@ public final class ImportWizardVisualPanel1 extends JPanel {
     }
 
     public JFileChooser getjFileChooser() {
-        return jFileChooser1;
+        return selectorArchivo;
     }
     
 
@@ -51,8 +51,8 @@ public final class ImportWizardVisualPanel1 extends JPanel {
         jLabel3 = new javax.swing.JLabel();
         jRadioButtonToExcel = new javax.swing.JRadioButton();
         jRadioButtonToFieldlog = new javax.swing.JRadioButton();
-        lblFileName = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jRadioButtonDataKapture = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyeditor/images/fieldlog.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ImportWizardVisualPanel1.class, "ImportWizardVisualPanel1.jLabel1.text")); // NOI18N
@@ -60,11 +60,11 @@ public final class ImportWizardVisualPanel1 extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1MouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
             }
         });
 
@@ -99,62 +99,59 @@ public final class ImportWizardVisualPanel1 extends JPanel {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(lblFileName, org.openide.util.NbBundle.getMessage(ImportWizardVisualPanel1.class, "ImportWizardVisualPanel1.lblFileName.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jRadioButtonDataKapture, org.openide.util.NbBundle.getMessage(ImportWizardVisualPanel1.class, "ImportWizardVisualPanel1.jRadioButtonDataKapture.text")); // NOI18N
 
-        jFileChooser1.setControlButtonsAreShown(false);
-        jFileChooser1.setToolTipText(org.openide.util.NbBundle.getMessage(ImportWizardVisualPanel1.class, "ImportWizardVisualPanel1.jFileChooser1.toolTipText")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyeditor/images/csvexcel.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ImportWizardVisualPanel1.class, "ImportWizardVisualPanel1.jLabel2.text")); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addGap(80, 80, 80)
-                        .addComponent(jRadioButtonToExcel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
-                    .addComponent(lblFileName)
-                    .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jRadioButtonDataKapture)
+                    .addComponent(jRadioButtonToExcel)
+                    .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addContainerGap(422, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(17, 17, 17)
-                                        .addComponent(jLabel1)
-                                        .addGap(20, 20, 20))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jRadioButtonToFieldlog, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(67, 67, 67)))
-                                .addGap(21, 21, 21))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(60, 60, 60)))
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jRadioButtonToExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(lblFileName)
-                        .addGap(8, 8, 8)))
-                .addGap(18, 18, 18)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                        .addGap(22, 22, 22)
+                        .addComponent(jRadioButtonToExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonDataKapture)
+                    .addComponent(jLabel2))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -185,37 +182,50 @@ public final class ImportWizardVisualPanel1 extends JPanel {
     private void jRadioButtonToFieldlogItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonToFieldlogItemStateChanged
         if (jRadioButtonToFieldlog.isSelected()) {
             FileFilter[] filtros = new FileFilter[10];
-            filtros = jFileChooser1.getChoosableFileFilters();
+            filtros = selectorArchivo.getChoosableFileFilters();
             for (int i = 0; i < filtros.length; i++) {
                 FileFilter filtro = filtros[i];
-                jFileChooser1.removeChoosableFileFilter(filtro);
+                selectorArchivo.removeChoosableFileFilter(filtro);
             }
-            this.jFileChooser1.addChoosableFileFilter(new CSVFiltro());
+            this.selectorArchivo.addChoosableFileFilter(new CSVFiltro());
         }
     }//GEN-LAST:event_jRadioButtonToFieldlogItemStateChanged
 
     private void jRadioButtonToExcelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonToExcelItemStateChanged
         if (jRadioButtonToExcel.isSelected()) {
             FileFilter[] filtros = new FileFilter[10];
-            filtros = jFileChooser1.getChoosableFileFilters();
+            filtros = selectorArchivo.getChoosableFileFilters();
             for (int i = 0; i < filtros.length; i++) {
                 FileFilter filtro = filtros[i];
-                jFileChooser1.removeChoosableFileFilter(filtro);
+                selectorArchivo.removeChoosableFileFilter(filtro);
             }
-            this.jFileChooser1.addChoosableFileFilter(new ExcelFiltro());
+            this.selectorArchivo.addChoosableFileFilter(new ExcelFiltro());
         }
     }//GEN-LAST:event_jRadioButtonToExcelItemStateChanged
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseEntered
+
+    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRadioButtonDataKapture;
     public javax.swing.JRadioButton jRadioButtonToExcel;
     public javax.swing.JRadioButton jRadioButtonToFieldlog;
-    private javax.swing.JLabel lblFileName;
     // End of variables declaration//GEN-END:variables
 
     private void customDialog() {
-        this.jFileChooser1.addChoosableFileFilter(new CSVFiltro());
+        this.selectorArchivo.addChoosableFileFilter(new CSVFiltro());
     }
 }

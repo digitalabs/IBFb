@@ -29,6 +29,8 @@ public class Listdata extends BaseFilter implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    public static final String ENTRY_PREFIX = "E";
+    
     @EmbeddedId
     protected ListdataPK listdataPK;
     

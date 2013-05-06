@@ -6,6 +6,7 @@ import ibfb.studyeditor.core.db.FieldbookCSVUtil;
 import ibfb.studyeditor.core.db.WorkbookSavingHelper;
 import ibfb.studyeditor.core.model.*;
 import ibfb.studyeditor.designs.DesignsClass;
+import ibfb.studyeditor.designs.DesignsGenerator;
 import ibfb.studyeditor.designs.DesignsUtils;
 import ibfb.studyeditor.export.FieldBookExcelExporter;
 import ibfb.studyeditor.export.FieldbookCSVExporter;
@@ -102,7 +103,7 @@ public final class StudyEditorTopComponent extends TopComponent {
     DefaultTableModel modelMeasurements = new DefaultTableModel();
     DesignTableModel modelDesign = new DesignTableModel();
     DefaultTableModel modelObs = new DefaultTableModel();
-    private CSVOziel csv;
+    private CSVFileManager csv;
     AlphaDesignsRowEditor alphaRowEditorStudy;
     private Workbook myWorkbook;
     private Workbook workbookAfterSave;
@@ -148,6 +149,8 @@ public final class StudyEditorTopComponent extends TopComponent {
     private String stringTraitToEvaluate = "GY";
     private boolean forMaster = false;
     private boolean conPreguntas = true;
+    // get list of exsiting traits saved 
+    private List<Variate> savedTraits;
     private SelectCommand unselectedCommand = new SelectCommand() {
 
         @Override
@@ -246,7 +249,7 @@ public final class StudyEditorTopComponent extends TopComponent {
         this.jTableEntries.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableDesign.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableObservations.getTableHeader().addMouseListener(new ColumnFitAdapter());
-        csv = new CSVOziel(this.jTableObservations, new JList());
+        csv = new CSVFileManager(this.jTableObservations, new JList());
         deshabilitaSorters();
         designsUtils = new DesignsUtils(jTableDesign, jTextFieldEntries);
         doubleListPanel = new DoubleListPanel<Variate>(availableTraits, selectedTraits, unselectedCommand, selectedCommand);
@@ -411,10 +414,8 @@ public final class StudyEditorTopComponent extends TopComponent {
         jScrollPane6 = new javax.swing.JScrollPane();
         jTableEntries = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
-        jButtonCopyGID = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabelTotalGermp = new javax.swing.JLabel();
-        jButtonImportCrossInfo = new javax.swing.JButton();
         pnlOtherTreatment = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableOtherFactorLabels = new javax.swing.JTable();
@@ -994,42 +995,16 @@ public final class StudyEditorTopComponent extends TopComponent {
         });
         jScrollPane6.setViewportView(jTableEntries);
 
-        jButtonCopyGID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyeditor/images/copyGID.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButtonCopyGID, org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jButtonCopyGID.text")); // NOI18N
-        jButtonCopyGID.setToolTipText(org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jButtonCopyGID.toolTipText")); // NOI18N
-        jButtonCopyGID.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonCopyGID.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonCopyGID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCopyGIDActionPerformed(evt);
-            }
-        });
-
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jLabel5.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabelTotalGermp, org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jLabelTotalGermp.text")); // NOI18N
-
-        jButtonImportCrossInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyeditor/images/crossInfoSmall.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButtonImportCrossInfo, org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jButtonImportCrossInfo.text")); // NOI18N
-        jButtonImportCrossInfo.setToolTipText(org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jButtonImportCrossInfo.toolTipText")); // NOI18N
-        jButtonImportCrossInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonImportCrossInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonImportCrossInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportCrossInfoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonCopyGID, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jButtonImportCrossInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTotalGermp, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1038,19 +1013,11 @@ public final class StudyEditorTopComponent extends TopComponent {
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabelTotalGermp))
-                        .addGap(34, 34, 34))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonCopyGID, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addComponent(jButtonImportCrossInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelTotalGermp))
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout pnlGermplasmEntriesLayout = new javax.swing.GroupLayout(pnlGermplasmEntries);
@@ -2215,7 +2182,11 @@ public final class StudyEditorTopComponent extends TopComponent {
 }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
-        fillObservationsData();
+        if (!studyAlreadyExists) {
+            fillObservationsData();
+        } else {
+            fillExistingObservationsData();
+        }
 
         DialogUtil.displayInfo(StudyEditorTopComponent.class, "StudyEditorTopComponent.datasyncronized");
 
@@ -2264,7 +2235,7 @@ public final class StudyEditorTopComponent extends TopComponent {
                     DialogUtil.displayInfo(NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.saved"));
                     enableMeasurementButtons();
                     RefreshBrowserHelper.refreshStudyBrowser();
-                    
+
                     if (!closingEditor) {
                         reLoadStudy();
                     }
@@ -2752,60 +2723,9 @@ public final class StudyEditorTopComponent extends TopComponent {
         //jButtonSaveToExcel.setEnabled(!jTextTrialName.getText().trim().isEmpty());
     }//GEN-LAST:event_jTextTrialNameKeyReleased
 
-    private void jButtonCopyGIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopyGIDActionPerformed
-
-        GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
-        int colGID = entriesTableModel.findColumn("GID");
-        if (colGID > 0) {
-
-            String str = "GID\n";
-            for (int i = 0; i < entriesTableModel.getRowCount(); i++) {
-                str = str + entriesTableModel.getValueAt(i, colGID).toString() + "\n";
-            }
-            StringSelection ss = new StringSelection(str);
-            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-
-            DialogUtil.display(NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.copied"));
-
-        } else {
-            DialogUtil.displayError(NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.noGID"));
-        }
-
-
-
-    }//GEN-LAST:event_jButtonCopyGIDActionPerformed
-
     private void jTableEntriesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableEntriesPropertyChange
         this.jLabelTotalGermp.setText(String.valueOf(this.jTableEntries.getRowCount()));
     }//GEN-LAST:event_jTableEntriesPropertyChange
-
-    private void jButtonImportCrossInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportCrossInfoActionPerformed
-
-        ImportData importData = new ImportData(jTableEntries);
-
-        FileFilter[] filtros = new FileFilter[10];
-        filtros = selectorArchivo.getChoosableFileFilters();
-        for (int i = 0; i < filtros.length; i++) {
-            FileFilter filtro = filtros[i];
-            selectorArchivo.removeChoosableFileFilter(filtro);
-        }
-        File archivoNulo = new File("");
-        selectorArchivo.setSelectedFile(archivoNulo);
-        selectorArchivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        selectorArchivo.addChoosableFileFilter(new ExcelFiltro());
-
-
-        int resultado = selectorArchivo.showOpenDialog(null);
-        if (resultado == JFileChooser.CANCEL_OPTION) {
-            return;
-        }
-        importData.importFromCrossInfoToGermplasm(selectorArchivo.getSelectedFile());
-
-        fillObservationsData();
-        DialogUtil.displayInfo(StudyEditorTopComponent.class, "StudyEditorTopComponent.datasyncronized");
-        this.jTabbedPaneEditor.setSelectedIndex(7);
-
-    }//GEN-LAST:event_jButtonImportCrossInfoActionPerformed
 
     private void jButtonSaveMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveMasterActionPerformed
     }//GEN-LAST:event_jButtonSaveMasterActionPerformed
@@ -3133,9 +3053,10 @@ public final class StudyEditorTopComponent extends TopComponent {
     public void fillObservationsData() {
         List<Variate> selectedVariates = doubleListPanel.getTargetList();
         this.setSelectedTraits(selectedVariates);
-        List fieldbookVariates = null;
-        ObservationsTableModel tableModel = null;
 
+        ObservationsTableModel tableModel = null;
+        TreatmentLabelsTableModel otftm = (TreatmentLabelsTableModel) jTableOtherFactorLabels.getModel();
+        DesignsGenerator designsGenerator = new DesignsGenerator(this.jTableEntries, this.jTextFieldEntries, myWorkbook, otftm);
 
         tableModel = new ObservationsTableModel(myWorkbook, selectedVariates);
 
@@ -3161,6 +3082,8 @@ public final class StudyEditorTopComponent extends TopComponent {
         // this because there is not other factors!
         if (this.myWorkbook.getOtherFactors().isEmpty()) {
             combinations = 1;
+        } else {
+            combinations = myWorkbook.getOtherFactors().size();
         }
 
         for (int i = 0; i < trials; i++) {
@@ -3170,10 +3093,7 @@ public final class StudyEditorTopComponent extends TopComponent {
             rep = bean.getReplications().toString();
             blockSize = bean.getBlockSize().toString();
             blocksPerRep = bean.getBlocksPerReplicate().toString();
-//            String disenio = jTableDesign.getValueAt(i, 1).toString();            
-//            rep = this.jTableDesign.getValueAt(i, 2).toString();
-//            blockSize = this.jTableDesign.getValueAt(i, 3).toString();
-//            blocksPerRep = this.jTableDesign.getValueAt(i, 4).toString();
+
             entries = Integer.parseInt(blockSize) * (Integer.parseInt(blocksPerRep));
             if (disenio.startsWith(DesignsClass.USER_DEFINED_DESIGN)) {
 
@@ -3224,13 +3144,13 @@ public final class StudyEditorTopComponent extends TopComponent {
                     disenios.deleteWD(new File("C:" + File.separator + "R"));
                 }
             } else if (disenio.equals(DesignsClass.UNREPLICATED_DESIGH_WITH_RANDOMIZATION)) {
-                generateUnreplicatedDesignWithRandomization(i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
+                designsGenerator.generateUnreplicatedDesignWithRandomization(i + 1, tableModel, combinations);
             } else if (disenio.equals(DesignsClass.UNREPLICATED_DESIGH_WITHOUT_RANDOMIZATION)) {
-                generateUnreplicatedDesignWithoutRandomization(i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
+                designsGenerator.generateUnreplicatedDesignWithoutRandomization(i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
             } else {
                 //rep = this.jTableDesign.getValueAt(i, 2).toString();
                 rep = bean.getReplications().toString();
-                generateRandomizeCompleteBlock(Integer.parseInt(rep), i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
+                designsGenerator.generateRandomizeCompleteBlock(Integer.parseInt(rep), i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
             }
         }
         int entriesTot = this.jTableEntries.getRowCount();
@@ -3341,210 +3261,11 @@ public final class StudyEditorTopComponent extends TopComponent {
 
     }
 
-    private void generateUnreplicatedDesignWithoutRandomization(int trial, ObservationsTableModel model, ArrayList<String> otherFactors, String[][] factorsDesignCad, int totalRep) {
-        TableColumnModel tcm = this.jTableEntries.getColumnModel();
-        GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
-        int total = Integer.parseInt(this.jTextFieldEntries.getText());
-
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(0);
-
-        for (int i = 0; i < total; i++) {
-            for (int j = 0; j < totalRep; j++) {
-                Object[] rowToAdd = new Object[model.getColumnCount()];
-                rowToAdd[model.getHeaderIndex(ObservationsTableModel.TRIAL)] = trial;
-
-                if (model.getHeaderIndex(ObservationsTableModel.REPLICATION) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.REPLICATION)] = 1;
-                }
-
-                if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = 1;
-                }
-
-                //A2*10^(TRUNC(LOG10(MAX(16,5,22)))+1)+B2                
-
-                int resInt = (int) java.lang.Math.floor(java.lang.Math.log10(total)) + 1;
-                int newPlot = (trial * ((int) (Math.pow(10, resInt)))) + (i + 1);
-
-                if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = i + 1;
-                } else {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = newPlot; //NESTEDNUMBER
-                }
-                //  rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i;
-
-                //rowToAdd[model.getHeaderIndex(ObservationsTableModel.ENTRY)] = i + 1;
-                int entriesColIndex = 0;
-                for (Factor factor : entriesTableModel.getFactorHeaders()) {
-                    String columnHeader = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
-                    rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(i, entriesColIndex);
-                    entriesColIndex++;
-                }
-                // tmsanchez
-                if (otherFactors != null) {
-                    for (int k = 0; k < otherFactors.size(); k++) {
-                        //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
-                    }
-                }
-                model.addRow(rowToAdd);
-            }
-        }
-    }
-
     public int findColumn(String name, DefaultTableModel model) {
         int colEntry = 0;
         colEntry = model.findColumn(name);
         return colEntry;
 
-    }
-
-    private void generateUnreplicatedDesignWithRandomization(int trial, ObservationsTableModel model, ArrayList<String> otherFactors, String[][] factorsDesignCad, int totalRep) {
-        GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
-        int total = Integer.parseInt(this.jTextFieldEntries.getText());
-        int vector[] = randomize(total);
-        for (int i = 0; i < total; i++) {
-            for (int j = 0; j < totalRep; j++) {
-                Object[] rowToAdd = new Object[model.getColumnCount()];
-                rowToAdd[model.getHeaderIndex(ObservationsTableModel.TRIAL)] = trial;
-                if (model.getHeaderIndex(ObservationsTableModel.REPLICATION) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.REPLICATION)] = 1;
-                }
-                if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = 1;
-                }
-
-
-
-                //A2*10^(TRUNC(LOG10(MAX(16,5,22)))+1)+B2                
-
-                int resInt = (int) java.lang.Math.floor(java.lang.Math.log10(total)) + 1;
-                int newPlot = (trial * ((int) (Math.pow(10, resInt)))) + (i + 1);
-
-                if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = i + 1;
-                } else {
-
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = newPlot; //NESTEDNUMBER
-                }
-                // rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i + 1;
-                //rowToAdd[model.getHeaderIndex(ObservationsTableModel.ENTRY)] = i + 1;
-
-                int entriesColIndex = 0;
-                for (Factor factor : entriesTableModel.getFactorHeaders()) {
-                    String columnHeader = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
-                    rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(vector[i], entriesColIndex);
-                    entriesColIndex++;
-                }
-
-                // tmsanchez
-                if (otherFactors != null) {
-                    for (int k = 0; k < otherFactors.size(); k++) {
-                        //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
-                    }
-                }
-                model.addRow(rowToAdd);
-            }
-        }
-    }
-
-    private void generateRandomizeCompleteBlock(int rep, int trial, ObservationsTableModel model, ArrayList<String> otherFactors, String[][] factorsDesignCad, int totalRep) {
-        GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
-        int total = Integer.parseInt(this.jTextFieldEntries.getText());
-        int plot = 0;
-        int repet = 0;
-
-        //A2*10^(TRUNC(LOG10(MAX(16,5,22)))+1)+B2                                
-
-        for (int j = 0; j < rep; j++) {
-            repet++;
-            int vector[] = randomize(total);
-
-            for (int i = 0; i < total; i++) {
-
-
-                int resInt = (int) java.lang.Math.floor(java.lang.Math.log10(total * rep)) + 1;
-                int newPlot = (trial * ((int) (Math.pow(10, resInt)))) + (plot + 1);
-                plot++;
-
-                for (int m = 0; m < totalRep; m++) {
-                    Object[] rowToAdd = new Object[model.getColumnCount()];
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.TRIAL)] = trial;
-                    if (model.getHeaderIndex(ObservationsTableModel.REPLICATION) > 0) {
-                        rowToAdd[model.getHeaderIndex(ObservationsTableModel.REPLICATION)] = repet;
-                    }
-                    if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
-                        rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = 1;
-                    }
-
-
-                    if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
-                        rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = plot;
-                    } else {
-                        rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = newPlot;
-                    }
-
-                    int entriesColIndex = 0;
-                    for (Factor factor : entriesTableModel.getFactorHeaders()) {
-                        String columnHeader = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
-                        rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(vector[i], entriesColIndex);
-                        entriesColIndex++;
-                    }
-
-                    // tmsanchez
-                    if (otherFactors != null) {
-                        for (int k = 0; k < otherFactors.size(); k++) {
-                            //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
-                        }
-                    }
-                    model.addRow(rowToAdd);
-                }
-            }
-        }
-    }
-
-    private int[] randomizeDif(int tam) {
-
-        Random r;
-        r = new Random();
-        r.setSeed(new Date().getTime());
-
-
-        int vector[] = new int[tam];
-        int i = 0, j;
-        vector[i] = (int) (r.nextDouble() * tam);
-
-        for (i = 1; i < tam; i++) {
-            vector[i] = (int) (r.nextDouble() * tam);
-            for (j = 0; j < i; j++) {
-                if (vector[i] == vector[j]) {
-                    i--;
-                }
-            }
-        }
-        return vector;
-    }
-
-    private int[] randomize(int tam) {
-
-        Random r;
-        r = new Random();
-        r.setSeed(new Date().getTime());
-
-
-        int vector[] = new int[tam];
-        int i = 0, j;
-        vector[i] = (int) (Math.random() * tam);
-
-        for (i = 1; i < tam; i++) {
-            vector[i] = (int) (Math.random() * tam);
-            for (j = 0; j < i; j++) {
-                if (vector[i] == vector[j]) {
-                    i--;
-                }
-            }
-        }
-        return vector;
     }
 
     public void printLabels() {
@@ -3650,7 +3371,7 @@ public final class StudyEditorTopComponent extends TopComponent {
 
     private boolean launchImportWizard() {
         ObservationsTableModel observationsTableModel = (ObservationsTableModel) jTableObservations.getModel();
-        csv = new CSVOziel(this.jTableObservations, new JList());
+        csv = new CSVFileManager(this.jTableObservations, new JList());
         int instanceCounter = observationsTableModel.getTrialCounter();
         ImportData importData = new ImportData(jTableObservations, csv, instanceCounter);
 
@@ -3676,7 +3397,7 @@ public final class StudyEditorTopComponent extends TopComponent {
                     break;
 
                 case 2:
-                    importData.importFromCrossInfo(trialImportFile);
+                    importData.importFromCSV(trialImportFile);
                     break;
             }
             return true;
@@ -3732,11 +3453,35 @@ public final class StudyEditorTopComponent extends TopComponent {
                 case 2:
                     exportToExcel();
                     break;
+                case 3:
+                    exportToDataKapture();
+                    exportToDataKaptureTraits();
+                    break;
             }
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Export the trial to CSV
+     *
+     * @author Raul Hernandez Toledo
+     * @since 1.0
+     */
+    private void exportToDataKapture() {
+        FieldbookCSVExporter.exportToDataKapture(jTableObservations, trialFile, csv, triallOption, trialStart, trialEnd, trialSelected);
+    }
+
+    /**
+     * Export traits from trial to CSV
+     *
+     * @author Raul Hernandez Toledo
+     * @since 1.0
+     */
+    private void exportToDataKaptureTraits() {
+        FieldbookCSVExporter.exportToDataKaptureTraits(jTableObservations, trialFile, csv, triallOption, trialStart, trialEnd, trialSelected);
     }
 
     public int getMaxTrial() {
@@ -3842,9 +3587,9 @@ public final class StudyEditorTopComponent extends TopComponent {
     }
 
     public void disableTraitsSelection() {
-        jButtonSync.setEnabled(false);
-        doubleListPanel.setEnabled(false);
-        jButtonSelectTraits.setEnabled(false);
+        //jButtonSync.setEnabled(false);
+        //doubleListPanel.setEnabled(false);
+        //jButtonSelectTraits.setEnabled(false);
     }
 
     public void loadDataFromDB() {
@@ -3901,7 +3646,10 @@ public final class StudyEditorTopComponent extends TopComponent {
         }
 
         changeCursorWaitStatus(false);
-
+        savedTraits = new ArrayList<Variate>();
+        for (Variate variate : doubleListPanel.getTargetList()) {
+            savedTraits.add(variate);
+        }
     }
 
     private int getTotalTrialsFromObservations() {
@@ -4253,31 +4001,49 @@ public final class StudyEditorTopComponent extends TopComponent {
         return tipo.getType();
     }
 
- private void  validateDesignButtons() {
+    private void validateDesignButtons() {
         boolean enableCustomDesign = rBtnImportLayoutFile.isSelected();
-        
+
         txtFileName.setEnabled(enableCustomDesign);
         btnBrowse.setEnabled(enableCustomDesign);
     }
-    
+
+    private void fillExistingObservationsData() {
+        List<Variate> selectedVariates = doubleListPanel.getTargetList();
+        List<Variate> variatesToAdd = new ArrayList<Variate>();
+        this.setSelectedTraits(selectedVariates);
+
+        ObservationsTableModel tableModel = (ObservationsTableModel) jTableObservations.getModel();
+
+        // check new traits to add
+        for (Variate variate : selectedVariates) {
+            if (!savedTraits.contains(variate)) {
+                variatesToAdd.add(variate);
+            }
+        }
+        // then add it to model
+        for (Variate variate : variatesToAdd) {
+            tableModel.addNewTrait(variate);
+        }
+    }
+
     private void importLayoutFromFile() {
         File layoutFile = FileUtils.openFile();
         if (layoutFile != null) {
             txtFileName.setText(layoutFile.getPath());
-            DesignTableModel dtm = (DesignTableModel)jTableDesign.getModel();
+            DesignTableModel dtm = (DesignTableModel) jTableDesign.getModel();
             for (DesignBean designBean : dtm.getDesignList()) {
                 designBean.setDesign(DesignsClass.USER_DEFINED_DESIGN);
                 designBean.setUserDefinedDesign(layoutFile);
             }
             dtm.fireTableDataChanged();
             try {
-            designsUtils.checkDesignTable(2,0, true);
+                designsUtils.checkDesignTable(2, 0, true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }    
-    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel JPanelData;
     private javax.swing.JButton btnBrowse;
@@ -4287,10 +4053,8 @@ public final class StudyEditorTopComponent extends TopComponent {
     private javax.swing.ButtonGroup buttonGroupMaster;
     private javax.swing.ButtonGroup buttonGroupMeasurements;
     private javax.swing.ButtonGroup buttonGroupTrInformation;
-    private javax.swing.JButton jButtonCopyGID;
     private javax.swing.JButton jButtonExportData;
     private javax.swing.JButton jButtonExportMaster;
-    private javax.swing.JButton jButtonImportCrossInfo;
     private javax.swing.JButton jButtonImportData;
     public static javax.swing.JButton jButtonRefreshDesign;
     private javax.swing.JButton jButtonSaveData;

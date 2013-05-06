@@ -368,7 +368,6 @@ public final class InventoryViewerTopComponent extends TopComponent {
         List<JTable> tables = new ArrayList<JTable>();
         tables.add(this.jTableEntries);
 
-        ExcelTableExporter exporter;
         InventoryExcelExporter inventoryExcelExporter = new InventoryExcelExporter(jTableEntries,archivo.getAbsolutePath(),inventoryDataList,selectedList);
         try {
             //exporter = new ExcelTableExporter(tables, archivo, nombreTabs);

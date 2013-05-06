@@ -233,28 +233,38 @@ public class InventoryExcelExporter {
                 celdaExcel.setCellValue(id.getDesig());
                 col++;
 
-                celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_STRING);
-                celdaExcel.setCellValue("");
+                if (id.getCross() != null) {
+                    celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_STRING);
+                    celdaExcel.setCellValue(id.getCross());
+                }
                 col++;
 
                 celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
                 celdaExcel.setCellValue(id.getGid());
                 col++;
 
-                celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
-                celdaExcel.setCellValue(id.getLotid());
+                if (id.getLotid() != null) {
+                    celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
+                    celdaExcel.setCellValue(id.getLotid());
+                }
                 col++;
 
-                celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_STRING);
-                celdaExcel.setCellValue(id.getLocationName());
+                if (id.getLocationName() != null) {
+                    celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_STRING);
+                    celdaExcel.setCellValue(id.getLocationName());
+                }
                 col++;
 
-                celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
-                celdaExcel.setCellValue(id.getLocationid());
+                if (id.getLocationid() != null) {
+                    celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
+                    celdaExcel.setCellValue(id.getLocationid());
+                }
                 col++;
 
-                celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
-                celdaExcel.setCellValue(id.getAmmount());
+                if (id.getAmmount() != null) {
+                    celdaExcel = filaExcel.createCell(col, HSSFCell.CELL_TYPE_NUMERIC);
+                    celdaExcel.setCellValue(id.getAmmount());
+                }
                 col++;
 
 

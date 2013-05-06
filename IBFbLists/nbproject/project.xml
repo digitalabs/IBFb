@@ -7,6 +7,30 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>ibfb.domain.core</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.0</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>ibfb.settings.core</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.0</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>ibfb.workbook.core</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.0</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.cimmyt.cril.ibwb.api</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -39,6 +63,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.openide.awt</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.39.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.dialogs</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -57,6 +89,8 @@
             </module-dependencies>
             <public-packages>
                 <package>ibfb.lists.core</package>
+                <package>ibfb.lists.core.importwizard</package>
+                <package>ibfb.lists.core.location</package>
             </public-packages>
         </data>
     </configuration>

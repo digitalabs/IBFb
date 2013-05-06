@@ -72,6 +72,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.openide.dialogs</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.23.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.util</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -96,7 +104,13 @@
                     </run-dependency>
                 </dependency>
             </module-dependencies>
-            <public-packages/>
+            <public-packages>
+                <package>ibfb.inventory.actions</package>
+                <package>ibfb.inventory.core</package>
+                <package>ibfb.inventory.export</package>
+                <package>ibfb.inventory.models</package>
+                <package>ibfb.inventory.update</package>
+            </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/jxl.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/jxl.jar</binary-origin>

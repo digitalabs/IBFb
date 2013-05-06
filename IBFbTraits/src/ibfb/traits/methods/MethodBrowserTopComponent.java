@@ -8,10 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.TableBindingUtil;
-import org.cimmyt.cril.ibwb.domain.Location;
 import org.cimmyt.cril.ibwb.domain.Tmethod;
 import org.cimmyt.cril.ibwb.domain.TmsMethod;
 import org.openide.util.NbBundle;
@@ -81,7 +79,6 @@ public final class MethodBrowserTopComponent extends TopComponent {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnBrowse = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/new.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jMenuItem1, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem1.text")); // NOI18N
@@ -202,13 +199,6 @@ public final class MethodBrowserTopComponent extends TopComponent {
         });
         tblBarMenu.add(btnBrowse);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,10 +213,7 @@ public final class MethodBrowserTopComponent extends TopComponent {
                                 .addComponent(lblSearch)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblRecordsFound)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))
+                                    .addComponent(lblRecordsFound)
                                     .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)))))
                     .addComponent(tblBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
                 .addContainerGap())
@@ -240,11 +227,9 @@ public final class MethodBrowserTopComponent extends TopComponent {
                     .addComponent(lblSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRecordsFound)
-                    .addComponent(jButton1))
+                .addComponent(lblRecordsFound)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -284,21 +269,11 @@ public final class MethodBrowserTopComponent extends TopComponent {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         openOntology();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        //JOptionPane.showMessageDialog(this, "test");
-        List< Location> locationList = AppServicesProxy.getDefault().appServices().getLocationList();
-        JOptionPane.showMessageDialog(this, "Locations: "+locationList.size());
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnNew;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

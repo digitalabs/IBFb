@@ -15,6 +15,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>ibfb.inventory.core</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.0</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>ibfb.lists</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -186,15 +194,6 @@
                     </run-dependency>
                 </dependency>
             </module-dependencies>
-            <test-dependencies>
-                <test-type>
-                    <name>unit</name>
-                    <test-dependency>
-                        <code-name-base>org.netbeans.libs.junit4</code-name-base>
-                        <compile-dependency/>
-                    </test-dependency>
-                </test-type>
-            </test-dependencies>
             <public-packages>
                 <package>ibfb.nursery.actions</package>
                 <package>ibfb.nursery.core</package>

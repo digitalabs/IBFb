@@ -2190,6 +2190,13 @@ public interface CommonServices {
      */
     public List<Represtn> getListReprestn(Represtn represtnFilter, int start, int pageSize, boolean paged);
 
+    /**
+     * Gests a Representation object for a Study
+     * @param studyId Study number
+     * @param represName Representation name to find
+     * @return
+     */
+    public Represtn getReprestnForStudyId(final Integer studyId, String represName);    
     //-----------------------------------Scale---------------------------
     /**
      * Adds an Object Scale to database

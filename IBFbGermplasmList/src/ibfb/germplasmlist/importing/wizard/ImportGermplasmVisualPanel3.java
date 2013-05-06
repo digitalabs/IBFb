@@ -4,11 +4,15 @@
  */
 package ibfb.germplasmlist.importing.wizard;
 
+import ibfb.settings.core.FieldbookSettings;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
+import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
+import org.cimmyt.cril.ibwb.domain.Listnms;
 import org.cimmyt.cril.ibwb.domain.Udflds;
 import org.openide.util.NbBundle;
 
@@ -51,6 +55,31 @@ public final class ImportGermplasmVisualPanel3 extends JPanel {
     @Override
     public String getName() {
         return bundle.getString("ImportGermplasmVisualPanel3.title");
+    }
+
+    public Listnms getListnms() {
+        Listnms listnms = new Listnms();
+        Integer loggedUserid = AppServicesProxy.getDefault().appServices().getLoggedUserId(FieldbookSettings.getLocalGmsUserId());
+        // get selected list type
+        Udflds selectedListType = (Udflds) cboListType.getSelectedItem();
+
+        listnms.setListname(txtListName.getText());
+        listnms.setListdesc(txtDescription.getText());
+        listnms.setListdate(ConvertUtils.getDateAsInteger(dtDate.getDate()));
+        listnms.setListtype(selectedListType.getFcode());
+        listnms.setListuid(loggedUserid);        
+        listnms.setLhierarchy(0);
+        listnms.setListstatus(Listnms.LSSTATUS_OPEN_LIST);
+
+        return listnms;
+    }
+
+    public JTextField getTxtDescription() {
+        return txtDescription;
+    }
+
+    public JTextField getTxtListName() {
+        return txtListName;
     }
 
     /**
@@ -102,7 +131,7 @@ public final class ImportGermplasmVisualPanel3 extends JPanel {
                     .addComponent(txtListName)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(dtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 197, Short.MAX_VALUE))
+                        .addGap(0, 188, Short.MAX_VALUE))
                     .addComponent(cboListType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );

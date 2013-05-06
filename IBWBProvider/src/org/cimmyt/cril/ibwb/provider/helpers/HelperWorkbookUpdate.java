@@ -56,6 +56,8 @@ public class HelperWorkbookUpdate {
     Map<Integer, Factor> mapaLabes = new HashMap<Integer, Factor>();
     Map<String, Factor> mapaFactorsByName = new HashMap<String, Factor>();
     Map<String, Variate> mapaConstantsByName = new HashMap<String, Variate>();
+    public static final String vtype = "MV";
+    private org.cimmyt.cril.ibwb.domain.Study dbStudy;
 
     /**
      * Default Constructor
@@ -90,7 +92,7 @@ public class HelperWorkbookUpdate {
     }
 
     private void updateStudy() {
-        org.cimmyt.cril.ibwb.domain.Study dbStudy = ConverterDomainToDTO.getStudy(this.study);
+         dbStudy = ConverterDomainToDTO.getStudy(this.study);
         localServices.updateStudy(dbStudy);
     }
 
@@ -349,7 +351,10 @@ public class HelperWorkbookUpdate {
     }
 
     private void saveOrUpdateVariates() {
-        // get all variate from database marked as Traits        
+        // get all variate from database marked as Traits     
+        
+        saveNewTraits();
+        
         List<Variate> savedVarietList = savedVarietList = this.appServices.getListVariateTraits(study.getStudyid());
 
         // then put in a map all saved variates for fast retrieval
@@ -416,6 +421,107 @@ public class HelperWorkbookUpdate {
                 if (dataC.getDvalue() != null && !dataC.getDvalue().trim().isEmpty()) {
                     localServices.addOrUpdateDataC(dataC);
                 }
+            }
+        }
+    }
+
+    private void saveNewTraits() {
+        Integer dmsatype;
+        String dmsatab;
+
+        char traitsType = 'V';
+        dmsatype = 802;
+        dmsatab = "VARIATE";
+
+
+
+        for (ibfb.domain.core.Variate variateDomain : workbook.getVariates()) {
+            if (variateDomain.getVariateId() == null) {
+                TmsMethod tmsMethod;
+                Scales scales;
+                Traits traits = new Traits();
+                Measuredin measuredin;
+                Variate variate;
+                Dmsattr dmsattr;
+
+                // Check if Method already exists
+                TmsMethod tmsMethodFilter = new TmsMethod(true);
+                // to search method by name
+                tmsMethodFilter.setTmname(variateDomain.getMethod());
+                // method seach 
+                List<TmsMethod> tmsMethodsList = appServices.getListTmsMethod(tmsMethodFilter, 0, 0, false);
+                // if method found then retrieve it
+                if (!tmsMethodsList.isEmpty()) {
+                    // retrieve method from list
+                    tmsMethod = tmsMethodsList.get(0);
+                } else {
+                    // method not found, then add to database
+                    tmsMethod = ConverterDomainToDTO.getTmsMethod(variateDomain.getMethod());
+                    // add a new method
+                    localServices.addTmsMethod(tmsMethod);
+                }
+
+                //Verificar existencia de scales
+                Scales scalesFilter = new Scales(true);
+                scalesFilter.setScname(variateDomain.getScale());
+                List<Scales> scalesList = appServices.getListScales(scalesFilter, 0, 0, false);
+                if (!scalesList.isEmpty()) {
+                    scales = scalesList.get(0);
+                } else {
+                    scales = ConverterDomainToDTO.getScales(variateDomain.getScale(), '-');
+                    localServices.addScales(scales);
+                }
+
+                //Verificar existencia de traits
+                Traits traitsFilter = new Traits(true);
+                traitsFilter.setTrname(variateDomain.getProperty());
+                List<Traits> traitsList = appServices.getListTraitsOnly(traitsFilter, 0, 0, false);
+                if (!traitsList.isEmpty()) {
+                    traits = traitsList.get(0);
+                } else {
+                    traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty());
+                    traits.setTraittype(String.valueOf(traitsType));
+                    localServices.addTraits(traits);
+                }
+                //TODO agregar algoritmo para determinacion del standard scale
+
+                //Verificar existencia de measuredin
+                Measuredin measuredinFilter = new Measuredin(true);
+                measuredinFilter.setScaleid(scales.getScaleid());
+                measuredinFilter.setTraitid(traits.getTid());
+                measuredinFilter.setTmethid(tmsMethod.getTmethid());
+                List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
+                if (!measuredinList.isEmpty()) {
+                    measuredin = measuredinList.get(0);
+                } else {
+                    measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                    localServices.addMeasuredin(measuredin);
+                }
+
+                //Asignando el measuredin en el traits
+                traits.setMeasuredin(measuredin);
+                measuredin.setScales(scales);
+                measuredin.setTmsMethod(tmsMethod);
+
+                //Verificar factor
+                variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), dbStudy, traits, tmsMethod);
+                variate.setVtype(vtype);
+                localServices.addVariate(variate);
+
+                //Verificar dmsattr
+                dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), variateDomain.getDescription());
+                localServices.addDmsattr(dmsattr);
+
+                variateDomain.setVariateId(variate.getVariatid());
+                
+                Represtn represtn = localServices.getReprestnForStudyId(dbStudy.getStudyid(),Represtn.STEFFECTNAMEMEASUREMENT);
+                
+                Veffect veffect = new Veffect();
+                VeffectPK veffectPK = new VeffectPK();
+                veffectPK.setRepresno(represtn.getEffectid());
+                veffectPK.setVariatid(variate.getVariatid());
+                veffect.setVeffectPK(veffectPK);
+                localServices.addVeffect(veffect);                
             }
         }
     }

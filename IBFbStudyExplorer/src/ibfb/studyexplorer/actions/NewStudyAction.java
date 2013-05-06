@@ -5,7 +5,6 @@ package ibfb.studyexplorer.actions;
 import ibfb.studyexplorer.jdialogs.JDNewSTD;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.SystemAction;
@@ -28,8 +27,6 @@ public class NewStudyAction extends SystemAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-                
         JDNewSTD newStudy=new JDNewSTD(null, true);
        
         TopComponent background = WindowManager.getDefault().findTopComponent("BackgroundWindowTopComponent");

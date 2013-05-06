@@ -1,13 +1,21 @@
 package ibfb.studyexplorer.explorer.listNames;
 
+import ibfb.domain.core.Factor;
+import ibfb.inventory.core.InventoryFactors;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.swing.JFileChooser;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.DialogUtil;
 import org.cimmyt.cril.ibwb.commongui.TableBindingUtil;
+import org.cimmyt.cril.ibwb.commongui.filters.ExcelFiltro;
 import org.cimmyt.cril.ibwb.domain.Listdata;
 import org.cimmyt.cril.ibwb.domain.ListdataPK;
 import org.cimmyt.cril.ibwb.domain.Listnms;
@@ -17,6 +25,13 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.NotifyDescriptor;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import ibfb.inventory.export.InventoryExcelExporter;
+import ibfb.inventory.models.GermplasmEntriesTableModel;
+import ibfb.inventory.update.UpdateInventoryWizardIterator;
+import java.text.MessageFormat;
+import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
+import org.openide.DialogDisplayer;
+import org.openide.WizardDescriptor;
 
 @ConvertAsProperties(dtd = "-//ibfb.studyexplorer.explorer.listNames//ListDataWindow//EN",
 autostore = false)
@@ -35,7 +50,8 @@ public final class ListDataWindowTopComponent extends TopComponent {
     private ResourceBundle bundle = NbBundle.getBundle(ListDataWindowTopComponent.class);
     private Listnms parentListname;
     private List<Listdata> listdataEntries;
-    private boolean forWheat=false;
+    private boolean forWheat = false;
+    private JFileChooser fileChooser = new JFileChooser();
 
     public ListDataWindowTopComponent(Listnms listnms) {
         this.parentListname = listnms;
@@ -70,8 +86,9 @@ public final class ListDataWindowTopComponent extends TopComponent {
         txtDescription = new javax.swing.JTextField();
         lblListId = new javax.swing.JLabel();
         txtListId = new javax.swing.JTextField();
-        tblBarMenu = new javax.swing.JToolBar();
-        btnDelete = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnExporToInventory = new javax.swing.JButton();
+        btnImportToInventory = new javax.swing.JButton();
 
         pMnuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyexplorer/explorer/listNames/delete.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(pMnuDelete, org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.pMnuDelete.text")); // NOI18N
@@ -99,6 +116,7 @@ public final class ListDataWindowTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.jLabel2.text")); // NOI18N
 
+        tblListData.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tblListData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -130,81 +148,105 @@ public final class ListDataWindowTopComponent extends TopComponent {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parentListname.listid}"), txtListId, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        tblBarMenu.setFloatable(false);
-        tblBarMenu.setRollover(true);
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/studyexplorer/explorer/listNames/delete.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(btnDelete, org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.btnDelete.text")); // NOI18N
-        btnDelete.setToolTipText(org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.btnDelete.toolTipText")); // NOI18N
-        btnDelete.setFocusable(false);
-        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(btnExporToInventory, org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.btnExporToInventory.text")); // NOI18N
+        btnExporToInventory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnExporToInventoryActionPerformed(evt);
             }
         });
-        tblBarMenu.add(btnDelete);
+
+        org.openide.awt.Mnemonics.setLocalizedText(btnImportToInventory, org.openide.util.NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.btnImportToInventory.text")); // NOI18N
+        btnImportToInventory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportToInventoryActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnImportToInventory)
+                    .addComponent(btnExporToInventory))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnExporToInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnImportToInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(24, 24, 24)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescription)
-                            .addComponent(txtListName)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(lblListId))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(44, 44, 44)
-                                .addComponent(txtSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(lblEntriesFound))
+                                .addContainerGap()
+                                .addComponent(jLabel2))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescription)
+                            .addComponent(txtListName)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblListId)
-                                .addGap(48, 48, 48)
-                                .addComponent(txtListId, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tblBarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblEntriesFound))
+                                    .addComponent(txtListId, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 135, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(tblBarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblListId)
-                    .addComponent(txtListId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtListName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblListId)
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtListId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtListName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEntriesFound, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(lblEntriesFound, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -218,30 +260,34 @@ public final class ListDataWindowTopComponent extends TopComponent {
     public void setIsForWheat(boolean forWheat) {
         this.forWheat = forWheat;
     }
-        
+
     private void txtSearchTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchTextKeyReleased
         updateListData();
 }//GEN-LAST:event_txtSearchTextKeyReleased
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        deleteRecord();
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void pMnuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pMnuDeleteActionPerformed
         deleteRecord();
     }//GEN-LAST:event_pMnuDeleteActionPerformed
 
+    private void btnExporToInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExporToInventoryActionPerformed
+        exportToInventory();
+    }//GEN-LAST:event_btnExporToInventoryActionPerformed
+
+    private void btnImportToInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportToInventoryActionPerformed
+        importToInventory();
+    }//GEN-LAST:event_btnImportToInventoryActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExporToInventory;
+    private javax.swing.JButton btnImportToInventory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEntriesFound;
     private javax.swing.JLabel lblListId;
     private javax.swing.JMenuItem pMnuDelete;
     private javax.swing.JPopupMenu popMnu;
-    private javax.swing.JToolBar tblBarMenu;
     private javax.swing.JTable tblListData;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtListId;
@@ -301,26 +347,26 @@ public final class ListDataWindowTopComponent extends TopComponent {
         header.append(bundle.getString("ListDataWindowTopComponent.headerCross"));
         header.append(",");
         header.append(bundle.getString("ListDataWindowTopComponent.headerEntryId"));
-        
 
-        
+
+
         lblEntriesFound.setText(listdataEntries.size() + " " + bundle.getString("ListDataWindowTopComponent.entriesFound"));
         TableBindingUtil.createColumnsFromDB(Listdata.class, listdataEntries, tblListData, "gid,desig,entrycd,source,grpname,entryid", header.toString());
 
-        if(isForWheat()){
+        if (isForWheat()) {
             loadData();
             System.out.println("ok es trigo");
         }
-        }
+    }
 
-    public void loadData(){     
-        
-        TableColumn columna=new TableColumn();
+    public void loadData() {
+
+        TableColumn columna = new TableColumn();
         columna.setHeaderValue("UNO");
         tblListData.addColumn(columna);
-        
+
     }
-    
+
     /**
      * Return current instance of TraitEditorTopComponent using current Traits
      * object
@@ -356,9 +402,91 @@ public final class ListDataWindowTopComponent extends TopComponent {
             int[] selectedRows = tblListData.getSelectedRows();
 
             for (int index = 0; index < selectedRows.length; index++) {
-                AppServicesProxy.getDefault().appServices().deleteListData(listdataEntries.get(selectedRows[index]) );
+                AppServicesProxy.getDefault().appServices().deleteListData(listdataEntries.get(selectedRows[index]));
             }
             updateListData();
         }
     }
+
+    private void exportToInventory() {
+
+        FileFilter[] filtros = new FileFilter[10];
+        filtros = fileChooser.getChoosableFileFilters();
+
+        for (int i = 0; i < filtros.length; i++) {
+            FileFilter filtro = filtros[i];
+            fileChooser.removeChoosableFileFilter(filtro);
+        }
+
+
+        File archivoNulo = new File("");
+        fileChooser.setSelectedFile(archivoNulo);
+
+
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new ExcelFiltro());
+        int resultado = fileChooser.showSaveDialog(null);
+
+        if (resultado == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+
+        exportToExcel(fileChooser.getSelectedFile());
+
+
+
     }
+
+    private void exportToExcel(File file) {
+        File archivo = new File(file.getAbsolutePath());
+
+        List<Factor> inventoryFactors = InventoryFactors.getGermplasmAndInventoryFactors();
+
+        List<List<Object>> germplasmListData = new ArrayList<List<Object>>();
+
+        GermplasmEntriesTableModel modeloFilter = new GermplasmEntriesTableModel(inventoryFactors, germplasmListData);
+
+        JTable inventoryTable = new JTable();
+        inventoryTable.setModel(modeloFilter);
+
+
+        List<InventoryData> inventoryListData = new ArrayList<InventoryData>();
+        for (Listdata listdata : this.listdataEntries) {
+            InventoryData id = new InventoryData();
+            id.setDesig(listdata.getDesig());
+            id.setEntry(listdata.getEntryid());
+            id.setGid(listdata.getGid());
+            id.setCross(listdata.getGrpname());
+            inventoryListData.add(id);
+        }
+
+        InventoryExcelExporter inventoryExcelExporter = new InventoryExcelExporter(inventoryTable, archivo.getAbsolutePath(), inventoryListData, this.parentListname);
+        try {
+            //exporter = new ExcelTableExporter(tables, archivo, nombreTabs);
+            inventoryExcelExporter.exportToExcel();
+            //if (exporter.export()) {
+            DialogUtil.display(NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.inventoryExported"));
+            //}
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("ERROR AL EXPORTAR TABLA");
+        }
+
+
+
+    }
+
+    private void importToInventory() {
+        WizardDescriptor wiz = new WizardDescriptor(new UpdateInventoryWizardIterator());
+        // {0} will be replaced by WizardDescriptor.Panel.getComponent().getName()
+        // {1} will be replaced by WizardDescriptor.Iterator.name()
+        wiz.setTitleFormat(new MessageFormat("{0} ({1})"));
+        wiz.setTitle(NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.UpdateSeedInventory"));
+        if (DialogDisplayer.getDefault().notify(wiz) == WizardDescriptor.FINISH_OPTION) {
+            
+        }
+
+    }
+}
