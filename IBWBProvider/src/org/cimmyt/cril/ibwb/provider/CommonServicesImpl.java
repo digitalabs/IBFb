@@ -12,6 +12,7 @@ import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
 import org.cimmyt.cril.ibwb.provider.dao.*;
+import org.cimmyt.cril.ibwb.provider.dto.DataNDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -382,7 +383,21 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public List<DataN> getDataNByEffectId(final Integer effectId) {
-        return dataNDAO.getDataNByEffectId(effectId);
+        DataNDto dataNDto = new DataNDto();
+        dataNDto.setEffectid(effectId);
+        dataNDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
+        List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getDataNByEffectId", "effectid", "central");
+        List dataNList = new ArrayList();
+        //return dataNDAO.getDataNByEffectId(effectId);
+        if(dataNDtoList != null){
+            for(int i = 0 ; i < dataNDtoList.size(); i++){
+                DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
+                DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
+                dataN.setDvalue(dataNDto1.getValue());
+                dataNList.add(dataN);
+            }
+        }
+        return dataNList;
     }
 
 //-----------------------------------DataT---------------------------
@@ -1384,7 +1399,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Obsunit> getObsunitList() {
-        return obsunitDAO.findAll();
+
+        return this.utilityDAO.callStoredProcedureForList(new Obsunit(), "getObsunitList");
+        //return obsunitDAO.findAll();
     }
 
     @Override
