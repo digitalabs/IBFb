@@ -12,6 +12,7 @@ import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
 import org.cimmyt.cril.ibwb.provider.dao.*;
+import org.cimmyt.cril.ibwb.provider.dto.DataCDto;
 import org.cimmyt.cril.ibwb.provider.dto.DataNDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -307,7 +308,23 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<DataC> getDataCList() {
-        return dataCDAO.findAll();
+        //return dataCDAO.findAll();
+
+        DataCDto dataCDto = new DataCDto();
+
+                List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getDataCList");
+                List dataCList = new ArrayList();
+                //return dataNDAO.getDataNByEffectId(effectId);
+                if(dataCDtoList != null){
+                    for(int i = 0 ; i < dataCDtoList.size(); i++){
+                        DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
+                        DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
+                        dataC.setDvalue(dataCDto1.getValue());
+                        dataCList.add(dataC);
+                    }
+                }
+               return dataCList;
+
     }
 
     @Override
@@ -328,7 +345,22 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public List<DataC> getDataCByEffectId(final Integer effectId) {
-        return dataCDAO.getDataNByEffectId(effectId);
+        DataCDto dataCDto = new DataCDto();
+        dataCDto.setEffectid(effectId);
+        dataCDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
+                List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getDataCByEffectId", "effectid", "central");
+                List dataCList = new ArrayList();
+                //return dataNDAO.getDataNByEffectId(effectId);
+                if(dataCDtoList != null){
+                    for(int i = 0 ; i < dataCDtoList.size(); i++){
+                        DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
+                        DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
+                        dataC.setDvalue(dataCDto1.getValue());
+                        dataCList.add(dataC);
+                    }
+                }
+               return dataCList;
+        //return dataCDAO.getDataNByEffectId(effectId);
     }
 //-----------------------------------DataN---------------------------
 
