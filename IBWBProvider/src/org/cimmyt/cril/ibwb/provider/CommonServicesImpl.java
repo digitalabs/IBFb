@@ -362,7 +362,21 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<DataN> getDataNList() {
-        return dataNDAO.findAll();
+        //return dataNDAO.findAll();
+        DataNDto dataNDto = new DataNDto();
+
+       List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getDataNList");
+       List dataNList = new ArrayList();
+       //return dataNDAO.getDataNByEffectId(effectId);
+       if(dataNDtoList != null){
+           for(int i = 0 ; i < dataNDtoList.size(); i++){
+               DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
+               DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
+               dataN.setDvalue(dataNDto1.getValue());
+               dataNList.add(dataN);
+           }
+       }
+       return dataNList;
     }
 
     @Override
@@ -2414,6 +2428,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Variate getVariate(Variate variate) {
+        //not being use based on tracing - daniel jao
         return this.variateDAO.findById(variate.getVariatid());
     }
 
