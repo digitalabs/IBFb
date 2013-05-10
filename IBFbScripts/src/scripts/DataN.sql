@@ -15,7 +15,7 @@ IF iscentral = 1 then
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id 
 	inner join projectprop pp on pp.value = p.observable_id and pp.project_id = nexp.project_id 
 	INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank 
-	WHERE pp.type_id = 1070 and label.type_id = 1043 and nexp.project_id = effectid 
+	WHERE pp.type_id = 1070 and label.type_id in(1043, 1048) and nexp.project_id = effectid 
 	and exists 
 	( 
 	select 1 
@@ -34,7 +34,7 @@ else
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id 
 	inner join projectprop pp on pp.value = p.observable_id and pp.project_id = nexp.project_id 
 	INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank 
-	WHERE pp.type_id = 1070 and label.type_id = 1043 and nexp.project_id = effectid 
+	WHERE pp.type_id = 1070 and label.type_id in(1043, 1048) and nexp.project_id = effectid 
 	and exists 
 	( 
 	select 1 
@@ -62,7 +62,7 @@ begin
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id 
 	inner join projectprop pp on pp.value = p.observable_id and pp.project_id = nexp.project_id 
 	INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank 
-	WHERE pp.type_id = 1070 and label.type_id = 1043
+	WHERE pp.type_id = 1070 and label.type_id in(1043, 1048)
 	and exists 
 	( 
 	select 1 
