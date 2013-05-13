@@ -2,6 +2,8 @@ package org.cimmyt.cril.ibwb.provider.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
@@ -70,11 +72,17 @@ public class UtilityDAO extends HibernateDaoSupport {
         return result;
     }
     
-    public List callStoredProcedureForList(
-            final Object bean, 
+    public List callStoredProcedureForListNew(
+            final Class beanClass,
             final String procedureName, 
-            final String... params) {
-        
+            final HashMap parameters) {
+
+        String params[] = new String[parameters.keySet().size()];
+        Iterator iter = parameters.keySet().iterator();
+        int i = 0 ;
+        while(iter.hasNext()){
+            params[i++] = (String)iter.next();
+        }
         final String sql = buildSQLQuery(procedureName, params);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
@@ -82,20 +90,15 @@ public class UtilityDAO extends HibernateDaoSupport {
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
                 Query query = session.
-                        createSQLQuery(sql).addEntity(bean.getClass());
-                if(params!=null && params.length>0) {
-	                for (String paramName : params) {
-	                    try {
-	                        Object obj = PropertyUtils.getProperty(bean,paramName);
-	                        query.setParameter(paramName, obj);
-	                    } catch (IllegalAccessException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (InvocationTargetException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (NoSuchMethodException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    }
-	                }
+                        createSQLQuery(sql).addEntity(beanClass);
+                    if(parameters != null){
+                        Iterator iterParam = parameters.keySet().iterator();
+                        while(iterParam.hasNext()){
+                            String paramName = (String)iterParam.next();
+                            Object obj = parameters.get(paramName);
+                            query.setParameter(paramName, obj);
+                        }
+
                 }
                 return query.list();
             }

@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import org.cimmyt.cril.ibwb.api.*;
 import org.cimmyt.cril.ibwb.domain.*;
 
+import java.util.HashMap;
 import java.util.List;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
 import org.cimmyt.cril.ibwb.provider.dao.*;
-import org.cimmyt.cril.ibwb.provider.dto.DataCDto;
-import org.cimmyt.cril.ibwb.provider.dto.DataNDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -309,22 +308,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataC> getDataCList() {
         //return dataCDAO.findAll();
-
-        DataCDto dataCDto = new DataCDto();
-
-                List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getDataCList");
-                List dataCList = new ArrayList();
-                //return dataNDAO.getDataNByEffectId(effectId);
-                if(dataCDtoList != null){
-                    for(int i = 0 ; i < dataCDtoList.size(); i++){
-                        DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
-                        DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
-                        dataC.setDvalue(dataCDto1.getValue());
-                        dataCList.add(dataC);
-                    }
-                }
-               return dataCList;
-
+         return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getDataCList", new HashMap());
     }
 
     @Override
@@ -335,21 +319,12 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataC> getListDataC(DataC filter, int start, int pageSize, boolean paged) {
         //return dataCDAO.getList(filter, start, pageSize, paged);
-        DataCDto dataCDto = new DataCDto();
-       dataCDto.setVariatid(filter.getDataCPK().getVariatid());
-       dataCDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
-               List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getListDataC", "variatid", "central");
-               List dataCList = new ArrayList();
-               //return dataNDAO.getDataNByEffectId(effectId);
-               if(dataCDtoList != null){
-                   for(int i = 0 ; i < dataCDtoList.size(); i++){
-                       DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
-                       DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
-                       dataC.setDvalue(dataCDto1.getValue());
-                       dataCList.add(dataC);
-                   }
-               }
-              return dataCList;
+
+        HashMap params = new HashMap();
+        params.put("variatid", filter.getDataCPK().getVariatid());
+        params.put("central", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getListDataC", params);
+
     }
 
     /**
@@ -360,21 +335,12 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public List<DataC> getDataCByEffectId(final Integer effectId) {
-        DataCDto dataCDto = new DataCDto();
-        dataCDto.setEffectid(effectId);
-        dataCDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
-                List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getDataCByEffectId", "effectid", "central");
-                List dataCList = new ArrayList();
-                //return dataNDAO.getDataNByEffectId(effectId);
-                if(dataCDtoList != null){
-                    for(int i = 0 ; i < dataCDtoList.size(); i++){
-                        DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
-                        DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
-                        dataC.setDvalue(dataCDto1.getValue());
-                        dataCList.add(dataC);
-                    }
-                }
-               return dataCList;
+
+        HashMap params = new HashMap();
+       params.put("effectid", effectId);
+       params.put("central", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getDataCByEffectId", params);
+
         //return dataCDAO.getDataNByEffectId(effectId);
     }
 //-----------------------------------DataN---------------------------
@@ -410,20 +376,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataN> getDataNList() {
         //return dataNDAO.findAll();
-        DataNDto dataNDto = new DataNDto();
-
-       List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getDataNList");
-       List dataNList = new ArrayList();
-       //return dataNDAO.getDataNByEffectId(effectId);
-       if(dataNDtoList != null){
-           for(int i = 0 ; i < dataNDtoList.size(); i++){
-               DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
-               DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
-               dataN.setDvalue(dataNDto1.getValue());
-               dataNList.add(dataN);
-           }
-       }
-       return dataNList;
+       return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getDataNList", new HashMap());
     }
 
     @Override
@@ -435,20 +388,13 @@ public class CommonServicesImpl implements CommonServices {
     public List<DataN> getListDataN(DataN filter, int start, int pageSize, boolean paged) {
         //return dataNDAO.getList(filter, start, pageSize, paged);
         //does not do pagination
-        DataNDto dataNDto = new DataNDto();
-        dataNDto.setVariatid(filter.getDataNPK().getVariatid());
-        dataNDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
-        List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getListDataN", "variatid", "central");
-        List dataNList = new ArrayList();
-        if(dataNDtoList != null){
-            for(int i = 0 ; i < dataNDtoList.size(); i++){
-                DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
-                DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
-                dataN.setDvalue(dataNDto1.getValue());
-                dataNList.add(dataN);
-            }
-        }
-        return dataNList;
+
+        HashMap params = new HashMap();
+               params.put("variatid", filter.getDataNPK().getVariatid());
+               params.put("central", isCentral() ? new Integer(1) : new Integer(0));
+
+        return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getListDataN",params);
+
     }
 
     /**
@@ -459,21 +405,12 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public List<DataN> getDataNByEffectId(final Integer effectId) {
-        DataNDto dataNDto = new DataNDto();
-        dataNDto.setEffectid(effectId);
-        dataNDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
-        List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getDataNByEffectId", "effectid", "central");
-        List dataNList = new ArrayList();
-        //return dataNDAO.getDataNByEffectId(effectId);
-        if(dataNDtoList != null){
-            for(int i = 0 ; i < dataNDtoList.size(); i++){
-                DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
-                DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
-                dataN.setDvalue(dataNDto1.getValue());
-                dataNList.add(dataN);
-            }
-        }
-        return dataNList;
+
+        HashMap params = new HashMap();
+       params.put("effectid", effectId);
+       params.put("central", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getDataNByEffectId", params);
+
     }
 
 //-----------------------------------DataT---------------------------
@@ -1476,7 +1413,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Obsunit> getObsunitList() {
 
-        return this.utilityDAO.callStoredProcedureForList(new Obsunit(), "getObsunitList");
+        return this.utilityDAO.callStoredProcedureForListNew(Obsunit.class, "getObsunitList", new HashMap());
         //return obsunitDAO.findAll();
     }
 
