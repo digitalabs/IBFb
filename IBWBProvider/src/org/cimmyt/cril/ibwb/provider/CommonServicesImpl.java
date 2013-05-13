@@ -1951,9 +1951,9 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addStudy(Study study) {
         study = this.studyDAO.create(study);
-        this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
-                "studyid","sname","title","objectiv",
-                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
+        /*this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+                "studyid","sname","pmkey","title","objectiv",
+                "investid","stype","sdate","edate","userid","sstatus","shierarchy");*/
     }
 
     @Override
@@ -1967,16 +1967,24 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Study getStudy(Study study) {
-        return this.studyDAO.findById(study.getStudyid());
+        //return this.studyDAO.findById(study.getStudyid());
+    	return getStudy(study.getStudyid());
     }
 
     public Study getStudy(Integer idStudy) {
-        return this.studyDAO.findById(idStudy);
+    	Study study = new Study();
+    	study.setStudyid(idStudy);
+        //this.studyDAO.findById(idStudy);
+    	return utilityDAO.callStoredProcedureForObject(study, "getStudyById", "studyid");
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Study> getStudyList() {
-        return studyDAO.findAll();
+    	//return studyDAO.findAll();
+    	Study study = new Study();
+    	return utilityDAO.callStoredProcedureForList(study, "getStudyList");
+        
     }
 
     @Override
@@ -1984,9 +1992,18 @@ public class CommonServicesImpl implements CommonServices {
         return this.studyDAO.getTotal(study);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
-        return studyDAO.getList(filter, start, pageSize, paged);
+        //return studyDAO.getList(filter, start, pageSize, paged);
+    	//filter = new Study(true);
+    	//filter.setStudyid(10010);
+    	filter.setSstatus(Study.SSTATUS_DELETED);
+    	return utilityDAO.callStoredProcedureForListPaged(filter, paged,
+    				start, pageSize, "getStudy",
+    				"studyid","sname","pmkey","title","objectiv",
+                    "investid","stype","sdate","edate","userid","sstatus","shierarchy");
+    	
     }
 
     public ResultSet getTrialRandomization(

@@ -2,14 +2,21 @@ package org.cimmyt.cril.ibwb.provider.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -39,8 +46,9 @@ public class UtilityDAO extends HibernateDaoSupport {
         this.accessType = accessType;
     }
     
-    public Object callStoredProcedureForObject(
-            final Object bean, 
+    @SuppressWarnings("rawtypes")
+	public <T> T callStoredProcedureForObject(
+    		final T bean, 
             final String procedureName, 
             final String... params) {
         
@@ -51,7 +59,8 @@ public class UtilityDAO extends HibernateDaoSupport {
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
                 Query query = session.
-                        createSQLQuery(sql).addEntity(bean.getClass());
+                        createSQLQuery(sql);
+                query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
                 if(params!=null && params.length>0) {
 	                for (String paramName : params) {
 	                    try {
@@ -69,10 +78,13 @@ public class UtilityDAO extends HibernateDaoSupport {
                 return query.uniqueResult();
             }
         });
-        return result;
+        
+
+        return (T)result;
     }
     
-    public List callStoredProcedureForList(
+    @SuppressWarnings("rawtypes")
+	public List callStoredProcedureForList(
             final Class beanClass,
             final String procedureName, 
             final HashMap parameters) {
@@ -90,7 +102,8 @@ public class UtilityDAO extends HibernateDaoSupport {
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
                 Query query = session.
-                        createSQLQuery(sql).addEntity(beanClass);
+                        createSQLQuery(sql);
+                query.setResultTransformer(Transformers.aliasToBean(beanClass));
                     if(parameters != null){
                         Iterator iterParam = parameters.keySet().iterator();
                         while(iterParam.hasNext()){
@@ -106,9 +119,18 @@ public class UtilityDAO extends HibernateDaoSupport {
         return result;
     }
     
-    public List callStoredProcedureForListPaged(
+    @SuppressWarnings("rawtypes")
+	public <T> List callStoredProcedureForList(
+			final T bean,
+    		final String procedureName, 
+            final String... params) {
+    	return callStoredProcedureForListPaged(bean,false,0,0,procedureName,params); 
+    }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public <T> List<T> callStoredProcedureForListPaged(
+			final T bean,
     		final boolean paged,
-    		final Object bean,
     		final int start,
     		final int pageSize,            
             final String procedureName, 
@@ -121,7 +143,8 @@ public class UtilityDAO extends HibernateDaoSupport {
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
                 Query query = session.
-                        createSQLQuery(sql).addEntity(bean.getClass());
+                        createSQLQuery(sql);
+                query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
                 if(params!=null && params.length>0) {
 	                for (String paramName : params) {
 	                    try {
