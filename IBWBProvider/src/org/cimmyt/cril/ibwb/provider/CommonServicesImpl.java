@@ -308,7 +308,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataC> getDataCList() {
         //return dataCDAO.findAll();
-         return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getDataCList", new HashMap());
+         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList", new HashMap());
     }
 
     @Override
@@ -322,8 +322,8 @@ public class CommonServicesImpl implements CommonServices {
 
         HashMap params = new HashMap();
         params.put("variatid", filter.getDataCPK().getVariatid());
-        params.put("central", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getListDataC", params);
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getListDataC", params);
 
     }
 
@@ -338,8 +338,8 @@ public class CommonServicesImpl implements CommonServices {
 
         HashMap params = new HashMap();
        params.put("effectid", effectId);
-       params.put("central", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForListNew(DataC.class, "getDataCByEffectId", params);
+       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCByEffectId", params);
 
         //return dataCDAO.getDataNByEffectId(effectId);
     }
@@ -376,7 +376,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataN> getDataNList() {
         //return dataNDAO.findAll();
-       return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getDataNList", new HashMap());
+       return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap());
     }
 
     @Override
@@ -390,10 +390,10 @@ public class CommonServicesImpl implements CommonServices {
         //does not do pagination
 
         HashMap params = new HashMap();
-               params.put("variatid", filter.getDataNPK().getVariatid());
-               params.put("central", isCentral() ? new Integer(1) : new Integer(0));
+       params.put("variatid", filter.getDataNPK().getVariatid());
+       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
 
-        return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getListDataN",params);
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN",params);
 
     }
 
@@ -408,8 +408,8 @@ public class CommonServicesImpl implements CommonServices {
 
         HashMap params = new HashMap();
        params.put("effectid", effectId);
-       params.put("central", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForListNew(DataN.class, "getDataNByEffectId", params);
+       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNByEffectId", params);
 
     }
 
@@ -1413,7 +1413,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Obsunit> getObsunitList() {
 
-        return this.utilityDAO.callStoredProcedureForListNew(Obsunit.class, "getObsunitList", new HashMap());
+        return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitList", new HashMap());
         //return obsunitDAO.findAll();
     }
 
@@ -1665,12 +1665,27 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Scale> getListScale(Scale filter, int start, int pageSize, boolean paged) {
-        return scaleDAO.getList(filter, start, pageSize, paged);
+        //return scaleDAO.getList(filter, start, pageSize, paged);
+        HashMap params = new HashMap();
+        params.put("traitid", filter.getTraitid());
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScale", params);
     }
 
     @Override
     public List<Scale> getListScaleGroups() {
-        return scaleDAO.getScaleGroups();
+        //return scaleDAO.getScaleGroups();
+        List<Scale> resultLst = new ArrayList<Scale>();
+        List<Scale> resultLstTemp = this.getListScaleAll();
+        HashMap<String,Scale> diffScales = new HashMap<String, Scale>();
+        for (Scale scale:resultLstTemp) {
+            diffScales.put(scale.getScname()+scale.getSctype(), scale);
+        }
+
+        for (Scale scale: diffScales.values()) {
+            resultLst.add(scale);
+        }
+        return  resultLst;
     }
 
     public void migrateScaleToTmsscalesDirect() {
@@ -1678,7 +1693,10 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<Scale> getListScaleAll() {
-        return scaleDAO.getScaleAll();
+        //return scaleDAO.getScaleAll();
+        HashMap params = new HashMap();
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScaleAll", params);
     }
 
     //-----------------------------------Scales---------------------------

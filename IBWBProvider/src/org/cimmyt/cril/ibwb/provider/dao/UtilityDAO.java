@@ -72,7 +72,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         return result;
     }
     
-    public List callStoredProcedureForListNew(
+    public List callStoredProcedureForList(
             final Class beanClass,
             final String procedureName, 
             final HashMap parameters) {
