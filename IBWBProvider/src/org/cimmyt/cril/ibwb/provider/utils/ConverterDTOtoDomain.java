@@ -18,7 +18,7 @@ public class ConverterDTOtoDomain {
         study.setStudyid(studyDto.getStudyid());
         study.setStudy(studyDto.getSname());
         study.setTitle(studyDto.getTitle());
-        study.setPmkey(studyDto.getPmkey().toString());
+        study.setPmkey(studyDto.getPmkey()!=null?studyDto.getPmkey().toString():null);
         study.setObjective(studyDto.getObjectiv());
         study.setInvestid(studyDto.getInvestid());
         //study.setStarDate(ConverterDate.getDate(studyDto.getSdate()));

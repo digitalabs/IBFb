@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -65,8 +66,12 @@ public class UtilityDAO extends HibernateDaoSupport {
                 if(params!=null && params.length>0) {
 	                for (String paramName : params) {
 	                    try {
-	                    	query.addScalar(paramName);
-	                        Object obj = PropertyUtils.getProperty(bean,paramName);
+	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
+	                    	if(obj instanceof Integer) {
+	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else {
+	                    		query.addScalar(paramName);
+	                    	}
 	                        query.setParameter(paramName, obj);
 	                    } catch (IllegalAccessException e) {
 	                        log.error("error in setting update parameters " + e.getMessage());
@@ -110,8 +115,12 @@ public class UtilityDAO extends HibernateDaoSupport {
                         Iterator iterParam = parameters.keySet().iterator();
                         while(iterParam.hasNext()){
                             String paramName = (String)iterParam.next();
-                            query.addScalar(paramName);
                             Object obj = parameters.get(paramName);
+                            if(obj instanceof Integer) {
+	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else {
+	                    		query.addScalar(paramName);
+	                    	}
                             query.setParameter(paramName, obj);
                         }
 
@@ -140,7 +149,6 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String... params) {
         
         final String sql = buildSQLQuery(procedureName, params);
-        System.out.println("sql is "+sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
             @Override
             public Object doInHibernate(Session session)
@@ -151,8 +159,16 @@ public class UtilityDAO extends HibernateDaoSupport {
                 if(params!=null && params.length>0) {
 	                for (String paramName : params) {
 	                    try {
-	                    	query.addScalar(paramName);
 	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
+	                    	Class type = PropertyUtils.getPropertyType(bean,paramName);
+	                    	if(type.getSimpleName().equals("Integer")) {
+	                    		System.out.println("integer param: "+paramName);
+	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else {
+	                    		query.addScalar(paramName);
+	                    		System.out.println("non-integer param: "+paramName);
+	                    	}
+	                    	System.out.println("value: "+obj);
 	                        query.setParameter(paramName, obj);
 	                    } catch (IllegalAccessException e) {
 	                        log.error("error in setting update parameters " + e.getMessage());

@@ -1996,9 +1996,9 @@ public class CommonServicesImpl implements CommonServices {
 	@Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
-    	//filter = new Study(true);
-    	//filter.setStudyid(10010);
-    	filter.setSstatus(Study.SSTATUS_DELETED);
+    	filter = new Study(true);
+    	filter.setStudyid(10010);
+    	//filter.setSstatus(Study.SSTATUS_DELETED);
     	return utilityDAO.callStoredProcedureForListPaged(filter, paged,
     				start, pageSize, "getStudy",
     				"studyid","sname","pmkey","title","objectiv",
