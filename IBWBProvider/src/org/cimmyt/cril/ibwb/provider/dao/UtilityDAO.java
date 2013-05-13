@@ -104,6 +104,7 @@ public class UtilityDAO extends HibernateDaoSupport {
     }
     
     public List callStoredProcedureForListPaged(
+    		final boolean paged,
     		final Object bean,
     		final int start,
     		final int pageSize,            
@@ -132,8 +133,10 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                    }
 	                }
                 }
-                query.setFirstResult(start);
-                query.setMaxResults(pageSize);
+                if(paged) {
+                	query.setFirstResult(start);
+                	query.setMaxResults(pageSize);
+                }
                 return query.list();
             }
         });
