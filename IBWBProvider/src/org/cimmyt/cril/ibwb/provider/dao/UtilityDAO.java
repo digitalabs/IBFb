@@ -131,8 +131,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         return result;
     }
     
-    @SuppressWarnings("rawtypes")
-	public <T> List callStoredProcedureForList(
+    public <T> List<T> callStoredProcedureForList(
 			final T bean,
     		final String procedureName, 
             final String... params) {
