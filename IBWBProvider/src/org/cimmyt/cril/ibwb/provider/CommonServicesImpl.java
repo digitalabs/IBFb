@@ -334,7 +334,22 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<DataC> getListDataC(DataC filter, int start, int pageSize, boolean paged) {
-        return dataCDAO.getList(filter, start, pageSize, paged);
+        //return dataCDAO.getList(filter, start, pageSize, paged);
+        DataCDto dataCDto = new DataCDto();
+       dataCDto.setVariatid(filter.getDataCPK().getVariatid());
+       dataCDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
+               List dataCDtoList = this.utilityDAO.callStoredProcedureForList(dataCDto, "getListDataC", "variatid", "central");
+               List dataCList = new ArrayList();
+               //return dataNDAO.getDataNByEffectId(effectId);
+               if(dataCDtoList != null){
+                   for(int i = 0 ; i < dataCDtoList.size(); i++){
+                       DataCDto dataCDto1 = (DataCDto) dataCDtoList.get(i);
+                       DataC dataC = new DataC(dataCDto1.getOunitid(), dataCDto1.getVariatid());
+                       dataC.setDvalue(dataCDto1.getValue());
+                       dataCList.add(dataC);
+                   }
+               }
+              return dataCList;
     }
 
     /**
@@ -418,7 +433,22 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<DataN> getListDataN(DataN filter, int start, int pageSize, boolean paged) {
-        return dataNDAO.getList(filter, start, pageSize, paged);
+        //return dataNDAO.getList(filter, start, pageSize, paged);
+        //does not do pagination
+        DataNDto dataNDto = new DataNDto();
+        dataNDto.setVariatid(filter.getDataNPK().getVariatid());
+        dataNDto.setCentral(isCentral() ? new Integer(1) : new Integer(0));
+        List dataNDtoList = this.utilityDAO.callStoredProcedureForList(dataNDto, "getListDataN", "variatid", "central");
+        List dataNList = new ArrayList();
+        if(dataNDtoList != null){
+            for(int i = 0 ; i < dataNDtoList.size(); i++){
+                DataNDto dataNDto1 = (DataNDto) dataNDtoList.get(i);
+                DataN dataN = new DataN(dataNDto1.getOunitid(), dataNDto1.getVariatid());
+                dataN.setDvalue(dataNDto1.getValue());
+                dataNList.add(dataN);
+            }
+        }
+        return dataNList;
     }
 
     /**
