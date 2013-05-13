@@ -50,17 +50,19 @@ public class UtilityDAO extends HibernateDaoSupport {
                     throws HibernateException, SQLException {
                 Query query = session.
                         createSQLQuery(sql).addEntity(bean.getClass());
-                for (String paramName : params) {
-                    try {
-                        Object obj = PropertyUtils.getProperty(bean,paramName);
-                        query.setParameter(paramName, obj);
-                    } catch (IllegalAccessException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (InvocationTargetException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (NoSuchMethodException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    }
+                if(params!=null && params.length>0) {
+	                for (String paramName : params) {
+	                    try {
+	                        Object obj = PropertyUtils.getProperty(bean,paramName);
+	                        query.setParameter(paramName, obj);
+	                    } catch (IllegalAccessException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (InvocationTargetException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (NoSuchMethodException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    }
+	                }
                 }
                 return query.uniqueResult();
             }
@@ -81,18 +83,57 @@ public class UtilityDAO extends HibernateDaoSupport {
                     throws HibernateException, SQLException {
                 Query query = session.
                         createSQLQuery(sql).addEntity(bean.getClass());
-                for (String paramName : params) {
-                    try {
-                        Object obj = PropertyUtils.getProperty(bean,paramName);
-                        query.setParameter(paramName, obj);
-                    } catch (IllegalAccessException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (InvocationTargetException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (NoSuchMethodException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    }
+                if(params!=null && params.length>0) {
+	                for (String paramName : params) {
+	                    try {
+	                        Object obj = PropertyUtils.getProperty(bean,paramName);
+	                        query.setParameter(paramName, obj);
+	                    } catch (IllegalAccessException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (InvocationTargetException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (NoSuchMethodException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    }
+	                }
                 }
+                return query.list();
+            }
+        });
+        return result;
+    }
+    
+    public List callStoredProcedureForListPaged(
+    		final Object bean,
+    		final int start,
+    		final int pageSize,            
+            final String procedureName, 
+            final String... params) {
+        
+        final String sql = buildSQLQuery(procedureName, params);
+        List result = getHibernateTemplate().executeFind(new HibernateCallback() {
+
+            @Override
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.
+                        createSQLQuery(sql).addEntity(bean.getClass());
+                if(params!=null && params.length>0) {
+	                for (String paramName : params) {
+	                    try {
+	                        Object obj = PropertyUtils.getProperty(bean,paramName);
+	                        query.setParameter(paramName, obj);
+	                    } catch (IllegalAccessException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (InvocationTargetException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (NoSuchMethodException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    }
+	                }
+                }
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
                 return query.list();
             }
         });
@@ -111,17 +152,19 @@ public class UtilityDAO extends HibernateDaoSupport {
                     throws HibernateException, SQLException {
                 Query query = session.
                         createSQLQuery(sql);
-                for (String paramName : params) {
-                    try {
-                        Object obj = PropertyUtils.getProperty(bean,paramName);
-                        query.setParameter(paramName, obj);
-                    } catch (IllegalAccessException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (InvocationTargetException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    } catch (NoSuchMethodException e) {
-                        log.error("error in setting update parameters " + e.getMessage());
-                    }
+                if(params!=null && params.length>0) {
+	                for (String paramName : params) {
+	                    try {
+	                        Object obj = PropertyUtils.getProperty(bean,paramName);
+	                        query.setParameter(paramName, obj);
+	                    } catch (IllegalAccessException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (InvocationTargetException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    } catch (NoSuchMethodException e) {
+	                        log.error("error in setting update parameters " + e.getMessage());
+	                    }
+	                }
                 }
                 return query.executeUpdate();
             }
@@ -134,15 +177,17 @@ public class UtilityDAO extends HibernateDaoSupport {
         sql.append("CALL ");
         sql.append(procedureName);
         sql.append("(");
-        boolean start = true;
-        for (String paramName : params) {
-            if(!start) {
-                    sql.append(", ");
-            } else {
-                    start = false;
-            }
-            sql.append(":");
-            sql.append(paramName);
+        if(params!=null && params.length>0) {
+	        boolean start = true;
+	        for (String paramName : params) {
+	            if(!start) {
+	                    sql.append(", ");
+	            } else {
+	                    start = false;
+	            }
+	            sql.append(":");
+	            sql.append(paramName);
+	        }
         }
         sql.append(")");
        return sql.toString();
