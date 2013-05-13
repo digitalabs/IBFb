@@ -2463,11 +2463,15 @@ public class CommonServicesImpl implements CommonServices {
 
     public Variate getVariate(Variate variate) {
         //not being use based on tracing - daniel jao
-        return this.variateDAO.findById(variate.getVariatid());
+        //return this.variateDAO.findById(variate.getVariatid());
+        return getVariate(variate.getVariatid());
     }
 
     public Variate getVariate(Integer idVariate) {
-        return this.variateDAO.findById(idVariate);
+    	//return this.variateDAO.findById(idVariate);
+    	Variate variate = new Variate();
+    	variate.setVariatid(idVariate);
+    	return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", "variatid");
     }
 
     @Override
