@@ -91,5 +91,34 @@ public class DataN extends BaseFilter implements Serializable {
     public String toString() {
         return "org.cimmyt.cril.ibworkbench.services.beans.DataN[dataNPK=" + dataNPK + "]";
     }
+    
+    public Integer getOunitid() {
+    	if(dataNPK!=null) {
+    		return dataNPK.getOunitid();
+    	}
+    	return null;
+    }
+
+    public void setOunitid(Integer ounitid) {
+        if(dataNPK==null) {
+    		dataNPK = new DataNPK();
+    	}
+    	dataNPK.setOunitid(ounitid);
+    }
+
+    public Integer getVariatid() {
+        if(dataNPK!=null) {
+    		return dataNPK.getVariatid();
+    	}
+    	return null;
+    }
+
+    public void setVariatid(Integer variatid) {
+    	if(dataNPK==null) {
+    		dataNPK = new DataNPK();
+    	}
+    	dataNPK.setVariatid(variatid);
+    }
+    
 
 }

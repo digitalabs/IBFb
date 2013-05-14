@@ -47,9 +47,10 @@ public class UtilityDAO extends HibernateDaoSupport {
 	public <T> T callStoredProcedureForObject(
     		final T bean, 
             final String procedureName, 
-            final String... params) {
+            final String[] inParams,
+    		final String[] outParams) {
         
-        final String sql = buildSQLQuery(procedureName, params);
+        final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = "+sql);
         Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
@@ -59,11 +60,17 @@ public class UtilityDAO extends HibernateDaoSupport {
                 SQLQuery query = session.
                         createSQLQuery(sql);
                 query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
-                if(params!=null && params.length>0) {
-	                for (String paramName : params) {
-	                    try {
-	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
-	                    	Class type = PropertyUtils.getPropertyType(bean,paramName);
+                try {
+	                if(inParams!=null && inParams.length>0) {
+		                for (String paramName : inParams) {
+		                    Object obj = PropertyUtils.getProperty(bean,paramName);
+	                    	System.out.println(paramName + " = "+obj);
+	                        query.setParameter(paramName, obj);
+		                }
+	                }
+	                if(outParams!=null && outParams.length>0) {
+	                	for (String paramName : outParams) {
+		                	Class type = PropertyUtils.getPropertyType(bean,paramName);
 	                    	if(type.getSimpleName().equals("Integer")) {
 	                    		query.addScalar(paramName,Hibernate.INTEGER);
 	                    	} else if(type.getSimpleName().equals("Double")) {
@@ -71,16 +78,14 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                    	} else {
 	                    		query.addScalar(paramName);
 	                    	}
-	                    	System.out.println(paramName + " = "+obj);
-	                        query.setParameter(paramName, obj);
-	                    } catch (IllegalAccessException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (InvocationTargetException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (NoSuchMethodException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    }
+	                	}                    	
 	                }
+                } catch (IllegalAccessException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (InvocationTargetException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (NoSuchMethodException e) {
+                    log.error("error in setting parameters " + e.getMessage());
                 }
                 return query.uniqueResult();
             }
@@ -94,7 +99,8 @@ public class UtilityDAO extends HibernateDaoSupport {
 	public List callStoredProcedureForList(
             final Class beanClass,
             final String procedureName, 
-            final HashMap parameters) {
+            final HashMap parameters,
+            final String[] outParams) {
 
         String params[] = new String[parameters.keySet().size()];
         Iterator iter = parameters.keySet().iterator();
@@ -112,31 +118,35 @@ public class UtilityDAO extends HibernateDaoSupport {
                 SQLQuery query = session.
                         createSQLQuery(sql);
                 query.setResultTransformer(Transformers.aliasToBean(beanClass));
-                    if(parameters != null){
-                        Iterator iterParam = parameters.keySet().iterator();
-                        while(iterParam.hasNext()){
-                            String paramName = (String)iterParam.next();
-                            Object obj = parameters.get(paramName);
-							try {
-								Class type = PropertyUtils.getPropertyType(beanClass, paramName);
-								if(type.getSimpleName().equals("Integer")) {
-		                    		query.addScalar(paramName,Hibernate.INTEGER);
-		                    	} else if (type.getSimpleName().equals("Double")) {
-		                    		query.addScalar(paramName,Hibernate.DOUBLE);
-	                            }else {
-		                    		query.addScalar(paramName);
-		                    	}
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							} catch (InvocationTargetException e) {
-								e.printStackTrace();
-							} catch (NoSuchMethodException e) {
-								e.printStackTrace();
-							}
-							System.out.println(paramName + " = "+obj);
-                            query.setParameter(paramName, obj);
-                        }
+                if(parameters != null){
+                    Iterator iterParam = parameters.keySet().iterator();
+                    while(iterParam.hasNext()){
+                        String paramName = (String)iterParam.next();
+                        Object obj = parameters.get(paramName);
+						System.out.println(paramName + " = "+obj);
+                        query.setParameter(paramName, obj);
+                    }
                 }
+                try {
+                	if(outParams!=null && outParams.length>0) {
+	                	for (String paramName : outParams) {
+		                	Class type = PropertyUtils.getPropertyType(beanClass,paramName);
+	                    	if(type.getSimpleName().equals("Integer")) {
+	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else if(type.getSimpleName().equals("Double")) {
+	                    		query.addScalar(paramName,Hibernate.DOUBLE);
+	                    	} else {
+	                    		query.addScalar(paramName);
+	                    	}
+	                	}                    	
+	                }
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
                 return query.list();
             }
         });
@@ -146,8 +156,9 @@ public class UtilityDAO extends HibernateDaoSupport {
     public <T> List<T> callStoredProcedureForList(
 			final T bean,
     		final String procedureName, 
-            final String... params) {
-    	return callStoredProcedureForListPaged(bean,false,0,0,procedureName,params); 
+    		final String[] inParams,
+    		final String[] outParams) {
+    	return callStoredProcedureForListPaged(bean,false,0,0,procedureName,inParams,outParams); 
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -157,9 +168,10 @@ public class UtilityDAO extends HibernateDaoSupport {
     		final int start,
     		final int pageSize,            
             final String procedureName, 
-            final String... params) {
+            final String[] inParams,
+    		final String[] outParams) {
         
-        final String sql = buildSQLQuery(procedureName, params);
+        final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = "+sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
             @Override
@@ -168,11 +180,17 @@ public class UtilityDAO extends HibernateDaoSupport {
                 SQLQuery query = session.
                         createSQLQuery(sql);
                 query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
-                if(params!=null && params.length>0) {
-	                for (String paramName : params) {
-	                    try {
-	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
-	                    	Class type = PropertyUtils.getPropertyType(bean,paramName);
+                try {
+	                if(inParams!=null && inParams.length>0) {
+		                for (String paramName : inParams) {
+		                    Object obj = PropertyUtils.getProperty(bean,paramName);
+	                    	System.out.println(paramName + " = "+obj);
+	                        query.setParameter(paramName, obj);
+		                }
+	                }
+	                if(outParams!=null && outParams.length>0) {
+	                	for (String paramName : outParams) {
+		                	Class type = PropertyUtils.getPropertyType(bean,paramName);
 	                    	if(type.getSimpleName().equals("Integer")) {
 	                    		query.addScalar(paramName,Hibernate.INTEGER);
 	                    	} else if(type.getSimpleName().equals("Double")) {
@@ -180,16 +198,14 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                    	} else {
 	                    		query.addScalar(paramName);
 	                    	}
-	                    	System.out.println(paramName + " = "+obj);
-	                        query.setParameter(paramName, obj);
-	                    } catch (IllegalAccessException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (InvocationTargetException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    } catch (NoSuchMethodException e) {
-	                        log.error("error in setting update parameters " + e.getMessage());
-	                    }
+	                	}                    	
 	                }
+                } catch (IllegalAccessException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (InvocationTargetException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (NoSuchMethodException e) {
+                    log.error("error in setting parameters " + e.getMessage());
                 }
                 if(paged) {
                 	query.setFirstResult(start);

@@ -4,6 +4,7 @@ import ibfb.domain.core.Measurement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import org.cimmyt.cril.ibwb.api.*;
+import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
 import org.cimmyt.cril.ibwb.domain.*;
 
 import java.util.HashMap;
@@ -308,7 +309,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataC> getDataCList() {
         //return dataCDAO.findAll();
-         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList", new HashMap());
+         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList", 
+        		 new HashMap(),new String[]{"ounitid", "variatid", "dvalue"});
     }
 
     @Override
@@ -323,7 +325,8 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("variatid", filter.getDataCPK().getVariatid());
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getListDataC", params);
+        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getListDataC", params,
+        		new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
@@ -339,7 +342,8 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
        params.put("effectid", effectId);
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCByEffectId", params);
+        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCByEffectId", params,
+        		new String[]{"ounitid", "variatid", "dvalue"});
 
         //return dataCDAO.getDataNByEffectId(effectId);
     }
@@ -376,7 +380,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataN> getDataNList() {
         //return dataNDAO.findAll();
-       return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap());
+       return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap(),
+    		   new String[]{"ounitid", "variatid", "dvalue"});
     }
 
     @Override
@@ -393,7 +398,8 @@ public class CommonServicesImpl implements CommonServices {
        params.put("variatid", filter.getDataNPK().getVariatid());
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
 
-        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN",params);
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN",params,
+     		   new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
@@ -409,7 +415,8 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
        params.put("effectid", effectId);
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNByEffectId", params);
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNByEffectId", params,
+     		   new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
@@ -1413,7 +1420,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Obsunit> getObsunitList() {
 
-        return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitList", new HashMap());
+        return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitList", new HashMap(),
+     		   new String[]{"ounitid", "variatid", "dvalue"});
         //return obsunitDAO.findAll();
     }
 
@@ -1669,7 +1677,8 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("traitid", filter.getTraitid());
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScale", params);
+        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScale", params,
+      		   new String[]{"scaleid", "scname", "traitid","sctype"});
     }
 
     @Override
@@ -1696,7 +1705,8 @@ public class CommonServicesImpl implements CommonServices {
         //return scaleDAO.getScaleAll();
         HashMap params = new HashMap();
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScaleAll", params);
+        return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScaleAll", params,
+       		   new String[]{"scaleid", "scname", "traitid","sctype"});
     }
 
     //-----------------------------------Scales---------------------------
@@ -1735,7 +1745,17 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Scales> getListScales(Scales filter, int start, int pageSize, boolean paged) {
-        return scalesDAO.getList(filter, start, pageSize, paged);
+    	return scalesDAO.getList(filter, start, pageSize, paged);
+//    	if (filter.getGlobalsearch() == null) {
+//    		return this.utilityDAO.callStoredProcedureForList(filter, "getScales", "scaleid", 
+//    				"scname", "sctype", "ontology");
+//    	} else if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
+//    		return this.utilityDAO.callStoredProcedureForList(filter, "searchScales", "scaleid", 
+//    				"scname", "sctype", "ontology");
+//    	} else {
+//    		return this.utilityDAO.callStoredProcedureForList(filter, "searchScales", 
+//    				"scname", "sctype", "ontology");
+//    	}
     }
 
     public Scales getScalesByScnameAndSctype(Scales scales) {
@@ -1975,7 +1995,8 @@ public class CommonServicesImpl implements CommonServices {
     	Study study = new Study();
     	study.setStudyid(idStudy);
         //this.studyDAO.findById(idStudy);
-    	return utilityDAO.callStoredProcedureForObject(study, "getStudyById", "studyid");
+    	return utilityDAO.callStoredProcedureForObject(study, "getStudyById", new String[]{"studyid"},
+       		   new String[]{"studyid", "sname", "pmkey","title","objectiv","investid","stype","sdate","edate","userid","sstatus","shierarchy"});
     }
 
     @SuppressWarnings("unchecked")
@@ -1983,7 +2004,8 @@ public class CommonServicesImpl implements CommonServices {
     public List<Study> getStudyList() {
     	//return studyDAO.findAll();
     	Study study = new Study();
-    	return utilityDAO.callStoredProcedureForList(study, "getStudyList");
+    	return utilityDAO.callStoredProcedureForList(study, "getStudyList",null,
+    			new String[]{"studyid", "sname", "pmkey","title","objectiv","investid","stype","sdate","edate","userid","sstatus","shierarchy"});
         
     }
 
@@ -1996,11 +2018,12 @@ public class CommonServicesImpl implements CommonServices {
 	@Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
-    	filter.setSstatus(Study.SSTATUS_DELETED);
     	return utilityDAO.callStoredProcedureForListPaged(filter, paged,
     				start, pageSize, "getStudy",
-    				"studyid","sname","pmkey","title","objectiv",
-                    "investid","stype","sdate","edate","userid","sstatus","shierarchy");
+    				new String[]{"studyid","sname","pmkey","title","objectiv",
+                    "investid","stype","sdate","edate","userid","sstatus","shierarchy"},
+            		new String[]{"studyid", "sname", "pmkey","title","objectiv",
+    				"investid","stype","sdate","edate","userid","sstatus","shierarchy"});
     	
     }
 
@@ -2469,7 +2492,8 @@ public class CommonServicesImpl implements CommonServices {
     	//return this.variateDAO.findById(idVariate);
     	Variate variate = new Variate();
     	variate.setVariatid(idVariate);
-    	return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", "variatid");
+    	return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", new String[]{"variatid"},
+        		   new String[]{"variatid", "studyid", "vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
     }
 
     @Override

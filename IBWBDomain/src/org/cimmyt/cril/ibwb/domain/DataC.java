@@ -98,5 +98,34 @@ public class DataC extends BaseFilter implements Serializable {
     public String toString() {
         return "org.cimmyt.cril.ibworkbench.services.beans.DataC[dataCPK=" + dataCPK + "]";
     }
+    
+    public Integer getOunitid() {
+    	if(dataCPK!=null) {
+    		return dataCPK.getOunitid();
+    	}
+    	return null;
+    }
+
+    public void setOunitid(Integer ounitid) {
+        if(dataCPK==null) {
+    		dataCPK = new DataCPK();
+    	}
+    	dataCPK.setOunitid(ounitid);
+    }
+
+    public Integer getVariatid() {
+        if(dataCPK!=null) {
+    		return dataCPK.getVariatid();
+    	}
+    	return null;
+    }
+
+    public void setVariatid(Integer variatid) {
+    	if(dataCPK==null) {
+    		dataCPK = new DataCPK();
+    	}
+    	dataCPK.setVariatid(variatid);
+    }
+    
 
 }
