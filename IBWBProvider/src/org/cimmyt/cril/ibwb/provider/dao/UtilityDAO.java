@@ -2,22 +2,17 @@ package org.cimmyt.cril.ibwb.provider.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -55,6 +50,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String... params) {
         
         final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = "+sql);
         Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
             @Override
@@ -67,11 +63,15 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                for (String paramName : params) {
 	                    try {
 	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
-	                    	if(obj instanceof Integer) {
+	                    	Class type = PropertyUtils.getPropertyType(bean,paramName);
+	                    	if(type.getSimpleName().equals("Integer")) {
 	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else if(type.getSimpleName().equals("Double")) {
+	                    		query.addScalar(paramName,Hibernate.DOUBLE);
 	                    	} else {
 	                    		query.addScalar(paramName);
 	                    	}
+	                    	System.out.println(paramName + " = "+obj);
 	                        query.setParameter(paramName, obj);
 	                    } catch (IllegalAccessException e) {
 	                        log.error("error in setting update parameters " + e.getMessage());
@@ -103,6 +103,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             params[i++] = (String)iter.next();
         }
         final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = "+sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
             @Override
@@ -116,14 +117,25 @@ public class UtilityDAO extends HibernateDaoSupport {
                         while(iterParam.hasNext()){
                             String paramName = (String)iterParam.next();
                             Object obj = parameters.get(paramName);
-                            if(obj instanceof Integer) {
-	                    		query.addScalar(paramName,Hibernate.INTEGER);
-	                    	} else {
-	                    		query.addScalar(paramName);
-	                    	}
+							try {
+								Class type = PropertyUtils.getPropertyType(beanClass, paramName);
+								if(type.getSimpleName().equals("Integer")) {
+		                    		query.addScalar(paramName,Hibernate.INTEGER);
+		                    	} else if (type.getSimpleName().equals("Double")) {
+		                    		query.addScalar(paramName,Hibernate.DOUBLE);
+	                            }else {
+		                    		query.addScalar(paramName);
+		                    	}
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							} catch (InvocationTargetException e) {
+								e.printStackTrace();
+							} catch (NoSuchMethodException e) {
+								e.printStackTrace();
+							}
+							System.out.println(paramName + " = "+obj);
                             query.setParameter(paramName, obj);
                         }
-
                 }
                 return query.list();
             }
@@ -148,6 +160,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String... params) {
         
         final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = "+sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
             @Override
             public Object doInHibernate(Session session)
@@ -161,13 +174,13 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
 	                    	Class type = PropertyUtils.getPropertyType(bean,paramName);
 	                    	if(type.getSimpleName().equals("Integer")) {
-	                    		System.out.println("integer param: "+paramName);
 	                    		query.addScalar(paramName,Hibernate.INTEGER);
+	                    	} else if(type.getSimpleName().equals("Double")) {
+	                    		query.addScalar(paramName,Hibernate.DOUBLE);
 	                    	} else {
 	                    		query.addScalar(paramName);
-	                    		System.out.println("non-integer param: "+paramName);
 	                    	}
-	                    	System.out.println("value: "+obj);
+	                    	System.out.println(paramName + " = "+obj);
 	                        query.setParameter(paramName, obj);
 	                    } catch (IllegalAccessException e) {
 	                        log.error("error in setting update parameters " + e.getMessage());
@@ -193,6 +206,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String procedureName, 
             final String... params) {
         final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = "+sql);
         int result = (Integer) getHibernateTemplate().execute(new HibernateCallback() {
 
             @Override
@@ -205,6 +219,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 	                    try {
 	                    	Object obj = PropertyUtils.getProperty(bean,paramName);
 	                        query.setParameter(paramName, obj);
+	                        System.out.println(paramName+" = "+obj);
 	                    } catch (IllegalAccessException e) {
 	                        log.error("error in setting update parameters " + e.getMessage());
 	                    } catch (InvocationTargetException e) {
