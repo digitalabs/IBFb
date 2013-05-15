@@ -114,6 +114,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Atributs---------------------------
+    /*
     @Override
     public void addAtributs(Atributs atributs) {
         this.atributsDAO.create(atributs);
@@ -134,11 +135,12 @@ public class CommonServicesImpl implements CommonServices {
         return atributsDAO.findById(atributs.getAid());
     }
 
+
     @Override
     public Atributs getAtributs(Integer idAtributs) {
         return atributsDAO.findById(idAtributs);
     }
-
+    */
     @Override
     public List<Atributs> getAtributsList() {
         return atributsDAO.findAll();
@@ -155,6 +157,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Bibrefs---------------------------
+    /*
     @Override
     public void addBibrefs(Bibrefs bibrefs) {
         this.bibrefsDAO.create(bibrefs);
@@ -179,7 +182,7 @@ public class CommonServicesImpl implements CommonServices {
     public Bibrefs getBibrefs(Integer idBibrefs) {
         return bibrefsDAO.findById(idBibrefs);
     }
-
+      */
     @Override
     public List<Bibrefs> getBibrefsList() {
         return bibrefsDAO.findAll();
@@ -196,6 +199,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Changes---------------------------
+    /*
     @Override
     public void addChanges(Changes changes) {
         this.changesDAO.create(changes);
@@ -220,7 +224,7 @@ public class CommonServicesImpl implements CommonServices {
     public Changes getChanges(Integer idChanges) {
         return this.changesDAO.findById(idChanges);
     }
-
+        */
     @Override
     public List<Changes> getChangesList() {
         return changesDAO.findAll();
@@ -1956,15 +1960,34 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Steffect> getListSteffect(Steffect filter, int start, int pageSize, boolean paged) {
-        return steffectDAO.getList(filter, start, pageSize, paged);
+        //only needed is the studyid
+        //return steffectDAO.getList(filter, start, pageSize, paged);
+
+        HashMap params = new HashMap();
+        params.put("studyid", filter.getStudyid());
+        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getListSteffect", params, new String[]{"effectid", "studyid", "effectname"} );
+        if(list != null)
+            return list;
+        return new ArrayList();
+
     }
 
     public List<Steffect> getSteffectByStudyid(Integer studyid) {
+        //not being use, please confirm
         return steffectDAO.getSteffectByStudyid(studyid);
     }
 
     public List<Integer> getEffectidsByStudyid(Integer studyid) {
-        return steffectDAO.getEffectidsByStudyid(studyid);
+        //return steffectDAO.getEffectidsByStudyid(studyid);
+        HashMap params = new HashMap();
+        params.put("studyid", studyid);
+        params.put("iscentral", isCentral()?new Integer(1) : new Integer(0));
+        List list =  this.utilityDAO.callStoredProcedureForList(Integer.class, "getEffectidsByStudyid", params);
+        if(list != null)
+            return list;
+        return new ArrayList();
+
+
     }
 
 //-----------------------------------Study---------------------------
