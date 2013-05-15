@@ -14,7 +14,7 @@ begin
 	,GROUP_CONCAT(if(relationship = 'has type', ontology_value, NULL)) AS 'dtype' 
 	,GROUP_CONCAT(if(relationship = 'stored in', ontology_id, NULL)) AS 'tid' 
 	FROM 
-	(SELECT label.projectprop_id as variatid 
+	(SELECT pp.projectprop_id as variatid 
 	,label.value as vname 
 	,cvt2.name as relationship 
 	,cvt3.cvterm_id as ontology_id 
