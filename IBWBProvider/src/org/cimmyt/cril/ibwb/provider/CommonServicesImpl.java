@@ -1732,7 +1732,12 @@ public class CommonServicesImpl implements CommonServices {
     //-----------------------------------Scales---------------------------
     @Override
     public void addScales(Scales scales) {
-        this.scalesDAO.create(scales);
+        //this.scalesDAO.create(scales);
+        HashMap params = new HashMap();
+        params.put("cvidin", 1030);
+        params.put("cvname", scales.getScname());
+        params.put("cvdesc", scales.getScname());
+        this.utilityDAO.callStoredProcedureForUpdate("addCvterm", params);
     }
 
     @Override
@@ -2177,12 +2182,23 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------TmsMethod---------------------------
     @Override
     public void addTmsMethod(TmsMethod tmsMethod) {
-        this.tmsMethodDAO.create(tmsMethod);
+
+        //this.tmsMethodDAO.create(tmsMethod);
+        HashMap params = new HashMap();
+        params.put("cvidin", 1020);
+        params.put("cvname", tmsMethod.getTmname());
+        params.put("cvdesc", tmsMethod.getTmdesc());
+        this.utilityDAO.callStoredProcedureForUpdate("addCvterm", params);
     }
 
     @Override
     public void updateTmsMethod(TmsMethod tmsMethod) {
-        this.tmsMethodDAO.update(tmsMethod);
+        //this.tmsMethodDAO.update(tmsMethod);
+        HashMap params = new HashMap();
+       params.put("cvtermid", tmsMethod.getTmethid());
+       params.put("cvname", tmsMethod.getTmname());
+       params.put("cvdesc", tmsMethod.getTmdesc());
+       this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
     }
 
     @Override
@@ -3376,21 +3392,29 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public DiscreteConversion getDiscreteConversion(DiscreteConversion discreteConversion) {
+        //not being use
         return this.getDiscreteConversionDAO().findById(discreteConversion.getTransid());
     }
 
     @Override
     public DiscreteConversion getDiscreteConversion(Integer transid) {
-        return this.getDiscreteConversionDAO().findById(transid);
+
+       DiscreteConversion discreteConversion = new DiscreteConversion();
+       discreteConversion.setTransid(transid);
+       return this.utilityDAO.callStoredProcedureForObject(discreteConversion, "getDiscreteConversion", new String[] {"transid"}, new String[] {"transid", "value1", "value2"} );
+
+       // return this.getDiscreteConversionDAO().findById(transid);
     }
 
     @Override
     public List<DiscreteConversion> getDiscreteConversionList() {
+        //not being use
         return this.getDiscreteConversionDAO().findAll();
     }
 
     @Override
     public int getTotalDiscreteConversion(DiscreteConversion discreteConversion) {
+        //not being use
         return this.getDiscreteConversionDAO().getTotal(discreteConversion);
     }
 

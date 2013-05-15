@@ -307,6 +307,42 @@ public class UtilityDAO extends HibernateDaoSupport {
         sql.append(")");
         return sql.toString();
     }
+	@SuppressWarnings("rawtypes")
+    	public int callStoredProcedureForUpdate(
+                final String procedureName,
+                final HashMap parameters
+                ) {
+
+            String params[] = new String[parameters.keySet().size()];
+            Iterator iter = parameters.keySet().iterator();
+            int i = 0 ;
+            while(iter.hasNext()){
+                params[i++] = (String)iter.next();
+            }
+            final String sql = buildSQLQuery(procedureName, params);
+            System.out.println("sql = "+sql);
+            int result = (Integer) getHibernateTemplate().execute(new HibernateCallback() {
+
+                @Override
+                public Object doInHibernate(Session session)
+                        throws HibernateException, SQLException {
+                    SQLQuery query = session.
+                            createSQLQuery(sql);
+                    if(parameters != null){
+                        Iterator iterParam = parameters.keySet().iterator();
+                        while(iterParam.hasNext()){
+                            String paramName = (String)iterParam.next();
+                            Object obj = parameters.get(paramName);
+    						System.out.println(paramName + " = "+obj);
+                            query.setParameter(paramName, obj);
+                        }
+                    }
+
+                    return query.executeUpdate();
+                }
+            });
+            return result;
+        }
 
     private String buildSQLQuery(String procedureName, HashMap params) {
         StringBuilder sql = new StringBuilder();
