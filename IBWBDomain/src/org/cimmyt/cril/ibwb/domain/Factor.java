@@ -65,6 +65,7 @@ public class Factor extends BaseFilter implements Serializable {
     private Dmsattr dmsattr;
     @Transient
     private Map<Integer, LevelN> mapLevels;
+    private int islocal;
 
     public Factor() {
         setDefault();
@@ -338,4 +339,14 @@ public class Factor extends BaseFilter implements Serializable {
             return levelsC;
         }
     }
+
+	public int getIslocal() {
+		return islocal;
+	}
+
+	public void setIslocal(int islocal) {
+		this.islocal = islocal;
+	}
+    
+    
 }

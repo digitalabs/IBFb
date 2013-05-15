@@ -7,6 +7,7 @@ import org.cimmyt.cril.ibwb.api.*;
 import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
 import org.cimmyt.cril.ibwb.domain.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
@@ -692,8 +693,14 @@ public class CommonServicesImpl implements CommonServices {
         //return this.factorDAO.getMainFactorsByStudyid(studyid);
     	Factor factor = new Factor();
     	factor.setStudyid(studyid);
-    	return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid"}, 
+    	if(isLocal()) {
+    		factor.setIslocal(1);
+    	} else {
+    		factor.setIslocal(0);
+    	}
+    	return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid","islocal"}, 
     			new String[] {"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
+    	
     	
     }
 
