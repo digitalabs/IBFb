@@ -1982,9 +1982,17 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("studyid", studyid);
         params.put("iscentral", isCentral()?new Integer(1) : new Integer(0));
-        List list =  this.utilityDAO.callStoredProcedureForList(Integer.class, "getEffectidsByStudyid", params);
-        if(list != null)
-            return list;
+        //List list =  this.utilityDAO.callStoredProcedureForList(Integer.class, "getEffectidsByStudyid", params);
+        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getEffectidsByStudyid", params, new String[]{"effectid"} );
+        if(list != null){
+            List temp = new ArrayList();
+            for(int i = 0 ; i < list.size() ; i++){
+                Steffect eff = (Steffect) list.get(i);
+                temp.add(eff.getEffectid());
+            }
+            return temp;
+        }
+
         return new ArrayList();
 
 
