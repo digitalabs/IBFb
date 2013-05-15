@@ -34,8 +34,6 @@ begin
 	from project_relationship pr where pr.type_id = 1150
 	and pr.object_project_id = studyid
 
-	
-end if;
 end$$
 
 
