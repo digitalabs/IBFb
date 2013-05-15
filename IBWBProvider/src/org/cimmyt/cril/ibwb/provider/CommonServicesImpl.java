@@ -1,8 +1,12 @@
 package org.cimmyt.cril.ibwb.provider;
 
 import ibfb.domain.core.Measurement;
+
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import org.apache.commons.beanutils.PropertyUtils;
 import org.cimmyt.cril.ibwb.api.*;
 import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
 import org.cimmyt.cril.ibwb.domain.*;
@@ -1761,17 +1765,31 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Scales> getListScales(Scales filter, int start, int pageSize, boolean paged) {
-    	return scalesDAO.getList(filter, start, pageSize, paged);
-//    	if (filter.getGlobalsearch() == null) {
-//    		return this.utilityDAO.callStoredProcedureForList(filter, "getScales", "scaleid", 
-//    				"scname", "sctype", "ontology");
-//    	} else if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
-//    		return this.utilityDAO.callStoredProcedureForList(filter, "searchScales", "scaleid", 
-//    				"scname", "sctype", "ontology");
-//    	} else {
-//    		return this.utilityDAO.callStoredProcedureForList(filter, "searchScales", 
-//    				"scname", "sctype", "ontology");
-//    	}
+    	//return scalesDAO.getList(filter, start, pageSize, paged);
+    	if (filter.getGlobalsearch() == null) {
+    		return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getScales",  
+    				new String[]{"scaleid","scname", "sctype"},
+    				new String[]{"scaleid","scname", "sctype"});
+    	} else if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
+    		return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "searchScales", 
+    				new String[]{"scaleid","scname", "sctype"},
+    				new String[]{"scaleid","scname", "sctype"});
+    	} else {
+    		Scales copy = new Scales();
+    		try {
+				PropertyUtils.copyProperties(copy,filter);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+    		copy.setScaleid(null);
+    		return this.utilityDAO.callStoredProcedureForListPaged(copy, paged, start, pageSize, "searchScales", 
+    				new String[]{"scaleid","scname", "sctype"},
+    				new String[]{"scaleid","scname", "sctype"});
+    	}
     }
 
     public Scales getScalesByScnameAndSctype(Scales scales) {
