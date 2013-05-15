@@ -9,7 +9,7 @@ begin
 
 IF iscentral = 1 then
 
-	select nep.nd_experiment_id as ounitid, label.projectprop_id as variatid, p.value as dvalue
+	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p 
 	inner join nd_experiment_phenotype nep on p.phenotype_id = nep.phenotype_id 
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id 
@@ -28,7 +28,7 @@ IF iscentral = 1 then
 	order by ounitid asc, variatid asc ;
 else
 
-	select nep.nd_experiment_id as ounitid, label.projectprop_id as variatid, p.value as dvalue
+	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p 
 	inner join nd_experiment_phenotype nep on p.phenotype_id = nep.phenotype_id 
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id 
@@ -54,7 +54,7 @@ drop procedure if exists `getDataCList`$$
 CREATE PROCEDURE `getDataCList`()
 begin
 
-	select nep.nd_experiment_id as ounitid, label.projectprop_id as variatid, p.value as dvalue
+	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p
 	inner join projectprop pp on pp.value = observable_id 
 	and exists
@@ -79,7 +79,7 @@ CREATE PROCEDURE `getListDataC`(IN paramvariatid int, IN iscentral int)
 begin
 
 IF iscentral = 1 then
-	select nep.nd_experiment_id as ounitid, label.projectprop_id as variatid, p.value as dvalue
+	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p
 	inner join projectprop pp on pp.value = observable_id 
 	and exists
@@ -96,7 +96,7 @@ IF iscentral = 1 then
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id and pp.project_id = nexp.project_id
 	order by ounitid asc;
 else
-	select nep.nd_experiment_id as ounitid, label.projectprop_id as variatid, p.value as dvalue
+	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p
 	inner join projectprop pp on pp.value = observable_id 
 	and exists
