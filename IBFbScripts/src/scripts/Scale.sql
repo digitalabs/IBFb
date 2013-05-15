@@ -63,7 +63,7 @@ IF iscentral = 1 then
 	inner join cvterm cvst on cvst.cvterm_id = cvrsb2.object_id and cvrsb2.type_id = 1200 and cvst.cvterm_id = traitid
 	inner join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id
 	inner join cvterm cvsdt on cvsdt.cvterm_id = cvrsb3.type_id and cvrsb3.type_id = 1105
-	where cvsc.cvterm_id = 6000
+	--where cvsc.cvterm_id = 6000
 	ORDER BY scaleid asc;	
 	
 else
@@ -79,7 +79,7 @@ else
 	inner join cvterm cvst on cvst.cvterm_id = cvrsb2.object_id and cvrsb2.type_id = 1200 and cvst.cvterm_id = traitid
 	inner join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id
 	inner join cvterm cvsdt on cvsdt.cvterm_id = cvrsb3.type_id and cvrsb3.type_id = 1105
-	where cvsc.cvterm_id = 6000
+	--where cvsc.cvterm_id = 6000
 	ORDER BY scaleid desc;
 	
 end if;
