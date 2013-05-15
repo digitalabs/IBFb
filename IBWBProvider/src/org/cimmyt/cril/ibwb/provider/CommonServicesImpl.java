@@ -2044,7 +2044,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void deleteStudy(Study study) {
-        this.studyDAO.logicalDelete(study);
+        //this.studyDAO.logicalDelete(study);
+    	utilityDAO.callStoredProcedureForUpdate(study, "deleteStudy", "studyid");
     }
 
     public Study getStudy(Study study) {

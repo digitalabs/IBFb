@@ -169,3 +169,29 @@ begin
 	EXECUTE stmt;
 	
 end$$
+
+drop procedure if exists `deleteStudy`$$
+
+CREATE PROCEDURE `deleteStudy`(IN v_studyid int)
+begin
+	
+	update cvterm cvalue
+	set name = 0
+	where exists
+	(select 1
+	from projectprop pp
+	,projectprop type
+	,projectprop label
+	,cvterm ctype
+	where pp.project_id = v_studyid
+	and pp.value = cvalue.cvterm_id
+	and type.value = pp.type_id
+	and type.project_id = pp.project_id
+	and type.rank = pp.rank
+	and type.type_id = 1070
+	and label.rank = type.rank
+	and label.project_id = type.project_id
+	and label.type_id = ctype.cvterm_id
+	and ctype.name = 'STATUS');
+
+end$$ 
