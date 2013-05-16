@@ -1760,7 +1760,10 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Scales> getScalesList() {
-        return scalesDAO.findAll();
+        //return scalesDAO.findAll();
+        return this.utilityDAO.callStoredProcedureForList(Scales.class, "getScalesList",
+            				new HashMap(),
+            				new String[]{"scaleid","scname", "sctype"});
     }
 
     @Override
@@ -1798,7 +1801,11 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Scales getScalesByScnameAndSctype(Scales scales) {
-        return scalesDAO.getScalesByScnameAndSctype(scales);
+        //return scalesDAO.getScalesByScnameAndSctype(scales);
+        //no need for ordering since it reutrns only 1 object
+        return this.utilityDAO.callStoredProcedureForObject(scales, "getScalesByScnameAndSctype",
+                                    new String[]{"scname", "sctype"},
+                    				new String[]{"scaleid","scname", "sctype"});
     }
 
     public Scales getScalesByScname(Scales scales) {

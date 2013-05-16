@@ -11,5 +11,19 @@ begin
 
 end$$
 
+drop procedure if exists `updateCvterm`$$
+
+CREATE PROCEDURE `updateCvterm`(IN cvtermid int, IN cvname varchar(500), IN cvdesc varchar(500))
+begin
+
+	update cvterm
+	set name = cvname,
+	definition = cvdesc
+	where cvterm_id = cvtermid
+
+
+end$$
+
+
 
 
