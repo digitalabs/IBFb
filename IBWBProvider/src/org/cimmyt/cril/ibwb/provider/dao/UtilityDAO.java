@@ -136,15 +136,11 @@ public class UtilityDAO extends HibernateDaoSupport {
             final Class beanClass,
             final String procedureName,
             final HashMap parameters,
+            final String[] inParams ,
             final String[] outParams) {
 
-        String params[] = new String[parameters.keySet().size()];
-        Iterator iter = parameters.keySet().iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-            params[i++] = (String) iter.next();
-        }
-        final String sql = buildSQLQuery(procedureName, params);
+
+        final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = " + sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
 

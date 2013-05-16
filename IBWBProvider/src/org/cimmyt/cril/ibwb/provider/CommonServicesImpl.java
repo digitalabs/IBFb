@@ -319,7 +319,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<DataC> getDataCList() {
         //return dataCDAO.findAll();
          return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList", 
-        		 new HashMap(),new String[]{"ounitid", "variatid", "dvalue"});
+        		 new HashMap(), new String[]{},new String[]{"ounitid", "variatid", "dvalue"});
     }
 
     @Override
@@ -335,6 +335,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("variatid", filter.getDataCPK().getVariatid());
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getListDataC", params,
+                new String[]{"variatid", "iscentral"},
         		new String[]{"ounitid", "variatid", "dvalue"});
 
     }
@@ -352,6 +353,7 @@ public class CommonServicesImpl implements CommonServices {
        params.put("effectid", effectId);
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCByEffectId", params,
+                new String[]{"effectid", "iscentral"},
         		new String[]{"ounitid", "variatid", "dvalue"});
 
         //return dataCDAO.getDataNByEffectId(effectId);
@@ -390,6 +392,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<DataN> getDataNList() {
         //return dataNDAO.findAll();
        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap(),
+               new String[]{},
     		   new String[]{"ounitid", "variatid", "dvalue"});
     }
 
@@ -408,6 +411,7 @@ public class CommonServicesImpl implements CommonServices {
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
 
         return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN",params,
+                new String[]{"variatid", "iscentral"},
      		   new String[]{"ounitid", "variatid", "dvalue"});
 
     }
@@ -425,6 +429,7 @@ public class CommonServicesImpl implements CommonServices {
        params.put("effectid", effectId);
        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNByEffectId", params,
+                new String[]{"effectid", "iscentral"},
      		   new String[]{"ounitid", "variatid", "dvalue"});
 
     }
@@ -1441,6 +1446,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Obsunit> getObsunitList() {
 
         return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitList", new HashMap(),
+                new String[]{},
      		   new String[]{"ounitid", "variatid", "dvalue"});
         //return obsunitDAO.findAll();
     }
@@ -1475,7 +1481,14 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public List<Obsunit> getObsunitListByEffectid(final Integer effectId) {
-        return obsunitDAO.getObsunitListByEffectid(effectId);
+//        return obsunitDAO.getObsunitListByEffectid(effectId);
+        HashMap params = new HashMap();
+        params.put("iscentral", isCentral()?new Integer(1): new Integer(0));
+        params.put("effectid", effectId);
+        return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitListByEffectid", params,
+                new String[]{"effectid", "iscentral"},
+             		   new String[]{"ounitid", "variatid", "dvalue"});
+        //getObsunitListByEffectid
     }
 //-----------------------------------Oindex---------------------------
 
@@ -1698,6 +1711,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("traitid", filter.getTraitid());
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScale", params,
+                new String[]{"traitid", "iscentral"},
       		   new String[]{"scaleid", "scname", "traitid","sctype"});
     }
 
@@ -1726,6 +1740,7 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScaleAll", params,
+                new String[]{ "iscentral"},
        		   new String[]{"scaleid", "scname", "traitid","sctype"});
     }
 
@@ -1742,7 +1757,13 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateScales(Scales scales) {
-        this.scalesDAO.update(scales);
+
+        //this.scalesDAO.update(scales);
+        HashMap params = new HashMap();
+       params.put("cvtermid", scales.getScaleid());
+       params.put("cvname", scales.getScname());
+       params.put("cvdesc", scales.getScname());
+       this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
     }
 
     @Override
@@ -2007,7 +2028,7 @@ public class CommonServicesImpl implements CommonServices {
 
         HashMap params = new HashMap();
         params.put("studyid", filter.getStudyid());
-        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getListSteffect", params, new String[]{"effectid", "studyid", "effectname"} );
+        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getListSteffect", params, new String[]{"studyid"},new String[]{"effectid", "studyid", "effectname"} );
         if(list != null)
             return list;
         return new ArrayList();
@@ -2025,7 +2046,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("studyid", studyid);
         params.put("iscentral", isCentral()?new Integer(1) : new Integer(0));
         //List list =  this.utilityDAO.callStoredProcedureForList(Integer.class, "getEffectidsByStudyid", params);
-        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getEffectidsByStudyid", params, new String[]{"effectid"} );
+        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getEffectidsByStudyid", params, new String[]{"studyid", "iscentral"},new String[]{"effectid"} );
         if(list != null){
             List temp = new ArrayList();
             for(int i = 0 ; i < list.size() ; i++){
