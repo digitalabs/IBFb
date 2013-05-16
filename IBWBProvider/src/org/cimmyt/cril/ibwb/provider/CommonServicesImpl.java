@@ -2457,11 +2457,14 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Traits getTraits(Traits traits) {
-        return this.traitsDAO.findById(traits.getTid());
+        return getTraits(traits.getTraitid());
     }
 
     public Traits getTraits(Integer idTrait) {
-        return this.traitsDAO.findById(idTrait);
+    	Traits traits = new Traits();
+    	traits.setTraitid(idTrait);
+    	return utilityDAO.callStoredProcedureForObject(traits, "getTraitsById", new String[]{"traitid"},
+    			new String[]{"tid", "traitid", "trname", "trdesc", "nstat", "traitgroup"});
     }
 
     public Traits getTraitsByTraitid(Integer idTrait) {
