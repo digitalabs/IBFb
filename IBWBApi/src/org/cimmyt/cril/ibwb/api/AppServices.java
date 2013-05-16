@@ -14,7 +14,10 @@ import org.cimmyt.cril.ibwb.domain.util.WheatData;
 import org.generationcp.middleware.manager.api.GermplasmDataManager;
 
 public interface AppServices {
-    
+
+    public CommonServices getCentralCommonService();
+       public CommonServices getLocalCommonService();
+
     public TypeDB getTypeDB();
 
     //-----------------------------------Atributs---------------------------

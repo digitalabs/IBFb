@@ -22,7 +22,21 @@
     <bean name="configResource" class="org.cimmyt.cril.ibwb.provider.IBWBConfigResource">
         <description>Custom Config Resource to Read properties from this module</description>
     </bean>
-	
+
+    <bean id="dataSourceNewCentralDMS" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${dmscentral2.driverclassname}"></property>
+        <property name="url" value="${dmscentral2.url}"></property>
+        <property name="username" value="${dmscentral2.username}"></property>
+        <property name="password" value="${dmscentral2.password}"></property>
+    </bean>
+
+    <bean id="dataSourceNewLocalDMS" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${dmslocal2.driverclassname}"></property>
+       <property name="url" value="${dmslocal2.url}"></property>
+       <property name="username" value="${dmslocal2.username}"></property>
+       <property name="password" value="${dmslocal2.password}"></property>
+    </bean>
+
     <bean id="dataSourceCentralDMS" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${dmscentral.driverclassname}"></property>
         <property name="url" value="${dmscentral.url}"></property>
@@ -66,7 +80,8 @@
         </property>
         <property name="locations">
             <list>
-                <value>file:/java/c/appc.properties</value>
+                <!--<value>file:/java/c/appc.properties</value>-->
+                <value>file:C:\Programming\Efficio\java\FieldBook\IBFb\appc.properties</value>
             </list>
         </property>
     </bean>

@@ -40,6 +40,17 @@
     </bean>
 
     <bean
+            id="sessionFactoryNewCentralDMS"
+            class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+            >
+            <property name="dataSource" ref="dataSourceNewCentralDMS" />
+            <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+            <property name="configLocation">
+                <value>classpath:hibernate.new.cfg.xml</value>
+            </property>
+        </bean>
+
+    <bean
         id="sessionFactoryCentralGMS"
         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
         >
@@ -452,4 +463,10 @@
         </property>
         <property name="accessType" value="central"/>
     </bean>
+    <bean id="UtilityDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
+            <property name="sessionFactory">
+                <ref bean="sessionFactoryNewCentralDMS" />
+            </property>
+            <property name="accessType" value="central"/>
+        </bean>
 </beans>

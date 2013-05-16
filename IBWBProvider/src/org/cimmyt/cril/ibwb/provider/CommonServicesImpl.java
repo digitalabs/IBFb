@@ -1421,7 +1421,10 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Obsunit---------------------------
     @Override
     public void addObsunit(Obsunit obsunit) {
-        this.obsunitDAO.create(obsunit);
+        //daniel
+        Integer id = this.utilityDAO.getNextMin("project");
+        System.out.println(isCentral()+"========================= id is "+id);
+        //this.obsunitDAO.create(obsunit);
     }
 
     @Override

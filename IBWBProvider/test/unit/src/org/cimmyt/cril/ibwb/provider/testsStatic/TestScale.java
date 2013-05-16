@@ -55,7 +55,7 @@ public class TestScale extends TestService {
 	
     public static void main(String[] args) {
         TestScale testScale = new TestScale();
-//        testTraits.testTraitsAdd();
+        testScale.testScaleAdd();
 //        testTraits.testTraitsList();
 //        testScale.testScaleLocalYRemoto();
 //        testScale.testScaleGroup();

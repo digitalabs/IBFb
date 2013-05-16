@@ -1,6 +1,7 @@
 package org.cimmyt.cril.ibwb.provider.dao;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -281,6 +282,27 @@ public class UtilityDAO extends HibernateDaoSupport {
             }
         });
         return result;
+    }
+
+    public Integer getNextMin(final String tableName){
+        final String sql = buildSQLQuery("getNextMin", "tableName");
+               System.out.println("sql = " + sql);
+               Object result = getHibernateTemplate().execute(new HibernateCallback() {
+
+                   @Override
+                   public Object doInHibernate(Session session)
+                           throws HibernateException, SQLException {
+                       SQLQuery query = session.
+                               createSQLQuery(sql);
+                       query.setParameter("tableName", tableName);
+
+                       return query.uniqueResult();
+                   }
+               });
+
+
+               BigInteger id = (BigInteger) result;
+            return new Integer(id.intValue());
     }
 
     private String buildSQLQuery(String procedureName, String... params) {

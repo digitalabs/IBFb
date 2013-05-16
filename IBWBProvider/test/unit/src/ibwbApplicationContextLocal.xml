@@ -29,15 +29,26 @@
     </bean>
 -->    
     <bean
-        id="sessionFactoryLocalDMS"
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
-        >
-        <property name="dataSource" ref="dataSourceLocalDMS" />
-        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
-        <property name="configLocation">
-            <value>classpath:hibernat.cfg.xml</value>
-        </property>
-    </bean>
+            id="sessionFactoryLocalDMS"
+            class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+            >
+            <property name="dataSource" ref="dataSourceLocalDMS" />
+            <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+            <property name="configLocation">
+                <value>classpath:hibernat.cfg.xml</value>
+            </property>
+        </bean>
+
+    <bean
+           id="sessionFactoryNewLocalDMS"
+           class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+           >
+           <property name="dataSource" ref="dataSourceNewLocalDMS" />
+           <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+           <property name="configLocation">
+               <value>classpath:hibernate.new.cfg.xml</value>
+           </property>
+       </bean>
 
     <bean
         id="sessionFactoryLocalGMS"
@@ -451,5 +462,12 @@
         </property>
         <property name="accessType" value="local"/>
     </bean>
+
+    <bean id="UtilityDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
+            <property name="sessionFactory">
+                <ref bean="sessionFactoryNewLocalDMS" />
+            </property>
+            <property name="accessType" value="local"/>
+        </bean>
     
 </beans>

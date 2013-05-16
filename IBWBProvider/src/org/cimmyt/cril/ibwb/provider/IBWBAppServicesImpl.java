@@ -37,6 +37,13 @@ public class IBWBAppServicesImpl implements AppServices {
         return servicios;
     }
 
+    public CommonServices getCentralCommonService(){
+        return serviciosCentral;
+    }
+    public CommonServices getLocalCommonService(){
+            return serviciosLocal;
+        }
+
 //-----------------------------------Atributs---------------------------
     @Override
     public List<Atributs> getAtributsList() {

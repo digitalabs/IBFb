@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import org.cimmyt.cril.ibwb.api.AppServices;
+import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
@@ -25,7 +26,13 @@ import org.generationcp.middleware.manager.api.GermplasmDataManager;
 public class IBWBAppServicesMemoryImpl implements AppServices {
     
     private static List<Study> studyList = new ArrayList<Study>();
-    
+
+    public CommonServices getCentralCommonService(){
+            return null;
+        }
+        public CommonServices getLocalCommonService(){
+                return null;
+            }
     @Override
     public List<Atributs> getAtributsList() {
         return new ArrayList<Atributs>();
