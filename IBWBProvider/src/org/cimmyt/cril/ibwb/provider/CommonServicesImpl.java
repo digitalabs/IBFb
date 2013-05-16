@@ -1422,8 +1422,11 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addObsunit(Obsunit obsunit) {
         //daniel
-        Integer id = this.utilityDAO.getNextMin("project");
-        System.out.println(isCentral()+"========================= id is "+id);
+        //test with 10085
+        Integer id = this.utilityDAO.getNextMin("nd_experiment");
+        obsunit.setOunitid(id);
+        this.utilityDAO.callStoredProcedureForUpdate(obsunit, "addObsunit", new String[]{"ounitid", "effectid"});
+        //System.out.println(isCentral()+"========================= id is "+id);
         //this.obsunitDAO.create(obsunit);
     }
 

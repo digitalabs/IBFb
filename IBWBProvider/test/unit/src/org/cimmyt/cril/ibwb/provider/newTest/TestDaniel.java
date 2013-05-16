@@ -21,6 +21,7 @@ public class TestDaniel extends TestService {
 
     public void testGetMinMax(){
         Obsunit o = new Obsunit();
+        o.setEffectid(55);
         servicios.getLocalCommonService().addObsunit(o);
     }
 

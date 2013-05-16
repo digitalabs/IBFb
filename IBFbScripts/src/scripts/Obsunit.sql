@@ -16,7 +16,7 @@ end$$
 
 drop procedure if exists `getObsunitListByEffectid`$$
 
-CREATE PROCEDURE `getObsunitListByEffectid`(IN effectidin in,  IN iscentral int)
+CREATE PROCEDURE `getObsunitListByEffectid`(IN effectidin int,  IN iscentral int)
 begin
 
 
@@ -28,8 +28,8 @@ project_id as effect_id,
 nd_experiment_id as ounitid 
 from nd_experiment_project nep 
 inner join project_relationship pr on pr.subject_project_id = nep.project_id and pr.type_id = 1150 
-where project_id = effectidin;
-order by ounitid asc
+where project_id = effectidin
+order by ounitid asc;
 
 else
 
@@ -38,11 +38,29 @@ project_id as effect_id,
 nd_experiment_id as ounitid 
 from nd_experiment_project nep 
 inner join project_relationship pr on pr.subject_project_id = nep.project_id and pr.type_id = 1150 
-where project_id = effectidin;
-order by ounitid desc
+where project_id = effectidin
+order by ounitid desc;
 
 	
 end if;
 
 end$$
 
+drop procedure if exists `addObsunit`$$
+
+CREATE PROCEDURE `addObsunit`(IN nd_experimentidin int, IN effectidin int)
+begin
+--get the study id of that effect id
+--insert into nd_experiment(nd_experiment_id, nd_geolocation_id,type_id) value (nd_experimentidin,nd_geolocation_id,type_id) ; 
+--to get the the nd_experiment_id
+--need to get nd_geolocation_id by effectid
+
+select projectprop_id from projectprop where project_id = effectidin and type_id = 1021;
+
+insert into nd_experiment_project (project_id, nd_experiment_id) value (effectidin, nd_experimentidin);
+--insert into project_relationship(subject_project_id,object_project_id,type_id) value (effectidin, ?, 1050)
+
+
+
+
+end$$
