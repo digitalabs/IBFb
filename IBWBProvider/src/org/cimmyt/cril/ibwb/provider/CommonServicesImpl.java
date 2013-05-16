@@ -1783,7 +1783,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Scales> getScalesList() {
         //return scalesDAO.findAll();
         return this.utilityDAO.callStoredProcedureForList(Scales.class, "getScalesList",
-            				new HashMap(),new String[]{}
+            				new HashMap(),new String[]{},
             				new String[]{"scaleid","scname", "sctype"});
     }
 
