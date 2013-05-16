@@ -119,7 +119,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Atributs---------------------------
-    /*
+
     @Override
     public void addAtributs(Atributs atributs) {
         this.atributsDAO.create(atributs);
@@ -145,7 +145,7 @@ public class CommonServicesImpl implements CommonServices {
     public Atributs getAtributs(Integer idAtributs) {
         return atributsDAO.findById(idAtributs);
     }
-    */
+
     @Override
     public List<Atributs> getAtributsList() {
         return atributsDAO.findAll();
@@ -162,7 +162,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Bibrefs---------------------------
-    /*
+
     @Override
     public void addBibrefs(Bibrefs bibrefs) {
         this.bibrefsDAO.create(bibrefs);
@@ -187,7 +187,7 @@ public class CommonServicesImpl implements CommonServices {
     public Bibrefs getBibrefs(Integer idBibrefs) {
         return bibrefsDAO.findById(idBibrefs);
     }
-      */
+
     @Override
     public List<Bibrefs> getBibrefsList() {
         return bibrefsDAO.findAll();
@@ -204,7 +204,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Changes---------------------------
-    /*
+
     @Override
     public void addChanges(Changes changes) {
         this.changesDAO.create(changes);
@@ -229,7 +229,7 @@ public class CommonServicesImpl implements CommonServices {
     public Changes getChanges(Integer idChanges) {
         return this.changesDAO.findById(idChanges);
     }
-        */
+
     @Override
     public List<Changes> getChangesList() {
         return changesDAO.findAll();
