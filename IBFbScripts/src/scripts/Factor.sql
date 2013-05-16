@@ -1,6 +1,6 @@
 delimiter $$
 
-drop procedure if exists `getDataNByEffectId`$$
+drop procedure if exists `getMainFactorsByStudyid`$$
 
 CREATE PROCEDURE `getMainFactorsByStudyid`(IN v_studyid int, IN v_islocal int)
 begin
