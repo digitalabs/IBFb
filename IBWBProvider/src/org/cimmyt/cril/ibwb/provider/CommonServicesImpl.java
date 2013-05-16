@@ -2070,15 +2070,20 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Study---------------------------
     @Override
     public void addStudy(Study study) {
-        study = this.studyDAO.create(study);
-        /*this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+        //this.studyDAO.create(study);
+    	if(isLocal()) {
+    		this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
                 "studyid","sname","pmkey","title","objectiv",
-                "investid","stype","sdate","edate","userid","sstatus","shierarchy");*/
+                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
+    	}
     }
 
     @Override
     public void updateStudy(Study study) {
-        this.studyDAO.update(study);
+        //this.studyDAO.update(study);
+    	this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+                "studyid","sname","pmkey","title","objectiv",
+                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
     }
 
     @Override
