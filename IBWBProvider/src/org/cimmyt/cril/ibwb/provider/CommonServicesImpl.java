@@ -2474,7 +2474,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Traits getTraitsByTraitid(Integer idTrait) {
-        return this.traitsDAO.getTraitByTraitid(idTrait);
+        return getTraits(idTrait);
     }
 
     @Override
