@@ -1295,7 +1295,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
-        return this.measuredinDAO.getList(filter, start, pageSize, paged);
+    	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredIn", 
+				new String[]{"measuredinid","traitid", "tmethid", "scaleid", "standardscale"},
+				new String[]{"measuredinid","traitid", "tmethid", "scaleid", "standardscale"});
     }
 
     @Override
