@@ -541,7 +541,9 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
-        return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
+        //return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
+    	return this.utilityDAO.callStoredProcedureForObject(dmsattr, "getDmsattrByDmsatrecAndDmsatype", new String[]{"dmsatrec","dmsatype"}, 
+    			new String[] {"dmsatid", "dmsatyp", "dmsatab", "dmsatrec", "dmsatval"});
     }
 
     @Override
