@@ -14,7 +14,7 @@ import org.cimmyt.cril.ibwb.domain.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
+import org.cimmyt.getcril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
@@ -938,7 +938,14 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<LevelC> getLevelsCByLabelid(Integer labelid) {
-        return levelCDAO.getLevelsCByLabelid(labelid);
+        //return levelCDAO.getLevelsCByLabelid(labelid);
+        HashMap params = new HashMap();
+        params.put("labelid", labelid);
+        params.put("isnumeric", new Integer(0));
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(LevelC.class, "getLevelsByLabelId", params,
+      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
+ 
     }
 
 //-----------------------------------LevelN---------------------------
@@ -982,7 +989,14 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<LevelN> getLevelnByLabelid(Integer labelid) {
-        return levelNDAO.getLevelsnByLabelid(labelid);
+        //return levelNDAO.getLevelsnByLabelid(labelid);
+        HashMap params = new HashMap();
+        params.put("labelid", labelid);
+        params.put("isnumeric", new Integer(1));
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(LevelN.class, "getLevelsByLabelId", params,
+      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
+        
     }
 
 //-----------------------------------LevelT---------------------------
@@ -1278,7 +1292,11 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Measuredin getMeasuredinByTraitidScaleidTmethid(Measuredin measuredin) {
-        return this.measuredinDAO.getMeasuredinByTraitidScaleidTmethid(measuredin);
+        //return this.measuredinDAO.getMeasuredinByTraitidScaleidTmethid(measuredin);
+        
+        return this.utilityDAO.callStoredProcedureForObject(measuredin, "getMeasuredinByTraitidScaleidTmethid", 
+                new String[] {"traitid", "scaleid", "tmethid"}, 
+                new String[] {"measuredinid", "traitid", "scaleid", "standardscale", "report", "formula", "tmethid"});
     }
 
     public Measuredin getMeasuredinByTraitidAndScaleid(Measuredin measuredin) {
