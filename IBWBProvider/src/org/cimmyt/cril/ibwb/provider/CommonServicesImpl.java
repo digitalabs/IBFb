@@ -2060,8 +2060,10 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addSteffect(Steffect steffect) {
         //this.steffectDAO.create(steffect);
-    	utilityDAO.callStoredProcedureForUpdate(steffect,"addSteffect","effectid",
+    	if(isLocal()) {
+    		utilityDAO.callStoredProcedureForUpdate(steffect,"addSteffect","effectid",
     			"studyid","effectname");
+    	}
     }
 
     @Override
@@ -2679,8 +2681,10 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addVariate(Variate variate) {
         //this.variateDAO.create(variate);
-    	utilityDAO.callStoredProcedureForUpdate(variate, "addVariate", new String[]{"studyid",
+    	if(isLocal()) {
+    		utilityDAO.callStoredProcedureForUpdate(variate, "addVariate", new String[]{"studyid",
     			"vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
+    	}
     }
 
     @Override
