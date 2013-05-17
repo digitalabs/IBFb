@@ -12,7 +12,7 @@ IF iscentral = 1 then
 	select distinct cvsc.cvterm_id as scaleid,
 	cvsc.name as scname,
 	cvst.cvterm_id as traitid,
-	if(cvrsb3.object_id = 1120, 'C', 'D') as sctype
+	case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype
 	from cvterm_relationship cvr
 	inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id
 	inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220
@@ -28,7 +28,7 @@ else
 	select distinct cvsc.cvterm_id as scaleid,
 	cvsc.name as scname,
 	cvst.cvterm_id as traitid,
-	if(cvrsb3.object_id = 1120, 'C', 'D') as sctype
+	case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype
 	from cvterm_relationship cvr
 	inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id
 	inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220
@@ -55,7 +55,7 @@ IF iscentral = 1 then
 	select distinct cvsc.cvterm_id as scaleid,
 	cvsc.name as scname,
 	cvst.cvterm_id as traitid,
-	if(cvrsb3.object_id = 1120, 'C', 'D') as sctype
+	case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype
 	from cvterm_relationship cvr
 	inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id
 	inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220
@@ -71,7 +71,7 @@ else
 	select distinct cvsc.cvterm_id as scaleid,
 	cvsc.name as scname,
 	cvst.cvterm_id as traitid,
-	if(cvrsb3.object_id = 1120, 'C', 'D') as sctype
+	case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype
 	from cvterm_relationship cvr
 	inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id
 	inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220

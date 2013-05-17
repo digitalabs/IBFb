@@ -10,7 +10,7 @@ begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
 	"cvsc.name as scname, ",
-	"if(cvrsb3.object_id = 1120, 'C', 'D') as sctype "
+	"case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
 	"from cvterm_relationship cvr ",
 	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
 	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
@@ -41,7 +41,7 @@ begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
 	"cvsc.name as scname, ",
-	"if(cvrsb3.object_id = 1120, 'C', 'D') as sctype "
+	"case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
 	"from cvterm_relationship cvr ",
 	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
 	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
@@ -69,7 +69,7 @@ begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
 	"cvsc.name as scname, ",
-	"if(cvrsb3.object_id = 1120, 'C', 'D') as sctype "
+	"case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
 	"from cvterm_relationship cvr ",
 	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
 	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
@@ -94,7 +94,7 @@ begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
 	"cvsc.name as scname, ",
-	"if(cvrsb3.object_id = 1120, 'C', 'D') as sctype "
+	"case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
 	"from cvterm_relationship cvr ",
 	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
 	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
@@ -104,6 +104,7 @@ begin
 	"inner join cvterm cvsdt on cvsdt.cvterm_id = cvrsb3.type_id and cvrsb3.type_id = 1105 ",
 	"having 1=1 ");
 	
+
 	IF(v_scname IS NOT NULL) THEN
     SET @sql = CONCAT(@sql," AND scname = '",v_scname,"'");
     END IF;
