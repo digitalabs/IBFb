@@ -951,6 +951,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", new Integer(0));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelC.class, "getLevelsByLabelId", params,
+                   new String[]{"labelid", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
  
     }
@@ -1002,6 +1003,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", new Integer(1));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "getLevelsByLabelId", params,
+                   new String[]{"labelid", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
         
     }
