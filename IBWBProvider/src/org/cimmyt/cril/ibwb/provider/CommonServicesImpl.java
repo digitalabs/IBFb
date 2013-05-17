@@ -974,16 +974,18 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<LevelC> getListLevelC(LevelC filter, int start, int pageSize, boolean paged) {
         return levelCDAO.getList(filter, start, pageSize, paged);
+        //global search not used, pagination not used.
+        
     }
 
     public List<LevelC> getLevelsCByLabelid(Integer labelid) {
         //return levelCDAO.getLevelsCByLabelid(labelid);
         HashMap params = new HashMap();
-        params.put("labelid", labelid);
+        params.put("p_labelid", labelid);
         params.put("isnumeric", new Integer(0));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelC.class, "getLevelsByLabelId", params,
-                   new String[]{"labelid", "isnumeric", "iscentral"},
+                   new String[]{"p_labelid", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
  
     }
@@ -1031,11 +1033,11 @@ public class CommonServicesImpl implements CommonServices {
     public List<LevelN> getLevelnByLabelid(Integer labelid) {
         //return levelNDAO.getLevelsnByLabelid(labelid);
         HashMap params = new HashMap();
-        params.put("labelid", labelid);
+        params.put("p_labelid", labelid);
         params.put("isnumeric", new Integer(1));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "getLevelsByLabelId", params,
-                   new String[]{"labelid", "isnumeric", "iscentral"},
+                   new String[]{"p_labelid", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
         
     }
