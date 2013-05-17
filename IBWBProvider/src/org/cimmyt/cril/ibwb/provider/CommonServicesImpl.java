@@ -14,7 +14,7 @@ import org.cimmyt.cril.ibwb.domain.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.cimmyt.getcril.ibwb.domain.constants.TypeDB;
+import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 
