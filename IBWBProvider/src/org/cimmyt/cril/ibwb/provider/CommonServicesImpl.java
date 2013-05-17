@@ -2678,17 +2678,21 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Variate---------------------------
     @Override
     public void addVariate(Variate variate) {
-        this.variateDAO.create(variate);
+        //this.variateDAO.create(variate);
+    	utilityDAO.callStoredProcedureForUpdate(variate, "addVariate", new String[]{"studyid",
+    			"vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
     }
 
     @Override
     public void updateVariate(Variate variate) {
-        this.variateDAO.update(variate);
+        //this.variateDAO.update(variate);
+    	//not used - last check 5/17/2013
     }
 
     @Override
     public void deleteVariate(Variate variate) {
-        this.variateDAO.delete(variate);
+        //this.variateDAO.delete(variate);
+    	//not used - last check 5/17/2013
     }
 
     public Variate getVariate(Variate variate) {
@@ -2707,12 +2711,16 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Variate> getVariateList() {
-        return variateDAO.findAll();
+        //return variateDAO.findAll();
+    	return null;
+    	//not used - last check 5/17/2013
     }
 
     @Override
     public int getTotalVariate(Variate variate) {
-        return this.variateDAO.getTotal(variate);
+        //return this.variateDAO.getTotal(variate);
+    	return 0;
+    	//not used - last check 5/17/2013
     }
 
     @Override
