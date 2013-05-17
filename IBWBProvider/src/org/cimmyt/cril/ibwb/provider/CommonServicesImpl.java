@@ -2535,7 +2535,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateTraits(Traits traits) {
-        this.traitsDAO.update(traits);
+        if(isLocal()) {
+            this.utilityDAO.callStoredProcedureForUpdate(traits, "updateTraits", "tid","trname","trdesc","tnstat","traitgroup");
+        }
     }
 
     @Override
