@@ -289,7 +289,8 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------DataC---------------------------
     @Override
     public void addDataC(DataC dataC) {
-        this.dataCDAO.create(dataC);
+        //this.dataCDAO.create(dataC);
+    	addOrUpdateDataC(dataC);
     }
 
     @Override
@@ -306,12 +307,14 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateDataC(DataC dataC) {
-        this.dataCDAO.update(dataC);
+        //this.dataCDAO.update(dataC);
+    	addOrUpdateDataC(dataC);
     }
 
     @Override
     public void deleteDataC(DataC dataC) {
-        this.dataCDAO.delete(dataC);
+        //this.dataCDAO.delete(dataC);
+    	//not used - last check: 5-17-2013  
     }
 
 //    @Override
@@ -331,7 +334,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public int getTotalDataC(DataC dataC) {
-        return this.dataCDAO.getTotal(dataC);
+        //return this.dataCDAO.getTotal(dataC);
+    	return 0;
+    	//not used - last check 5/17/2013
     }
 
     @Override
@@ -369,22 +374,33 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void addDataN(DataN dataN) {
-        this.dataNDAO.create(dataN);
+        //this.dataNDAO.create(dataN);
+    	addOrUpdateDataN(dataN);
     }
 
     @Override
     public void addOrUpdateDataN(DataN dataN) {
-        this.dataNDAO.addOrUpdate(dataN);
+        //this.dataNDAO.addOrUpdate(dataN);
+    	//reusing addOrUpdateDataC as they are both saved in the same db
+    	if(isLocal()) {
+	    	HashMap map = new HashMap();
+	    	map.put("ounitid",dataN.getDataNPK().getOunitid());
+	    	map.put("variatid",dataN.getDataNPK().getVariatid());
+	    	map.put("dvalue", dataN.getDvalue());
+	    	this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC",map);
+    	}
     }
 
     @Override
     public void updateDataN(DataN dataN) {
-        this.dataNDAO.update(dataN);
+        //this.dataNDAO.update(dataN);
+    	addOrUpdateDataN(dataN);
     }
 
     @Override
     public void deleteDataN(DataN dataN) {
-        this.dataNDAO.delete(dataN);
+        //this.dataNDAO.delete(dataN);
+    	//not used - last check 05/17/2013
     }
 
 //    @Override
@@ -405,7 +421,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public int getTotalDataN(DataN dataN) {
-        return this.dataNDAO.getTotal(dataN);
+        //return this.dataNDAO.getTotal(dataN);
+    	return 0;//not used - last check 05/17/2013
     }
 
     @Override
@@ -444,17 +461,20 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------DataT---------------------------
     @Override
     public void addDataT(DataT dataT) {
-        this.dataTDAO.create(dataT);
+        //this.dataTDAO.create(dataT);
+    	//not used - last check 05/17/2013
     }
 
     @Override
     public void updateDataT(DataT dataT) {
-        this.dataTDAO.update(dataT);
+        //this.dataTDAO.update(dataT);
+    	//not used - last check 05/17/2013
     }
 
     @Override
     public void deleteDataT(DataT dataT) {
-        this.dataTDAO.delete(dataT);
+        //this.dataTDAO.delete(dataT);
+    	//not used - last check 05/17/2013
     }
 
 //    @Override
@@ -467,17 +487,23 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<DataT> getDataTList() {
-        return dataTDAO.findAll();
+        //return dataTDAO.findAll();
+    	return null;
+    	//not used - last check 05/17/2013
     }
 
     @Override
     public int getTotalDataT(DataT dataT) {
-        return this.dataTDAO.getTotal(dataT);
+        //return this.dataTDAO.getTotal(dataT);
+    	return 0;
+    	//not used - last check 05/17/2013
     }
 
     @Override
     public List<DataT> getListDataT(DataT filter, int start, int pageSize, boolean paged) {
-        return dataTDAO.getList(filter, start, pageSize, paged);
+        //return dataTDAO.getList(filter, start, pageSize, paged);
+    	return null;
+    	//not used - last check 05/17/2013
     }
 
 //-----------------------------------Datattr---------------------------
