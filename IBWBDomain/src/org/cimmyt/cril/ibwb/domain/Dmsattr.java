@@ -50,6 +50,8 @@ public class Dmsattr extends BaseFilter implements Serializable {
     @Column(name = "dmsatval")
     private String dmsatval;
 
+    private int islocal;
+
     public Dmsattr() {
     	setDefault();
     }
@@ -124,6 +126,17 @@ public class Dmsattr extends BaseFilter implements Serializable {
     public void setDmsatval(String dmsatval) {
         this.dmsatval = dmsatval;
     }
+
+
+    public int getIslocal() {
+            return islocal;
+    }
+
+    public void setIslocal(int islocal) {
+            this.islocal = islocal;
+    }
+
+
 
     @Override
     public int hashCode() {
