@@ -973,8 +973,20 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<LevelC> getListLevelC(LevelC filter, int start, int pageSize, boolean paged) {
-        return levelCDAO.getList(filter, start, pageSize, paged);
+        //return levelCDAO.getList(filter, start, pageSize, paged);
         //global search not used, pagination not used.
+        HashMap params = new HashMap();
+        if (filter.getLevelCPK() != null) {
+            params.put("labelid", filter.getLevelCPK().getLabelid());
+            params.put("levelno", filter.getLevelCPK().getLevelno());
+        }
+        params.put("factorid", filter.getFactorid());
+        params.put("lvalue1", null);
+        params.put("lvalue2", filter.getLvalue());
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(LevelN.class, "searchLevels", params,
+                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "iscentral"},
+      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
         
     }
 
@@ -1027,7 +1039,21 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<LevelN> getListLevelN(LevelN filter, int start, int pageSize, boolean paged) {
-        return levelNDAO.getList(filter, start, pageSize, paged);
+        //return levelNDAO.getList(filter, start, pageSize, paged);
+        //global search not used, pagination not used.
+        HashMap params = new HashMap();
+        if (filter.getLevelNPK() != null) {
+            params.put("labelid", filter.getLevelNPK().getLabelid());
+            params.put("levelno", filter.getLevelNPK().getLevelno());
+        }
+        params.put("factorid", filter.getFactorid());
+        params.put("lvalue1", null);
+        params.put("lvalue2", filter.getLvalue());
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        return this.utilityDAO.callStoredProcedureForList(LevelN.class, "searchLevels", params,
+                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "iscentral"},
+      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
+
     }
 
     public List<LevelN> getLevelnByLabelid(Integer labelid) {
