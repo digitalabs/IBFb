@@ -17,179 +17,264 @@ IN v_sstatus int,
 IN v_shierarchy int)
 begin
 
+DECLARE v_projectprop_id int;
+DECLARE v_project_relationship_id int;
+
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 
 IF(v_studyid IS NULL) THEN
 	
-	SELECT if(MIN(project_id) is NULL,-1,MIN(project_id) - 1) INTO v_studyid FROM project;
+	CALL getNextMinReturn('project',v_studyid);
 	
 	INSERT INTO project(project_id,name,description)
 	VALUES(v_studyid,v_sname,v_title);
 	
-	INSERT INTO project_relationship(type_id,object_project_id,subject_project_id)
-	VALUE(1145,v_shierarchy,v_studyid);
+	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1011,'STUDY',1);
+	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
+	VALUE(v_project_relationship_id,1145,v_shierarchy,v_studyid);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'STUDY NAME',1);
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 1 as rank
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1011,'STUDY',1);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'STUDY NAME',1);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 1 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_NAME';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_sname as value, 1 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_sname as value, 1 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_NAME';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1012,'TITLE',2);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'TITLE ASSIGNED',2);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1012,'TITLE',2);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 2 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'TITLE ASSIGNED',2);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 2 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_TITLE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_title as value, 2 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_title as value, 2 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_TITLE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'PMKEY',3);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'PROJECT MANAGEMENT KEY',3);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'PMKEY',3);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 3 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'PROJECT MANAGEMENT KEY',3);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 3 as rank
 	FROM cvterm
 	WHERE name = 'PM_KEY';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_pmkey as value, 3 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_pmkey as value, 3 as rank
 	FROM cvterm
 	WHERE name = 'PM_KEY';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'OBJECTIVE',4);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'OBJECTIVE DESCRIBED',4);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'OBJECTIVE',4);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 4 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'OBJECTIVE DESCRIBED',4);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 4 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_OBJECTIVE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_objectiv as value, 4 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_objectiv as value, 4 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_OBJECTIVE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'START DATE',5);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'STUDY START DATE',5);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'START DATE',5);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 5 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'STUDY START DATE',5);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 5 as rank
 	FROM cvterm
 	WHERE name = 'START_DATE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_sdate as value, 5 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_sdate as value, 5 as rank
 	FROM cvterm
 	WHERE name = 'START_DATE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'END DATE',6);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'STUDY END DATE',6);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'END DATE',6);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 6 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'STUDY END DATE',6);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 6 as rank
 	FROM cvterm
 	WHERE name = 'END_DATE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_edate as value, 6 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_edate as value, 6 as rank
 	FROM cvterm
 	WHERE name = 'END_DATE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'STUDY TYPE',7);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'TYPE OF STUDY',7);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'STUDY TYPE',7);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 7 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'TYPE OF STUDY',7);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 7 as rank
 	FROM cvterm
 	WHERE name = 'STUDY_TYPE';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvt1.cvterm_id as type_id, cvt2.cvterm_id as value, 7 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvt1.cvterm_id as type_id, cvt2.cvterm_id as value, 7 as rank
 	FROM cvterm cvt1, cvterm cvt2
 	WHERE cvt1.name = 'STUDY_TYPE'
 	AND cvt2.name = v_stype
   	AND cvt2.cv_id = 2010;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'PIID',8);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'ID OF PRINCIPAL INVESTIGATOR',8);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'PIID',8);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 8 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'ID OF PRINCIPAL INVESTIGATOR',8);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 8 as rank
 	FROM cvterm
 	WHERE name = 'PI_ID';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_investid as value, 8 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_investid as value, 8 as rank
 	FROM cvterm
 	WHERE name = 'PI_ID';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1010,'STUDY UID',9);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'STUDY USER ID',9);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1010,'STUDY UID',9);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 9 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'STUDY USER ID',9);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 9 as rank
 	FROM cvterm
 	WHERE name = 'Study_UID';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, v_userid as value, 9 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_userid as value, 9 as rank
 	FROM cvterm
 	WHERE name = 'Study_UID';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1011,'STATUS',10);
+	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	VALUES(v_studyid,1060,'STATUS',10);
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1011,'STATUS',10);
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, 1070, cvterm_id as value, 10 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_studyid,1060,'STATUS',10);
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 10 as rank
 	FROM cvterm
 	WHERE name = 'STATUS';
 	
-	INSERT INTO projectprop(project_id,type_id,value,rank)
-	SELECT v_studyid AS project_id, cvterm_id as type_id, 1 as value, 10 as rank
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, 1 as value, 10 as rank
 	FROM cvterm
 	WHERE name = 'STATUS';
 	
@@ -436,9 +521,13 @@ drop procedure if exists `deleteStudy`$$
 CREATE PROCEDURE `deleteStudy`(IN v_studyid int)
 begin
 	
-  	declare v_prevname varchar(50);
-  	declare v_postfix varchar(10);
-  
+declare v_prevname varchar(50);
+declare v_postfix varchar(10);
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
+
 	update projectprop pp
 	set value = 9
 	where pp.project_id = v_studyid
@@ -458,5 +547,7 @@ begin
 	update project
 	set name = CONCAT(v_prevname,'#',v_postfix)
 	where project_id = v_studyid;
+
+COMMIT;
 
 end$$ 
