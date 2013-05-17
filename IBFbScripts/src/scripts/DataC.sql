@@ -116,3 +116,77 @@ else
 	
 end if;
 end$$
+
+drop procedure if exists addOrUpdateDataC$$
+
+CREATE PROCEDURE addOrUpdateDataC(
+IN v_ounitid int,
+IN v_variatid int,
+IN v_dvalue varchar(50))
+begin
+
+DECLARE v_phenotype_id int;
+DECLARE v_phenotype_name varchar(50);
+DECLARE v_cvalue_id int;
+DECLARE v_nd_experiment_phenotype_id int;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
+
+select ph.phenotype_id into v_phenotype_id
+from nd_experiment_phenotype nep, phenotype ph, projectprop pp 
+where nep.nd_experiment_id = v_ounitid
+and nep.phenotype_id = ph.phenotype_id
+and ph.observable_id = pp.value
+and pp.projectprop_id = v_variatid;
+    
+IF(v_phenotype_id IS NULL) THEN
+
+	CALL getNextMinReturn('phenotype',v_phenotype_id);
+	
+	select value into v_phenotype_name
+	from projectprop pp
+	where pp.projectprop_id = v_variatid;
+	
+	select cvterm_id into v_cvalue_id 
+	from cvterm ct, cvterm_relationship cr  
+	where name =  v_dvalue
+	and object_id = ct.cvterm_id
+	and subject_id = v_phenotype_name
+	and exists (
+    select 1 
+    from projectprop pp, projectprop label
+    where pp.project_id = label.project_id
+    and pp.rank = label.rank
+    and label.type_id = 1048
+    and pp.projectprop_id = v_variatid);
+	
+	insert into phenotype(phenotype_id,uniquename,name,observable_id,attr_id,value,cvalue_id,assay_id) 
+	values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalue_id,NULL);
+	
+	CALL getNextMinReturn('nd_experiment_phenotype',v_nd_experiment_phenotype_id);
+	
+	insert into nd_experiment_phenotype(nd_experiment_phenotype_id,nd_experiment_id,phenotype_id)
+	values(v_nd_experiment_phenotype_id,v_ounitid,v_phenotype_id);
+
+ELSE 
+
+	select cvterm_id into v_cvalue_id 
+	from cvterm ct, cvterm_relationship cr, phenotype ph  
+	where ct.name =  v_dvalue
+	and cr.object_id = ct.cvterm_id
+	and cr.subject_id = ph.observable_id
+	and ph.phenotype_id = v_phenotype_id;
+	
+    update phenotype
+	set value = v_dvalue
+	,cvalue_id = v_cvalue_id 
+	where phenotype_id = v_phenotype_id;
+	
+	
+END IF;
+
+COMMIT;
+
+end$$

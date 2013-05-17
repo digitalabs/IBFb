@@ -294,7 +294,14 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void addOrUpdateDataC(DataC dataC) {
-        this.dataCDAO.addOrUpdate(dataC);
+    	//this.dataCDAO.addOrUpdate(dataC);
+    	if(isLocal()) {
+	    	HashMap map = new HashMap();
+	    	map.put("ounitid",dataC.getDataCPK().getOunitid());
+	    	map.put("variatid",dataC.getDataCPK().getVariatid());
+	    	map.put("dvalue", dataC.getDvalue());
+	    	this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC",map);
+    	}
     }
 
     @Override
