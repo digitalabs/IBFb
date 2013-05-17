@@ -72,7 +72,7 @@ begin
 	call addCvtermReturnId(1000, traitgroup, traitgroup, @newcvtermidgroup); --group
 	
 	-- add cvterm relationship --IN typeid int, IN subjectid int, IN objectid int
-	call addCvtermRelationship(1200,?subjectId?,@newcvtermid);
+	--call addCvtermRelationship(1200,?subjectId?,@newcvtermid);
 	-- add cvterm relationship	
-	call addCvtermRelationship(1225,@newcvtermid,@newcvtermidgroup);
+	--call addCvtermRelationship(1225,@newcvtermid,@newcvtermidgroup);
 end$$

@@ -2529,7 +2529,8 @@ public class CommonServicesImpl implements CommonServices {
     //-----------------------------------Traits---------------------------
     @Override
     public void addTraits(Traits traits) {
-        this.traitsDAO.create(traits);
+        //this.traitsDAO.create(traits);
+        this.utilityDAO.callStoredProcedureForUpdate(traits, "addTraits", new String[]{"trname","trdesc","traitGroup"});
     }
 
     @Override
