@@ -23,7 +23,7 @@ START TRANSACTION;
 
 IF(v_studyid IS NULL) THEN
 	
-	SELECT MIN(project_id) - 1 INTO v_studyid FROM project;
+	SELECT if(MIN(project_id) is NULL,-1,MIN(project_id) - 1) INTO v_studyid FROM project;
 	
 	INSERT INTO project(project_id,name,description)
 	VALUES(v_studyid,v_sname,v_title);
