@@ -2267,7 +2267,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<TmsMethod> getListTmsMethod(TmsMethod filter, int start, int pageSize, boolean paged) {
-        return tmsMethodDAO.getList(filter, start, pageSize, paged);
+    	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListTmsMethod", 
+				new String[]{"tmethid","tmname", "tmdesc"},
+				new String[]{"tmethid","tmname", "tmdesc"});
     }
 
 //-----------------------------------TmsScaleCon---------------------------
