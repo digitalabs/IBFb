@@ -35,3 +35,19 @@ begin
 	   AND cvr.type_id = 1200 -- get "has property" relationships
 	   AND cvt.cvterm_id = v_traitid;
 end$$
+
+
+drop procedure if exists `addTraits`$$
+
+CREATE PROCEDURE `addTraits` (IN trname varchar(255), IN trdesc varchar(255), IN traitgroup varchar(255))
+begin
+	-- add cvterm - IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500), OUT newcvtermidret INT
+	call addCvtermReturnId(1010, trname, trdesc, @newcvtermid);
+	call addCvtermReturnId(1000, traitgroup, traitgroup, @newcvtermidgroup); --group
+	
+	-- add cvterm relationship --IN typeid int, IN subjectid int, IN objectid int
+	call addCvtermRelationship(1200,?subjectId?,@newcvtermid);
+	-- add cvterm relationship	
+	call addCvtermRelationship(1225,@newcvtermid,@newcvtermidgroup);
+end$$
+
