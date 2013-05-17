@@ -2053,35 +2053,47 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Steffect---------------------------
     @Override
     public void addSteffect(Steffect steffect) {
-        this.steffectDAO.create(steffect);
+        //this.steffectDAO.create(steffect);
+    	utilityDAO.callStoredProcedureForUpdate(steffect,"addSteffect","effectid",
+    			"studyid","effectname");
     }
 
     @Override
     public void updateSteffect(Steffect steffect) {
-        this.steffectDAO.update(steffect);
+        //this.steffectDAO.update(steffect);
+    	//not used - last check 5/17/2013
     }
 
     @Override
     public void deleteSteffect(Steffect steffect) {
-        this.steffectDAO.delete(steffect);
+        //this.steffectDAO.delete(steffect);
+    	//not used - last check 5/17/2013
     }
 
     public Steffect getSteffect(Steffect steffect) {
-        return this.steffectDAO.findById(steffect.getEffectid());
+        //return this.steffectDAO.findById(steffect.getEffectid());
+    	return null;
+    	//not used - last check 5/17/2013
     }
 
     public Steffect getSteffect(Integer idSteffect) {
-        return this.steffectDAO.findById(idSteffect);
+        //return this.steffectDAO.findById(idSteffect);
+    	return null;
+    	//not used - last check 5/17/2013
     }
 
     @Override
     public List<Steffect> getSteffectList() {
-        return steffectDAO.findAll();
+        //return steffectDAO.findAll();
+    	return null;
+      //not used - last check 5/17/2013
     }
 
     @Override
     public int getTotalSteffect(Steffect steffect) {
-        return this.steffectDAO.getTotal(steffect);
+        //return this.steffectDAO.getTotal(steffect);
+    	return 0;
+    	//not used - last check 5/17/2013
     }
 
     @Override
@@ -2099,8 +2111,9 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<Steffect> getSteffectByStudyid(Integer studyid) {
-        //not being use, please confirm
-        return steffectDAO.getSteffectByStudyid(studyid);
+        ////not used - last check 5/17/2013
+       // return steffectDAO.getSteffectByStudyid(studyid);
+    	return null;
     }
 
     public List<Integer> getEffectidsByStudyid(Integer studyid) {
