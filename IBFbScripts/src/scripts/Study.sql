@@ -24,8 +24,6 @@ DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK;
 
 START TRANSACTION;
 	
-	CALL getNextMinReturn('project',v_studyid);
-	
 	INSERT INTO project(project_id,name,description)
 	VALUES(v_studyid,v_sname,v_title);
 	
