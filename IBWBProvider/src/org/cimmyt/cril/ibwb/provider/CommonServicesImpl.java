@@ -1,26 +1,23 @@
 package org.cimmyt.cril.ibwb.provider;
 
 import ibfb.domain.core.Measurement;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.cimmyt.cril.ibwb.api.CommonServices;
+import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
+import org.cimmyt.cril.ibwb.domain.*;
+import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
+import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
+import org.cimmyt.cril.ibwb.domain.util.WheatData;
+import org.cimmyt.cril.ibwb.provider.dao.*;
+import org.cimmyt.cril.ibwb.provider.dto.EffectDto;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.cimmyt.cril.ibwb.api.*;
-import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
-import org.cimmyt.cril.ibwb.domain.*;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
-import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
-import org.cimmyt.cril.ibwb.domain.util.WheatData;
-
-import org.cimmyt.cril.ibwb.provider.dao.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -667,12 +664,25 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<Effect> getEffectList() {
-        return effectDAO.findAll();
+        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getAllEffects", new HashMap(), null, null);
+        List<Effect> returnVal = new ArrayList<Effect>(temp.size());
+
+        for (Object o : temp) {
+            EffectDto dto = (EffectDto) o;
+            Effect effect = new Effect(dto.getRepresNo(), dto.getFactorId(), dto.getEffectId());
+            returnVal.add(effect);
+        }
+
+        return returnVal;
     }
 
     @Override
     public int getTotalEffect(Effect effect) {
-        return this.effectDAO.getTotal(effect);
+        HashMap params = new HashMap();
+        params.put("represNo", effect.getEffectPK().getRepresno());
+        params.put("factorId", effect.getEffectPK().getFactorid());
+        params.put("effectId", effect.getEffectPK().getEffectid());
+        return utilityDAO.callStoredProcedureForCount("getTotalEffectsByEffect", params);
     }
 
     @Override
@@ -681,7 +691,32 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<Effect> getEffectsByEffectsids(final List effectsIds) {
-        return effectDAO.getEffectsByEffectsids(effectsIds);
+
+        /*return effectDAO.getEffectsByEffectsids(effectsIds);*/
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < effectsIds.size(); i++) {
+            buffer.append(effectsIds.get(i));
+
+            if ( (i + 1) < effectsIds.size() ) {
+                buffer.append(",");
+
+            }
+        }
+        HashMap params = new HashMap();
+        params.put("idList", buffer.toString());
+
+
+        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getEffectsByEffectIdList", params, new String[] {"idList"}, null);
+        List<Effect> returnVal = new ArrayList<Effect>(temp.size());
+
+        for (Object o : temp) {
+            EffectDto dto = (EffectDto) o;
+            Effect effect = new Effect(dto.getRepresNo(), dto.getFactorId(),dto.getEffectId());
+
+            returnVal.add(effect);
+        }
+
+        return returnVal;
     }
 
 //-----------------------------------Factor---------------------------
@@ -1780,6 +1815,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public Represtn getReprestnForStudyId(final Integer studyId, String represName) {
         return represtnDAO.getReprestnForStudyId(studyId, represName);
+
+        /*return utilityDAO.*/
     }
 //-----------------------------------Scale---------------------------
     @Override
@@ -2457,7 +2494,7 @@ public class CommonServicesImpl implements CommonServices {
     /**
      * Gets a ScaleCon by Measured In ID
      *
-     * @param Measured In ID
+     * @param measuredinId
      * @return TmsScaleCon Object if found, if not it returns NULL
      */
     @Override
@@ -2474,7 +2511,7 @@ public class CommonServicesImpl implements CommonServices {
     /**
      * Adds or updates an Object TmsScaleCon to database
      *
-     * @param tmsScaleCon Objeto a agregar
+     * @param tmsScaleDis Objeto a agregar
      */
     @Override
     public void addOrUpdateTmsScaleDis(TmsScaleDis tmsScaleDis) {
@@ -2524,7 +2561,7 @@ public class CommonServicesImpl implements CommonServices {
     /**
      * Gets a ScaleCon by Measured In ID
      *
-     * @param Measured In ID
+     * @param measuredinId
      * @return TmsScaleCon Object if found, if not it returns NULL
      */
     @Override
