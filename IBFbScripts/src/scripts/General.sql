@@ -83,36 +83,6 @@ SELECT
     , prop.value AS varid
     , GROUP_CONCAT(
          CASE
-           WHEN stinrel.object_id IN (1010, 1011, 1012) AND mfactors.value = '8005' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1015, 1016, 1017) AND mfactors.value = '8150' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1040, 1041, 1042, 1046, 1047) AND mfactors.value = '8230' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1020, 1021, 1022, 1023, 1024, 1025) AND mfactors.value = '8170' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id = 1030 AND mfactors.value IN ('8200', '8380') THEN mfactors.projectprop_id
-         END
-      ) AS factorid
-    , stinrel.object_id AS storedinid
-    , traitrel.object_id AS traitid
-    , dtyperel.object_id AS dtypeid
-  FROM projectprop prop
-  INNER JOIN cvterm_relationship stinrel ON stinrel.subject_id = prop.value and stinrel.type_id = 1044
-  INNER JOIN cvterm_relationship traitrel on traitrel.subject_id = prop.value and traitrel.type_id = 1200
-  INNER JOIN cvterm_relationship dtyperel ON dtyperel.subject_id = prop.value AND dtyperel.type_id = 1105
-  LEFT JOIN projectprop mfactors ON mfactors.project_id = prop.project_id AND mfactors.type_id = 1070 
-    AND mfactors.value in ('8005', '8150', '8230', '8170', '8200', '8380')
-  WHERE prop.type_id = 1070 
-  GROUP BY prop.projectprop_id
-$$
-
-DROP VIEW IF EXISTS `v_stdvar`$$
-CREATE VIEW v_stdvar (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
-AS
-SELECT 
-    prop.projectprop_id AS projectprop_id
-    , prop.project_id AS project_id
-    , prop.rank AS rank
-    , prop.value AS varid
-    , GROUP_CONCAT(
-         CASE
            WHEN stinrel.object_id = 1047 AND mfactors.value = '8230' THEN mfactors.projectprop_id
            WHEN stinrel.object_id IN (1010, 1011, 1012) AND mfactors.value = '8005' THEN mfactors.projectprop_id
            WHEN stinrel.object_id IN (1015, 1016, 1017) AND mfactors.value = '8150' THEN mfactors.projectprop_id
@@ -144,7 +114,7 @@ stdvar.projectprop_id AS labelId
 , CASE
     WHEN stdvar.storedinid IN (1010, 1011, 1012, 1015, 1016, 1017) THEN p.project_id
     WHEN stdvar.storedinid IN (1020, 1021, 1022, 1023, 1024, 1025) THEN geo.nd_geolocation_id
-    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experimentprop_id
+    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experiment_id
     WHEN stdvar.storedinid IN (1040, 1041, 1042, 1046, 1047) THEN stock.stock_id
   END AS levelno
 , CASE stdvar.storedinid 
