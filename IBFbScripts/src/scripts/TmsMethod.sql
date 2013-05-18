@@ -29,3 +29,16 @@ begin
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 end$$
+
+drop procedure if exists `getTmsMethodList`$$
+
+CREATE PROCEDURE `getTmsMethodList` ()
+begin
+	SET @sql := CONCAT("SELECT cvterm_id AS tmethid, ",
+	   			"name AS tmname, ",
+       			"definition AS tmdesc ",
+  				"FROM cvterm "
+ 				"WHERE cv_id = 1020 ");
+	PREPARE stmt FROM @sql;
+	EXECUTE stmt;
+end$$

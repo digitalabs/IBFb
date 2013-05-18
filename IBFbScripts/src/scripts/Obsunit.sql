@@ -55,7 +55,7 @@ begin
 --to get the the nd_experiment_id
 --need to get nd_geolocation_id by effectid
 
-select projectprop_id from projectprop where project_id = effectidin and type_id = 1021;
+--select projectprop_id from projectprop where project_id = effectidin and type_id = 1021;
 
 insert into nd_experiment_project (project_id, nd_experiment_id) value (effectidin, nd_experimentidin);
 --insert into project_relationship(subject_project_id,object_project_id,type_id) value (effectidin, ?, 1050)
