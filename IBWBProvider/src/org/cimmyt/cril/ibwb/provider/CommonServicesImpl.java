@@ -2870,17 +2870,31 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Veffect---------------------------
     @Override
     public void addVeffect(Veffect veffect) {
-        this.veffectDAO.create(veffect);
+        //this.veffectDAO.create(veffect);
+    	//05-18-2013 - this is no longer needed in the new schema
+    	/*
+    	 
+    	In addVariate, all entries for the variate are inserted in projectprop
+    	
+    	while in addDataC and addDataN, values are inserted in phenotype and nd_experiment_phenotype
+
+    	For nd_experiment, record is added in adding a level
+
+    	getting effectid at variatid for veffect are derived from values in projectprop and phenotype
+    	
+    	*/
     }
 
     @Override
     public void updateVeffect(Veffect veffect) {
-        this.veffectDAO.update(veffect);
+        //this.veffectDAO.update(veffect);
+    	//same comment in addVeffect
     }
 
     @Override
     public void deleteVeffect(Veffect veffect) {
-        this.veffectDAO.delete(veffect);
+        //this.veffectDAO.delete(veffect);
+    	//not used - last check 05-18-2013
     }
 
 //    public Veffect getVeffect(Veffect veffect) {
@@ -2892,17 +2906,22 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<Veffect> getVeffectList() {
-        return veffectDAO.findAll();
+       // return veffectDAO.findAll();
+    	//not used - last check 05-18-2013
     }
 
     @Override
     public int getTotalVeffect(Veffect veffect) {
-        return this.veffectDAO.getTotal(veffect);
+        //return this.veffectDAO.getTotal(veffect);
+    	return 0;
+    	//not used - last check 05-18-2013
     }
 
     @Override
     public List<Veffect> getListVeffect(Veffect filter, int start, int pageSize, boolean paged) {
-        return veffectDAO.getList(filter, start, pageSize, paged);
+        //return veffectDAO.getList(filter, start, pageSize, paged);
+    	return null;
+    	//not used - last check 05-18-2013
     }
 
 //---------------------------------------------Seters and Getter of DAO
