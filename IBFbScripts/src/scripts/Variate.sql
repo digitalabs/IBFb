@@ -141,22 +141,23 @@ CREATE PROCEDURE `getVarieteFromVeffects`(IN p_represno int)
 BEGIN
 
   SELECT
-    term.cvterm_id AS variatid
+    pp.projectprop_id AS variatid
     , pr.object_project_id AS studyid
     , term.name AS vname
     , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
     , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
     , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid
-    , GROUP_CONCAT(IF(cvr.type_id = 1105, cvr.object_id, NULL)) AS dtype
-    , GROUP_CONCAT(IF(cvr.type_id = 1225, cvr.object_id, NULL)) AS vtype
+    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1128), 'C', 'N'), NULL)) AS dtype
+    , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
     , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
   FROM
     cvterm term
     INNER JOIN projectprop pp ON pp.type_id = 1070 AND pp.value = term.cvterm_id
     INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
     INNER JOIN cvterm_relationship cvr ON cvr.subject_id = term.cvterm_id
-    INNER JOIN cvterm_relationship stin ON stin.subject_id = term.cvterm_id AND stin.type_id = 1044
-  WHERE
+    INNER JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
+    INNER JOIN cvterm_relationship stin ON stin.subject_id = term.cvterm_id AND stin.type_id = 1044  
+WHERE
     stin.object_id IN (1043, 1048)
     AND pp.project_id = p_represno
   GROUP BY
