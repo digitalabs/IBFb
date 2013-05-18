@@ -31,7 +31,7 @@ drop procedure if exists getTotalEffectsByEffect$$
 
 CREATE PROCEDURE getTotalEffectsByEffect(IN represNo int, IN factorId int, IN effectId int)
 BEGIN
-  SET @myQuery = 'select count(distinct *) from(
+  SET @myQuery = 'select count(distinct *) as effectCount from(
   SELECT
         prop.project_id AS represNo,
         CASE

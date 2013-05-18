@@ -10,6 +10,7 @@ import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 import org.cimmyt.cril.ibwb.provider.dao.*;
 import org.cimmyt.cril.ibwb.provider.dto.EffectDto;
+import org.cimmyt.cril.ibwb.provider.dto.TraitDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -641,7 +642,9 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Effect---------------------------
     @Override
     public void addEffect(Effect effect) {
-        this.effectDAO.create(effect);
+
+        // implementation changed to return immediately since tracing reveals that values in provided param already exist in system
+        return;
     }
 
     @Override
@@ -664,7 +667,9 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<Effect> getEffectList() {
-        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getAllEffects", new HashMap(), null, null);
+        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getAllEffects", new HashMap(), null,
+                new String[] {"represNo", "factorId", "effectId"});
+
         List<Effect> returnVal = new ArrayList<Effect>(temp.size());
 
         for (Object o : temp) {
@@ -682,6 +687,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("represNo", effect.getEffectPK().getRepresno());
         params.put("factorId", effect.getEffectPK().getFactorid());
         params.put("effectId", effect.getEffectPK().getEffectid());
+
         return utilityDAO.callStoredProcedureForCount("getTotalEffectsByEffect", params);
     }
 
@@ -706,7 +712,8 @@ public class CommonServicesImpl implements CommonServices {
         params.put("idList", buffer.toString());
 
 
-        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getEffectsByEffectIdList", params, new String[] {"idList"}, null);
+        List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getEffectsByEffectIdList",
+                params, new String[] {"idList"}, new String[] {"represNo", "factorId", "effectId"});
         List<Effect> returnVal = new ArrayList<Effect>(temp.size());
 
         for (Object o : temp) {
@@ -1802,7 +1809,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Represtn> getListReprestn(Represtn filter, int start, int pageSize, boolean paged) {
-        return represtnDAO.getList(filter, start, pageSize, paged);
+        String[] paramNames = new String[] {"represno", "represname", "effectid"};
+        return utilityDAO.callStoredProcedureForListPaged(filter, paged,start, pageSize, "getReprestnForReprestn",
+                paramNames, paramNames);
     }
 
     /**
@@ -1814,7 +1823,13 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public Represtn getReprestnForStudyId(final Integer studyId, String represName) {
-        return represtnDAO.getReprestnForStudyId(studyId, represName);
+
+        HashMap params = new HashMap();
+        params.put("studyId", studyId);
+        params.put("represName", represName);
+
+        return utilityDAO.callStoredProcedureForObject(new Represtn(), "getReprestnForStudyId", params,
+                new String[] {"represno", "represname", "effectid"});
 
         /*return utilityDAO.*/
     }
@@ -2613,7 +2628,23 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Trait> getListTrait(Trait filter, int start, int pageSize, boolean paged) {
         //return traitDAO.getList(filter, start, pageSize, paged);
-        return traitDAO.getTraitsWithScales();
+        TraitDto dto = new TraitDto(filter.getTid(), filter.getTraitid(), filter.getTrname(),
+                filter.getTrdesc(), filter.getTnstat(), filter.getTraitGroup());
+
+        List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
+                start,pageSize, "getTraitListByTrait",
+                new String[] {"tid","traitId", "traitName", "traitDescription", "traitGroup"},
+                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup"});
+        List<Trait> returnVal = new ArrayList<Trait>(temp.size());
+        for (Object o : temp) {
+            dto = (TraitDto) o;
+
+            Trait trait = new Trait(dto.getTid(), dto.getTraitId(), dto.getTraitName(), "", dto.getTraitDescription(),
+                    null, dto.getTraitGroup(), "");
+            returnVal.add(trait);
+        }
+
+        return returnVal;
     }
 
     //-----------------------------------Traits---------------------------

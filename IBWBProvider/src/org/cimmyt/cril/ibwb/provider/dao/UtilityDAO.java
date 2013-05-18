@@ -98,6 +98,69 @@ public class UtilityDAO extends HibernateDaoSupport {
         return (T) result;
     }
 
+    /**
+     *
+     * @param bean Bean
+     * @param procedureName Name of the procedure in the database to invoke
+     * @param params HashMap containing key value pairs specifying the parameters to provide to the stored proc
+     * @param outParams String array containing the column names in the return of the stored proc that need to be mapped back to the object
+     * @param <T>
+     * @return
+     */
+    public <T> T callStoredProcedureForObject(
+            final T bean,
+            final String procedureName,
+            final HashMap params,
+            final String[] outParams) {
+
+        final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = " + sql);
+        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+
+            @Override
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                SQLQuery query = session.
+                        createSQLQuery(sql);
+                query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
+                try {
+
+                    if (params != null && params.size() > 0) {
+
+                        for (Object o : params.entrySet()) {
+                            Map.Entry entry = (Map.Entry) o;
+                            System.out.println(entry.getKey() + " = " + entry.getValue());
+                            query.setParameter(entry.getKey().toString(), entry.getValue());
+                        }
+                    }
+
+                    if (outParams != null && outParams.length > 0) {
+                        for (String paramName : outParams) {
+                            Class type = PropertyUtils.getPropertyType(bean, paramName);
+                            if (type.getSimpleName().equals("Integer")) {
+                                query.addScalar(paramName, Hibernate.INTEGER);
+                            } else if (type.getSimpleName().equals("Double")) {
+                                query.addScalar(paramName, Hibernate.DOUBLE);
+                            } else {
+                                query.addScalar(paramName);
+                            }
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (InvocationTargetException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                } catch (NoSuchMethodException e) {
+                    log.error("error in setting parameters " + e.getMessage());
+                }
+                return query.uniqueResult();
+            }
+        });
+
+
+        return (T) result;
+    }
+
     @SuppressWarnings("rawtypes")
     public Integer callStoredProcedureForCount(
             final String procedureName,
