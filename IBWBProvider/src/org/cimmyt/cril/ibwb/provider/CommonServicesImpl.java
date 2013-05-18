@@ -1098,7 +1098,14 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateLevelN(LevelN levelN) {
-        this.levelNDAO.update(levelN);
+        //this.levelNDAO.update(levelN);
+    	
+    	LinkedHashMap params = new LinkedHashMap();
+        params.put("labelid", levelN.getLevelNPK().getLabelid());
+        params.put("factorid", levelN.getFactorid());
+        params.put("levelno", levelN.getLevelNPK().getLevelno());
+        params.put("valuein", levelN.getLvalue());
+        this.utilityDAO.callStoredProcedureForUpdate("updateLevelN", params);
     }
 
     @Override
