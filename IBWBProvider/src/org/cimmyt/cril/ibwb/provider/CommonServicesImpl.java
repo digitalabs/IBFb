@@ -1780,7 +1780,8 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Represtn---------------------------
     @Override
     public void addReprestn(Represtn represtn) {
-        this.represtnDAO.create(represtn);
+        // functionally, at this point in the UI the data contained in the Represtn object has already been saved into the system. Hence the quick return
+        return;
     }
 
     @Override
