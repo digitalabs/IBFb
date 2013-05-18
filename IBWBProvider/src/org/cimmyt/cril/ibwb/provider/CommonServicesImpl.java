@@ -410,6 +410,8 @@ public class CommonServicesImpl implements CommonServices {
         Integer id = this.utilityDAO.getNextMin("nd_experiment");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
+        params.put("nd_geolocation_id", ndGeolocationId);
+        params.put("typeId", typeId);
         this.utilityDAO.callStoredProcedureForUpdate("addNdExperiment", params);
         return id;
     }
