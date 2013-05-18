@@ -1556,11 +1556,16 @@ public class CommonServicesImpl implements CommonServices {
     public void addObsunit(Obsunit obsunit) {
         //daniel
         //test with 10085
-        Integer id = this.utilityDAO.getNextMin("nd_experiment");
+        /*Integer id = this.utilityDAO.getNextMin("nd_experiment");
         obsunit.setOunitid(id);
-        this.utilityDAO.callStoredProcedureForUpdate(obsunit, "addObsunit", new String[]{"ounitid", "effectid"});
+        this.utilityDAO.callStoredProcedureForUpdate(obsunit, "addObsunit", new String[]{"ounitid", "effectid"});*/
         //System.out.println(isCentral()+"========================= id is "+id);
         //this.obsunitDAO.create(obsunit);
+    	
+    	//05-18-2013 - this method should not be used
+    	//an nd_experiment record is already inserted by adding level entries 
+    	//this method cannot retrieve the created nd_experiment_id as it has no information on it
+    	//addOindex will be used instead to create the nd_experiment_project
     }
 
     @Override
@@ -1631,15 +1636,14 @@ public class CommonServicesImpl implements CommonServices {
     }
 //-----------------------------------Oindex---------------------------
 
-    @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
     public void addOindex(Oindex oindex) {
         //this.oindexDAO.create(oindex);
     	if(isLocal()) {
     		HashMap params = new HashMap();
-    		params.put("ounitid", oindex.getOindexPK().getOunitid());
     		params.put("factorid", oindex.getOindexPK().getFactorid());
     		params.put("levelno", oindex.getOindexPK().getLevelno());
-    		params.put("represno", oindex.getOindexPK().getRepresno());
     		this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
     	}
     }
