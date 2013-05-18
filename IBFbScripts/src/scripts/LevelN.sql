@@ -93,3 +93,133 @@ BEGIN
 	
 
 END$$
+
+
+DROP PROCEDURE IF EXISTS `updateLevelN`$$
+
+CREATE PROCEDURE `updateLevelN`(
+  IN labelidin int
+  , IN factoridin int
+  , IN levelnoin int
+ , IN lvaluein double)
+
+BEGIN
+
+	DECLARE v_storedinid INT;
+	DECLARE projectid INT;
+	
+	SELECT storedinid 
+	  INTO v_storedinid
+      FROM v_stdvar
+     WHERE projectprop_id = labelidin; 
+	
+	IF (v_storedinid = 1010 OR v_storedinid = 1015) THEN
+		UPDATE v_stdvar stdvar 
+	     INNER JOIN projectprop pval ON pval.type_id = stdvar.varid AND pval.project_id = stdvar.project_id AND pval.rank = stdvar.rank
+		   SET pval.value = lvaluein
+		 WHERE stdvar.projectprop_id = labelidin;
+    END IF;
+	
+	IF (v_storedinid = 1011 OR v_storedinid = 1016) THEN
+		-- get project id first
+		SELECT @projectid = projectprop_id 
+          FROM projectprop 
+		 WHERE projectprop_id = labelidin;
+		
+		UPDATE project
+		   SET name = lvaluein
+		 WHERE project_id = @projectid;
+    END IF;
+
+	IF (v_storedinid = 1012 OR v_storedinid = 1017) THEN
+		-- get project id first
+		SELECT @projectid = projectprop_id 
+          FROM projectprop 
+		 WHERE projectprop_id = labelidin;
+		
+		UPDATE project
+		   SET description = lvaluein
+		 WHERE project_id = @projectid;
+    END IF;
+	
+	IF (v_storedinid = 1020) THEN
+		UPDATE nd_geolocationprop gp
+		 INNER JOIN v_stdvar stdvar ON stdvar.varid = gp.type_id
+		   SET gp.value = lvaluein
+		 WHERE gp.nd_geolocation_id = levelnoin
+		   AND stdvar.projectprop_id = labelidin;
+    END IF;
+	
+	IF (v_storedinid = 1021) THEN
+		UPDATE nd_geolocation 
+           SET description = lvaluein 
+         WHERE nd_geolocation_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1022) THEN
+		UPDATE nd_geolocation 
+		   SET latitude = lvaluein 
+		 WHERE nd_geolocation_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1023) THEN
+		UPDATE nd_geolocation 
+           SET longitude = lvaluein 
+		 WHERE nd_geolocation_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1024) THEN
+		UPDATE nd_geolocation 
+           SET geodetic_datum = lvaluein 
+		 WHERE nd_geolocation_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1025) THEN
+		UPDATE nd_geolocation 
+           SET altitude = lvaluein 
+         WHERE nd_geolocation_id = levelnoin;
+    END IF;
+	
+	IF (v_storedinid = 1030) THEN
+		UPDATE nd_experimentprop exp
+		 INNER JOIN v_stdvar stdvar ON stdvar.varid = exp.type_id
+		   SET value = lvaluein
+		 WHERE exp.nd_experiment_id = levelnoin
+		   AND stdvar.projectprop_id = labelidin;	
+    END IF;
+
+	IF (v_storedinid = 1040) THEN		
+		UPDATE stockprop sp
+		 INNER JOIN v_stdvar stdvar ON stdvar.varid = sp.type_id
+		   SET sp.value = lvaluein
+		 WHERE sp.stock_id = levelnoin
+		  and stdvar.projectprop_id = labelidin;
+    END IF;
+
+	IF (v_storedinid = 1041) THEN
+		UPDATE stock 
+           SET uniquename = lvaluein 
+		 WHERE stock_id = levelnoin;
+    END IF;
+	IF(v_storedinid = 1042) THEN
+		UPDATE stock 
+           SET dbxref_id = lvaluein 
+		 WHERE stock_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1046) THEN
+		UPDATE stock 
+           SET name = lvaluein 
+		 WHERE stock_id = levelnoin;
+    END IF;
+
+	IF (v_storedinid = 1047) THEN
+		UPDATE stock 
+           SET value = lvaluein 
+		 WHERE stock_id = levelnoin;
+    END IF;
+	
+
+END$$
+
+
