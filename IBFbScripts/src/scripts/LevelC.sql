@@ -12,36 +12,40 @@ BEGIN
 
 	declare storedinid INT;
 	declare newlevelno int;
+	declare projectid INT;
+	declare termid varchar(255);
+	declare rankint INT; 
 	
 	select @storedinid = storedinid from v_level where labelid = labelidin limit 1; 
 	
 	IF(@storedinid = 1010 or @storedinid = 1015) THEN
 		call getNextMinReturn('projectprop', @newppid);
-		declare projectid INT;
-		declare termid varchar(255);
-		declare rankint INT; 
+		
 		select @projectid = projectprop_id, @termid = value, @rankint = rank from projectprop where projectprop_id = labelidin;
 		insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, @projectid, @termid, lvaluein, @rankint);
     END IF;
+	/*
 	IF(@storedinid = 1011) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
 	IF(@storedinid = 1012) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
 	
 	IF(@storedinid = 1016) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
 	IF(@storedinid = 1017) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
-	
+	*/
 	IF(@storedinid = 1020) THEN
 		call getNextMinReturn('nd_geolocationprop', @newgeoid);
-		declare projectid INT;
-		declare termid varchar(255);
-		declare rankint INT; 
+		 
 		select @projectid = projectprop_id, @termid = value, @rankint = rank from projectprop where projectprop_id = labelidin;
 		
 		insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, @termid , lvaluein, 0);
@@ -65,9 +69,7 @@ BEGIN
 	
 	IF(@storedinid = 1030) THEN
 		call getNextMinReturn('nd_experimentprop', @newexpid);
-		declare projectid INT;
-		declare termid varchar(255);
-		declare rankint INT; 
+		
 		select @projectid = projectprop_id, @termid = value, @rankint = rank from projectprop where projectprop_id = labelidin;
 		
 		insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, @termid , lvaluein, 0);
@@ -75,9 +77,7 @@ BEGIN
     END IF;
 	IF(@storedinid = 1040) THEN
 		call getNextMinReturn('stockprop', @newstockpropid);
-		declare projectid INT;
-		declare termid varchar(255);
-		declare rankint INT; 
+		
 		select @projectid = projectprop_id, @termid = value, @rankint = rank from projectprop where projectprop_id = labelidin;
 		
 		insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, @termid , lvaluein, 0);
