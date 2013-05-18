@@ -102,21 +102,22 @@ BEGIN
 END$$
 
 
+
 DROP PROCEDURE IF EXISTS `updateLevelC`$$
 
 CREATE PROCEDURE `updateLevelC`(
   IN labelidin int
   , IN factoridin int
   , IN levelnoin int
- , IN lvaluein varchar(500))
+  , IN lvaluein varchar(500))
 
 BEGIN
 
 	DECLARE v_storedinid INT;
-	DECLARE projectid INT;
+	DECLARE v_projectid INT;
 	
-	SELECT storedinid 
-	  INTO v_storedinid
+	SELECT storedinid, project_id 
+	  INTO v_storedinid, v_projectid
       FROM v_stdvar
      WHERE projectprop_id = labelidin; 
 	
@@ -127,26 +128,16 @@ BEGIN
 		 WHERE stdvar.projectprop_id = labelidin;
     END IF;
 	
-	IF (v_storedinid = 1011 OR v_storedinid = 1016) THEN
-		-- get project id first
-		SELECT @projectid = projectprop_id 
-          FROM projectprop 
-		 WHERE projectprop_id = labelidin;
-		
+	IF (v_storedinid = 1011 OR v_storedinid = 1016) THEN			
 		UPDATE project
 		   SET name = lvaluein
-		 WHERE project_id = @projectid;
+		 WHERE project_id = v_projectid;
     END IF;
 
 	IF (v_storedinid = 1012 OR v_storedinid = 1017) THEN
-		-- get project id first
-		SELECT @projectid = projectprop_id 
-          FROM projectprop 
-		 WHERE projectprop_id = labelidin;
-		
 		UPDATE project
 		   SET description = lvaluein
-		 WHERE project_id = @projectid;
+		 WHERE project_id = v_projectid;
     END IF;
 	
 	IF (v_storedinid = 1020) THEN
