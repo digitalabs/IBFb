@@ -1591,17 +1591,27 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void addOindex(Oindex oindex) {
-        this.oindexDAO.create(oindex);
+        //this.oindexDAO.create(oindex);
+    	if(isLocal()) {
+    		HashMap params = new HashMap();
+    		params.put("ounitid", oindex.getOindexPK().getOunitid());
+    		params.put("factorid", oindex.getOindexPK().getFactorid());
+    		params.put("levelno", oindex.getOindexPK().getLevelno());
+    		params.put("represno", oindex.getOindexPK().getRepresno());
+    		this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
+    	}
     }
 
     @Override
     public void updateOindex(Oindex oindex) {
-        this.oindexDAO.update(oindex);
+        //this.oindexDAO.update(oindex);
+    	//not used - last check 05/18/2013
     }
 
     @Override
     public void deleteOindex(Oindex oindex) {
-        this.oindexDAO.delete(oindex);
+        //this.oindexDAO.delete(oindex);
+      //not used - last check 05/18/2013
     }
 
 //    public Oindex getOindex(Oindex oindex) {
@@ -1613,17 +1623,23 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<Oindex> getOindexList() {
-        return oindexDAO.findAll();
+        //return oindexDAO.findAll();
+    	return null;
+    	//not used - last check 05/18/2013
     }
 
     @Override
     public int getTotalOindex(Oindex oindex) {
-        return this.oindexDAO.getTotal(oindex);
+        //return this.oindexDAO.getTotal(oindex);
+    	return 0;
+    	//not used - last check 05/18/2013
     }
 
     @Override
     public List<Oindex> getListOindex(Oindex filter, int start, int pageSize, boolean paged) {
-        return oindexDAO.getList(filter, start, pageSize, paged);
+        //return oindexDAO.getList(filter, start, pageSize, paged);
+    	return null;
+    	//not used - last check 05/18/2013
     }
 
     /**
@@ -1633,7 +1649,9 @@ public class CommonServicesImpl implements CommonServices {
      * @return List of Oindex or empty list if not records match
      */
     public List<Oindex> getOindexListByRepresno(final Integer represno) {
-        return oindexDAO.getOindexListByRepresno(represno);
+        //return oindexDAO.getOindexListByRepresno(represno);
+    	return null;
+    	//not used - last check 05/18/2013
     }
 //-----------------------------------Persons---------------------------
 
