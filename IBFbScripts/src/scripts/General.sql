@@ -6,7 +6,7 @@ CREATE PROCEDURE `getNextMin`(
 IN tableName varchar(255))
 begin
 
-SET @sql := CONCAT("select IF(min(",tableName,"_id) is NULL, -1, min(",tableName,"_id) -1)  as id from ",tableName);
+SET @sql := CONCAT("select IF(min(",tableName,"_id) is NULL or min(",tableName,"_id) >= 0, -1, min(",tableName,"_id) -1)  as id from ",tableName);
 PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 	
@@ -72,6 +72,34 @@ begin
 
 end$$
 
+drop procedure if exists `addNdGeolocation`$$
+
+CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int)
+begin
+
+/* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */
+insert into  nd_geolocation (nd_geolocation_id, description, latitude, longitude, geodetic_datum, altitude) value (nd_geolocation_id_v, '',NULL,NULL,'',NULL);
+
+end$$
+
+drop procedure if exists `addStock`$$
+
+CREATE PROCEDURE `addStock`(IN stock_id_in int)
+begin
+
+insert into stock (stock_id, type_id, is_obsolete) value (stock_id_in, 8300,0);
+
+end$$
+
+drop procedure if exists `addNdExperiment`$$
+
+CREATE PROCEDURE `addNdExperiment`(IN nd_experimentid_id_v int, IN nd_geolocation_id_v int, IN type_id_v INT)
+begin
+
+insert into   nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) value (nd_experimentid_id_v, nd_geolocation_id_v, type_id_v);
+
+
+end$$
 
 DROP VIEW IF EXISTS `v_stdvar`$$
 CREATE VIEW v_stdvar (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
