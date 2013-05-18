@@ -1,8 +1,8 @@
 delimiter $$
 
-drop procedure if exists `addOrUpdateStudy`$$
+drop procedure if exists `addStudy`$$
 
-CREATE PROCEDURE `addOrUpdateStudy`(
+CREATE PROCEDURE `addStudy`(
 IN v_studyid int,
 IN v_sname varchar(50), 
 IN v_pmkey int,
@@ -23,8 +23,6 @@ DECLARE v_project_relationship_id int;
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
-
-IF(v_studyid IS NULL) THEN
 	
 	CALL getNextMinReturn('project',v_studyid);
 	
@@ -277,8 +275,34 @@ IF(v_studyid IS NULL) THEN
 	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, 1 as value, 10 as rank
 	FROM cvterm
 	WHERE name = 'STATUS';
-	
-ELSE
+
+COMMIT;
+
+end$$
+
+drop procedure if exists `updateStudy`$$
+
+CREATE PROCEDURE `updateStudy`(
+IN v_studyid int,
+IN v_sname varchar(50), 
+IN v_pmkey int,
+IN v_title varchar(255), 
+IN v_objectiv varchar(255),
+IN v_investid int,
+IN v_stype varchar(5),
+IN v_sdate int,
+IN v_edate int,
+IN v_userid int,
+IN v_sstatus int,
+IN v_shierarchy int)
+begin
+
+DECLARE v_projectprop_id int;
+DECLARE v_project_relationship_id int;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
 	
 	UPDATE project
 	SET name = v_sname
@@ -379,8 +403,6 @@ ELSE
 	set object_project_id = v_shierarchy 
 	where pr.subject_project_id = v_studyid;
 	
-END IF;
-
 COMMIT;
 
 end$$

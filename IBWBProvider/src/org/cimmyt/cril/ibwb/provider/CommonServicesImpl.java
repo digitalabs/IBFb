@@ -2252,7 +2252,9 @@ public class CommonServicesImpl implements CommonServices {
     public void addStudy(Study study) {
         //this.studyDAO.create(study);
     	if(isLocal()) {
-    		this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+    		Integer id = this.utilityDAO.getNextMin("project");
+    		study.setStudyid(id);
+    		this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy", 
                 "studyid","sname","pmkey","title","objectiv",
                 "investid","stype","sdate","edate","userid","sstatus","shierarchy");
     	}
@@ -2262,7 +2264,7 @@ public class CommonServicesImpl implements CommonServices {
     public void updateStudy(Study study) {
         //this.studyDAO.update(study);
     	if(isLocal()) {
-	    	this.utilityDAO.callStoredProcedureForUpdate(study, "addOrUpdateStudy", 
+	    	this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy", 
 	    			"studyid","sname","pmkey","title","objectiv",
 	                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
     	}
