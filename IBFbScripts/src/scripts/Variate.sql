@@ -152,11 +152,15 @@ BEGIN
     , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
   FROM
     cvterm term
-    JOIN projectprop pp ON pp.type_id = 1070 AND pp.value = term.cvterm_id
-    JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
-    JOIN cvterm_relationship cvr ON cvr.subject_id = term.cvterm_id
+    INNER JOIN projectprop pp ON pp.type_id = 1070 AND pp.value = term.cvterm_id
+    INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
+    INNER JOIN cvterm_relationship cvr ON cvr.subject_id = term.cvterm_id
+    INNER JOIN cvterm_relationship stin ON stin.subject_id = term.cvterm_id AND stin.type_id = 1044
   WHERE
-    pp.project_id = p_represno
+    stin.object_id IN (1043, 1048)
+    AND pp.project_id = p_represno
   GROUP BY
     pp.projectprop_id
   ;
+
+END$$
