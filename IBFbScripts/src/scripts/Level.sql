@@ -28,7 +28,7 @@ ELSE
       , lvalue
     FROM 
        v_level
-    WHERE (isnumeric AND dtypeid IN (1110, 1117, 1118)
+    WHERE (isnumeric AND dtypeid IN (1110, 1117, 1118, 1125)
       OR NOT isnumeric AND dtypeid IN (1128, 1120))
       AND labelid = p_labelid
     ORDER BY levelno DESC
