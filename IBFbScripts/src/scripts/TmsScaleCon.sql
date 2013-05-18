@@ -2,7 +2,7 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `getScaleConByMeasuredinId`$$
 
-CREATE PROCEDURE `getScaleConByMeasuredinId`(IN measuredinid int)
+CREATE PROCEDURE `getScaleConByMeasuredinId`(IN p_measuredinid int)
 
 BEGIN
 
@@ -14,7 +14,7 @@ BEGIN
   FROM
     cvtermprop min
     INNER JOIN cvtermprop max ON max.cvterm_id = min.cvterm_id AND max.type_id = 1115
-    WHERE min.type_id = 1113 AND min.cvterm_id = measuredinid
+    WHERE min.type_id = 1113 AND min.cvterm_id = p_measuredinid
   ;
 
 END$$
