@@ -2962,6 +2962,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Veffect> getVeffectList() {
        // return veffectDAO.findAll();
     	//not used - last check 05-18-2013
+        return new ArrayList();
     }
 
     @Override
