@@ -3700,5 +3700,9 @@ public interface CommonServices {
      * @param fieldName Field name 
      * @return List of Udflds objects
      */
-    public List <Udflds> getUdfldsList(final String tableName, final String fieldName);    
+    public List <Udflds> getUdfldsList(final String tableName, final String fieldName);
+
+    public Integer addNdGeolocation();
+    public Integer addStock();
+    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId);
 }

@@ -3,10 +3,7 @@ package org.cimmyt.cril.ibwb.provider.dao;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -391,7 +388,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 	@SuppressWarnings("rawtypes")
     	public int callStoredProcedureForUpdate(
                 final String procedureName,
-                final HashMap parameters
+                final LinkedHashMap parameters
                 ) {
 
             String params[] = new String[parameters.keySet().size()];

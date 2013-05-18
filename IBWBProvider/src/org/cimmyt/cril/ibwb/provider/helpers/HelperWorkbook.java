@@ -225,27 +225,36 @@ public class HelperWorkbook {
         //=======================
         // Get next ID for levels
         log.info("Recovery next levelNo....");
-        Integer levelNo = this.localServices.getNextLevelNo();
+        //Integer levelNo = this.localServices.getNextLevelNo();
         log.info("Recovery next levelNo DONE!");
 
 
         //Guardando levels for study
         log.info("Saving levels for study....");
+        //levelno should be study id
+        Integer levelNo = study.getStudyid();
         levelNo = saveLevelsStudy(levelNo);
         log.info("Saving levels for study DONE!");
 
+        //insert geolocation - daniel
+        //level no = geolocation id
         //Guardando levels for Trials
         log.info("Saving levels for trial....");
-        levelNo = HelperFactor.saveLavelsFactorTrials(
+        Integer levelNoNdGeoLocationId = this.localServices.addNdGeolocation();
+        //levelNo is the nd_geolocationId
+        levelNoNdGeoLocationId = HelperFactor.saveLavelsFactorTrials(
                 getMapTrialFactors(),
                 workbook.getConditionsData(),
                 workbook.getInstanceNumber(),
-                levelNo,
+                levelNoNdGeoLocationId,
                 this.localServices);
         log.info("Saving levels for trial DONE!");
+        //insert stock record - daniel
 
         //Guardando levels for Entrys
+        //Integer levelNoStockId = this.localServices.addStock();
         log.info("Saving levels for entrys....");
+        //levelNo here is not needed
         levelNo = HelperFactor.saveLavelsFactorsEntrys(
                 getListEntryFactors(),
                 workbook.getGermplasmData(),
@@ -255,7 +264,9 @@ public class HelperWorkbook {
 
         //Salvar levels para grupos de convinaciones de PLOT
         log.info("Saving levels for plots....");
-        saveLevelsPlots(levelNo);
+        Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+        //saveLevelsPlots(levelNo);
+        saveLevelsPlots(levelNoNdExperimentId);
         log.info("Saving levels for plots DONE!");
 
         //=======================
@@ -1117,12 +1128,69 @@ public class HelperWorkbook {
             if (agregado) {
                 //HelperFactor.addLevels(factorGroupTemp.getFactorid(), levelNo, localServices);
                 //HelperFactor.addLevels(factorDeHeader.getFactorid(), levelNo, localServices);
-                levelNo--;
+                //levelNo--;
                 agregado = false;
             }
         }
         //}
     }
+
+    public void saveLevelsPlotsOld(Integer levelNo) {
+            Factor factorDeHeader = new Factor();
+            List<String> listHeaders = workbook.getMeasurementHeaders();
+            boolean agregado = false;
+            //for (Factor factorGroupTemp : listPlotFactors) {
+            for (Measurement measurement : workbook.getMeasurementsRep()) {
+                for (String header : listHeaders) {
+                    factorDeHeader = mapPlotFactors.get(header);
+    // TODO: ajusstar los nombres de los factores a la combinacion
+                    if (factorDeHeader != null) {
+                        if (factorDeHeader.getFname().equals(workbook.getPlotLabel())) {
+                            HelperFactor.saveLevel(factorDeHeader,
+                                    levelNo,
+                                    measurement.getPlot(),
+                                    localServices);
+                            agregado = true;
+                        } else if (factorDeHeader.getFname().equals(workbook.getRepLabel())) {//"REP"
+                            HelperFactor.saveLevel(factorDeHeader,
+                                    levelNo,
+                                    measurement.getReplication(),
+                                    localServices);
+                            agregado = true;
+                        } else if (factorDeHeader.getFname().equals(workbook.getBlockLabel())) {//"BLOCK"
+                            HelperFactor.saveLevel(factorDeHeader,
+                                    levelNo,
+                                    measurement.getBlock(),
+                                    localServices);
+                            agregado = true;
+                        } else if (factorDeHeader.getFname().equals(workbook.getRowLabel())) {//"ROW"
+                            HelperFactor.saveLevel(factorDeHeader,
+                                    levelNo,
+                                    measurement.getRow(),
+                                    localServices);
+                            agregado = true;
+                        } else if (factorDeHeader.getFname().equals(workbook.getColLabel())) {//"COL"
+                            HelperFactor.saveLevel(factorDeHeader,
+                                    levelNo,
+                                    measurement.getColumn(),
+                                    localServices);
+                            agregado = true;
+                        } else {
+                            System.out.println("Unrecognized");
+                        }
+                    }
+
+
+                }
+                if (agregado) {
+                    //HelperFactor.addLevels(factorGroupTemp.getFactorid(), levelNo, localServices);
+                    //HelperFactor.addLevels(factorDeHeader.getFactorid(), levelNo, localServices);
+                    levelNo--;
+                    agregado = false;
+                }
+            }
+            //}
+        }
 
     /**
      * Insert into OBSUNIT all records from Represtn

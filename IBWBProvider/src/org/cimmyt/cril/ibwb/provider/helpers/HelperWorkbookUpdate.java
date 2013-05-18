@@ -154,6 +154,7 @@ public class HelperWorkbookUpdate {
 
     private void saveOrUpdateLavelsFactorStudy(
             List<Condition> conditionsData) {
+        //not needed to change, assumption is that the levelN was inserted properly
         int levelNoTemporal = 0;
 
         LevelN levelNT = (LevelN) factorTrial.getLevelByIndex(0);

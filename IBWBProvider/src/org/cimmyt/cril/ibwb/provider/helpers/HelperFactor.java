@@ -242,7 +242,7 @@ public class HelperFactor {
             CommonServices serviceLocal) {
 
         int instance = 0;
-        int levelNoTemporal = levelNo + 1;
+        //int levelNoTemporal = levelNo + 1;
         String nameFactorInitial = "";
 
         //Guardar los levels del trial
@@ -253,13 +253,14 @@ public class HelperFactor {
 //        levelNoTemporal++;
         for (Condition conditionData : conditionsData) {
             Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
-
+            /*
             if (nameFactorInitial.equals(conditionData.getConditionName())) {
                 instance++;
                 levelNoTemporal--;
                 addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
             }
-            System.out.println("Instance: " + instance + " levelNo: " + levelNoTemporal);
+            */
+            System.out.println("Instance: " + instance + " levelNo: " + levelNo);
             log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
             if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
                 LevelN levelN = new LevelN();
@@ -274,7 +275,7 @@ public class HelperFactor {
                 }
                 LevelNPK levelNPK = new LevelNPK();
                 levelNPK.setLabelid(factorTemp.getLabelid());
-                levelNPK.setLevelno(levelNoTemporal);
+                levelNPK.setLevelno(levelNo);
                 levelN.setLevelNPK(levelNPK);
                 serviceLocal.addLevelN(levelN);
                 factorTemp.getLevelsN().add(levelN);
@@ -293,7 +294,7 @@ public class HelperFactor {
                 }
                 LevelCPK levelCPK = new LevelCPK();
                 levelCPK.setLabelid(factorTemp.getLabelid());
-                levelCPK.setLevelno(levelNoTemporal);
+                levelCPK.setLevelno(levelNo);
                 levelC.setLevelCPK(levelCPK);
                 serviceLocal.addLevelC(levelC);
                 factorTemp.getLevelsC().add(levelC);
@@ -308,9 +309,87 @@ public class HelperFactor {
             System.out.println("Error al comparar el numero de instancias");
         }
 
-        levelNoTemporal--;
-        return levelNoTemporal;
+        //levelNo--;
+        return levelNo;
     }
+
+    public static Integer saveLavelsFactorTrialsOld(
+               Map mapTrials,
+               List<Condition> conditionsData,
+               Integer numberRepeticion,
+               Integer levelNo,
+               CommonServices serviceLocal) {
+
+           int instance = 0;
+           int levelNoTemporal = levelNo + 1;
+           String nameFactorInitial = "";
+
+           //Guardar los levels del trial
+
+           if (conditionsData.size() > 0) {
+               nameFactorInitial = conditionsData.get(0).getConditionName();
+           }
+   //        levelNoTemporal++;
+           for (Condition conditionData : conditionsData) {
+               Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
+
+               if (nameFactorInitial.equals(conditionData.getConditionName())) {
+                   instance++;
+                   levelNoTemporal--;
+                   addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
+               }
+               System.out.println("Instance: " + instance + " levelNo: " + levelNoTemporal);
+               log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
+               if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
+                   LevelN levelN = new LevelN();
+                   levelN.setFactorid(factorTemp.getFactorid());
+                   if (conditionData.getConditionName().equals(nameFactorInitial)) {
+                       Integer tempInstance = conditionData.getInstance();
+                       levelN.setLvalue(castingToDouble(tempInstance));
+                   } else {
+                       if (conditionData.getValue() != null) {
+                           levelN.setLvalue(castingToDouble(conditionData.getValue()));
+                       }
+                   }
+                   LevelNPK levelNPK = new LevelNPK();
+                   levelNPK.setLabelid(factorTemp.getLabelid());
+                   levelNPK.setLevelno(levelNoTemporal);
+                   levelN.setLevelNPK(levelNPK);
+                   serviceLocal.addLevelN(levelN);
+                   factorTemp.getLevelsN().add(levelN);
+               } else {
+                   LevelC levelC = new LevelC();
+                   levelC.setFactorid(factorTemp.getFactorid());
+
+                   if (conditionData.getValue() != null) {
+                       if (conditionData.getValue().toString().isEmpty()) {
+                           levelC.setLvalue(" ");
+                       } else {
+                           levelC.setLvalue((String) conditionData.getValue());
+                       }
+                   } else if (conditionData.getValue() == null) {
+                       levelC.setLvalue(" ");
+                   }
+                   LevelCPK levelCPK = new LevelCPK();
+                   levelCPK.setLabelid(factorTemp.getLabelid());
+                   levelCPK.setLevelno(levelNoTemporal);
+                   levelC.setLevelCPK(levelCPK);
+                   serviceLocal.addLevelC(levelC);
+                   factorTemp.getLevelsC().add(levelC);
+               }
+
+               if (nameFactorInitial.equals(conditionData.getConditionName())) {
+                   //addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
+               }
+
+           }
+           if (instance != numberRepeticion) {
+               System.out.println("Error al comparar el numero de instancias");
+           }
+
+           levelNoTemporal--;
+           return levelNoTemporal;
+       }
 
     public static void saveLavelsFactors(
             Map mapTrials,
@@ -415,9 +494,15 @@ public class HelperFactor {
             List<List<Object>> germplasmData,
             Integer levelNo,
             CommonServices serviceLocal) {
+
         Factor factorTemp = new Factor();
         for (List<Object> objectList : germplasmData) {
+            //we need to add new stock for every new germplasm entry values
+            Integer levelNoStockId = serviceLocal.addStock();
             for (int i = 0; i < objectList.size(); i++) {
+                //we set the level no to the new stockId
+                levelNo = levelNoStockId;
+
                 if (i < listEntryFactors.size()) {
                 Object value = objectList.get(i);
                 factorTemp = listEntryFactors.get(i);
@@ -455,11 +540,62 @@ public class HelperFactor {
                 }
                 }
             }
-            addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
-            levelNo--;
+            //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
+            //levelNo--;
         }
         return levelNo;
     }
+
+    public static Integer saveLavelsFactorsEntrysOld(
+               List<Factor> listEntryFactors,
+               List<List<Object>> germplasmData,
+               Integer levelNo,
+               CommonServices serviceLocal) {
+           Factor factorTemp = new Factor();
+           for (List<Object> objectList : germplasmData) {
+               for (int i = 0; i < objectList.size(); i++) {
+                   if (i < listEntryFactors.size()) {
+                   Object value = objectList.get(i);
+                   factorTemp = listEntryFactors.get(i);
+                   log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
+                   if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
+                       LevelN levelN = new LevelN();
+                       levelN.setFactorid(factorTemp.getFactorid());
+
+                       levelN.setLvalue(castingToDouble(value));
+                       LevelNPK levelNPK = new LevelNPK();
+                       levelNPK.setLabelid(factorTemp.getLabelid());
+                       levelNPK.setLevelno(levelNo);
+                       levelN.setLevelNPK(levelNPK);
+                       serviceLocal.addLevelN(levelN);
+                       factorTemp.getLevelsN().add(levelN);
+                   } else {
+                       LevelC levelC = new LevelC();
+                       levelC.setFactorid(factorTemp.getFactorid());
+                       String valueToSave = castingToString(value);
+                       if (valueToSave != null) {
+                           if (valueToSave.trim().isEmpty()) {
+                               levelC.setLvalue(" ");
+                           } else {
+                               levelC.setLvalue(valueToSave);
+                           }
+                       } else {
+                           levelC.setLvalue(" ");
+                       }
+                       LevelCPK levelCPK = new LevelCPK();
+                       levelCPK.setLabelid(factorTemp.getLabelid());
+                       levelCPK.setLevelno(levelNo);
+                       levelC.setLevelCPK(levelCPK);
+                       serviceLocal.addLevelC(levelC);
+                       factorTemp.getLevelsC().add(levelC);
+                   }
+                   }
+               }
+               addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
+               levelNo--;
+           }
+           return levelNo;
+       }
 
     /**
      * Save one record into LEVEL_C and LEVEL_N according to DATATYPE

@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -295,7 +296,7 @@ public class CommonServicesImpl implements CommonServices {
     public void addOrUpdateDataC(DataC dataC) {
     	//this.dataCDAO.addOrUpdate(dataC);
     	if(isLocal()) {
-	    	HashMap map = new HashMap();
+            LinkedHashMap map = new LinkedHashMap();
 	    	map.put("ounitid",dataC.getDataCPK().getOunitid());
 	    	map.put("variatid",dataC.getDataCPK().getVariatid());
 	    	map.put("dvalue", dataC.getDvalue());
@@ -381,12 +382,36 @@ public class CommonServicesImpl implements CommonServices {
         //this.dataNDAO.addOrUpdate(dataN);
     	//reusing addOrUpdateDataC as they are both saved in the same db
     	if(isLocal()) {
-	    	HashMap map = new HashMap();
+            LinkedHashMap map = new LinkedHashMap();
 	    	map.put("ounitid",dataN.getDataNPK().getOunitid());
 	    	map.put("variatid",dataN.getDataNPK().getVariatid());
 	    	map.put("dvalue", dataN.getDvalue());
 	    	this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC",map);
     	}
+    }
+
+    //new functions
+    public Integer addNdGeolocation(){
+        //daniel
+        Integer id = this.utilityDAO.getNextMin("nd_geolocation");
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("id", id);
+        this.utilityDAO.callStoredProcedureForUpdate("addNdGeolocation", params);
+        return id;
+    }
+    public Integer addStock(){
+        Integer id = this.utilityDAO.getNextMin("stock");
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("id", id);
+        this.utilityDAO.callStoredProcedureForUpdate("addStock", params);
+        return id;
+    }
+    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId){
+        Integer id = this.utilityDAO.getNextMin("nd_experiment");
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("id", id);
+        this.utilityDAO.callStoredProcedureForUpdate("addNdExperiment", params);
+        return id;
     }
 
     @Override
@@ -980,7 +1005,14 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------LevelC---------------------------
     @Override
     public void addLevelC(LevelC levelC) {
-        this.levelCDAO.create(levelC);
+        //this.levelCDAO.create(levelC);
+
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("labelid", levelC.getLevelCPK().getLabelid());
+        params.put("factorid", levelC.getFactorid());
+        params.put("valuein", levelC.getLvalue());
+        params.put("levelno", levelC.getLevelCPK().getLevelno());
+        this.utilityDAO.callStoredProcedureForUpdate("addLevelC", params);
     }
 
     @Override
@@ -1047,7 +1079,13 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------LevelN---------------------------
     @Override
     public void addLevelN(LevelN levelN) {
-        this.levelNDAO.create(levelN);
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("labelid", levelN.getLevelNPK().getLabelid());
+        params.put("factorid", levelN.getFactorid());
+        params.put("valuein", levelN.getLvalue());
+        params.put("levelno", levelN.getLevelNPK().getLevelno());
+        this.utilityDAO.callStoredProcedureForUpdate("addLevelN", params);
+        //this.levelNDAO.create(levelN);
     }
 
     @Override
@@ -1151,7 +1189,7 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Levels---------------------------
     @Override
     public void addLevels(Levels levels) {
-        this.levelsDAO.create(levels);
+        //this.levelsDAO.create(levels);
     }
 
     @Override
@@ -1641,7 +1679,7 @@ public class CommonServicesImpl implements CommonServices {
     public void addOindex(Oindex oindex) {
         //this.oindexDAO.create(oindex);
     	if(isLocal()) {
-    		HashMap params = new HashMap();
+            LinkedHashMap params = new LinkedHashMap();
     		params.put("factorid", oindex.getOindexPK().getFactorid());
     		params.put("levelno", oindex.getOindexPK().getLevelno());
     		this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
@@ -1920,7 +1958,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addScales(Scales scales) {
         //this.scalesDAO.create(scales);
-        HashMap params = new HashMap();
+        LinkedHashMap params = new LinkedHashMap();
         params.put("cvidin", 1030);
         params.put("cvname", scales.getScname());
         params.put("cvdesc", scales.getScname());
@@ -1931,7 +1969,7 @@ public class CommonServicesImpl implements CommonServices {
     public void updateScales(Scales scales) {
 
         //this.scalesDAO.update(scales);
-        HashMap params = new HashMap();
+        LinkedHashMap params = new LinkedHashMap();
        params.put("cvtermid", scales.getScaleid());
        params.put("cvname", scales.getScname());
        params.put("cvdesc", scales.getScname());
@@ -2410,7 +2448,7 @@ public class CommonServicesImpl implements CommonServices {
     public void addTmsMethod(TmsMethod tmsMethod) {
 
         //this.tmsMethodDAO.create(tmsMethod);
-        HashMap params = new HashMap();
+        LinkedHashMap params = new LinkedHashMap();
         params.put("cvidin", 1020);
         params.put("cvname", tmsMethod.getTmname());
         params.put("cvdesc", tmsMethod.getTmdesc());
@@ -2420,7 +2458,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void updateTmsMethod(TmsMethod tmsMethod) {
         //this.tmsMethodDAO.update(tmsMethod);
-        HashMap params = new HashMap();
+        LinkedHashMap params = new LinkedHashMap();
        params.put("cvtermid", tmsMethod.getTmethid());
        params.put("cvname", tmsMethod.getTmname());
        params.put("cvdesc", tmsMethod.getTmdesc());
@@ -2442,7 +2480,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<TmsMethod> getTmsMethodList() {
-        return tmsMethodDAO.findAll();
+        //return tmsMethodDAO.findAll();
+        return this.utilityDAO.callStoredProcedureForList(new TmsMethod(), "getTmsMethodList", new String[]{},new String[]{"tmethid","tmname", "tmdesc"});
     }
 
     @Override
