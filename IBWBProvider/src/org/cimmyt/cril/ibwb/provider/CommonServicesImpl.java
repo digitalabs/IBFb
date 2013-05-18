@@ -2499,7 +2499,12 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public TmsScaleCon getScaleConByMeasuredinId(final Integer measuredinId) {
-        return tmsScaleConDAO.getScaleConByMeasuredinId(measuredinId);
+        //return tmsScaleConDAO.getScaleConByMeasuredinId(measuredinId);
+    	TmsScaleCon scalecon = new TmsScaleCon();
+    	scalecon.setMeasuredinid(measuredinId);
+    	return utilityDAO.callStoredProcedureForObject(scalecon, "getScaleConByMeasuredinId", 
+                        new String[]{"measuredinid"},
+    			new String[]{"tmsscaleconid", "measuredinid", "slevel", "elevel"});
     }
 
     //-----------------------------------TmsScaleDis---------------------------
