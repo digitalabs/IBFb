@@ -824,7 +824,12 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<Factor> getGroupFactorsByStudyidAndFactorid(Integer studyid, Integer factorid) {
-        return this.factorDAO.getGroupFactorsByStudyidAndFactorid(studyid, factorid);
+        //return this.factorDAO.getGroupFactorsByStudyidAndFactorid(studyid, factorid);
+    	Factor factor = new Factor();
+    	factor.setStudyid(studyid);
+        factor.setFactorid(factorid);
+    	return this.utilityDAO.callStoredProcedureForList(factor, "getGroupFactorsByStudyidAndFactorid", new String[]{"studyid","factorid"}, 
+    			new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});        
     }
 
     public List<Factor> getFactorsByFactorsids(List factorIds) {
@@ -836,7 +841,7 @@ public class CommonServicesImpl implements CommonServices {
     	factor.setStudyid(studyid);
         factor.setFname(fname);
         return this.utilityDAO.callStoredProcedureForObject(factor, "getFactorByStudyidAndFname", new String[]{"studyid","fname"}, 
-    			new String[] {"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
+                        new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});        
         //return this.factorDAO.getFactorByStudyidAndFname(studyid, fname);
     }
 
