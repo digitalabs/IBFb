@@ -832,7 +832,12 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Factor getFactorByStudyidAndFname(Integer studyid, String fname) {
-        return this.factorDAO.getFactorByStudyidAndFname(studyid, fname);
+        Factor factor = new Factor();
+    	factor.setStudyid(studyid);
+        factor.setFname(fname);
+        return this.utilityDAO.callStoredProcedureForObject(factor, "getFactorByStudyidAndFname", new String[]{"studyid","fname"}, 
+    			new String[] {"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
+        //return this.factorDAO.getFactorByStudyidAndFname(studyid, fname);
     }
 
 //-----------------------------------Georef---------------------------
