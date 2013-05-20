@@ -142,7 +142,7 @@ stdvar.projectprop_id AS labelId
 , CASE
     WHEN stdvar.storedinid IN (1010, 1011, 1012, 1015, 1016, 1017) THEN p.project_id
     WHEN stdvar.storedinid IN (1020, 1021, 1022, 1023, 1024, 1025) THEN geo.nd_geolocation_id
-    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experiment_id
+    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experimentprop_id
     WHEN stdvar.storedinid IN (1040, 1041, 1042, 1046, 1047) THEN stock.stock_id
   END AS levelno
 , CASE stdvar.storedinid 
