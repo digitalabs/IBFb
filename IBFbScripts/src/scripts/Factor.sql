@@ -30,6 +30,7 @@ begin
 	"and pp.project_id = ",v_studyid,
 	" AND NOT EXISTS ( select 1 from phenotype ph where ph.observable_id = pp.value ) ",
 	") factor left join v_stdvar v on factor.labelid = v.projectprop_id ",
+	"WHERE factor.labelid = v.factorid ",
 	"GROUP BY labelid ");
 	IF(v_islocal = 1) THEN
 		SET @sql = CONCAT(@sql,"ORDER BY labelid DESC");
