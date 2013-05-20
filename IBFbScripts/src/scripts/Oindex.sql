@@ -26,7 +26,7 @@ CASE
     WHEN stdvar.storedinid = 1030 THEN 'TRIAL DESIGN'
     WHEN stdvar.storedinid IN (1040, 1041, 1042, 1046, 1047) THEN 'GERMPLASM ENTRY' 
 END AS etype INTO v_etype 
-FROM v_stdvar stdvar
+FROM v_factor stdvar
 WHERE stdvar.factorid = v_factorid
 AND stdvar.project_id = v_project_id;
 
