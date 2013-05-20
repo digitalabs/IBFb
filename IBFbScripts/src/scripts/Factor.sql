@@ -29,7 +29,7 @@ begin
 	"and label.type_id in (1011, 1016, 1017, 1021, 1030, 1041) ", 
 	"and pp.project_id = ",v_studyid,
 	" AND NOT EXISTS ( select 1 from phenotype ph where ph.observable_id = pp.value ) ",
-	") factor left join v_stdvar v on factor.labelid = v.projectprop_id ",
+	") factor left join v_factor v on factor.labelid = v.projectprop_id ",
 	"WHERE factor.labelid = v.factorid ",
 	"GROUP BY labelid ");
 	IF(v_islocal = 1) THEN
