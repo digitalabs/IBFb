@@ -770,7 +770,9 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateFactor(Factor factor) {
-        this.factorDAO.update(factor);
+        //this.factorDAO.update(factor);
+    	//BY TRACING - this is only used for updating the factorid after addFactor, 
+    	//but since factorid is just a derived field in the new schema, this is no longer needed
     }
 
     @Override
