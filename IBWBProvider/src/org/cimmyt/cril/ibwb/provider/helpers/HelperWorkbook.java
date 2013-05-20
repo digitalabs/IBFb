@@ -251,17 +251,6 @@ public class HelperWorkbook {
         log.info("Saving levels for trial DONE!");
         //insert stock record - daniel
 
-        //Guardando levels for Entrys
-        //Integer levelNoStockId = this.localServices.addStock();
-        log.info("Saving levels for entrys....");
-        //levelNo here is not needed
-        levelNo = HelperFactor.saveLavelsFactorsEntrys(
-                getListEntryFactors(),
-                workbook.getGermplasmData(),
-                levelNo,
-                this.localServices);
-        log.info("Saving levels for entrys DONE!");
-
         //Salvar levels para grupos de convinaciones de PLOT
         log.info("Saving levels for plots....");
         Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
@@ -269,6 +258,33 @@ public class HelperWorkbook {
         saveLevelsPlots(levelNoNdExperimentId);
         log.info("Saving levels for plots DONE!");
 
+        //Guardando levels for Entrys
+        //Integer levelNoStockId = this.localServices.addStock();
+        log.info("Saving levels for entrys....");
+        //levelNo here is not needed
+        /*
+        levelNo = HelperFactor.saveLavelsFactorsEntrys(
+                getListEntryFactors(),
+                workbook.getGermplasmData(),
+                levelNo,
+                this.localServices);
+                */
+        //we now pass in the nd_experiment_id
+        levelNo = HelperFactor.saveLavelsFactorsEntrys(
+                        getListEntryFactors(),
+                        workbook.getGermplasmData(),
+                levelNoNdExperimentId,
+                        this.localServices);
+        log.info("Saving levels for entrys DONE!");
+
+        /*      move to upper part
+        //Salvar levels para grupos de convinaciones de PLOT
+        log.info("Saving levels for plots....");
+        Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+        //saveLevelsPlots(levelNo);
+        saveLevelsPlots(levelNoNdExperimentId);
+        log.info("Saving levels for plots DONE!");
+         */
         //=======================
         //Salvar obsunit con todas la convinaciones datos
         //=======================

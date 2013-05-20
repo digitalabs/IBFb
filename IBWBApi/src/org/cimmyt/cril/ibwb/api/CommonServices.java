@@ -3705,4 +3705,5 @@ public interface CommonServices {
     public Integer addNdGeolocation();
     public Integer addStock();
     public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId);
+    public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId);
 }

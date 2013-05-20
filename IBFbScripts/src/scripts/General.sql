@@ -82,6 +82,16 @@ insert into  nd_geolocation (nd_geolocation_id, description, latitude, longitude
 
 end$$
 
+drop procedure if exists `addNdExperimentStock`$$
+
+CREATE PROCEDURE `addNdExperimentStock`(IN nd_experiment_stock_id_v int, IN nd_experiment_id_v int, IN stock_id_v int)
+begin
+
+/* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */
+insert into  nd_experiment_stock (nd_experiment_stock_id,nd_experiment_id,stock_id,type_id) value (nd_experiment_stock_id_v, nd_experiment_id_v, stock_id_v, 1000);
+
+end$$
+
 drop procedure if exists `addStock`$$
 
 CREATE PROCEDURE `addStock`(IN stock_id_in int)

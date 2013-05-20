@@ -496,9 +496,12 @@ public class HelperFactor {
             CommonServices serviceLocal) {
 
         Factor factorTemp = new Factor();
+        Integer ndExperimentId = levelNo;
         for (List<Object> objectList : germplasmData) {
             //we need to add new stock for every new germplasm entry values
             Integer levelNoStockId = serviceLocal.addStock();
+            //we need to add here the nd_experiment_stock relationship
+            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {
                 //we set the level no to the new stockId
                 levelNo = levelNoStockId;
