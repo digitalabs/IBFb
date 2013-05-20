@@ -18,7 +18,7 @@ BEGIN
 	
 	SELECT storedinid 
 	  INTO v_storedinid
-      FROM v_stdvar
+      FROM v_factor
      WHERE projectprop_id = labelidin  limit 1; 
 	
 	IF(@v_storedinid = 1010 or @v_storedinid = 1015) THEN
@@ -114,11 +114,11 @@ BEGIN
 	
 	SELECT storedinid, project_id 
 	  INTO v_storedinid, v_projectid
-      FROM v_stdvar
+      FROM v_factor
      WHERE projectprop_id = labelidin; 
 	
 	IF (v_storedinid = 1010 OR v_storedinid = 1015) THEN
-		UPDATE v_stdvar stdvar 
+		UPDATE v_factor stdvar 
 	     INNER JOIN projectprop pval ON pval.type_id = stdvar.varid AND pval.project_id = stdvar.project_id AND pval.rank = stdvar.rank
 		   SET pval.value = lvaluein
 		 WHERE stdvar.projectprop_id = labelidin;
@@ -138,7 +138,7 @@ BEGIN
 	
 	IF (v_storedinid = 1020) THEN
 		UPDATE nd_geolocationprop gp
-		 INNER JOIN v_stdvar stdvar ON stdvar.varid = gp.type_id
+		 INNER JOIN v_factor stdvar ON stdvar.varid = gp.type_id
 		   SET gp.value = lvaluein
 		 WHERE gp.nd_geolocation_id = levelnoin
 		   AND stdvar.projectprop_id = labelidin;
@@ -176,7 +176,7 @@ BEGIN
 	
 	IF (v_storedinid = 1030) THEN
 		UPDATE nd_experimentprop exp
-		 INNER JOIN v_stdvar stdvar ON stdvar.varid = exp.type_id
+		 INNER JOIN v_factor stdvar ON stdvar.varid = exp.type_id
 		   SET value = lvaluein
 		 WHERE exp.nd_experiment_id = levelnoin
 		   AND stdvar.projectprop_id = labelidin;	
@@ -184,7 +184,7 @@ BEGIN
 
 	IF (v_storedinid = 1040) THEN		
 		UPDATE stockprop sp
-		 INNER JOIN v_stdvar stdvar ON stdvar.varid = sp.type_id
+		 INNER JOIN v_factor stdvar ON stdvar.varid = sp.type_id
 		   SET sp.value = lvaluein
 		 WHERE sp.stock_id = levelnoin
 		  and stdvar.projectprop_id = labelidin;
