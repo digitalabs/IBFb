@@ -101,8 +101,8 @@ insert into   nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) value (
 
 end$$
 
-DROP VIEW IF EXISTS `v_stdvar`$$
-CREATE VIEW v_stdvar (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
+DROP VIEW IF EXISTS `v_factor`$$
+CREATE VIEW v_factor (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
 AS
 SELECT 
     prop.projectprop_id AS projectprop_id
@@ -168,7 +168,7 @@ stdvar.projectprop_id AS labelId
 , stdvar.dtypeid AS dtypeid
 , stdvar.storedinid AS storedinid
 FROM 
-v_stdvar AS stdvar
+v_factor AS stdvar
 INNER JOIN project p ON p.project_id = stdvar.project_id
 INNER JOIN nd_experiment_project ep ON ep.project_id = p.project_id
 INNER JOIN nd_experiment exp ON exp.nd_experiment_id = ep.nd_experiment_id
