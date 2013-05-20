@@ -2867,8 +2867,10 @@ public class CommonServicesImpl implements CommonServices {
     public void addVariate(Variate variate) {
         //this.variateDAO.create(variate);
     	if(isLocal()) {
-    		utilityDAO.callStoredProcedureForUpdate(variate, "addVariate", new String[]{"studyid",
+    		Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(variate, "addVariate", new String[]{"studyid",
     			"vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
+    		variate.setVariatid(id);
+    		
     	}
     }
 

@@ -421,6 +421,41 @@ public class UtilityDAO extends HibernateDaoSupport {
             });
             return result;
         }
+	
+	@SuppressWarnings("rawtypes")
+	public int callStoredProcedureForUpdateAndReturnPK(
+			final Object bean,
+            final String procedureName,
+            final String... params) {
+        final String sql = buildSQLQuery(procedureName, params);
+        System.out.println("sql = " + sql);
+        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+
+            @Override
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.
+                        createSQLQuery(sql);
+                if (params != null && params.length > 0) {
+                    for (String paramName : params) {
+                        try {
+                            Object obj = PropertyUtils.getProperty(bean, paramName);
+                            query.setParameter(paramName, obj);
+                            System.out.println(paramName + " = " + obj);
+                        } catch (IllegalAccessException e) {
+                            log.error("error in setting update parameters " + e.getMessage());
+                        } catch (InvocationTargetException e) {
+                            log.error("error in setting update parameters " + e.getMessage());
+                        } catch (NoSuchMethodException e) {
+                            log.error("error in setting update parameters " + e.getMessage());
+                        }
+                    }
+                }
+                return query.uniqueResult();
+            }
+        });
+        return (Integer)result;
+    }
 
     private String buildSQLQuery(String procedureName, HashMap params) {
         StringBuilder sql = new StringBuilder();

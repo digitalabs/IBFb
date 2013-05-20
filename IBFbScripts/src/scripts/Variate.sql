@@ -126,6 +126,8 @@ START TRANSACTION;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
+	
+	SELECT v_projectprop_id;
 
 COMMIT;	
 	
