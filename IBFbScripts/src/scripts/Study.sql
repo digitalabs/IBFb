@@ -395,7 +395,7 @@ START TRANSACTION;
 	(select 1
 	from cvterm ctype
 	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STATUS');
+	and ctype.name = 'STUDY_STATUS');
 	
 	update project_relationship pr
 	set object_project_id = v_shierarchy 
@@ -418,7 +418,7 @@ begin
 	,GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate' 
 	,GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate' 
 	,GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid' 
-	,GROUP_CONCAT(if(ct.name = 'STATUS', value.value, NULL)) AS 'sstatus' 
+	,GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', value.value, NULL)) AS 'sstatus' 
 	FROM project p 
 	INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id 
 	,cvterm ct, projectprop value 
@@ -426,7 +426,7 @@ begin
 	WHERE value.project_id = p.project_id 
   	AND value.type_id = ct.cvterm_id 
 	AND ct.name 
-	IN ('STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
+	IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
 	GROUP BY p.project_id
 	HAVING (sstatus IS NULL OR sstatus != 9);
 
@@ -445,7 +445,7 @@ begin
 	,GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate' 
 	,GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate' 
 	,GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid' 
-	,GROUP_CONCAT(if(ct.name = 'STATUS', value.value, NULL)) AS 'sstatus' 
+	,GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', value.value, NULL)) AS 'sstatus' 
 	FROM project p 
 	INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id 
 	,cvterm ct, projectprop value 
@@ -453,7 +453,7 @@ begin
 	WHERE value.project_id = p.project_id 
   	AND value.type_id = ct.cvterm_id 
 	AND ct.name 
-	IN ('STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
+	IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
 	AND p.project_id = v_studyid;
 	
 end$$
@@ -483,7 +483,7 @@ begin
 	",GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate'",  
 	",GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate'",  
 	",GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid'",  
-	",GROUP_CONCAT(if(ct.name = 'STATUS', value.value, NULL)) AS 'sstatus'",  
+	",GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', value.value, NULL)) AS 'sstatus'",  
 	"FROM project p ", 
 	"INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id ",  
 	",cvterm ct, projectprop value ", 
@@ -555,7 +555,7 @@ START TRANSACTION;
 	(select 1
 	from cvterm ctype
 	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STATUS');
+	and ctype.name = 'STUDY_STATUS');
     
   	select name into v_prevname from project where project_id = v_studyid;
 
