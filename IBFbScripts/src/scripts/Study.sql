@@ -253,26 +253,26 @@ START TRANSACTION;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1011,'STATUS',10);
+	VALUES(v_projectprop_id,v_studyid,1011,'STUDY_STATUS',10);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'STATUS',10);
+	VALUES(v_projectprop_id,v_studyid,1060,'Study status (1=active, 2=private, 3=locked, 9=deleted)',10);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 10 as rank
 	FROM cvterm
-	WHERE name = 'STATUS';
+	WHERE name = 'STUDY_STATUS';
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, 1 as value, 10 as rank
 	FROM cvterm
-	WHERE name = 'STATUS';
+	WHERE name = 'STUDY_STATUS';
 
 COMMIT;
 
