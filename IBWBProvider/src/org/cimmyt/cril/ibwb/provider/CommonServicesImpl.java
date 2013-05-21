@@ -1511,6 +1511,9 @@ public class CommonServicesImpl implements CommonServices {
     	// use filter to set getting by trait id
     	Measuredin measuredIn = new Measuredin();
     	measuredIn.setTraitid(traitId);
+        //override default values
+        measuredIn.setScaleid(null); 
+        measuredIn.setTmethid(null); 
     	
     	return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn", 
     			new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
@@ -2035,8 +2038,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Scales> getScalesList() {
         //return scalesDAO.findAll();
-        return this.utilityDAO.callStoredProcedureForList(Scales.class, "getScalesList",
-            				new HashMap(),new String[]{},
+        return this.utilityDAO.callStoredProcedureForList(new Scales()  , "getScalesList",
+            				new String[]{},
             				new String[]{"scaleid","scname", "sctype"});
     }
 
