@@ -9,7 +9,7 @@ IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
 IN v_investid int,
-IN v_stype varchar(5),
+IN v_stype varchar(3),
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
@@ -289,7 +289,7 @@ IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
 IN v_investid int,
-IN v_stype varchar(5),
+IN v_stype varchar(3),
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
@@ -504,7 +504,7 @@ begin
 	IF(v_title IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND title = '",v_title,"'");
 	END IF;
-	IF(v_shierarchy IS NOT NULL OR v_shierarchy != 0) THEN
+	IF(v_shierarchy IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND shierarchy = ",v_shierarchy);
 	END IF;
 	IF(v_pmkey IS NOT NULL) THEN

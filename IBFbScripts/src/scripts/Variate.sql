@@ -56,15 +56,15 @@ DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK;
 
 START TRANSACTION;
 
-	SELECT MAX(rank) + 1 as rank, pp.project_id INTO v_rank, v_project_id 
-	FROM projectprop pp, project_relationship pr 
-	WHERE pr.type_id = 1150
-	AND pr.subject_project_id = pp.project_id
-	AND pr.object_project_id = v_studyid;
+	SELECT MAX(rank) + 1 as rank INTO v_rank 
+	FROM projectprop pp
+	WHERE pp.project_id = v_studyid;
 	
 	IF(v_rank IS NULL) THEN
 	SET v_rank := 1;
 	END IF;
+	
+	SET v_project_id := v_studyid;
 	
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 
