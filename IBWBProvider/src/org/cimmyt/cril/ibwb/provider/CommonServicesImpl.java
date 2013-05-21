@@ -608,15 +608,7 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
-        //return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
-        if(isLocal()) {
-            dmsattr.setIslocal(1);
-    	} else {
-            dmsattr.setIslocal(0);
-    	}
-
-    	return this.utilityDAO.callStoredProcedureForObject(dmsattr, "getDmsattrByDmsatrecAndDmsatype", new String[]{"dmsatrec","dmsatype", "islocal"}, 
-    			new String[] {"dmsatid", "dmsatyp", "dmsatab", "dmsatrec", "dmsatval"});
+        return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
     }
 
     @Override
