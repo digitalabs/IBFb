@@ -7,10 +7,7 @@
             <param name="ConversionPattern"
                    value="[%d{ISO8601}] =%d{dd-MM HH:mm:ss,SSS} %-5p %t (%F:%M:%L)  -%m%n " />
         </layout>
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="ERROR"/>
-            <param name="LevelMax" value="FATAL"/>
-        </filter>
+
     </appender>
 
     <!--                           -->

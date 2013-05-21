@@ -2796,9 +2796,22 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Traits> getListTraits(Traits filter, int start, int pageSize, boolean paged) {
-    	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getTraitList", 
-				new String[]{},
-				new String[]{"tid", "traitid", "trname", "trdesc", "nstat", "traitgroup"});
+        TraitDto dto = new TraitDto(filter.getTid(), filter.getTraitid(), filter.getTrname(),
+                filter.getTrdesc(), filter.getTnstat(), filter.getTraitGroup());
+
+        List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
+                start,pageSize, "getTraitListByTrait",
+                new String[] {"tid","traitId", "traitName", "traitDescription", "traitGroup"},
+                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup"});
+        List<Traits> returnVal = new ArrayList<Traits>(temp.size());
+        for (Object o : temp) {
+            dto = (TraitDto) o;
+
+            Traits trait = new Traits(dto.getTid(), dto.getTraitId(),dto.getTraitName(), null, dto.getTraitDescription(), null, dto.getTraitGroup(), null);
+            returnVal.add(trait);
+        }
+
+        return returnVal;
     }
 
     public Traits getTraitsByTrname(Traits traits) {
