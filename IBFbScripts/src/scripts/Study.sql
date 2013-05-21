@@ -24,6 +24,8 @@ DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK;
 
 START TRANSACTION;
 	
+SET foreign_key_checks = 0;
+
 	INSERT INTO project(project_id,name,description)
 	VALUES(v_studyid,v_sname,v_title);
 	
@@ -409,7 +411,7 @@ drop procedure if exists `getStudyList`$$
 
 CREATE PROCEDURE `getStudyList`()
 begin
-
+        insert into logger (log_value) values ('getStudyList');
 	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy 
 	,GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey' 
 	,GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv' 
@@ -436,7 +438,7 @@ drop procedure if exists `getStudyById`$$
 
 CREATE PROCEDURE `getStudyById`(IN v_studyid int)
 begin
-
+        
 	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy 
 	,GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey' 
 	,GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv' 
@@ -467,14 +469,14 @@ IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
 IN v_investid int,
-IN v_stype varchar(1),
+IN v_stype varchar(3),
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
 IN v_sstatus int,
 IN v_shierarchy int)
 begin
-
+       
 	SET @sql := CONCAT("SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy", 
 	",GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey'", 
 	",GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv'",  
@@ -502,7 +504,7 @@ begin
 	IF(v_title IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND title = '",v_title,"'");
 	END IF;
-	IF(v_shierarchy IS NOT NULL) THEN
+	IF(v_shierarchy IS NOT NULL OR v_shierarchy != 0) THEN
 	SET @sql = CONCAT(@sql," AND shierarchy = ",v_shierarchy);
 	END IF;
 	IF(v_pmkey IS NOT NULL) THEN
