@@ -757,7 +757,16 @@ public class CommonServicesImpl implements CommonServices {
 //-----------------------------------Factor---------------------------
     @Override
     public void addFactor(Factor factor) {
-        this.factorDAO.create(factor);
+        //this.factorDAO.create(factor);
+    	if(isLocal()) {
+    		Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addFactor", new String[]{
+    				"labelid","factorid","studyid","fname","traitid","scaleid","tmethid","ltype","tid"});
+    		factor.setLabelid(id);
+    		Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"}, 
+    				new String[]{"factorid"});
+    		factor.setFactorid(newFactor.getFactorid());
+    		
+    	}
     }
 
     @Override

@@ -123,4 +123,112 @@ SET @studyid = p_studyid;
 SET @factorid = p_factorid;
 EXECUTE stmt USING @studyid, @factorid;
 	
+end$$
+
+drop procedure if EXISTS addFactor$$
+
+CREATE PROCEDURE addFactor(
+IN v_labelid int,
+IN v_factorid int,
+IN v_studyid int,
+IN v_fname varchar(50),
+IN v_traitid int,
+IN v_scaleid int,
+IN v_tmethid int,
+IN v_ltype varchar(1),
+IN v_tid int)
+begin
+
+DECLARE v_project_id int;
+DECLARE v_projectprop_id int;
+DECLARE v_rank int;
+DECLARE v_type_id int;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
+
+	SELECT MAX(rank) + 1 as rank, pp.project_id INTO v_rank, v_project_id 
+	FROM projectprop pp, project_relationship pr 
+	WHERE pr.type_id = 1150
+	AND pr.subject_project_id = pp.project_id
+	AND pr.object_project_id = v_studyid;
+	
+	IF(v_rank IS NULL) THEN
+	SET v_rank := 1;
+	END IF;
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_project_id,v_tid,v_fname,v_rank);
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_project_id,1060,v_fname,v_rank);
+	
+	SELECT cvt1.cvterm_id into v_type_id
+    FROM cvterm cvt1 
+    WHERE EXISTS (
+    SELECT 1 
+    FROM cvterm_relationship cvtr
+	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
+ 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
+    WHERE cvt1.cvterm_id = cvtr.subject_id 
+    AND (cvt2.name = 'stored in' AND cvt3.cvterm_id = v_tid)
+    ) AND EXISTS ( 
+    SELECT 1 
+    FROM cvterm_relationship cvtr
+	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
+ 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
+    WHERE cvt1.cvterm_id = cvtr.subject_id 
+     AND (cvt2.name = 'has type' AND cvt3.cvterm_id = v_ltype)
+    ) AND EXISTS ( 
+    SELECT 1 
+    FROM cvterm_relationship cvtr
+	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
+ 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
+    WHERE cvt1.cvterm_id = cvtr.subject_id 
+    AND (cvt2.name = 'has property' AND cvt3.cvterm_id = v_traitid)
+    ) AND EXISTS ( 
+    SELECT 1 
+    FROM cvterm_relationship cvtr
+	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
+ 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
+    WHERE cvt1.cvterm_id = cvtr.subject_id 
+    AND (cvt2.name = 'has scale' AND cvt3.cvterm_id = v_scaleid)
+    ) AND EXISTS ( 
+    SELECT 1 
+    FROM cvterm_relationship cvtr
+	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
+ 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
+    WHERE cvt1.cvterm_id = cvtr.subject_id 
+    AND (cvt2.name = 'has method' AND cvt3.cvterm_id = v_tmethid)
+    );
+    
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+	VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
+	
+	SELECT v_projectprop_id;
+
+COMMIT;	
+	
+end$$
+
+delimiter $$
+
+drop procedure if exists `getFactoridByLabelid`$$
+
+CREATE PROCEDURE `getFactoridByLabelid`(IN v_labelid int)
+begin
+
+	SELECT factorid
+	FROM v_factor 
+	WHERE projectprop_id = v_labelid;
+	
 end$$ 
+
+
