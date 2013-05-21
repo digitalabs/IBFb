@@ -5,8 +5,7 @@ CREATE PROCEDURE `getListMeasuredIn` (
 IN v_measuredinid int,
 IN v_traitid int,
 IN v_tmethid int,
-IN v_scaleid int,
-IN v_standardscale int)
+IN v_scaleid int)
 begin
 	SET @sql := CONCAT("SELECT cvt.cvterm_id AS measuredinid, ",
 				"crp.object_id AS traitid, ",
@@ -38,10 +37,6 @@ begin
 		SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
     END IF;
 	
-	IF(v_standardscale IS NOT NULL) THEN
-		SET @sql = CONCAT(@sql," AND crs.object_id = ",v_standardscale);
-    END IF;
-
 	SET @sql = CONCAT(@sql, " ORDER BY measuredinid; ");
 	
 	PREPARE stmt FROM @sql;
