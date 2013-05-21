@@ -31,7 +31,7 @@ SET @mySQL = 'SELECT DISTINCT
       cvt.cvterm_id AS traitId,
       cvt.name AS traitName,
       cvt.definition AS traitDescription,
-      1 AS nstat,
+      1 AS tnstat,
       grp.name AS traitGroup
     FROM cvterm cvt
       INNER JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id
