@@ -2751,8 +2751,15 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<String> getTraitGroups() {
 
-        return this.utilityDAO.callStoredProcedureForList(String.class, "getTraitGroups", 
-       		 new HashMap(), new String[]{},new String[]{"traitgroup"});
+        List<TraitDto> list = this.utilityDAO.callStoredProcedureForList(new TraitDto(), "getTraitGroups", 
+       		 new String[]{},new String[]{"traitGroup"});
+        
+        List<String> groupList = new ArrayList<String>();
+        for (TraitDto dto : list){
+            groupList.add(dto.getTraitGroup());
+        }
+        
+        return groupList;
     }
 
     @Override
