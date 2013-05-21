@@ -2775,7 +2775,7 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Traits> getTraitsList() {
-        return traitsDAO.findAll();
+        return getTraitList();
     }
 
     @Override
