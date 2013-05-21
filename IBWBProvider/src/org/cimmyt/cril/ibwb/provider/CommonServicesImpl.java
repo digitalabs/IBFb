@@ -1499,7 +1499,13 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Measuredin> getMeasuredInListByTrait(Integer traitId) {
-        return this.measuredinDAO.getMeasuredInListByTrait(traitId);
+    	// use filter to set getting by trait id
+    	Measuredin measuredIn = new Measuredin();
+    	measuredIn.setTraitid(traitId);
+    	
+    	return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn", 
+    			new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
+    			new String[]{"measuredinid","traitid", "tmethid", "scaleid"});
     }
 
     @Override
