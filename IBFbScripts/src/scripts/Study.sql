@@ -411,7 +411,7 @@ drop procedure if exists `getStudyList`$$
 
 CREATE PROCEDURE `getStudyList`()
 begin
-        insert into logger (log_value) values ('getStudyList');
+        
 	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy 
 	,GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey' 
 	,GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv' 
