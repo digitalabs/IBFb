@@ -2775,7 +2775,7 @@ public class CommonServicesImpl implements CommonServices {
     	Traits traits = new Traits();
     	traits.setTraitid(idTrait);
     	return utilityDAO.callStoredProcedureForObject(traits, "getTraitsById", new String[]{"traitid"},
-    			new String[]{"tid", "traitid", "trname", "trdesc", "nstat", "traitgroup"});
+    			new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup"});
     }
 
     public Traits getTraitsByTraitid(Integer idTrait) {
