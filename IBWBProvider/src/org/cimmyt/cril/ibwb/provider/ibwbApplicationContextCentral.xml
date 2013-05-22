@@ -619,6 +619,7 @@
             <ref bean="sessionFactoryNewCentralDMS" />
         </property>
         <property name="accessType" value="central"/>
+        <property name="centralDatabaseName" value="${dmscentral2.defaultSchema}"/>
     </bean>
     
 </beans>

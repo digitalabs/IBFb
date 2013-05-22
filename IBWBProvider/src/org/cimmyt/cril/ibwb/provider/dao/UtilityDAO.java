@@ -22,6 +22,10 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class UtilityDAO extends HibernateDaoSupport {
 
+    public static final String DATABASE_PARAMETER_NAME = "dName";
+
+    private String centralDatabaseName;
+
     private static Logger log = Logger.getLogger(UtilityDAO.class);
     private String accessType;
 
@@ -41,6 +45,14 @@ public class UtilityDAO extends HibernateDaoSupport {
      */
     public void setAccessType(String accessType) {
         this.accessType = accessType;
+    }
+
+    public String getCentralDatabaseName() {
+        return centralDatabaseName;
+    }
+
+    public void setCentralDatabaseName(String centralDatabaseName) {
+        this.centralDatabaseName = centralDatabaseName;
     }
 
     @SuppressWarnings("rawtypes")
@@ -67,7 +79,12 @@ public class UtilityDAO extends HibernateDaoSupport {
                             System.out.println(paramName + " = " + obj);
                             query.setParameter(paramName, obj);
                         }
+
+                        // GCP-4347 Adding central database name as a parameter for all SQL queries
+
+                        query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                     }
+
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
                             Class type = PropertyUtils.getPropertyType(bean, paramName);
@@ -131,6 +148,10 @@ public class UtilityDAO extends HibernateDaoSupport {
                         }
                     }
 
+                    // GCP - 4347 Adding central database name as a parameter to all SQL queries
+
+                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
                             Class type = PropertyUtils.getPropertyType(bean, paramName);
@@ -184,6 +205,9 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
                 }
 
+                // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+
                 return query.uniqueResult();
             }
         });
@@ -220,6 +244,11 @@ public class UtilityDAO extends HibernateDaoSupport {
                         query.setParameter(paramName, obj);
                     }
                 }
+
+
+                // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+
                 try {
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
@@ -287,6 +316,10 @@ public class UtilityDAO extends HibernateDaoSupport {
                             query.setParameter(paramName, obj);
                         }
                     }
+
+                    // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
                             Class type = PropertyUtils.getPropertyType(bean, paramName);
@@ -344,6 +377,9 @@ public class UtilityDAO extends HibernateDaoSupport {
                         }
                     }
                 }
+
+                // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                 return query.executeUpdate();
             }
         });
@@ -388,6 +424,10 @@ public class UtilityDAO extends HibernateDaoSupport {
                 sql.append(paramName);
             }
         }
+
+        // GCP - 4347 Adding database name as a parameter to all SQL queries
+        sql.append(", :" + DATABASE_PARAMETER_NAME);
+
         sql.append(")");
         return sql.toString();
     }
@@ -421,6 +461,9 @@ public class UtilityDAO extends HibernateDaoSupport {
                             query.setParameter(paramName, obj);
                         }
                     }
+
+                    // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     return query.executeUpdate();
                 }
@@ -457,6 +500,10 @@ public class UtilityDAO extends HibernateDaoSupport {
                         }
                     }
                 }
+
+                // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+
                 return query.uniqueResult();
             }
         });
@@ -483,6 +530,9 @@ public class UtilityDAO extends HibernateDaoSupport {
                 sql.append(key);
             }
         }
+
+        // GCP - 4347 Adding database name as a parameter to all SQL queries
+        sql.append(", :" + DATABASE_PARAMETER_NAME);
         sql.append(")");
         return sql.toString();
     }
