@@ -40,19 +40,10 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
-   public void testTmsMethodList(){
-        List<TmsMethod> tmsMethodList = servicios.getCentralCommonService().getTmsMethodList();
-        for(int i = 0 ; i < tmsMethodList.size() ; i++){
-            TmsMethod tmsMethod = tmsMethodList.get(i);
-            System.out.println(tmsMethod.getTmname());
-        }
-    }
-
    public static void main(String[] args) {
         try {
             TestTrialRandomization test = new TestTrialRandomization();
 
-            //test.testTmsMethodList();
             test.testGetTrialRandomizationVeryFast();
         } catch(Exception e) {
             e.printStackTrace();
