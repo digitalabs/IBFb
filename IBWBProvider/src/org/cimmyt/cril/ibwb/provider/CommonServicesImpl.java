@@ -2032,7 +2032,20 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Scales getScales(Integer idScale) {
-        return this.scalesDAO.findById(idScale);
+        Scales scales = new Scales();
+        scales.setScaleid(idScale);
+        //override default values
+        scales.setScname(null); 
+        scales.setSctype(null);
+        
+        List<Scales> list =  this.utilityDAO.callStoredProcedureForList(scales, "getScales", 
+                new String[]{"scaleid","scname", "sctype"}, 
+                new String[]{"scaleid","scname", "sctype"});
+        
+        if (list!=null)
+            return list.get(0);
+        
+        return null;
     }
 
     @Override
