@@ -142,7 +142,7 @@ CREATE PROCEDURE `getVarieteFromVeffects`(IN p_represno int)
 
 BEGIN
 
- SELECT
+  SELECT
     pp.projectprop_id AS variatid
     , pr.object_project_id AS studyid
     , term.value AS vname
@@ -157,14 +157,12 @@ BEGIN
     INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
     INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
     INNER JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
-    INNER JOIN cvterm_relationship stin ON stin.subject_id = pp.value AND stin.type_id = 1044  
-    INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id = stin.object_id
+    INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
   WHERE
     pp.type_id = 1070 
-    AND stin.object_id IN (1043, 1048)
     AND pp.project_id = p_represno
   GROUP BY
     pp.projectprop_id
-  ;
+  $$
 
 END$$
