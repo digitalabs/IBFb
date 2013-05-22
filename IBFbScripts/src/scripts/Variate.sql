@@ -163,6 +163,6 @@ BEGIN
     AND pp.project_id = p_represno
   GROUP BY
     pp.projectprop_id
-  $$
+  ;
 
 END$$
