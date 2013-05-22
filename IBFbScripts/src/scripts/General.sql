@@ -144,15 +144,15 @@ $$
 
 
 DROP VIEW IF EXISTS `v_level`$$
-CREATE VIEW v_level (labelid, factorid, levelno, lvalue, dtypeid, storedinid)
+CREATE VIEW v_level (labelid, factorid, levelno, lvalue, dtypeid, storedinid, nd_experiment_id)
 AS
-SELECT DISTINCT
+SELECT 
 stdvar.projectprop_id AS labelId
 , stdvar.factorid AS factorId
 , CASE
     WHEN stdvar.storedinid IN (1010, 1011, 1012, 1015, 1016, 1017) THEN p.project_id
     WHEN stdvar.storedinid IN (1020, 1021, 1022, 1023, 1024, 1025) THEN geo.nd_geolocation_id
-    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experimentprop_id
+    WHEN stdvar.storedinid = 1030 THEN eprop.nd_experiment_id
     WHEN stdvar.storedinid IN (1040, 1041, 1042, 1046, 1047) THEN stock.stock_id
   END AS levelno
 , CASE stdvar.storedinid 
@@ -177,6 +177,7 @@ stdvar.projectprop_id AS labelId
   END AS lvalue
 , stdvar.dtypeid AS dtypeid
 , stdvar.storedinid AS storedinid
+, exp.nd_experiment_id AS nd_experiment_id
 FROM 
 v_factor AS stdvar
 INNER JOIN project p ON p.project_id = stdvar.project_id
