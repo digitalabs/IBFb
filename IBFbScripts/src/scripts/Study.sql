@@ -559,12 +559,10 @@ START TRANSACTION;
 	where ctype.cvterm_id = pp.type_id
 	and ctype.name = 'STUDY_STATUS');
     
-  	select name into v_prevname from project where project_id = v_studyid;
-
-	select if(INSTR(v_prevname, '#') = 0, 1, max(SUBSTRING_INDEX(name,'#',-1))+1) into v_postfix 
+  	select if(INSTR(v_prevname, '#') = 0, 1, max(SUBSTRING_INDEX(name,'#',-1))+1)
+  	,SUBSTRING_INDEX(name,'#',1) into v_postfix,v_prevname 
 	from project 
-	where name like 
-	CONCAT(v_prevname,'%');
+	where project_id = v_studyid;
 
 	update project
 	set name = CONCAT(v_prevname,'#',v_postfix)
