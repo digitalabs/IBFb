@@ -612,24 +612,26 @@ public class HelperWorkbookReader {
             Integer numeroDeFactoresPrincipales
             ){
        String consultaSQL = "SELECT " 
-                + "  dataset.project_id AS represno " 
-                + "  , COUNT(dataset.project_id) " 
+                + "  ds.project_id AS represno " 
+                + "  , COUNT(*) AS countvalue" 
                 + " FROM " 
-                + "  project dataset " 
-                + "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = dataset.project_id " 
-                + "  INNER JOIN v_factor mainfactor ON mainfactor.project_id = dataset.project_id AND mainfactor.projectprop_id = mainfactor.factorid "
+                + "  project ds " 
+                + "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = ds.project_id " 
+                + "  INNER JOIN v_factor mainfactor ON mainfactor.project_id = ds.project_id AND mainfactor.projectprop_id = mainfactor.factorid "
                 + "  INNER JOIN projectprop fname ON fname.project_id = mainfactor.project_id AND fname.rank = mainfactor.rank " 
                 + "      AND fname.type_id = mainfactor.storedinid " 
                 + " WHERE " 
                 + "  pr.object_project_id = " + studyid  
                 + "  AND fname.value IN (" + factoresPrincipalesStr + ") " 
                 + " GROUP BY " 
-                + "  dataset.project_id " 
+                + "  ds.project_id " 
                 + " HAVING " 
-                + "  COUNT(dataset.project_id) = " + numeroDeFactoresPrincipales;
-        
-        query = session.createSQLQuery(consultaSQL);
-        List resultado = query.list();
+                + "  COUNT(*) = " + numeroDeFactoresPrincipales;
+                
+       query = session.createSQLQuery(consultaSQL);
+       query.addScalar("represno", Hibernate.INTEGER);
+       query.addScalar("countvalue", Hibernate.INTEGER);
+       List resultado = query.list();
         if (resultado != null) {
             if (resultado.size() > 0) {
                 Object[] fila = (Object[]) resultado.get(0);
@@ -679,6 +681,11 @@ public class HelperWorkbookReader {
             Integer studyid,
             String factoresResultadoStr
             ){
+        
+        if (factoresResultadoStr == null || "".equals(factoresResultadoStr)) {
+            log.error("No se encontro ningun factor resultado");
+            return 0;
+        }
         String consultaSQL = "SELECT COUNT(*)" 
                 + " FROM " 
                 + "  v_factor factor " 
@@ -780,6 +787,10 @@ public class HelperWorkbookReader {
             Integer represNo,
             String factoresResultadoStr
             ){
+        
+        if (factoresResultadoStr == null || "".equals(factoresResultadoStr)) {
+            return null;
+        }
         String condicionWhere = "fname.value IN (" + factoresResultadoStr + ")"
                 + " AND (prs.subject_project_id = " + studyid + " OR prd.subject_project_id = " + represNo + ") "
                 ;
@@ -870,6 +881,11 @@ public class HelperWorkbookReader {
             String orden
             
             ){
+        if (condicionWhere == null) {
+            log.error("No se encontro ningun listado de factores y levesl a devolver");
+            log.error("No se logro recuperar estructura");
+            return null;
+        }
         String consultaSQL = "SELECT " 
                 + "  level.nd_experiment_id AS OUNITID " 
                 + "  , fname.value AS FNAME " 
@@ -880,9 +896,9 @@ public class HelperWorkbookReader {
                 + "  v_level level " 
                 + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
                 + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id AND fname.rank = stdvar.rank AND fname.type_id = level.storedinid " 
-                + "  LEFT JOIN project_relationship prd ON prd.type_id IN = 1150 " 
+                + "  LEFT JOIN project_relationship prd ON prd.type_id = 1150 " 
                 + "      AND prd.subject_project_id = fname.project_id " 
-                + "  LEFT JOIN project_relationship prs ON prs.type_id IN = 1145 " 
+                + "  LEFT JOIN project_relationship prs ON prs.type_id = 1145 " 
                 + "      AND prs.subject_project_id = fname.project_id " 
                 + " WHERE " + condicionWhere
                 + " ORDER BY "
@@ -942,7 +958,7 @@ public class HelperWorkbookReader {
         String consultaSQL = "SELECT " 
                 + "  stdvar.projectprop_id AS variatid " 
                 + " FROM " 
-                + "  projectprop " 
+                + "  projectprop stdvar " 
                 + "  INNER JOIN cvterm_relationship cvr ON cvr.type_id = 1044 AND cvr.subject_id = stdvar.value "
                 + " WHERE " 
                 + "  stdvar.type_id = 1070 "
