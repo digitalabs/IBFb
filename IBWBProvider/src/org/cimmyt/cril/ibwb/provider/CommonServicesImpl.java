@@ -111,13 +111,16 @@ public class CommonServicesImpl implements CommonServices {
     private StockpropDAO stockpropDAO;
     private UtilityDAO utilityDAO;
 
+
     public static CommonServices getCommonServices() {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         CommonServices servicios = (CommonServices) context.getBean("ibWorbenchServiceImpl");
         return servicios;
     }
 
-//-----------------------------------Atributs---------------------------
+
+
+    //-----------------------------------Atributs---------------------------
 
     @Override
     public void addAtributs(Atributs atributs) {
@@ -2052,6 +2055,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Scales> getScalesList() {
         //return scalesDAO.findAll();
+        //System.out.println("DB Name"+getCentralDbName());
         return this.utilityDAO.callStoredProcedureForList(new Scales()  , "getScalesList",
             				new String[]{},
             				new String[]{"scaleid","scname", "sctype"});
@@ -2350,6 +2354,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addStudy(Study study) {
         //this.studyDAO.create(study);
+
     	if(isLocal()) {
     		Integer id = this.utilityDAO.getNextMin("project");
     		study.setStudyid(id);

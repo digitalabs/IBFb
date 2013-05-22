@@ -1,5 +1,8 @@
 package org.cimmyt.cril.ibwb.provider.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.sql.SQLException;
@@ -14,6 +17,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
+import org.openide.modules.InstalledFileLocator;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -24,6 +28,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
     public static final String DATABASE_PARAMETER_NAME = "dName";
 
+
     private String centralDatabaseName;
 
     private static Logger log = Logger.getLogger(UtilityDAO.class);
@@ -32,6 +37,26 @@ public class UtilityDAO extends HibernateDaoSupport {
     public UtilityDAO() {
 
     }
+
+    public UtilityDAO(String dbConfigRelativePath) {
+
+
+           InstalledFileLocator locator = InstalledFileLocator.getDefault();
+           File databaseConfigFile = locator.locate(dbConfigRelativePath, "org.cimmyt.cril.ibwb.provider", false);
+           Properties propertiesFile = new Properties();
+           try {
+               InputStream streamProperties = new FileInputStream(databaseConfigFile);
+               propertiesFile.load(streamProperties);
+
+               String centralDb = propertiesFile.getProperty("dmscentral2.defaultSchema");
+               this.setCentralDatabaseName(centralDb);
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+
+    }
+
+
 
     /**
      * @return the accessType
@@ -62,6 +87,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String[] inParams,
             final String[] outParams) {
 
+        
         final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = " + sql);
         Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
@@ -299,7 +325,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String[] inParams,
             final String[] outParams) {
 
-        final String sql = buildSQLQuery(procedureName, inParams);
+        final String sql = buildSQLQuery(procedureName+getCentralDatabaseName()+"daniel", inParams);
         System.out.println("sql = " + sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
             @Override
@@ -387,6 +413,7 @@ public class UtilityDAO extends HibernateDaoSupport {
     }
 
     public Integer getNextMin(final String tableName){
+
         final String sql = buildSQLQuery("getNextMin", "tableName");
                System.out.println("sql = " + sql);
                Object result = getHibernateTemplate().execute(new HibernateCallback() {

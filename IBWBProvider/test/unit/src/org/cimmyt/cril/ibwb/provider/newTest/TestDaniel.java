@@ -38,12 +38,17 @@ public class TestDaniel extends TestService {
             System.out.println(tmsMethod.getTmname());
         }
     }
+    public void testGetScaleList(){
+        List<Scales> scalesList = servicios.getCentralCommonService().getScalesList();
+        
+    }
 
     public static void main(String[] args) {
         TestDaniel tl = new TestDaniel();
 
         //tl.testGetMinMax();
         //tl.testTmsMethodList();
-        tl.testAddLevelN();
+        //tl.testAddLevelN();
+        tl.testGetScaleList();
     }
 }

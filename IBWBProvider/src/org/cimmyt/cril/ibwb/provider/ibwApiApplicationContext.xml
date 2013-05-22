@@ -68,6 +68,9 @@
         </property>
     </bean>
     -->
+
+
+
     <import resource="ibwbApplicationContextLocal.xml"/>
     <import resource="ibwbApplicationContextCentral.xml"/>
     <import resource="ibwApiApplicationContextSrv.xml"/>

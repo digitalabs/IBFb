@@ -615,11 +615,12 @@
     </bean>
     
     <bean id="UtilityDAOCentral" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
+        <constructor-arg value="modules/ext/databasenewconfig.properties" />
         <property name="sessionFactory">
             <ref bean="sessionFactoryNewCentralDMS" />
         </property>
         <property name="accessType" value="central"/>
-        <property name="centralDatabaseName" value="${dmscentral2.defaultSchema}"/>
+
     </bean>
     
 </beans>
