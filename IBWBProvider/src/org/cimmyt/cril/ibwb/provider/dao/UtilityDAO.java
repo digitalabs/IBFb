@@ -325,7 +325,7 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String[] inParams,
             final String[] outParams) {
 
-        final String sql = buildSQLQuery(procedureName+getCentralDatabaseName()+"daniel", inParams);
+        final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = " + sql);
         List result = getHibernateTemplate().executeFind(new HibernateCallback() {
             @Override
@@ -439,6 +439,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         sql.append("CALL ");
         sql.append(procedureName);
         sql.append("(");
+
         if (params != null && params.length > 0) {
             boolean start = true;
             for (String paramName : params) {
