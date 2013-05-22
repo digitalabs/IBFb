@@ -448,9 +448,17 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
         }
         StringBuilder sb = new StringBuilder();
         for (String nombreFactor : factoresPrincipales) {
-            sb.append("'");
-            sb.append(nombreFactor);
-            sb.append("',");
+            //GCP: assumes factoresPrincipales is a string of factor names = cvterm names.
+            //in the future, we might use the cvterm id, since this is more stable than the projectprop local name (or factor name)
+            //remove any study or dataset main factor
+            //this method is used for finding a dataset that has an exact match of main factors
+            //study factor and dataset factors must not be used in matching
+            //because a study will never have a dataset factor, and a dataset will never have a study factor.
+            if (!"STUDY_NAME".equals(nombreFactor) && !"DATASET_NAME".equals(nombreFactor)) {
+                sb.append("'");
+                sb.append(nombreFactor);
+                sb.append("',");
+            }
         }
         return sb.substring(0, sb.length() - 1);
     }

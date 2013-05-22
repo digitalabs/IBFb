@@ -58,6 +58,12 @@ public class DataC extends BaseFilter implements Serializable {
         this.dataCPK = new DataCPK(ounitid, variatid);
     }
 
+    //for new schema
+    public DataC(Integer ounitid, Integer variatid, String dvalue) {
+        this(ounitid, variatid);
+        this.dvalue = dvalue;
+    }
+    
     public DataCPK getDataCPK() {
         return dataCPK;
     }

@@ -432,9 +432,16 @@ public class HelperWorkbookReader {
         if(studyid == null){
             log.error("El siguiente studyid = " + studyid + " no es un estudio valido.");
         }
-        String consultaSQL = "select SNAME as SNAME "
+        /*String consultaSQL = "select SNAME as SNAME "
                 + "from study "
                 + "where study.STUDYID = " + studyid + ";";
+        */
+        //NEW SCHEMA assumption: id is a study id, not a dataset id
+        //if id is a dataset id, it will return dataset name
+        String consultaSQL = "SELECT name AS SNAME " 
+                + " FROM project "
+                + " WHERE project_id = " + studyid + ";";
+        
         query = session.createSQLQuery(consultaSQL);
         query.addScalar("SNAME", Hibernate.STRING);
         Object snameTemp = query.uniqueResult();
@@ -451,7 +458,7 @@ public class HelperWorkbookReader {
             String orden
             ){
         List resultado;
-        
+/*        
         String consultaSQL = "SELECT "
                 + "factor.FNAME as FNAME, "
                 + "tmstraits.trname as TRNAME, "
@@ -468,8 +475,29 @@ public class HelperWorkbookReader {
                 + "tmstraits.tid = tmsmeasuredin.traitid "
                 + "where factor.STUDYID = "
                 + studyid
-                + " and factor.FACTORID = factor.LABELID "
+                + " and factor.FACTORID factor= factor.LABELID "
                 + "order by LABELID " + orden + ";";
+ */     //NEW SCHEMA  
+        String consultaSQL = "SELECT " 
+                + "  fname.value AS FNAME "
+                + "  , trait.name AS TRNAME " 
+                + "  , scale.name AS SCNAME " 
+                + "  , factor.projectprop_id AS LABELID " 
+                + " FROM " 
+                + "  v_factor factor " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = fname.rank " 
+                + "      AND fname.type_id = factor.storedinid " 
+                + "  INNER JOIN cvterm trait ON trait.cvterm_id = factor.traitid "
+                + "  INNER JOIN cvterm_relationship scalerel ON scalerel.type_id = 1220 AND scalerel.subject_id = factor.varid " 
+                + "  INNER JOIN cvterm scale ON scale.cvterm_id = scalerel.object_id "
+                + "  INNER JOIN cvterm_relationship methodrel ON methodrel.type_id = 1210 AND methodrel.subject_id = factor.varid " 
+                + "  INNER JOIN cvterm method ON method.cvterm_id = methodrel.object_id " 
+                + " WHERE "
+                + "  factor.factorid = factor.projectprop_id "
+                + "  AND factor.project_id = " + studyid 
+                + " ORDER BY " 
+                + "  factor.projectprop_id " + orden 
+                + ";";
 
         query = session.createSQLQuery(consultaSQL);
         query.addScalar("FNAME", Hibernate.STRING);
@@ -491,7 +519,7 @@ public class HelperWorkbookReader {
             String orden
             ){
         List resultado;
-        
+        /*
         String consultaSQL = "SELECT "
                 + "factor.FNAME as FNAME, "
                 + "tmstraits.trname as TRNAME, "
@@ -511,6 +539,27 @@ public class HelperWorkbookReader {
                 + " and factor.FACTORID = "
                 + numberEntry
                 + " order by LABELID " + orden + ";";
+        */
+        //NEW SCHEMA
+        String consultaSQL = "SELECT " 
+                + "  fname.value AS FNAME " 
+                + "  , trait.name AS TRNAME " 
+                + "  , scale.name AS SCNAME " 
+                + "  , factor.projectprop_id AS LABELID " 
+                + " FROM " 
+                + "  v_factor factor " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = factor.rank " 
+                + "      AND fname.type_id = factor.storedinid " 
+                + "  INNER JOIN cvterm trait ON trait.cvterm_id = factor.traitid " 
+                + "  INNER JOIN cvterm_relationship scalerel ON scalerel.type_id = 1220 AND scalerel.subject_id = factor.varid " 
+                + "  INNER JOIN cvterm scale ON scale.cvterm_id = scalerel.object_id " 
+                + "  INNER JOIN cvterm_relationship methodrel ON methodrel.type_id = 1210 AND methodrel.subject_id = factor.varid " 
+                + "  INNER JOIN cvterm method ON method.cvterm_id = methodrel.object_id " 
+                + " WHERE " 
+                + "  factor.project_id = " + studyid 
+                + "  AND factor.factorid = " + numberEntry
+                + " ORDER BY " 
+                + "  factor.projectprop_id " + orden + ";";
         
         query = session.createSQLQuery(consultaSQL);
         query.addScalar("FNAME", Hibernate.STRING);
@@ -523,7 +572,7 @@ public class HelperWorkbookReader {
         }
         return resultado;
     }
-
+/*
     public static Integer getRepresno(
             Session session,
             SQLQuery query,
@@ -537,6 +586,7 @@ public class HelperWorkbookReader {
                 + "f.factorid = f.labelid AND "
                 + "fname IN (" + factoresPrincipalesStr + ") "
                 + "GROUP BY represno HAVING COUNT(*) = " + numeroDeFactoresPrincipales;
+        
         query = session.createSQLQuery(consultaSQL);
         List resultado = query.list();
         if (resultado != null) {
@@ -552,7 +602,48 @@ public class HelperWorkbookReader {
             return null;
         }
     }
-
+    */
+    //getRepresno using the new schema.
+    public static Integer getRepresno(
+            Session session,
+            SQLQuery query,
+            Integer studyid,
+            String factoresPrincipalesStr,
+            Integer numeroDeFactoresPrincipales
+            ){
+       String consultaSQL = "SELECT " 
+                + "  dataset.project_id AS represno " 
+                + "  , COUNT(dataset.project_id) " 
+                + " FROM " 
+                + "  project dataset " 
+                + "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = dataset.project_id " 
+                + "  INNER JOIN v_factor mainfactor ON mainfactor.project_id = dataset.project_id AND mainfactor.projectprop_id = mainfactor.factorid "
+                + "  INNER JOIN projectprop fname ON fname.project_id = mainfactor.project_id AND fname.rank = mainfactor.rank " 
+                + "      AND fname.type_id = mainfactor.storedinid " 
+                + " WHERE " 
+                + "  pr.object_project_id = " + studyid  
+                + "  AND fname.value IN (" + factoresPrincipalesStr + ") " 
+                + " GROUP BY " 
+                + "  dataset.project_id " 
+                + " HAVING " 
+                + "  COUNT(dataset.project_id) = " + numeroDeFactoresPrincipales;
+        
+        query = session.createSQLQuery(consultaSQL);
+        List resultado = query.list();
+        if (resultado != null) {
+            if (resultado.size() > 0) {
+                Object[] fila = (Object[]) resultado.get(0);
+                return (Integer) fila[represNo];
+            } else {
+                log.error("No se encontro el represNo");
+                return null;
+            }
+        } else {
+            log.error("No se encontro el represNo");
+            return null;
+        }
+    }
+/*
     public static Integer getNumeroFactoresResultado(
             Session session,
             SQLQuery query,
@@ -579,7 +670,41 @@ public class HelperWorkbookReader {
         }
         return cuantosFR;
     }
-    
+*/
+    //using New Schema
+    //assumes projectid passed is the studyid and not a datasetid
+    public static Integer getNumeroFactoresResultado(
+            Session session,
+            SQLQuery query,
+            Integer studyid,
+            String factoresResultadoStr
+            ){
+        String consultaSQL = "SELECT COUNT(*)" 
+                + " FROM " 
+                + "  v_factor factor " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = factor.rank AND fname.type_id = factor.storedinid " 
+                + " WHERE " 
+                + "  factor.project_id = " + studyid 
+                + "  AND fname.value IN (" + factoresResultadoStr + ")";
+        
+        Integer cuantosFR = 0;
+        
+        query = session.createSQLQuery(consultaSQL);
+        Object tempObject = query.uniqueResult();
+        
+        if (tempObject instanceof BigInteger) {
+            BigInteger temp = (BigInteger) tempObject;
+            cuantosFR = temp.intValue();
+        } else if (tempObject instanceof Integer) {
+            Integer temp = (Integer) tempObject;
+            cuantosFR = temp.intValue();
+        } else if(tempObject == null){
+            log.error("No se encontro ningun factor resultado");
+        }
+        return cuantosFR;
+    }
+  
+    //TODO: need to convert to new schema used by getListGermplasmAndPlotBy..
     public static List getFactoresResultado(
             Session session,
             SQLQuery query,
@@ -603,7 +728,7 @@ public class HelperWorkbookReader {
         }
         return resultado;
     }
-    
+/*    
     public static String getCondicionesWhere(
             Session session,
             SQLQuery query,
@@ -643,8 +768,58 @@ public class HelperWorkbookReader {
             condicionWhere += " and ounitid in (" + cadOunitid + ")";
         }
         return condicionWhere;
-    }
+    }*/
+    
+    //New Schema
+    public static String getCondicionesWhere(
+            Session session,
+            SQLQuery query,
+            Integer studyid,
+            Integer trial,
+            String trialName,
+            Integer represNo,
+            String factoresResultadoStr
+            ){
+        String condicionWhere = "fname.value IN (" + factoresResultadoStr + ")"
+                + " AND (prs.subject_project_id = " + studyid + " OR prd.subject_project_id = " + represNo + ") "
+                ;
+        if (trial > 0) {
+            String consultaSQL = "SELECT " 
+                    + "  level.nd_experiment_id AS OUNITID" 
+                    + " FROM " 
+                    + "  v_level level " 
+                    + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
+                    + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id AND fname.rank = stdvar.rank AND fname.type_id = level.storedinid " 
+                    + "  LEFT JOIN project_relationship prd ON prd.type_id IN = 1150 " 
+                    + "      AND prd.subject_project_id = fname.project_id " 
+                    + "  LEFT JOIN project_relationship prs ON prs.type_id IN = 1145 " 
+                    + "      AND prs.subject_project_id = fname.project_id " 
+                    + " WHERE " 
+                    + "  fname.value = '" + trialName + "'" 
+                    + "  AND (prs.subject_project_id = " + studyid + " OR prd.subject_project_id = " + represNo + ") " 
+                    + "  AND level.lvalue = " + trial 
+                    ;
 
+            query = session.createSQLQuery(consultaSQL);
+            List resultado = query.list();
+
+            int cuantosRegistros = 0;
+            String cadOunitid = "";
+
+            if (resultado.size() == 0) {
+                return null;
+            } else {
+                for (Object fila : resultado) {
+                    cuantosRegistros += 1;
+                    cadOunitid += fila.toString() + ",";
+                }
+            }
+            cadOunitid = cadOunitid.substring(0, cadOunitid.length() - 1);
+            condicionWhere += " AND level.nd_experiment_id IN (" + cadOunitid + ") ";
+        }
+        return condicionWhere;
+    }
+/*
     public static List getListFactorsAndLevels(
             Session session,
             SQLQuery query,
@@ -686,8 +861,54 @@ public class HelperWorkbookReader {
             log.error("No se logro recuperar estructura");
         }
         return resultado;
+    }*/
+    //new schema
+    public static List getListFactorsAndLevels(
+            Session session,
+            SQLQuery query,
+            String condicionWhere,
+            String orden
+            
+            ){
+        String consultaSQL = "SELECT " 
+                + "  level.nd_experiment_id AS OUNITID " 
+                + "  , fname.value AS FNAME " 
+                + "  , level.lvalue AS LVALUE " 
+                + "  , level.dtypeid AS LTYPE " 
+                + "  , level.labelid AS LABELID " 
+                + " FROM " 
+                + "  v_level level " 
+                + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id AND fname.rank = stdvar.rank AND fname.type_id = level.storedinid " 
+                + "  LEFT JOIN project_relationship prd ON prd.type_id IN = 1150 " 
+                + "      AND prd.subject_project_id = fname.project_id " 
+                + "  LEFT JOIN project_relationship prs ON prs.type_id IN = 1145 " 
+                + "      AND prs.subject_project_id = fname.project_id " 
+                + " WHERE " + condicionWhere
+                + " ORDER BY "
+                + " level.nd_experiment_id " + orden + ", level.labelid " + orden
+                ;
+        
+        query = session.createSQLQuery(consultaSQL);
+        
+        query.addScalar("OUNITID", Hibernate.INTEGER);
+        query.addScalar("FNAME", Hibernate.STRING);
+        query.addScalar("LVALUE", Hibernate.STRING);
+        query.addScalar("LTYPE", Hibernate.STRING);
+        query.addScalar("LABELID", Hibernate.INTEGER);
+        
+        List resultado = query.list();
+        if(resultado == null){
+            log.error("No se encontro ningun listado de factores y levesl a devolver");
+            log.error("No se logro recuperar estructura");
+        }else if(resultado.isEmpty()){
+            log.error("No se encontro ningun listado de factores y levesl a devolver");
+            log.error("No se logro recuperar estructura");
+        }
+        return resultado;
     }
-    
+   
+/*    
     public static List<Integer> getVariatesByRepresno(
             Session session,
             SQLQuery query,
@@ -711,7 +932,39 @@ public class HelperWorkbookReader {
             return null;
         }
     }
-    
+*/
+    //New Schema
+    public static List<Integer> getVariatesByRepresno(
+            Session session,
+            SQLQuery query,
+            Integer represNo
+            ){
+        String consultaSQL = "SELECT " 
+                + "  stdvar.projectprop_id AS variatid " 
+                + " FROM " 
+                + "  projectprop " 
+                + "  INNER JOIN cvterm_relationship cvr ON cvr.type_id = 1044 AND cvr.subject_id = stdvar.value "
+                + " WHERE " 
+                + "  stdvar.type_id = 1070 "
+                + "  AND cvr.object_id IN (1043, 1048) "
+                + "  AND stdvar.project_id = " + represNo + ";";
+        
+        query = session.createSQLQuery(consultaSQL);
+        query.addScalar("variatid", Hibernate.INTEGER);
+        List resultado = query.list();
+        if (resultado != null) {
+            if (resultado.size() > 0) {
+                return resultado;
+            } else {
+                log.error("No se encontro ningun variate para el represNo " + represNo);
+                return null;
+            }
+        } else {
+            log.error("No se encontro ningun variate para el represNo " + represNo);
+            return null;
+        }
+    }
+/*    
     public static List<DataN> getDataN(
             Session session,
             List<Integer> variates,
@@ -736,7 +989,71 @@ public class HelperWorkbookReader {
             return null;
         }
     }
+*/
+    //New schema
+    public static List<DataN> getDataN(
+            Session session,
+            List<Integer> variates,
+            String orden
+            ){
+        if(variates == null){
+            log.error("No existen variates para recuperar DATA_N");
+        }else if(variates.isEmpty()){
+            log.error("No existen variates para recuperar DATA_N");
+        }
+        List<DataN> resultado;
+        String consultaSQL = "SELECT " 
+                + "  eph.nd_experiment_id AS ounitid " 
+                + "  , stdvar.projectprop_id AS variatid " 
+                + "  , ph.value AS dvalue " 
+                + " FROM " 
+                + "  projectprop stdvar " 
+                + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 AND dtyperel.subject_id = stdvar.value " 
+                + "  INNER JOIN nd_experiment_project ep ON ep.project_id = stdvar.project_id " 
+                + "  INNER JOIN nd_experiment_phenotype eph ON eph.nd_experiment_id = ep.nd_experiment_id " 
+                + "  INNER JOIN phenotype ph ON ph.phenotype_id = eph.phenotype_id AND ph.observable_id = stdvar.value " 
+                + " WHERE " 
+                + "  dtyperel.object_id NOT IN (1120, 1128) " 
+                + "  AND stdvar.projectprop_id IN (" + getStringValue(variates) + ") "
+                + " ORDER BY "
+                + "  eph.nd_experiment_id " + orden + ", stdvar.projectprop_id " + orden
+                ;
+        SQLQuery query = session.createSQLQuery(consultaSQL);
+        query.addScalar("ounitid", Hibernate.INTEGER);
+        query.addScalar("variatid", Hibernate.INTEGER);
+        query.addScalar("dvalue", Hibernate.DOUBLE);
+        List<Object[]> resultado2 = query.list();
+        if(resultado2 != null){
+            resultado = new ArrayList<DataN>();
+            for (Object[] fila : resultado2) {
+                resultado.add(new DataN(Integer.valueOf(fila[0].toString())
+                                        , Integer.valueOf(fila[1].toString())
+                                        , Double.valueOf(fila[2].toString())));
+            }
+            return resultado;
+        }else{
+            log.error("No se encontraron datos en data_n.");
+            return null;
+        }
+    }
+
+    //FOR NEW SCHEMA
+    private static String getStringValue(List<Integer> intList) {
+        StringBuffer str = null;
+        if (intList != null) {
+            for (Integer anInt : intList) {
+                if (str == null) {
+                    str = new StringBuffer();
+                } else {
+                    str.append(", ");
+                }
+                str.append(anInt);
+            }
+        }
+        return str == null ? "" : str.toString();
+    }
     
+/*    
     public static List<DataC> getDataC(
             Session session,
             List<Integer> variates,
@@ -761,7 +1078,54 @@ public class HelperWorkbookReader {
             return null;
         }
     }
-    
+*/
+    //NEW SCHEMA
+    public static List<DataC> getDataC(
+            Session session,
+            List<Integer> variates,
+            String orden
+            ){
+        if(variates == null){
+            log.error("No existen variates para recuperar DATA_C");
+        }else if(variates.isEmpty()){
+            log.error("No existen variates para recuperar DATA_C");
+        }
+        List<DataC> resultado;
+        String consultaSQL = "SELECT " 
+                + "  eph.nd_experiment_id AS ounitid " 
+                + "  , stdvar.projectprop_id AS variatid " 
+                + "  , ph.value AS dvalue " 
+                + " FROM " 
+                + "  projectprop stdvar " 
+                + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 AND dtyperel.subject_id = stdvar.value " 
+                + "  INNER JOIN nd_experiment_project ep ON ep.project_id = stdvar.project_id " 
+                + "  INNER JOIN nd_experiment_phenotype eph ON eph.nd_experiment_id = ep.nd_experiment_id " 
+                + "  INNER JOIN phenotype ph ON ph.phenotype_id = eph.phenotype_id AND ph.observable_id = stdvar.value " 
+                + " WHERE " 
+                + "  dtyperel.object_id IN (1120, 1128) " 
+                + "  AND stdvar.projectprop_id IN (" + getStringValue(variates) + ") "
+                + " ORDER BY "
+                + "  eph.nd_experiment_id " + orden + ", stdvar.projectprop_id " + orden
+                ;
+        SQLQuery query = session.createSQLQuery(consultaSQL);
+        query.addScalar("ounitid", Hibernate.INTEGER);
+        query.addScalar("variatid", Hibernate.INTEGER);
+        query.addScalar("dvalue", Hibernate.STRING);
+        List<Object[]> resultado2 = query.list();
+        if(resultado2 != null){
+            resultado = new ArrayList<DataC>();
+            for (Object[] fila : resultado2) {
+                resultado.add(new DataC(Integer.valueOf(fila[0].toString())
+                                        , Integer.valueOf(fila[1].toString())
+                                        , fila[2].toString()));
+            }
+            return resultado;
+        }else{
+            log.error("No se encontraron datos en data_c.");
+            return null;
+        }
+    }
+/*
     public static List<Variate> getVariates(
             Session session,
             List<Integer> variates,
@@ -781,7 +1145,81 @@ public class HelperWorkbookReader {
             return null;
         }
     }
+*/
+    //NEW SCHEMA
+    public static List<Variate> getVariates(
+            Session session,
+            List<Integer> variates,
+            String orden
+            ){
+        List<Variate> resultado;
+        String consultaSQL = "SELECT " 
+                + "    pp.projectprop_id AS variatid " 
+                + "    , pp.project_id AS studyid " 
+                + "    , term.value AS vname " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1128), 'C', 'N'), NULL)) AS dtype " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid " 
+                + " FROM " 
+                + "    projectprop pp " 
+                + "    INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value " 
+                + "    INNER JOIN cvterm obj ON obj.cvterm_id = cvr.object_id " 
+                + "    INNER JOIN projectprop term ON term.project_id = pp.project_id "
+                + "      AND term.rank = pp.rank AND term.type_id IN (1043, 1048) "
+                + " WHERE " 
+                + "    pp.type_id = 1070 "
+                + "    AND pp.projectprop_id IN (" + getStringValue(variates) + ") " 
+                + " GROUP BY " 
+                + "    pp.projectprop_id " 
+                + " ORDER BY " 
+                + "    pp.projectprop_id " + orden
+                ;
+
+        SQLQuery query = session.createSQLQuery(consultaSQL);
+        query.addScalar("variatid", Hibernate.INTEGER);
+        query.addScalar("studyid", Hibernate.INTEGER);
+        query.addScalar("vname", Hibernate.STRING);
+        query.addScalar("traitid", Hibernate.INTEGER);
+        query.addScalar("scaleid", Hibernate.INTEGER);
+        query.addScalar("tmethid", Hibernate.INTEGER);
+        query.addScalar("dtype", Hibernate.STRING);
+        query.addScalar("vtype", Hibernate.STRING);
+        query.addScalar("tid", Hibernate.INTEGER);
+        List<Object[]> resultado2 = query.list();
+        if(resultado2 != null){
+            resultado = new ArrayList<Variate>();
+            for (Object[] fila : resultado2) {
+                Variate variate = new Variate();
+                variate.setVariatid(getIntegerValue(fila[0]));
+                variate.setStudyid(getIntegerValue(fila[1]));
+                variate.setVname(getStringValue(fila[2]));
+                variate.setTraitid(getIntegerValue(fila[3]));
+                variate.setScaleid(getIntegerValue(fila[4]));
+                variate.setTmethid(getIntegerValue(fila[5]));
+                variate.setDtype(getStringValue(fila[6]));
+                variate.setVtype(getStringValue(fila[7]));
+                variate.setTid(getIntegerValue(fila[8]));
+                resultado.add(variate);
+            }
+            return resultado;
+        }else{
+            log.error("No se encontraron variates a partir de la lista de variates  de veffect proporcionada.");
+            return null;
+        }
+    }
     
+    //FOR NEW SCHEMA
+    private static String getStringValue(Object strObj) {
+         return strObj != null ? strObj.toString() : null;
+    }
+    private static Integer getIntegerValue(Object intObj) {
+        return intObj != null ? Integer.valueOf(intObj.toString()) : null;
+    }
+
+    //NEW SCHEMA TEAM: NOT USED, NO USAGES FOUND
     public static List<Factor> getFactors(
             Session session,
             Study study,

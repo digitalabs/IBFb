@@ -50,6 +50,12 @@ public class DataN extends BaseFilter implements Serializable {
     public DataN(Integer ounitid, Integer variatid) {
         this.dataNPK = new DataNPK(ounitid, variatid);
     }
+    
+    //for new schema:
+    public DataN(Integer ounitid, Integer variatid, Double dvalue) {
+        this(ounitid, variatid);
+        this.dvalue = dvalue;
+    }
 
     public DataNPK getDataNPK() {
         return dataNPK;
