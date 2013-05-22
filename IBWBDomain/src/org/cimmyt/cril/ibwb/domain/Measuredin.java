@@ -60,6 +60,10 @@ public class Measuredin extends BaseFilter implements Serializable {
     private Scales scales;
     @Transient
     private TmsMethod tmsMethod;
+    @Transient
+    private String name;
+    @Transient
+    private Integer storedinid;
 //    @Basic(optional = true)
 //    @Column(name = "tmethodid", nullable = true)
 //    private Integer tmethodid;
@@ -270,5 +274,20 @@ public class Measuredin extends BaseFilter implements Serializable {
         this.tmsScaleDef = tmsScaleDef;
     }
     
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    public Integer getStoredinid(){
+        return this.storedinid;
+    }
+    
+    public void setStoredinid(Integer storedinid){
+        this.storedinid = storedinid;
+    }
     
 }
