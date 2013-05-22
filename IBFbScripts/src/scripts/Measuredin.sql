@@ -66,3 +66,35 @@ BEGIN
 	limit 1;
 
 END$$
+
+drop procedure if EXISTS addMeasuredin$$
+
+CREATE PROCEDURE addMeasuredin(
+IN v_traitid int,
+iN v_tmethid int,
+IN v_scaleid int,
+IN v_name varchar(255),
+IN v_storedinid int)
+begin
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
+	-- insert standard variable
+	call addCvtermReturnId(1040, v_name, v_name, @newcvtermid);
+
+	-- insert "stored in" relationship
+	call addCvtermRelationship(1044, @newcvtermid, v_storedinid);
+
+	-- insert "has property" relationship
+	call addCvtermRelationship(1200, @newcvtermid, v_traitid);
+
+	-- insert "has method" relationship
+	call addCvtermRelationship(1210, @newcvtermid, v_tmethid);
+
+	-- insert "has scale" relationship
+	call addCvtermRelationship(1220, @newcvtermid, v_scaleid);
+
+COMMIT;	
+	
+end$$
