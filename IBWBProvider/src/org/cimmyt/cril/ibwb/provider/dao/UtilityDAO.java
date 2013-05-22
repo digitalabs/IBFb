@@ -223,7 +223,13 @@ public class UtilityDAO extends HibernateDaoSupport {
                 try {
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
-                            Class type = PropertyUtils.getPropertyType(beanClass, paramName);
+                            Object object = null;
+                            try{
+                            object = beanClass.newInstance();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            Class type = PropertyUtils.getPropertyType(object, paramName);
                             if (type.getSimpleName().equals("Integer")) {
                                 query.addScalar(paramName, Hibernate.INTEGER);
                             } else if (type.getSimpleName().equals("Double")) {
