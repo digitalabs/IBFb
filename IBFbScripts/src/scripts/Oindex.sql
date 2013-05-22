@@ -35,9 +35,7 @@ IF ('TRIAL ENVIRONMENT') THEN
 	FROM nd_experiment
 	WHERE nd_geolocation_id = v_levelno;
 ELSEIF ('TRIAL DESIGN') THEN
-	SELECT nd_experiment_id INTO v_nd_experiment_id 
-	FROM nd_experimentprop 
-	WHERE nd_experimentprop_id = v_levelno;
+	SELECT v_levelno INTO v_nd_experiment_id;
 ELSEIF ('GERMPLASM ENTRY') THEN
 	SELECT nd_experiment_id INTO v_nd_experiment_id 
 	FROM nd_experiment_stock 

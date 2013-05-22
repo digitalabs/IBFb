@@ -493,7 +493,7 @@ begin
 	"WHERE value.project_id = p.project_id ", 
   	"AND value.type_id = ct.cvterm_id ", 
 	"AND ct.name ", 
-	"IN ('STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') ",  
+	"IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') ",  
 	"GROUP BY p.project_id HAVING 1=1 ");
 	IF(v_studyid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND studyid = ",v_studyid);
