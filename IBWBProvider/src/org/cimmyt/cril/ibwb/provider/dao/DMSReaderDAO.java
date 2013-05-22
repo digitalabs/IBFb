@@ -117,7 +117,7 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
      * @param nombreDelTrial puede ser null
      * @return
      */
-    public ResultSet getTrialRandomization(
+/*    public ResultSet getTrialRandomization(
             int studyId,
             int trialFactorId,
             List<String> factoresPrincipales,
@@ -322,7 +322,230 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
         log.info("Getting trial randomization.... DONE");
         return pr;
     }
-    
+*/
+    //NEW SCHEMA
+    public ResultSet getTrialRandomization(
+            int studyId,
+            int trialFactorId,
+            List<String> factoresPrincipales,
+            List<String> factoresSalida,
+            String trialName) {
+        log.info("Getting trial randomization");
+        Integer numeroDeFactoresPrincipales = factoresPrincipales.size();
+        String listaDeFactoresResultado = getFactoresParaUsoInQuery(factoresSalida);
+        ResultSet pr = null;
+        String consultaSQL = "SELECT " 
+                + "  ds.project_id  " 
+                + "  , COUNT(*) " 
+                + " FROM " 
+                + "  project ds " 
+                + "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = ds.project_id " 
+                + "  INNER JOIN v_factor mainfactor ON mainfactor.project_id = ds.project_id AND mainfactor.projectprop_id = mainfactor.factorid "
+                + "  INNER JOIN projectprop fname ON fname.project_id = mainfactor.project_id AND fname.rank = mainfactor.rank " 
+                + "      AND fname.type_id = mainfactor.storedinid " 
+                + " WHERE " 
+                + "  pr.object_project_id = " + studyId  
+                + "  AND fname.value IN (" + getFactoresParaUsoInQuery(factoresPrincipales) + ") " 
+                + " GROUP BY " 
+                + "  ds.project_id " 
+                + " HAVING " 
+                + "  COUNT(*) = " + numeroDeFactoresPrincipales;
+
+        try {
+            List resultado = executeQueryCustomListOfGSqlNat(consultaSQL);
+            String orden;
+            if (isLocal()) {
+                orden = "DESC";
+            } else if (isCentral()) {
+                orden = "ASC";
+            } else {
+                orden = "DESC";
+            }
+
+            int trepresNo = 0;
+            if (resultado != null) {
+                if (resultado.size() > 0) {
+                    Object[] fila = (Object[]) resultado.get(0);
+                    trepresNo = (Integer) fila[represNo]; // rsTemp.getInt("represno");
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+            RowSetMetaDataImpl rsmd = new RowSetMetaDataImpl();
+            consultaSQL = "SELECT COUNT(*)" 
+                + " FROM " 
+                + "  v_factor factor " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = factor.rank AND fname.type_id = factor.storedinid " 
+                + " WHERE " 
+                + "  factor.project_id = " + studyId 
+                + "  AND fname.value IN (" + listaDeFactoresResultado + ")";
+        
+            int cuantosFR = 0;
+
+            Object tempObject = executeQueryCustomUniqueResultSqlNat(consultaSQL);
+            if (tempObject instanceof BigInteger) {
+                BigInteger temp = (BigInteger) tempObject;
+                cuantosFR = temp.intValue();
+            } else if (tempObject instanceof Integer) {
+                Integer temp = (Integer) tempObject;
+                cuantosFR = temp.intValue();
+            }
+
+            consultaSQL = "SELECT " 
+                    + "  fname.value AS FNAME " //fname
+                    + "  , IF(dtyperel.object_id IN (1120, 1128), 'C', 'N') AS LTYPE  " //ltype
+                    + "  , stdvar.projectprop_id AS LABELID  " //labelid
+                    + " FROM " 
+                    + "  projectprop stdvar " 
+                    + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id " 
+                    + "    AND fname.rank = stdvar.rank AND fname.type_id NOT IN (1060, 1070, stdvar.value) " 
+                    + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 " 
+                    + "    AND dtyperel.subject_id = stdvar.value " 
+                    + " WHERE " 
+                    + "  stdvar.type_id = 1070 " 
+                    + "  AND stdvar.project_id = " + studyId 
+                    + "  AND fname.value IN (" + listaDeFactoresResultado + ") " 
+                    + "  ORDER BY stdvar.projectprop_id " + orden;
+
+            resultado = executeQueryRandomtNative(consultaSQL);
+            rsmd.setColumnCount(cuantosFR);
+            int tconsecutivo = 0;
+            for (Object fila : resultado) {
+                tconsecutivo += 1;
+                Object[] casilla = (Object[]) fila;
+                rsmd.setColumnName(tconsecutivo, (String) casilla[fname]);
+                String ltypeTemp = casilla[ltype].toString();
+                if (ltypeTemp.equals("N")) {
+                    rsmd.setColumnType(tconsecutivo, Types.INTEGER);
+                } else {
+                    rsmd.setColumnType(tconsecutivo, Types.VARCHAR);
+                }
+            }
+
+            CachedRowSetImpl crs = new CachedRowSetImpl();
+            int i889 = 0;
+            crs.setMetaData(rsmd);
+            String condicionWhere = "fname.value IN (" + listaDeFactoresResultado + ")"
+                    + " AND (prs.subject_project_id = " + studyId + " OR prd.subject_project_id = " + trepresNo + ") "
+                    ;
+            if (trialFactorId > 0) {
+                consultaSQL = "SELECT " 
+                        + "  level.nd_experiment_id " 
+                        + " FROM " 
+                        + "  v_level level " 
+                        + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
+                        + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id AND fname.rank = stdvar.rank AND fname.type_id = level.storedinid " 
+                        + "  LEFT JOIN project_relationship prd ON prd.type_id IN = 1150 " 
+                        + "      AND prd.subject_project_id = fname.project_id " 
+                        + "  LEFT JOIN project_relationship prs ON prs.type_id IN = 1145 " 
+                        + "      AND prs.subject_project_id = fname.project_id " 
+                        + " WHERE " 
+                        + "  fname.value = '" + trialName + "'" 
+                        + "  AND (prs.subject_project_id = " + studyId + " OR prd.subject_project_id = " + trepresNo + ") " 
+                        + "  AND level.lvalue = " + trialFactorId 
+                        ;
+
+                resultado = executeQueryCustomListOfGSqlNat(consultaSQL);
+                int cuantosRegistros = 0;
+                String cadOunitid = "";
+
+                if (resultado.size() == 0) {
+                    return null;
+                } else {
+                    for (Object fila : resultado) {
+                        cuantosRegistros += 1;
+                        cadOunitid += fila.toString() + ",";
+                    }
+                }
+                cadOunitid = cadOunitid.substring(0, cadOunitid.length() - 1);
+                condicionWhere += " AND level.nd_experiment_id IN (" + cadOunitid + ")";
+            }
+            
+            consultaSQL = "SELECT " 
+                + "  level.nd_experiment_id AS OUNITID " //OUNITID 
+                + "  , fname.value AS FNAME " //FNAME
+                + "  , level.lvalue AS LVALUE " //LVALUE
+                + "  , IF(level.dtypeid IN (1120, 1128), 'C', 'N') AS LTYPE " //LTYPE
+                + "  , level.labelid AS LABELID " //LABELID
+                + " FROM " 
+                + "  v_level level " 
+                + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
+                + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id AND fname.rank = stdvar.rank AND fname.type_id = level.storedinid " 
+                + "  LEFT JOIN project_relationship prd ON prd.type_id = 1150 " 
+                + "      AND prd.subject_project_id = fname.project_id " 
+                + "  LEFT JOIN project_relationship prs ON prs.type_id = 1145 " 
+                + "      AND prs.subject_project_id = fname.project_id " 
+                + " WHERE " + condicionWhere
+                + " ORDER BY "
+                + " level.nd_experiment_id " + orden + ", level.labelid " + orden
+                ;
+
+            //System.out.println(consultaSQL);
+            resultado = executeQueryCustomListNative(consultaSQL);
+            int tounitidAnt = 0;
+            int tounitidActual = 0;
+            String fname = "";
+            int tlvalue = 0;
+            for (Object fila : resultado) {
+                Object[] celdas = (Object[]) fila;
+
+                tounitidActual = (Integer) celdas[ounitid];
+                if (tounitidAnt != tounitidActual) {
+                    if (tounitidAnt != 0) {
+                        crs.insertRow();
+                    }
+                    crs.moveToInsertRow();
+                    for (i889 = 1; i889 <= cuantosFR; i889++) {
+                        crs.updateNull(i889);
+                    }
+                }
+                fname = (String) celdas[FNAME];
+                String ltypeTemp = (String) celdas[LTYPE];
+                ltypeTemp = ltypeTemp.trim().toUpperCase();
+                //System.out.println("*" + celdas[LVALUE] + ", " + celdas[FNAME] + ", " + celdas[ounitid]);
+                if (ltypeTemp.equals("N")) {
+                    if (celdas[2] instanceof String) {
+                        String valueTemp = (String) celdas[LVALUE];
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    }
+                    crs.updateInt(fname, tlvalue);
+                } else {
+                    if (celdas[2] instanceof String) {
+                        crs.updateString(fname, (String) celdas[LVALUE]);
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        crs.updateString(fname, valueTemp);
+                    }
+
+                }
+                tounitidAnt = tounitidActual;
+            }
+            if (tounitidAnt != 0) {
+                crs.insertRow();
+            }
+            crs.moveToCurrentRow();
+            crs.beforeFirst();
+            pr = crs;
+//            pr.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            pr = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            pr = null;
+        }
+//        muestraRegistros(pr);
+        log.info("Getting trial randomization.... DONE");
+        return pr;
+    }
+
     /**
      * This method found List of trial or occ indicated by study indicated
      * @param studyId id del estudio

@@ -711,8 +711,7 @@ public class HelperWorkbookReader {
         return cuantosFR;
     }
   
-    //TODO: need to convert to new schema used by getListGermplasmAndPlotBy..
-    public static List getFactoresResultado(
+/*    public static List getFactoresResultado(
             Session session,
             SQLQuery query,
             Integer studyid,
@@ -729,6 +728,45 @@ public class HelperWorkbookReader {
             log.error("La lista de factores esta vacia.");
         }
         query = session.createSQLQuery(consultaSQL);
+        List resultado = query.list();
+        if(resultado == null){
+            log.error("No se encontraron factores para regresar.");
+        }
+        return resultado;
+    }
+*/  //NEW SCHEMA
+    public static List getFactoresResultado(
+            Session session,
+            SQLQuery query,
+            Integer studyid,
+            String factoresResultadoStr,
+            String orden
+            ){
+            String consultaSQL = "SELECT " 
+                    + "  fname.value AS fname " //fname
+                    + "  , IF(dtyperel.object_id IN (1120, 1128), 'C', 'N') AS ltype " //ltype
+                    + "  , stdvar.projectprop_id AS labelid " //labelid
+                    + " FROM " 
+                    + "  projectprop stdvar " 
+                    + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id " 
+                    + "    AND fname.rank = stdvar.rank AND fname.type_id NOT IN (1060, 1070, stdvar.value) " 
+                    + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 " 
+                    + "    AND dtyperel.subject_id = stdvar.value " 
+                    + " WHERE " 
+                    + "  stdvar.type_id = 1070 " 
+                    + "  AND stdvar.project_id = " + studyid 
+                    + "  AND fname.value IN (" + factoresResultadoStr + ") " 
+                    + "  ORDER BY stdvar.projectprop_id " + orden;
+        if(factoresResultadoStr == null){
+            log.error("La lista de factores esta vacia.");
+        }else if(factoresResultadoStr.isEmpty()){
+            log.error("La lista de factores esta vacia.");
+        }
+        query = session.createSQLQuery(consultaSQL);
+        query.addScalar("fname", Hibernate.STRING);
+        query.addScalar("ltype", Hibernate.STRING);
+        query.addScalar("labelid", Hibernate.INTEGER);
+        
         List resultado = query.list();
         if(resultado == null){
             log.error("No se encontraron factores para regresar.");
@@ -890,7 +928,7 @@ public class HelperWorkbookReader {
                 + "  level.nd_experiment_id AS OUNITID " 
                 + "  , fname.value AS FNAME " 
                 + "  , level.lvalue AS LVALUE " 
-                + "  , level.dtypeid AS LTYPE " 
+                + "  , IF(level.dtypeid IN (1120, 1128), 'C', 'N') AS LTYPE " 
                 + "  , level.labelid AS LABELID " 
                 + " FROM " 
                 + "  v_level level " 
