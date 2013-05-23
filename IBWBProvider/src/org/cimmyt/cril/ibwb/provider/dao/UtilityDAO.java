@@ -27,6 +27,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class UtilityDAO extends HibernateDaoSupport {
 
     public static final String DATABASE_PARAMETER_NAME = "dName";
+    public static final String IS_LOCAL = "islocal";
 
 
     private String centralDatabaseName;
@@ -70,7 +71,11 @@ public class UtilityDAO extends HibernateDaoSupport {
     public void setAccessType(String accessType) {
         this.accessType = accessType;
     }
-
+    
+    protected int isLocal() {
+        return accessType!=null&&accessType.equals("local")?1:0;
+    }
+    
     public String getCentralDatabaseName() {
         return centralDatabaseName;
     }
@@ -108,6 +113,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                         // GCP-4347 Adding central database name as a parameter for all SQL queries
                         // TODO : remove temporary comment
                         //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                        //query.setParameter(IS_LOCAL, isLocal());
                     }
 
                     if (outParams != null && outParams.length > 0) {
@@ -176,6 +182,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
                     // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(IS_LOCAL, isLocal());
 
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
@@ -233,6 +240,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
                 // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(IS_LOCAL, isLocal());
 
                 return query.uniqueResult();
             }
@@ -275,6 +283,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
                 // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(IS_LOCAL, isLocal());
 
                 try {
                     if (outParams != null && outParams.length > 0) {
@@ -347,6 +356,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
                     // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(IS_LOCAL, isLocal());
 
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
@@ -409,6 +419,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
                 // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(IS_LOCAL, isLocal());
                 return query.executeUpdate();
             }
         });
@@ -459,6 +470,8 @@ public class UtilityDAO extends HibernateDaoSupport {
         // GCP - 4347 Adding database name as a parameter to all SQL queries
         // TODO : remove temporary comment
         //sql.append(", :" + DATABASE_PARAMETER_NAME);
+        //sql.append(", :" + IS_LOCAL);
+
 
         sql.append(")");
         return sql.toString();
@@ -497,6 +510,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
                     // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(IS_LOCAL, isLocal());
 
                     return query.executeUpdate();
                 }
@@ -537,6 +551,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
                 // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(IS_LOCAL, isLocal());
 
                 return query.uniqueResult();
             }
@@ -568,6 +583,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         // GCP - 4347 Adding database name as a parameter to all SQL queries
         // TODO : remove temporary comment
         //sql.append(", :" + DATABASE_PARAMETER_NAME);
+        //sql.append(", :" + IS_LOCAL);
         sql.append(")");
         return sql.toString();
     }
