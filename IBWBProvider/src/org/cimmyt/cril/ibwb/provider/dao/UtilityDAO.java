@@ -53,7 +53,6 @@ public class UtilityDAO extends HibernateDaoSupport {
            } catch (Exception e) {
                e.printStackTrace();
            }
-
     }
 
 
@@ -107,7 +106,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                         }
 
                         // GCP-4347 Adding central database name as a parameter for all SQL queries
-
+                        // TODO : remove temporary comment
                         //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                     }
 
@@ -175,7 +174,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
-
+                    // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     if (outParams != null && outParams.length > 0) {
@@ -232,6 +231,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 return query.uniqueResult();
@@ -273,6 +273,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 try {
@@ -344,6 +345,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                    // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     if (outParams != null && outParams.length > 0) {
@@ -405,6 +407,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                 return query.executeUpdate();
             }
@@ -454,6 +457,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         }
 
         // GCP - 4347 Adding database name as a parameter to all SQL queries
+        // TODO : remove temporary comment
         //sql.append(", :" + DATABASE_PARAMETER_NAME);
 
         sql.append(")");
@@ -491,6 +495,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                    // TODO : remove temporary comment
                     //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     return query.executeUpdate();
@@ -530,6 +535,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                // TODO : remove temporary comment
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 return query.uniqueResult();
@@ -560,6 +566,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         }
 
         // GCP - 4347 Adding database name as a parameter to all SQL queries
+        // TODO : remove temporary comment
         //sql.append(", :" + DATABASE_PARAMETER_NAME);
         sql.append(")");
         return sql.toString();
