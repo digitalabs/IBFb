@@ -5,7 +5,7 @@ drop procedure if exists `getScales`$$
 CREATE PROCEDURE `getScales`(
 IN v_scaleid int,
 IN v_scname varchar(50), 
-IN v_sctype varchar(1))
+IN v_sctype varchar(10))
 begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
@@ -36,7 +36,7 @@ drop procedure if exists `searchScales`$$
 CREATE PROCEDURE `searchScales`(
 IN v_scaleid int,
 IN v_scname varchar(50), 
-IN v_sctype varchar(1))
+IN v_sctype varchar(10))
 begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
@@ -89,7 +89,7 @@ drop procedure if exists `getScalesByScnameAndSctype`$$
 
 CREATE PROCEDURE `getScalesByScnameAndSctype`(
 IN v_scname varchar(50), 
-IN v_sctype varchar(1))
+IN v_sctype varchar(10))
 begin
 
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
