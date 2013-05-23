@@ -48,15 +48,15 @@ begin
 	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
 	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
 	"inner join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
-	"having 1=1 ");
+	"having 1=0 ");
 	IF(v_scaleid IS NOT NULL) THEN
-	SET @sql = CONCAT(@sql," AND scaleid = ",v_scaleid);
+	SET @sql = CONCAT(@sql," OR scaleid = ",v_scaleid);
 	END IF;
 	IF(v_scname IS NOT NULL) THEN
-    SET @sql = CONCAT(@sql," AND scname like '%",v_scname,"%'");
+    SET @sql = CONCAT(@sql," OR scname like '%",v_scname,"%'");
     END IF;
 	IF(v_sctype IS NOT NULL) THEN
-	SET @sql = CONCAT(@sql," AND sctype like '%",v_sctype,"%'");
+	SET @sql = CONCAT(@sql," OR sctype like '%",v_sctype,"%'");
 	END IF;	
 	
 	PREPARE stmt FROM @sql;
