@@ -482,7 +482,6 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
                 + " level.nd_experiment_id " + orden + ", level.labelid " + orden
                 ;
 
-            //System.out.println(consultaSQL);
             resultado = executeQueryCustomListNative(consultaSQL);
             int tounitidAnt = 0;
             int tounitidActual = 0;
@@ -504,7 +503,6 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
                 fname = (String) celdas[FNAME];
                 String ltypeTemp = (String) celdas[LTYPE];
                 ltypeTemp = ltypeTemp.trim().toUpperCase();
-                //System.out.println("*" + celdas[LVALUE] + ", " + celdas[FNAME] + ", " + celdas[ounitid]);
                 if (ltypeTemp.equals("N")) {
                     if (celdas[2] instanceof String) {
                         String valueTemp = (String) celdas[LVALUE];

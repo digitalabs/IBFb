@@ -44,8 +44,10 @@ public class TestTrialRandomization extends TestService {
         System.out.println("testGetTrialRandomization");
         int studyid = 5739;  //represNo = 5798
         int trialFactorId = 0;
-        List<String> factoresPrincipales = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
-        List<String> factoresSalida = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
+        List<String> factoresPrincipales = Arrays.asList("SETNO");
+        List<String> factoresSalida = Arrays.asList("SETNO");
+        //List<String> factoresPrincipales = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
+        //List<String> factoresSalida = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
         String nombreTrial = "";
         ResultSet measurementList = 
                 servicios.getCentralCommonService()
@@ -58,9 +60,7 @@ public class TestTrialRandomization extends TestService {
         
         if (measurementList != null) {
             try {
-                while (measurementList.next()) {
-                    System.out.println(measurementList.getString(0));
-                }
+                System.out.println(measurementList);
             } catch(Exception e) {
                 e.printStackTrace();
             }
