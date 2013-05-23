@@ -2073,22 +2073,15 @@ public class CommonServicesImpl implements CommonServices {
     		return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getScales",  
     				new String[]{"scaleid","scname", "sctype"},
     				new String[]{"scaleid","scname", "sctype"});
-    	} else if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
-    		return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "searchScales", 
-    				new String[]{"scaleid","scname", "sctype"},
-    				new String[]{"scaleid","scname", "sctype"});
     	} else {
     		Scales copy = new Scales();
-    		try {
-				PropertyUtils.copyProperties(copy,filter);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			}
-    		copy.setScaleid(null);
+    		if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
+    			copy.setScaleid(new Integer(filter.getGlobalsearch()));
+    		} else {
+    			copy.setScaleid(null);
+    		}
+    		copy.setScname(filter.getGlobalsearch());
+    		copy.setSctype(filter.getGlobalsearch());
     		return this.utilityDAO.callStoredProcedureForListPaged(copy, paged, start, pageSize, "searchScales", 
     				new String[]{"scaleid","scname", "sctype"},
     				new String[]{"scaleid","scname", "sctype"});
