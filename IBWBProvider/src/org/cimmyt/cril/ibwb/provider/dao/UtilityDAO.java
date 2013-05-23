@@ -108,7 +108,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
                         // GCP-4347 Adding central database name as a parameter for all SQL queries
 
-                        query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                        //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                     }
 
                     if (outParams != null && outParams.length > 0) {
@@ -176,7 +176,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
 
-                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
@@ -232,7 +232,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 return query.uniqueResult();
             }
@@ -273,7 +273,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 try {
                     if (outParams != null && outParams.length > 0) {
@@ -344,7 +344,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     if (outParams != null && outParams.length > 0) {
                         for (String paramName : outParams) {
@@ -405,7 +405,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                 return query.executeUpdate();
             }
         });
@@ -454,7 +454,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         }
 
         // GCP - 4347 Adding database name as a parameter to all SQL queries
-        sql.append(", :" + DATABASE_PARAMETER_NAME);
+        //sql.append(", :" + DATABASE_PARAMETER_NAME);
 
         sql.append(")");
         return sql.toString();
@@ -491,7 +491,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                     }
 
                     // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                    query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                     return query.executeUpdate();
                 }
@@ -530,7 +530,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                 }
 
                 // GCP - 4347 Adding central database name as a parameter to all SQL queries
-                query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
 
                 return query.uniqueResult();
             }
@@ -560,7 +560,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         }
 
         // GCP - 4347 Adding database name as a parameter to all SQL queries
-        sql.append(", :" + DATABASE_PARAMETER_NAME);
+        //sql.append(", :" + DATABASE_PARAMETER_NAME);
         sql.append(")");
         return sql.toString();
     }
