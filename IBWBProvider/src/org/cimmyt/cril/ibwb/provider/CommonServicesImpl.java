@@ -2696,7 +2696,13 @@ public class CommonServicesImpl implements CommonServices {
      */
     @Override
     public TmsScaleDis getScaleDisByMeasuredinId(final Integer measuredinId) {
-        return tmsScaleDisDAO.getScaleDisByMeasuredinId(measuredinId);
+        //return tmsScaleDisDAO.getScaleDisByMeasuredinId(measuredinId);
+    	TmsScaleDis scaledis = new TmsScaleDis();
+    	scaledis.setMeasuredinid(measuredinId);
+    	List<TmsScaleDis> sdList = utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId", 
+                        new String[]{"p_measuredinid"},
+    			new String[]{"tmsscaledisid", "measuredinid", "valuename", "valuedesc"});
+        return sdList != null && sdList.size() > 0 ? sdList.get(0) : null;
     }
 
     //-----------------------------------Trait---------------------------
