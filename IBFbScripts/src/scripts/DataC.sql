@@ -2,7 +2,8 @@ delimiter $$
 
 drop procedure if exists `getDataCByEffectId`$$
 
-CREATE PROCEDURE `getDataCByEffectId`(IN effectid int, IN iscentral int)
+CREATE PROCEDURE `getDataCByEffectId`(IN effectid int, IN iscentral int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 
@@ -51,7 +52,8 @@ end$$
 
 drop procedure if exists `getDataCList`$$
 
-CREATE PROCEDURE `getDataCList`()
+CREATE PROCEDURE `getDataCList`(IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
@@ -75,7 +77,8 @@ end$$
 
 drop procedure if exists `getListDataC`$$
 
-CREATE PROCEDURE `getListDataC`(IN paramvariatid int, IN iscentral int)
+CREATE PROCEDURE `getListDataC`(IN paramvariatid int, IN iscentral int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 IF iscentral = 1 then
@@ -122,7 +125,8 @@ drop procedure if exists addOrUpdateDataC$$
 CREATE PROCEDURE addOrUpdateDataC(
 IN v_ounitid int,
 IN v_variatid int,
-IN v_dvalue varchar(50))
+IN v_dvalue varchar(50),IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 DECLARE v_phenotype_id int;

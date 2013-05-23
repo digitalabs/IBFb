@@ -2,7 +2,8 @@ delimiter $$
 
 drop procedure if exists `getObsunitList`$$
 
-CREATE PROCEDURE `getObsunitList`()
+CREATE PROCEDURE `getObsunitList`(IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 select 
@@ -16,7 +17,8 @@ end$$
 
 drop procedure if exists `getObsunitListByEffectid`$$
 
-CREATE PROCEDURE `getObsunitListByEffectid`(IN effectidin int,  IN iscentral int)
+CREATE PROCEDURE `getObsunitListByEffectid`(IN effectidin int,  IN iscentral int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 
@@ -48,7 +50,8 @@ end$$
 
 drop procedure if exists `addObsunit`$$
 
-CREATE PROCEDURE `addObsunit`(IN nd_experimentidin int, IN effectidin int)
+CREATE PROCEDURE `addObsunit`(IN nd_experimentidin int, IN effectidin int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 --get the study id of that effect id
 --insert into nd_experiment(nd_experiment_id, nd_geolocation_id,type_id) value (nd_experimentidin,nd_geolocation_id,type_id) ; 

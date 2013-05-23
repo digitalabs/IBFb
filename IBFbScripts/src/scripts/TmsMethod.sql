@@ -4,7 +4,8 @@ drop procedure if exists `getListTmsMethod`$$
 CREATE PROCEDURE `getListTmsMethod` (
 IN v_tmethid int,
 IN v_tmname varchar(50),
-IN v_tmdesc varchar(255))
+IN v_tmdesc varchar(255),IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 	SET @sql := CONCAT("SELECT cvterm_id AS tmethid, ",
 	   			"name AS tmname, ",
@@ -32,7 +33,8 @@ end$$
 
 drop procedure if exists `getTmsMethodList`$$
 
-CREATE PROCEDURE `getTmsMethodList` ()
+CREATE PROCEDURE `getTmsMethodList` (IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 	SET @sql := CONCAT("SELECT cvterm_id AS tmethid, ",
 	   			"name AS tmname, ",

@@ -2,7 +2,8 @@ delimiter $$
 
 drop procedure if exists `getListScaleAll`$$
 
-CREATE PROCEDURE `getListScaleAll`(IN iscentral int)
+CREATE PROCEDURE `getListScaleAll`(IN iscentral int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 
@@ -45,7 +46,8 @@ end$$
 
 drop procedure if exists `getListScale`$$
 
-CREATE PROCEDURE `getListScale`(IN traitid int, IN iscentral int)
+CREATE PROCEDURE `getListScale`(IN traitid int, IN iscentral int,IN v_central_db_name varchar(20),
+IN v_is_local INT)
 begin
 
 
