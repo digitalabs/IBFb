@@ -394,7 +394,7 @@ START TRANSACTION;
 	and ctype.name = 'Study_UID');
 	
 	update projectprop pp
-	set value = (select cvterm_id from cvterm where name = 1) 
+	set value = (select cvterm_id from cvterm where name = 1 and cv_id = 2005) 
 	where pp.project_id = v_studyid
 	and exists
 	(select 1
@@ -554,7 +554,7 @@ DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK;
 START TRANSACTION;
 
 	update projectprop pp
-	set value = (select cvterm_id from cvterm where name = 9) 
+	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005) 
 	where pp.project_id = v_studyid
 	and exists
 	(select 1
