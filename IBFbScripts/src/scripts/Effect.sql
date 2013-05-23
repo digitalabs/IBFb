@@ -2,7 +2,7 @@ delimiter $$
 
 drop procedure if exists `getAllEffects`$$
 
-CREATE PROCEDURE `getAllEffects`()
+CREATE PROCEDURE `getAllEffects`(IN dName varchar(50))
 begin
 
 select distinct * from (
@@ -29,7 +29,7 @@ end$$
 delimiter $$
 drop procedure if exists getTotalEffectsByEffect$$
 
-CREATE PROCEDURE getTotalEffectsByEffect(IN represNo int, IN factorId int, IN effectId int)
+CREATE PROCEDURE getTotalEffectsByEffect(IN represNo int, IN factorId int, IN effectId int, IN dName varchar(50))
 BEGIN
   SET @myQuery = 'select count(distinct *) as effectCount from(
   SELECT
@@ -71,7 +71,7 @@ delimiter $$
 
 drop procedure if exists `getEffectsByEffectIdList`$$
 
-CREATE PROCEDURE `getEffectsByEffectIdList`(IN idList varchar(200))
+CREATE PROCEDURE `getEffectsByEffectIdList`(IN idList varchar(200), IN dName varchar(50))
   begin
 
     SET @myQuery = 'select distinct * from (
@@ -91,8 +91,7 @@ SELECT
       INNER JOIN project_relationship pr ON prop.project_id = pr.subject_project_id and pr.type_id = 1150
       LEFT JOIN projectprop factor ON factor.project_id = prop.project_id AND factor.type_id = 1070
         AND factor.value in (\'8005\', \'8150\', \'8230\', \'8170\', \'8200\', \'8380\')
-       WHERE prop.type_id = 1070) as a
-where factorid is not null';
+       WHERE prop.type_id = 1070) as a where factorid is not null';
 
     IF (idList IS NOT NULL) THEN
       SET @myQuery = CONCAT(@myQuery, ' AND represNo in (', idList, ')');
