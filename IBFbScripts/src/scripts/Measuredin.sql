@@ -5,41 +5,47 @@ CREATE PROCEDURE `getListMeasuredIn` (
 IN v_measuredinid int,
 IN v_traitid int,
 IN v_tmethid int,
-IN v_scaleid int)
+IN v_scaleid int,
+IN v_central_db_name varchar(20),
+IN v_is_local int)
 begin
+
+    -- DOES NOT CHECK v_is_local, no info needed from central db ontology
     SET @sql := CONCAT("SELECT cvt.cvterm_id AS measuredinid, ",
-                        "crp.object_id AS traitid, ",
-                        "crs.object_id AS scaleid, ",
-                        "crm.object_id AS tmethid ",
-                        "FROM cvterm cvt ",
-                        "INNER JOIN cvterm_relationship crp ON crp.subject_id = cvt.cvterm_id ",
-                        "INNER JOIN cvterm_relationship crm ON crm.subject_id = cvt.cvterm_id ",
-                        "INNER JOIN cvterm_relationship crs ON crs.subject_id = cvt.cvterm_id ",
-                        "WHERE cvt.cv_id = 1040 ",
-                        "AND crp.type_id = 1200 ",
-                        "AND crm.type_id = 1210 ",
-                        "AND crs.type_id = 1220 ");
+                                            "crp.object_id AS traitid, ",
+                                            "crs.object_id AS scaleid, ",
+                                            "crm.object_id AS tmethid ",
+                                            "FROM cvterm cvt ",
+                                            "INNER JOIN cvterm_relationship crp ON crp.subject_id = cvt.cvterm_id ",
+                                            "INNER JOIN cvterm_relationship crm ON crm.subject_id = cvt.cvterm_id ",
+                                            "INNER JOIN cvterm_relationship crs ON crs.subject_id = cvt.cvterm_id ",
+                                            "WHERE cvt.cv_id = 1040 ",
+                                            "AND crp.type_id = 1200 ",
+                                            "AND crm.type_id = 1210 ",
+                                            "AND crs.type_id = 1220 ");
 
     IF (v_measuredinid IS NOT NULL) THEN
-        SET @sql = CONCAT(@sql," AND cvt.cvterm_id = ",v_measuredinid);
+            SET @sql = CONCAT(@sql," AND cvt.cvterm_id = ",v_measuredinid);
     END IF;
 
     IF (v_traitid IS NOT NULL) THEN
-        SET @sql = CONCAT(@sql," AND crp.object_id = ",v_traitid);
+            SET @sql = CONCAT(@sql," AND crp.object_id = ",v_traitid);
     END IF;
 
     IF (v_tmethid IS NOT NULL) THEN
-        SET @sql = CONCAT(@sql," AND crm.object_id = ",v_tmethid);
+            SET @sql = CONCAT(@sql," AND crm.object_id = ",v_tmethid);
     END IF;
 
     IF (v_scaleid IS NOT NULL) THEN
-        SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
+            SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
     END IF;
+		
 	
     SET @sql = CONCAT(@sql, " ORDER BY measuredinid; ");
 	
     PREPARE stmt FROM @sql;
     EXECUTE stmt;
+
 end$$
 
 drop procedure if exists `getMeasuredinByTraitidScaleidTmethid`$$
