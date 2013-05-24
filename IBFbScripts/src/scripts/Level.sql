@@ -13,7 +13,7 @@ IF iscentral = 1 THEN
       , lvalue
     FROM 
        v_level
-    WHERE (isnumeric AND dtypeid IN (1110, 1117, 1118)
+    WHERE (isnumeric AND dtypeid NOT IN (1120, 1128)
       OR NOT isnumeric AND dtypeid IN (1128, 1120))
       AND labelid = p_labelid
     ORDER BY levelno ASC
@@ -28,7 +28,7 @@ ELSE
       , lvalue
     FROM 
        v_level
-    WHERE (isnumeric AND dtypeid IN (1110, 1117, 1118, 1125)
+    WHERE (isnumeric AND dtypeid NOT IN (1120, 1128)
       OR NOT isnumeric AND dtypeid IN (1128, 1120))
       AND labelid = p_labelid
     ORDER BY levelno DESC
@@ -47,11 +47,18 @@ CREATE PROCEDURE `searchLevels`(
   , IN factorid int
   , IN lvalue1 double
   , IN lvalue2 varchar(255)
+  , IN isnumeric int
   , IN iscentral int)
 
 BEGIN
 
-  SET @sql := CONCAT("SELECT labelid, factorid, levelno, lvalue from v_level WHERE 1=1 ");
+  SET @sql := CONCAT("SELECT labelid AS labelid, factorid, levelno AS levelno, lvalue from v_level ");
+
+  IF isnumeric = 1 THEN
+    SET @sql = CONCAT(@sql, " WHERE dtypeid NOT IN (1120, 1128) ");
+  ELSE
+    SET @sql = CONCAT(@sql, " WHERE dtypeid IN (1120, 1128) ");
+  END IF;
 
   IF (labelid IS NOT NULL) THEN
     SET @sql = CONCAT(@sql, " AND labelid = ", labelid);
