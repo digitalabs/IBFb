@@ -767,6 +767,8 @@ public class CommonServicesImpl implements CommonServices {
     		factor.setLabelid(id);
     		Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"}, 
     				new String[]{"factorid"});
+                
+                System.out.println("addFactor id = " + id);
     		factor.setFactorid(newFactor.getFactorid());
     		
     	}
@@ -1462,7 +1464,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addMeasuredin(Measuredin measuredin) {
         utilityDAO.callStoredProcedureForUpdate(measuredin, "addMeasuredin", 
-                new String[]{"traitid","tmethid","scaleid","name","storedinid"});
+                new String[]{"traitid","tmethid","scaleid","name","storedinid","hasType"});
     }
 
     @Override
@@ -1510,8 +1512,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
     	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredIn", 
-				new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
-				new String[]{"measuredinid","traitid", "tmethid", "scaleid"});
+				new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"},
+				new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"});
     }
 
     @Override

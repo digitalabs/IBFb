@@ -180,11 +180,13 @@ public class HelperFactor {
         measuredinFilter.setScaleid(scales.getScaleid());
         measuredinFilter.setTraitid(traits.getTraitid());
         measuredinFilter.setTmethid(tmsMethod.getTmethid());
+        measuredinFilter.setStoredinid(traits.getTid());
+        measuredinFilter.setName(condition.getConditionName());
         List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
         if (!measuredinList.isEmpty()) {
             measuredin = measuredinList.get(0);
         } else {
-            measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+            measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(), condition.getDataType());
             //GCP 4122
             measuredin.setName(condition.getConditionName());
             measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
