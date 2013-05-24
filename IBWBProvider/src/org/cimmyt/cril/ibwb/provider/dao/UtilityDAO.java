@@ -525,13 +525,16 @@ public class UtilityDAO extends HibernateDaoSupport {
             final String... params) {
         final String sql = buildSQLQuery(procedureName, params);
         System.out.println("sql = " + sql);
-        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+       // getHibernateTemplate().ex
+        Object result = getHibernateTemplate().execute(new HibernateCallback() {
 
             @Override
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
+                
                 Query query = session.
                         createSQLQuery(sql);
+                
                 if (params != null && params.length > 0) {
                     for (String paramName : params) {
                         try {
@@ -553,9 +556,11 @@ public class UtilityDAO extends HibernateDaoSupport {
                 //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
                 //query.setParameter(IS_LOCAL, isLocal());
 
+               
                 return query.uniqueResult();
             }
         });
+      
         return (Integer)result;
     }
 
