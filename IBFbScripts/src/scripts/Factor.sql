@@ -183,7 +183,8 @@ START TRANSACTION;
 	INNER JOIN cvterm cvt2 ON cvt2.cvterm_id = cvtr.type_id 
  	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
     WHERE cvt1.cvterm_id = cvtr.subject_id 
-     AND (cvt2.name = 'has type' AND cvt3.cvterm_id = v_ltype)
+    AND cvt2.name = 'has type' 
+    AND ((cvt3.cvterm_id = 1120 and v_ltype = 'C') OR v_ltype = 'N')
     ) AND EXISTS ( 
     SELECT 1 
     FROM cvterm_relationship cvtr
