@@ -92,7 +92,7 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,,8040,v_pmkey,3);
+	VALUES(v_projectprop_id,v_studyid,8040,v_pmkey,3);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
