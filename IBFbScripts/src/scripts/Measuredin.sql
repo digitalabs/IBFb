@@ -55,9 +55,7 @@ BEGIN
 	var.cvterm_id AS measuredinid
 	, traitrel.object_id AS traitid
 	, scalerel.object_id AS scaleid
-	, scalerel.object_id AS standardscale
-        , NULL AS report
-        , NULL AS formula
+	, CAST(scalerel.object_id AS CHAR(50)) AS standardscale
 	, methrel.object_id AS tmethid
 	FROM cvterm var
 	INNER JOIN cvterm_relationship traitrel ON traitrel.subject_id = var.cvterm_id AND traitrel.type_id = 1200
@@ -67,7 +65,7 @@ BEGIN
 	AND traitrel.object_id = traitId
 	AND methrel.object_id = tmethId
 	AND scalerel.object_id = scaleId
-	limit 1;
+	;
 
 END$$
 
