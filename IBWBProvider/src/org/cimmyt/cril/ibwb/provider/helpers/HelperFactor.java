@@ -179,7 +179,7 @@ public class HelperFactor {
         //Verificar existencia de measuredin
         Measuredin measuredinFilter = new Measuredin(true);
         measuredinFilter.setScaleid(scales.getScaleid());
-        measuredinFilter.setTraitid(traits.getTid());
+        measuredinFilter.setTraitid(traits.getTraitid());
         measuredinFilter.setTmethid(tmsMethod.getTmethid());
         List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
         if (!measuredinList.isEmpty()) {
