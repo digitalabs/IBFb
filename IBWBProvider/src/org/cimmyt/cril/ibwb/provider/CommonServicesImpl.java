@@ -1090,9 +1090,10 @@ public class CommonServicesImpl implements CommonServices {
         params.put("factorid", filter.getFactorid());
         params.put("lvalue1", null);
         params.put("lvalue2", filter.getLvalue());
+        params.put("isnumeric", 0);
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
-        return this.utilityDAO.callStoredProcedureForList(LevelN.class, "searchLevels", params,
-                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "iscentral"},
+        return this.utilityDAO.callStoredProcedureForList(LevelC.class, "searchLevels", params,
+                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
         
     }
@@ -1169,9 +1170,10 @@ public class CommonServicesImpl implements CommonServices {
         params.put("factorid", filter.getFactorid());
         params.put("lvalue1", null);
         params.put("lvalue2", filter.getLvalue());
+        params.put("isnumeric", 1);
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "searchLevels", params,
-                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "iscentral"},
+                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
       		   new String[]{"labelid", "factorid", "levelno","lvalue"});
 
     }
