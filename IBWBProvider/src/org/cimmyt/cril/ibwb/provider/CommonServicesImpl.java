@@ -1484,9 +1484,11 @@ public class CommonServicesImpl implements CommonServices {
     public Measuredin getMeasuredinByTraitidScaleidTmethid(Measuredin measuredin) {
         //return this.measuredinDAO.getMeasuredinByTraitidScaleidTmethid(measuredin);
         
-        return this.utilityDAO.callStoredProcedureForObject(measuredin, "getMeasuredinByTraitidScaleidTmethid", 
+        List<Measuredin> list = this.utilityDAO.callStoredProcedureForList(measuredin, "getMeasuredinByTraitidScaleidTmethid", 
                 new String[] {"traitid", "scaleid", "tmethid"}, 
-                new String[] {"measuredinid", "traitid", "scaleid", "standardscale", "report", "formula", "tmethid"});
+                new String[] {"measuredinid", "traitid", "scaleid", "standardscale", "tmethid"});
+        
+        return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
     public Measuredin getMeasuredinByTraitidAndScaleid(Measuredin measuredin) {
