@@ -2623,7 +2623,7 @@ public class CommonServicesImpl implements CommonServices {
     	TmsScaleCon scalecon = new TmsScaleCon();
     	scalecon.setMeasuredinid(measuredinId);
     	return utilityDAO.callStoredProcedureForObject(scalecon, "getScaleConByMeasuredinId", 
-                        new String[]{"p_measuredinid"},
+                        new String[]{"measuredinid"},
     			new String[]{"tmsscaleconid", "measuredinid", "slevel", "elevel"});
     }
 
@@ -2684,8 +2684,8 @@ public class CommonServicesImpl implements CommonServices {
     	TmsScaleDis scaledis = new TmsScaleDis();
     	scaledis.setMeasuredinid(measuredindid);
     	return utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId", 
-                        new String[]{"p_measuredinid"},
-    			new String[]{"tmsscaledisid", "measuredinid", "valuename", "valuedesc"});
+                        new String[]{"measuredinid"},
+    			new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
     }
 
     /**
@@ -2700,8 +2700,8 @@ public class CommonServicesImpl implements CommonServices {
     	TmsScaleDis scaledis = new TmsScaleDis();
     	scaledis.setMeasuredinid(measuredinId);
     	List<TmsScaleDis> sdList = utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId", 
-                        new String[]{"p_measuredinid"},
-    			new String[]{"tmsscaledisid", "measuredinid", "valuename", "valuedesc"});
+                        new String[]{"measuredinid"},
+    			new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
         return sdList != null && sdList.size() > 0 ? sdList.get(0) : null;
     }
 
