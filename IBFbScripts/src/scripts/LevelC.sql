@@ -6,8 +6,7 @@ CREATE PROCEDURE `addLevelC`(
   IN labelidin int
   , IN factoridin int
   , IN lvaluein varchar(500)
-  , IN levelno_v int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+  , IN levelno_v int)
 
 BEGIN
 
@@ -110,8 +109,7 @@ CREATE PROCEDURE `updateLevelC`(
   IN labelidin int
   , IN factoridin int
   , IN levelnoin int
-  , IN lvaluein varchar(500),IN v_central_db_name varchar(20),
-IN v_is_local INT)
+  , IN lvaluein varchar(500))
 
 BEGIN
 

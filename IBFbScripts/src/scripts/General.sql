@@ -3,8 +3,7 @@ delimiter $$
 drop procedure if exists `getNextMin`$$
 
 CREATE PROCEDURE `getNextMin`(
-IN tableName varchar(255),IN v_central_db_name varchar(20),
-IN v_is_local INT)
+IN tableName varchar(255))
 begin
 
 SET @sql := CONCAT("select IF(min(",tableName,"_id) is NULL or min(",tableName,"_id) >= 0, -1, min(",tableName,"_id) -1)  as id from ",tableName);
@@ -62,8 +61,7 @@ end$$
 
 drop procedure if exists `updateCvterm`$$
 
-CREATE PROCEDURE `updateCvterm`(IN cvtermid int, IN cvname varchar(500), IN cvdesc varchar(500),IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `updateCvterm`(IN cvtermid int, IN cvname varchar(500), IN cvdesc varchar(500))
 begin
 
 	update cvterm
@@ -76,8 +74,7 @@ end$$
 
 drop procedure if exists `addNdGeolocation`$$
 
-CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int)
 begin
 
 /* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */
@@ -87,8 +84,7 @@ end$$
 
 drop procedure if exists `addNdExperimentStock`$$
 
-CREATE PROCEDURE `addNdExperimentStock`(IN nd_experiment_stock_id_v int, IN nd_experiment_id_v int, IN stock_id_v int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `addNdExperimentStock`(IN nd_experiment_stock_id_v int, IN nd_experiment_id_v int, IN stock_id_v int)
 begin
 
 /* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */
@@ -98,8 +94,7 @@ end$$
 
 drop procedure if exists `addStock`$$
 
-CREATE PROCEDURE `addStock`(IN stock_id_in int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `addStock`(IN stock_id_in int)
 begin
 
 insert into stock (stock_id, type_id, is_obsolete) value (stock_id_in, 8300,0);
@@ -108,8 +103,7 @@ end$$
 
 drop procedure if exists `addNdExperiment`$$
 
-CREATE PROCEDURE `addNdExperiment`(IN nd_experimentid_id_v int, IN nd_geolocation_id_v int, IN type_id_v INT,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `addNdExperiment`(IN nd_experimentid_id_v int, IN nd_geolocation_id_v int, IN type_id_v INT)
 begin
 
 insert into   nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) value (nd_experimentid_id_v, nd_geolocation_id_v, type_id_v);

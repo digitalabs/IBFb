@@ -2,8 +2,7 @@ delimiter $$
 
 drop procedure if exists `getDataNByEffectId`$$
 
-CREATE PROCEDURE `getDataNByEffectId`(IN effectid int, IN iscentral int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `getDataNByEffectId`(IN effectid int, IN iscentral int)
 begin
 
 
@@ -52,8 +51,7 @@ end$$
 
 drop procedure if exists `getDataNList`$$
 
-CREATE PROCEDURE `getDataNList`(IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `getDataNList`()
 begin
 
 	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value
@@ -78,8 +76,7 @@ end$$
 
 drop procedure if exists `getListDataN`$$
 
-CREATE PROCEDURE `getListDataN`(IN paramvariatid int, IN iscentral int,IN v_central_db_name varchar(20),
-IN v_is_local INT)
+CREATE PROCEDURE `getListDataN`(IN paramvariatid int, IN iscentral int)
 begin
 
 IF iscentral = 1 then
