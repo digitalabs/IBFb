@@ -87,6 +87,29 @@ public class LevelN extends BaseFilter implements Serializable {
         this.lvalue = lvalue;
     }
 
+    //NEW SCHEMA BEGIN
+    public void setLabelid(Integer labelid) {
+        if (this.levelNPK == null) {
+            this.levelNPK = new LevelNPK();
+        }
+        this.levelNPK.setLabelid(labelid);
+    }
+ 
+    public void setLevelno(Integer levelno) {
+        if (this.levelNPK == null) {
+            this.levelNPK = new LevelNPK();
+        }
+        this.levelNPK.setLevelno(levelno);
+    }
+    public Integer getLabelid() {
+        return this.levelNPK != null ? this.levelNPK.getLabelid() : null;
+    }
+ 
+    public Integer getLevelno() {
+        return this.levelNPK != null ? this.levelNPK.getLabelid() : null;
+    }
+    //NEW SCHEMA END
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 
 /**
@@ -86,6 +87,29 @@ public class LevelC extends BaseFilter implements Serializable {
     public void setLvalue(String lvalue) {
         this.lvalue = lvalue;
     }
+    
+    //NEW SCHEMA BEGIN
+    public void setLabelid(Integer labelid) {
+        if (this.levelCPK == null) {
+            this.levelCPK = new LevelCPK();
+        }
+        this.levelCPK.setLabelid(labelid);
+    }
+ 
+    public void setLevelno(Integer levelno) {
+        if (this.levelCPK == null) {
+            this.levelCPK = new LevelCPK();
+        }
+        this.levelCPK.setLevelno(levelno);
+    }
+    public Integer getLabelid() {
+        return this.levelCPK != null ? this.levelCPK.getLabelid() : null;
+    }
+ 
+    public Integer getLevelno() {
+        return this.levelCPK != null ? this.levelCPK.getLabelid() : null;
+    }
+    //NEW SCHEMA END
 
     @Override
     public int hashCode() {
