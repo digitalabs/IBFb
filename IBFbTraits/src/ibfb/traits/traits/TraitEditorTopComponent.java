@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ibfb.traits.traits;
 
 import ibfb.traits.traits.model.MeasuredInCellRenderer;
@@ -611,10 +612,10 @@ public final class TraitEditorTopComponent extends TopComponent {
 
         // a least must have one scale and method
 
-        if (measuredInTableModel.isEmpty()) {
-            DialogUtil.displayError(NbBundle.getMessage(MeasuredInTableModel.class, "Measuredin.scaleandmethodrequired"));
-            return;
-        }
+       // if (measuredInTableModel.isEmpty()) {
+       //     DialogUtil.displayError(NbBundle.getMessage(MeasuredInTableModel.class, "Measuredin.scaleandmethodrequired"));
+         //   return;
+        //}
 
         String traitGroup = (String) cboTraitGroup.getSelectedItem();
         trait.setTraitGroup(traitGroup);
