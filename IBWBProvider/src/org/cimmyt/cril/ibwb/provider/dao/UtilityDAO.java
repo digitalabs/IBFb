@@ -94,7 +94,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         
         final String sql = buildSQLQuery(procedureName, inParams);
         System.out.println("sql = " + sql);
-        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+        Object result = getHibernateTemplate().execute(new HibernateCallback() {
 
             @Override
             public Object doInHibernate(Session session)
@@ -160,7 +160,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
         final String sql = buildSQLQuery(procedureName, params);
         System.out.println("sql = " + sql);
-        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+        Object result = getHibernateTemplate().execute(new HibernateCallback() {
 
             @Override
             public Object doInHibernate(Session session)
@@ -218,7 +218,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
         final String sql = buildSQLQuery(procedureName, params);
         System.out.println("sql = " + sql);
-        Object result = getHibernateTemplate().executeFind(new HibernateCallback() {
+        Object result = getHibernateTemplate().execute(new HibernateCallback() {
 
             @Override
             public Object doInHibernate(Session session)
