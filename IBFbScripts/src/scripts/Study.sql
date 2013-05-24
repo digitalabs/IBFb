@@ -47,16 +47,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 1 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_NAME';
+	VALUES(v_projectprop_id,v_studyid,1070,8005,1);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_sname as value, 1 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_NAME';
+	VALUES(v_projectprop_id,v_studyid,8005,v_sname,1);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -71,16 +67,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 2 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_TITLE';
+	VALUES(v_projectprop_id,v_studyid,1070,8007,2);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_title as value, 2 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_TITLE';
+	VALUES(v_projectprop_id,v_studyid,8007,v_title,2);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -95,16 +87,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 3 as rank
-	FROM cvterm
-	WHERE name = 'PM_KEY';
+	VALUES(v_projectprop_id,v_studyid,1070,8040,3);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_pmkey as value, 3 as rank
-	FROM cvterm
-	WHERE name = 'PM_KEY';
+	VALUES(v_projectprop_id,v_studyid,,8040,v_pmkey,3);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -119,16 +107,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 4 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_OBJECTIVE';
+	VALUES(v_projectprop_id,v_studyid,1070,8030,4);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_objectiv as value, 4 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_OBJECTIVE';
+	VALUES(v_projectprop_id,v_studyid,8030,v_objectiv,4);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -143,16 +127,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 5 as rank
-	FROM cvterm
-	WHERE name = 'START_DATE';
+	VALUES(v_projectprop_id,v_studyid,1070,8050,5);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_sdate as value, 5 as rank
-	FROM cvterm
-	WHERE name = 'START_DATE';
+	VALUES(v_projectprop_id,v_studyid,8050,v_sdate,5);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -167,16 +147,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 6 as rank
-	FROM cvterm
-	WHERE name = 'END_DATE';
+	VALUES(v_projectprop_id,v_studyid,1070,8060,6);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_edate as value, 6 as rank
-	FROM cvterm
-	WHERE name = 'END_DATE';
+	VALUES(v_projectprop_id,v_studyid,8060,v_edate,6);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -191,18 +167,15 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 7 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_TYPE';
+	VALUES(v_projectprop_id,v_studyid,1070,8070,7);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvt1.cvterm_id as type_id, cvt2.cvterm_id as value, 7 as rank
-	FROM cvterm cvt1, cvterm cvt2
-	WHERE cvt1.name = 'STUDY_TYPE'
-	AND cvt2.name = v_stype
-  	AND cvt2.cv_id = 2010;
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8070 as type_id, cvterm_id as value, 7 as rank
+	FROM cvterm
+	WHERE name = v_stype
+  	AND cv_id = 2010;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -217,16 +190,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 8 as rank
-	FROM cvterm
-	WHERE name = 'PI_ID';
+	VALUES(v_projectprop_id,v_studyid,1070,8110,8);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_investid as value, 8 as rank
-	FROM cvterm
-	WHERE name = 'PI_ID';
+	VALUES(v_projectprop_id,v_studyid,8110,v_investid,8);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -241,16 +210,12 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 9 as rank
-	FROM cvterm
-	WHERE name = 'Study_UID';
+	VALUES(v_projectprop_id,v_studyid,1070,8020,9);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvterm_id as type_id, v_userid as value, 9 as rank
-	FROM cvterm
-	WHERE name = 'Study_UID';
+	VALUES(v_projectprop_id,v_studyid,8020,v_userid,9);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
@@ -265,18 +230,15 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 1070, cvterm_id as value, 10 as rank
-	FROM cvterm
-	WHERE name = 'STUDY_STATUS';
+	VALUES(v_projectprop_id,v_studyid,1070,8006,10);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, cvt1.cvterm_id as type_id, cvt2.cvterm_id as value, 10 as rank
-	FROM cvterm cvt1, cvterm cvt2
-	WHERE cvt1.name = 'STUDY_STATUS'
-	AND cvt2.name = 1
-  	AND cvt2.cv_id = 2005;
+	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8006 as type_id, cvterm_id as value, 10 as rank
+	FROM cvterm
+	WHERE name = 1
+  	AND cv_id = 2005;
   	
 
 COMMIT;
@@ -315,92 +277,52 @@ START TRANSACTION;
 	update projectprop pp
 	set value = v_sname
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_NAME');
+	and pp.type_id = 8005;
 	
 	update projectprop pp
 	set value = v_title
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_TITLE');
+	and pp.type_id = 8007;
 	
 	update projectprop pp
 	set value = v_pmkey
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'PM_KEY');
+	and pp.type_id = 8040;
 	
 	update projectprop pp
 	set value = v_objectiv
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_OBJECTIVE');
+	and pp.type_id = 8030;
 	
 	update projectprop pp
 	set value = v_investid
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'PI_ID');	
+	and pp.type_id = 8110;	
 	
 	update projectprop pp
-	set value = (select cvterm_id from cvterm where name = v_stype) 
+	set value = (select cvterm_id from cvterm where name = v_stype and cv_id = 2010) 
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_TYPE');
+	and pp.type_id = 8070;
 	
 	update projectprop pp
 	set value = v_sdate  
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'START_DATE');
+	and pp.type_id = 8050;
 	
 	update projectprop pp
 	set value = v_edate 
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'END_DATE');
+	and pp.type_id = 8060;
 	
 	update projectprop pp
 	set value = v_userid 
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'Study_UID');
+	and pp.type_id = 8020;
 	
 	update projectprop pp
 	set value = (select cvterm_id from cvterm where name = 1 and cv_id = 2005) 
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_STATUS');
+	and pp.type_id = 8006;
 		
 	update project_relationship pr
 	set object_project_id = v_shierarchy 
@@ -416,22 +338,20 @@ CREATE PROCEDURE `getStudyList`()
 begin
         
 	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy 
-	,GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv' 
-	,GROUP_CONCAT(if(ct.name = 'PI_ID', value.value, NULL)) AS 'investid' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_TYPE', ct2.name, NULL)) AS 'stype' 
-	,GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate' 
-	,GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate' 
-	,GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', ct2.name, NULL)) AS 'sstatus' 
+	,GROUP_CONCAT(if(value.type_id = 8040, value.value, NULL)) AS 'pmkey' 
+	,GROUP_CONCAT(if(value.type_id = 8030, value.value, NULL)) AS 'objectiv' 
+	,GROUP_CONCAT(if(value.type_id = 8110, value.value, NULL)) AS 'investid' 
+	,GROUP_CONCAT(if(value.type_id = 8070, ct2.name, NULL)) AS 'stype' 
+	,GROUP_CONCAT(if(value.type_id = 8050, value.value, NULL)) AS 'sdate' 
+	,GROUP_CONCAT(if(value.type_id = 8060, value.value, NULL)) AS 'edate' 
+	,GROUP_CONCAT(if(value.type_id = 8020, value.value, NULL)) AS 'userid' 
+	,GROUP_CONCAT(if(value.type_id = 8006, ct2.name, NULL)) AS 'sstatus' 
 	FROM project p 
-	INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id 
-	,cvterm ct, projectprop value 
+	INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id
+	,projectprop value 
 	LEFT JOIN cvterm ct2 ON ct2.cvterm_id = value.value 
 	WHERE value.project_id = p.project_id 
-  	AND value.type_id = ct.cvterm_id 
-	AND ct.name 
-	IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
+  	AND value.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020) 
 	GROUP BY p.project_id
 	HAVING (sstatus IS NULL OR sstatus != 9);
 
@@ -442,23 +362,21 @@ drop procedure if exists `getStudyById`$$
 CREATE PROCEDURE `getStudyById`(IN v_studyid int)
 begin
         
-	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy 
-	,GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv' 
-	,GROUP_CONCAT(if(ct.name = 'PI_ID', value.value, NULL)) AS 'investid' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_TYPE', ct2.name, NULL)) AS 'stype' 
-	,GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate' 
-	,GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate' 
-	,GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid' 
-	,GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', ct2.name, NULL)) AS 'sstatus' 
+	SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy
+	,GROUP_CONCAT(if(value.type_id = 8040, value.value, NULL)) AS 'pmkey' 
+	,GROUP_CONCAT(if(value.type_id = 8030, value.value, NULL)) AS 'objectiv' 
+	,GROUP_CONCAT(if(value.type_id = 8110, value.value, NULL)) AS 'investid' 
+	,GROUP_CONCAT(if(value.type_id = 8070, ct2.name, NULL)) AS 'stype' 
+	,GROUP_CONCAT(if(value.type_id = 8050, value.value, NULL)) AS 'sdate' 
+	,GROUP_CONCAT(if(value.type_id = 8060, value.value, NULL)) AS 'edate' 
+	,GROUP_CONCAT(if(value.type_id = 8020, value.value, NULL)) AS 'userid' 
+	,GROUP_CONCAT(if(value.type_id = 8006, ct2.name, NULL)) AS 'sstatus'
 	FROM project p 
 	INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id 
-	,cvterm ct, projectprop value 
+	,projectprop value 
 	LEFT JOIN cvterm ct2 ON ct2.cvterm_id = value.value 
 	WHERE value.project_id = p.project_id 
-  	AND value.type_id = ct.cvterm_id 
-	AND ct.name 
-	IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') 
+  	AND value.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020)
 	AND p.project_id = v_studyid;
 	
 end$$
@@ -481,22 +399,20 @@ IN v_shierarchy int)
 begin
        
 	SET @sql := CONCAT("SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy", 
-	",GROUP_CONCAT(if(ct.name = 'PM_KEY', value.value, NULL)) AS 'pmkey'", 
-	",GROUP_CONCAT(if(ct.name = 'STUDY_OBJECTIVE', value.value, NULL)) AS 'objectiv'",  
-	",GROUP_CONCAT(if(ct.name = 'PI_ID', value.value, NULL)) AS 'investid'",  
-	",GROUP_CONCAT(if(ct.name = 'STUDY_TYPE', ct2.name, NULL)) AS 'stype'",  
-	",GROUP_CONCAT(if(ct.name = 'START_DATE', value.value, NULL)) AS 'sdate'",  
-	",GROUP_CONCAT(if(ct.name = 'END_DATE', value.value, NULL)) AS 'edate'",  
-	",GROUP_CONCAT(if(ct.name = 'Study_UID', value.value, NULL)) AS 'userid'",  
-	",GROUP_CONCAT(if(ct.name = 'STUDY_STATUS', ct2.name, NULL)) AS 'sstatus'",  
+	",GROUP_CONCAT(if(value.type_id = 8040, value.value, NULL)) AS 'pmkey'", 
+	",GROUP_CONCAT(if(value.type_id = 8030, value.value, NULL)) AS 'objectiv'",  
+	",GROUP_CONCAT(if(value.type_id = 8110, value.value, NULL)) AS 'investid'",  
+	",GROUP_CONCAT(if(value.type_id = 8070, ct2.name, NULL)) AS 'stype'",  
+	",GROUP_CONCAT(if(value.type_id = 8050, value.value, NULL)) AS 'sdate'",  
+	",GROUP_CONCAT(if(value.type_id = 8060, value.value, NULL)) AS 'edate'",  
+	",GROUP_CONCAT(if(value.type_id = 8020, value.value, NULL)) AS 'userid'",  
+	",GROUP_CONCAT(if(value.type_id = 8006, ct2.name, NULL)) AS 'sstatus'",  
 	"FROM project p ", 
 	"INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id ",  
-	",cvterm ct, projectprop value ", 
+	",projectprop value ", 
 	"LEFT JOIN cvterm ct2 ON ct2.cvterm_id = value.value ",  
 	"WHERE value.project_id = p.project_id ", 
-  	"AND value.type_id = ct.cvterm_id ", 
-	"AND ct.name ", 
-	"IN ('STUDY_STATUS','PM_KEY','STUDY_OBJECTIVE','PI_ID','STUDY_TYPE','START_DATE','END_DATE','Study_UID') ",  
+  	"AND value.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020) ",  
 	"GROUP BY p.project_id HAVING 1=1 ");
 	IF(v_studyid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND studyid = ",v_studyid);
@@ -556,11 +472,7 @@ START TRANSACTION;
 	update projectprop pp
 	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005) 
 	where pp.project_id = v_studyid
-	and exists
-	(select 1
-	from cvterm ctype
-	where ctype.cvterm_id = pp.type_id
-	and ctype.name = 'STUDY_STATUS');
+	and pp.type_id = 8006;
     
   	select if(INSTR(v_prevname, '#') = 0, 1, max(SUBSTRING_INDEX(name,'#',-1))+1)
   	,SUBSTRING_INDEX(name,'#',1) into v_postfix,v_prevname 
