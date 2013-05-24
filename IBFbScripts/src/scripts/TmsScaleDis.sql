@@ -20,8 +20,8 @@ BEGIN
   SELECT 
     obj.cvterm_id AS tmsscaledisid
     , cv.name AS measuredinid
-    , obj.name AS valuename
-    , obj.definition AS valuedesc
+    , obj.name AS value
+    , obj.definition AS valdesc
   FROM
     cvterm obj
     INNER JOIN cv ON cv.cv_id = obj.cv_id
