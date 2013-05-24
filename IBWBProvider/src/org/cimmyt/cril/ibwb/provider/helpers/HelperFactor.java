@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.*;
+import org.cimmyt.cril.ibwb.provider.utils.ChadoSchemaUtil;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
 /**
@@ -28,17 +29,16 @@ public class HelperFactor {
     public static Factor getFactorFillingFull(
             Factor factorDto,
             AppServices appServices,
-            Integer dmsaType
-            ) {
+            Integer dmsaType) {
         log.info("Factor Name: " + factorDto.getFname() + " " + "  FactorId: " + factorDto.getFactorid());
-        
+
         Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
         factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
-        
+
         log.info("Cargando Measuredin con tid: " + factorDto.getTid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
         Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTid(), factorDto.getScaleid(), factorDto.getTmethid());
         factorDto.setMeasuredin(measuredin);
-        
+
         log.info("Cargando levels del factor: " + factorDto.getFname() + " labelid: " + factorDto.getLabelid());
         switch (factorDto.getLtype().charAt(0)) {
             case 'C':
@@ -71,37 +71,36 @@ public class HelperFactor {
         }
         return factorDto;
     }
-    
+
     public static Factor getFactorFillingFullWhitoutLevels(
             Factor factorDto,
             AppServices appServices,
-            Integer dmsaType
-            ) {
+            Integer dmsaType) {
         log.info("Factor Name: " + factorDto.getFname() + " " + "  FactorId: " + factorDto.getFactorid());
-        
+
         Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
         factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         log.info("Cargando Measuredin con tid: " + factorDto.getTid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
         Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTid(), factorDto.getScaleid(), factorDto.getTmethid());
         factorDto.setMeasuredin(measuredin);
-        
+
         return factorDto;
     }
-    
+
     /**
      * Saves a FIXED Study factor in FACTOR table
      * @param study
      * @param appServices
      * @param serviceLocal
-     * @return 
+     * @return
      */
     public static Factor saveFactorStudy(
             Study study,
             AppServices appServices,
             CommonServices serviceLocal) {
-        
+
         ibfb.domain.core.Condition condition = new Condition();
-        
+
         condition.setConditionName("STUDY");
         condition.setDescription("STUDY");
         condition.setProperty("STUDY");
@@ -110,7 +109,7 @@ public class HelperFactor {
         condition.setDataType("C");
         condition.setValue("");
         condition.setLabel("STUDY");
-        
+
         Factor factor = saveFactor(
                 study,
                 condition,
@@ -122,7 +121,7 @@ public class HelperFactor {
                 serviceLocal);
         return factor;
     }
-    
+
     public static Factor saveFactor(
             Study study,
             ibfb.domain.core.Condition condition,
@@ -186,6 +185,9 @@ public class HelperFactor {
             measuredin = measuredinList.get(0);
         } else {
             measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+            //GCP 4122
+            measuredin.setName(condition.getConditionName());
+            measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
             serviceLocal.addMeasuredin(measuredin);
         }
 
@@ -232,7 +234,7 @@ public class HelperFactor {
      * @param numberRepeticion Number of trials
      * @param levelNo
      * @param serviceLocal
-     * @return 
+     * @return
      */
     public static Integer saveLavelsFactorTrials(
             Map mapTrials,
@@ -254,12 +256,12 @@ public class HelperFactor {
         for (Condition conditionData : conditionsData) {
             Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
             /*
-            if (nameFactorInitial.equals(conditionData.getConditionName())) {
-                instance++;
-                levelNoTemporal--;
-                addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
-            }
-            */
+             if (nameFactorInitial.equals(conditionData.getConditionName())) {
+             instance++;
+             levelNoTemporal--;
+             addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
+             }
+             */
             System.out.println("Instance: " + instance + " levelNo: " + levelNo);
             log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
             if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
@@ -314,82 +316,82 @@ public class HelperFactor {
     }
 
     public static Integer saveLavelsFactorTrialsOld(
-               Map mapTrials,
-               List<Condition> conditionsData,
-               Integer numberRepeticion,
-               Integer levelNo,
-               CommonServices serviceLocal) {
+            Map mapTrials,
+            List<Condition> conditionsData,
+            Integer numberRepeticion,
+            Integer levelNo,
+            CommonServices serviceLocal) {
 
-           int instance = 0;
-           int levelNoTemporal = levelNo + 1;
-           String nameFactorInitial = "";
+        int instance = 0;
+        int levelNoTemporal = levelNo + 1;
+        String nameFactorInitial = "";
 
-           //Guardar los levels del trial
+        //Guardar los levels del trial
 
-           if (conditionsData.size() > 0) {
-               nameFactorInitial = conditionsData.get(0).getConditionName();
-           }
-   //        levelNoTemporal++;
-           for (Condition conditionData : conditionsData) {
-               Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
+        if (conditionsData.size() > 0) {
+            nameFactorInitial = conditionsData.get(0).getConditionName();
+        }
+        //        levelNoTemporal++;
+        for (Condition conditionData : conditionsData) {
+            Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
 
-               if (nameFactorInitial.equals(conditionData.getConditionName())) {
-                   instance++;
-                   levelNoTemporal--;
-                   addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
-               }
-               System.out.println("Instance: " + instance + " levelNo: " + levelNoTemporal);
-               log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
-               if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
-                   LevelN levelN = new LevelN();
-                   levelN.setFactorid(factorTemp.getFactorid());
-                   if (conditionData.getConditionName().equals(nameFactorInitial)) {
-                       Integer tempInstance = conditionData.getInstance();
-                       levelN.setLvalue(castingToDouble(tempInstance));
-                   } else {
-                       if (conditionData.getValue() != null) {
-                           levelN.setLvalue(castingToDouble(conditionData.getValue()));
-                       }
-                   }
-                   LevelNPK levelNPK = new LevelNPK();
-                   levelNPK.setLabelid(factorTemp.getLabelid());
-                   levelNPK.setLevelno(levelNoTemporal);
-                   levelN.setLevelNPK(levelNPK);
-                   serviceLocal.addLevelN(levelN);
-                   factorTemp.getLevelsN().add(levelN);
-               } else {
-                   LevelC levelC = new LevelC();
-                   levelC.setFactorid(factorTemp.getFactorid());
+            if (nameFactorInitial.equals(conditionData.getConditionName())) {
+                instance++;
+                levelNoTemporal--;
+                addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
+            }
+            System.out.println("Instance: " + instance + " levelNo: " + levelNoTemporal);
+            log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
+            if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
+                LevelN levelN = new LevelN();
+                levelN.setFactorid(factorTemp.getFactorid());
+                if (conditionData.getConditionName().equals(nameFactorInitial)) {
+                    Integer tempInstance = conditionData.getInstance();
+                    levelN.setLvalue(castingToDouble(tempInstance));
+                } else {
+                    if (conditionData.getValue() != null) {
+                        levelN.setLvalue(castingToDouble(conditionData.getValue()));
+                    }
+                }
+                LevelNPK levelNPK = new LevelNPK();
+                levelNPK.setLabelid(factorTemp.getLabelid());
+                levelNPK.setLevelno(levelNoTemporal);
+                levelN.setLevelNPK(levelNPK);
+                serviceLocal.addLevelN(levelN);
+                factorTemp.getLevelsN().add(levelN);
+            } else {
+                LevelC levelC = new LevelC();
+                levelC.setFactorid(factorTemp.getFactorid());
 
-                   if (conditionData.getValue() != null) {
-                       if (conditionData.getValue().toString().isEmpty()) {
-                           levelC.setLvalue(" ");
-                       } else {
-                           levelC.setLvalue((String) conditionData.getValue());
-                       }
-                   } else if (conditionData.getValue() == null) {
-                       levelC.setLvalue(" ");
-                   }
-                   LevelCPK levelCPK = new LevelCPK();
-                   levelCPK.setLabelid(factorTemp.getLabelid());
-                   levelCPK.setLevelno(levelNoTemporal);
-                   levelC.setLevelCPK(levelCPK);
-                   serviceLocal.addLevelC(levelC);
-                   factorTemp.getLevelsC().add(levelC);
-               }
+                if (conditionData.getValue() != null) {
+                    if (conditionData.getValue().toString().isEmpty()) {
+                        levelC.setLvalue(" ");
+                    } else {
+                        levelC.setLvalue((String) conditionData.getValue());
+                    }
+                } else if (conditionData.getValue() == null) {
+                    levelC.setLvalue(" ");
+                }
+                LevelCPK levelCPK = new LevelCPK();
+                levelCPK.setLabelid(factorTemp.getLabelid());
+                levelCPK.setLevelno(levelNoTemporal);
+                levelC.setLevelCPK(levelCPK);
+                serviceLocal.addLevelC(levelC);
+                factorTemp.getLevelsC().add(levelC);
+            }
 
-               if (nameFactorInitial.equals(conditionData.getConditionName())) {
-                   //addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
-               }
+            if (nameFactorInitial.equals(conditionData.getConditionName())) {
+                //addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
+            }
 
-           }
-           if (instance != numberRepeticion) {
-               System.out.println("Error al comparar el numero de instancias");
-           }
+        }
+        if (instance != numberRepeticion) {
+            System.out.println("Error al comparar el numero de instancias");
+        }
 
-           levelNoTemporal--;
-           return levelNoTemporal;
-       }
+        levelNoTemporal--;
+        return levelNoTemporal;
+    }
 
     public static void saveLavelsFactors(
             Map mapTrials,
@@ -487,7 +489,7 @@ public class HelperFactor {
      * @param germplasmData
      * @param levelNo
      * @param serviceLocal
-     * @return 
+     * @return
      */
     public static Integer saveLavelsFactorsEntrys(
             List<Factor> listEntryFactors,
@@ -507,40 +509,40 @@ public class HelperFactor {
                 levelNo = levelNoStockId;
 
                 if (i < listEntryFactors.size()) {
-                Object value = objectList.get(i);
-                factorTemp = listEntryFactors.get(i);
-                log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
-                if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
-                    LevelN levelN = new LevelN();
-                    levelN.setFactorid(factorTemp.getFactorid());
+                    Object value = objectList.get(i);
+                    factorTemp = listEntryFactors.get(i);
+                    log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
+                    if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
+                        LevelN levelN = new LevelN();
+                        levelN.setFactorid(factorTemp.getFactorid());
 
-                    levelN.setLvalue(castingToDouble(value));
-                    LevelNPK levelNPK = new LevelNPK();
-                    levelNPK.setLabelid(factorTemp.getLabelid());
-                    levelNPK.setLevelno(levelNo);
-                    levelN.setLevelNPK(levelNPK);
-                    serviceLocal.addLevelN(levelN);
-                    factorTemp.getLevelsN().add(levelN);
-                } else {
-                    LevelC levelC = new LevelC();
-                    levelC.setFactorid(factorTemp.getFactorid());
-                    String valueToSave = castingToString(value);
-                    if (valueToSave != null) {
-                        if (valueToSave.trim().isEmpty()) {
-                            levelC.setLvalue(" ");
-                        } else {
-                            levelC.setLvalue(valueToSave);
-                        }
+                        levelN.setLvalue(castingToDouble(value));
+                        LevelNPK levelNPK = new LevelNPK();
+                        levelNPK.setLabelid(factorTemp.getLabelid());
+                        levelNPK.setLevelno(levelNo);
+                        levelN.setLevelNPK(levelNPK);
+                        serviceLocal.addLevelN(levelN);
+                        factorTemp.getLevelsN().add(levelN);
                     } else {
-                        levelC.setLvalue(" ");
+                        LevelC levelC = new LevelC();
+                        levelC.setFactorid(factorTemp.getFactorid());
+                        String valueToSave = castingToString(value);
+                        if (valueToSave != null) {
+                            if (valueToSave.trim().isEmpty()) {
+                                levelC.setLvalue(" ");
+                            } else {
+                                levelC.setLvalue(valueToSave);
+                            }
+                        } else {
+                            levelC.setLvalue(" ");
+                        }
+                        LevelCPK levelCPK = new LevelCPK();
+                        levelCPK.setLabelid(factorTemp.getLabelid());
+                        levelCPK.setLevelno(levelNo);
+                        levelC.setLevelCPK(levelCPK);
+                        serviceLocal.addLevelC(levelC);
+                        factorTemp.getLevelsC().add(levelC);
                     }
-                    LevelCPK levelCPK = new LevelCPK();
-                    levelCPK.setLabelid(factorTemp.getLabelid());
-                    levelCPK.setLevelno(levelNo);
-                    levelC.setLevelCPK(levelCPK);
-                    serviceLocal.addLevelC(levelC);
-                    factorTemp.getLevelsC().add(levelC);
-                }
                 }
             }
             //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
@@ -550,60 +552,60 @@ public class HelperFactor {
     }
 
     public static Integer saveLavelsFactorsEntrysOld(
-               List<Factor> listEntryFactors,
-               List<List<Object>> germplasmData,
-               Integer levelNo,
-               CommonServices serviceLocal) {
-           Factor factorTemp = new Factor();
-           for (List<Object> objectList : germplasmData) {
-               for (int i = 0; i < objectList.size(); i++) {
-                   if (i < listEntryFactors.size()) {
-                   Object value = objectList.get(i);
-                   factorTemp = listEntryFactors.get(i);
-                   log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
-                   if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
-                       LevelN levelN = new LevelN();
-                       levelN.setFactorid(factorTemp.getFactorid());
+            List<Factor> listEntryFactors,
+            List<List<Object>> germplasmData,
+            Integer levelNo,
+            CommonServices serviceLocal) {
+        Factor factorTemp = new Factor();
+        for (List<Object> objectList : germplasmData) {
+            for (int i = 0; i < objectList.size(); i++) {
+                if (i < listEntryFactors.size()) {
+                    Object value = objectList.get(i);
+                    factorTemp = listEntryFactors.get(i);
+                    log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
+                    if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
+                        LevelN levelN = new LevelN();
+                        levelN.setFactorid(factorTemp.getFactorid());
 
-                       levelN.setLvalue(castingToDouble(value));
-                       LevelNPK levelNPK = new LevelNPK();
-                       levelNPK.setLabelid(factorTemp.getLabelid());
-                       levelNPK.setLevelno(levelNo);
-                       levelN.setLevelNPK(levelNPK);
-                       serviceLocal.addLevelN(levelN);
-                       factorTemp.getLevelsN().add(levelN);
-                   } else {
-                       LevelC levelC = new LevelC();
-                       levelC.setFactorid(factorTemp.getFactorid());
-                       String valueToSave = castingToString(value);
-                       if (valueToSave != null) {
-                           if (valueToSave.trim().isEmpty()) {
-                               levelC.setLvalue(" ");
-                           } else {
-                               levelC.setLvalue(valueToSave);
-                           }
-                       } else {
-                           levelC.setLvalue(" ");
-                       }
-                       LevelCPK levelCPK = new LevelCPK();
-                       levelCPK.setLabelid(factorTemp.getLabelid());
-                       levelCPK.setLevelno(levelNo);
-                       levelC.setLevelCPK(levelCPK);
-                       serviceLocal.addLevelC(levelC);
-                       factorTemp.getLevelsC().add(levelC);
-                   }
-                   }
-               }
-               addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
-               levelNo--;
-           }
-           return levelNo;
-       }
+                        levelN.setLvalue(castingToDouble(value));
+                        LevelNPK levelNPK = new LevelNPK();
+                        levelNPK.setLabelid(factorTemp.getLabelid());
+                        levelNPK.setLevelno(levelNo);
+                        levelN.setLevelNPK(levelNPK);
+                        serviceLocal.addLevelN(levelN);
+                        factorTemp.getLevelsN().add(levelN);
+                    } else {
+                        LevelC levelC = new LevelC();
+                        levelC.setFactorid(factorTemp.getFactorid());
+                        String valueToSave = castingToString(value);
+                        if (valueToSave != null) {
+                            if (valueToSave.trim().isEmpty()) {
+                                levelC.setLvalue(" ");
+                            } else {
+                                levelC.setLvalue(valueToSave);
+                            }
+                        } else {
+                            levelC.setLvalue(" ");
+                        }
+                        LevelCPK levelCPK = new LevelCPK();
+                        levelCPK.setLabelid(factorTemp.getLabelid());
+                        levelCPK.setLevelno(levelNo);
+                        levelC.setLevelCPK(levelCPK);
+                        serviceLocal.addLevelC(levelC);
+                        factorTemp.getLevelsC().add(levelC);
+                    }
+                }
+            }
+            addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
+            levelNo--;
+        }
+        return levelNo;
+    }
 
     /**
      * Save one record into LEVEL_C and LEVEL_N according to DATATYPE
      * @param factor FACTOR DTO to extract LABELID and FACTORID values
-     * @param levelNo Deep of level for 
+     * @param levelNo Deep of level for
      * @param value current value for LVALUE column
      * @param serviceLocal Service to manage local database
      */
@@ -746,10 +748,8 @@ public class HelperFactor {
             System.out.println("Error al comparar el numero de instancias");
         }
     }
-    
-    
-    
-    public static List<Factor> getFactorsByEffectid(Integer effectId, AppServices servicios){
+
+    public static List<Factor> getFactorsByEffectid(Integer effectId, AppServices servicios) {
         List<Integer> effectIds = new ArrayList<Integer>();
         effectIds.add(effectId);
         List<Effect> effects = servicios.getEffectsByEffectsids(effectIds);
@@ -760,13 +760,12 @@ public class HelperFactor {
         List<Factor> factors = servicios.getFactorsByFactorsids(factorsIds);
         return factors;
     }
-    
+
     public static List<Integer> getTrialsForStudyid(
             AppServices servicios,
-            Integer studyId
-            ){
+            Integer studyId) {
         Factor factorTrial = null;
-        
+
         List<Factor> factors = servicios.getMainFactorsByStudyid(studyId);
         for(Factor factor : factors){
             factor = HelperFactor.getFactorFillingFull(factor, servicios, 801);
@@ -776,19 +775,19 @@ public class HelperFactor {
                 break;
             }
         }
-        
+
         List<Integer> instancias = new ArrayList<Integer>();
         if(factorTrial != null){
-            for(LevelN levelN : factorTrial.getLevelsN()){
+            for (LevelN levelN : factorTrial.getLevelsN()) {
                 instancias.add(levelN.getLvalue().intValue());
             }
-        }else{
+        } else {
             log.error("Factor trial not found.");
         }
         return instancias;
     }
-    
-    public static StudySearch loadFactors(StudySearch studySearch, AppServices appServices){
+
+    public static StudySearch loadFactors(StudySearch studySearch, AppServices appServices) {
         List<Factor> factors = appServices.getMainFactorsByStudyid(studySearch.getStudyId());
         Factor factorEntry = null;
         for (Factor factor : factors) {
