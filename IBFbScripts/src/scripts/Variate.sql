@@ -88,18 +88,6 @@ START TRANSACTION;
     FROM cvterm_relationship cvtr
 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
     WHERE cvt1.cvterm_id = cvtr.subject_id 
-     AND (cvtr.type_id = 1105 AND cvt3.cvterm_id = v_dtype)
-    ) AND EXISTS ( 
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND (cvtr.type_id = 1225 AND cvt3.cvterm_id = v_vtype)
-    ) AND EXISTS ( 
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
     AND (cvtr.type_id = 1200 AND cvt3.cvterm_id = v_traitid)
     ) AND EXISTS ( 
     SELECT 1 
