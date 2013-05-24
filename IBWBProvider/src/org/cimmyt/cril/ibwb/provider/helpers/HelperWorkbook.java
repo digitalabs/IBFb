@@ -441,13 +441,16 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-            measuredinFilter.setTraitid(traits.getTid());
+            measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
+            measuredinFilter.setStoredinid(traits.getTid());
+            measuredinFilter.setName(condition.getConditionName());
+            
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -554,13 +557,16 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-            measuredinFilter.setTraitid(traits.getTid());
+            measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
+            measuredinFilter.setStoredinid(traits.getTid());
+            measuredinFilter.setName(condition.getConditionName());
+            
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -664,13 +670,15 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-            measuredinFilter.setTraitid(traits.getTid());
+            measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
+            measuredinFilter.setStoredinid(traits.getTid());
+            measuredinFilter.setName(factorDomain.getFactorName());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,factorDomain.getFactorName(),factorDomain.getDataType());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -781,13 +789,16 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-            measuredinFilter.setTraitid(traits.getTid());
+           
+            measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
+            measuredinFilter.setStoredinid(traits.getTid());
+            measuredinFilter.setName(constant.getConstantName());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -878,13 +889,15 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-            measuredinFilter.setTraitid(traits.getTid());
+            measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
+            measuredinFilter.setStoredinid(traits.getTid());
+            measuredinFilter.setName(variateDomain.getVariateName());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
                 localServices.addMeasuredin(measuredin);
             }
 

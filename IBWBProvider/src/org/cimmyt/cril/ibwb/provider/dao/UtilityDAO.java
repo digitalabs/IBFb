@@ -344,11 +344,13 @@ public class UtilityDAO extends HibernateDaoSupport {
                 SQLQuery query = session.
                         createSQLQuery(sql);
                 query.setResultTransformer(Transformers.aliasToBean(bean.getClass()));
+                System.out.println(bean.getClass());
                 try {
                     if (inParams != null && inParams.length > 0) {
                         for (String paramName : inParams) {
                             Object obj = PropertyUtils.getProperty(bean, paramName);
                             System.out.println(paramName + " = " + obj);
+                             
                             query.setParameter(paramName, obj);
                         }
                     }

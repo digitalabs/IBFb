@@ -170,16 +170,23 @@ public class ConverterDomainToDTO {
             Traits traits,
             Scales scales,
             Integer standardScale,
-            TmsMethod tmsMethod
+            TmsMethod tmsMethod,
+            String name,
+            String hasType
+         
             ) {
         Measuredin measuredin = new Measuredin();
         //Asignado de la relacion de donde proviene traits
-        measuredin.setTraitid(traits.getTid());
+        measuredin.setTraitid(traits.getTraitid());
         //Asignado de la relacion de donde proviene scalse
         measuredin.setScaleid(scales.getScaleid());
         //Pasada como parametro al measuredin para el standard
         measuredin.setStandardscale(standardScale.toString());
+        measuredin.setStoredinid(traits.getTid());
         measuredin.setTmethid(tmsMethod.getTmethid());
+        measuredin.setName(name);
+        measuredin.setHasType(hasType);
+        //measuredin.setIsA(isA);
         //Por default
 //        measuredin.setReport();
         //Por default

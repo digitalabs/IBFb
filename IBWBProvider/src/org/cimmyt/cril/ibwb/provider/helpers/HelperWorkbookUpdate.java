@@ -489,13 +489,16 @@ public class HelperWorkbookUpdate {
                 //Verificar existencia de measuredin
                 Measuredin measuredinFilter = new Measuredin(true);
                 measuredinFilter.setScaleid(scales.getScaleid());
-                measuredinFilter.setTraitid(traits.getTid());
+                measuredinFilter.setTraitid(traits.getTraitid());
+                measuredinFilter.setStoredinid(traits.getTid());
+                measuredinFilter.setName(variateDomain.getVariateName());
                 measuredinFilter.setTmethid(tmsMethod.getTmethid());
+                
                 List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
                 if (!measuredinList.isEmpty()) {
                     measuredin = measuredinList.get(0);
                 } else {
-                    measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod);
+                    measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(), variateDomain.getDataType());
                     localServices.addMeasuredin(measuredin);
                 }
 
