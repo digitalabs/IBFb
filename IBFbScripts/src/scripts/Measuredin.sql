@@ -5,22 +5,30 @@ CREATE PROCEDURE `getListMeasuredIn` (
 IN v_measuredinid int,
 IN v_traitid int,
 IN v_tmethid int,
-IN v_scaleid int)
+IN v_scaleid int,
+IN v_storedin int,
+IN v_hastype varchar(255))
 begin
 
     -- DOES NOT CHECK v_is_local, no info needed from central db ontology
     SET @sql := CONCAT("SELECT cvt.cvterm_id AS measuredinid, ",
                                             "crp.object_id AS traitid, ",
                                             "crs.object_id AS scaleid, ",
-                                            "crm.object_id AS tmethid ",
+                                            "crm.object_id AS tmethid, ",
+                                            "crt.object_id AS storedinid, ",
+                                            "if(crt.object_id = 1120, 'C', 'N') AS hasType ",
                                             "FROM cvterm cvt ",
                                             "INNER JOIN cvterm_relationship crp ON crp.subject_id = cvt.cvterm_id ",
                                             "INNER JOIN cvterm_relationship crm ON crm.subject_id = cvt.cvterm_id ",
                                             "INNER JOIN cvterm_relationship crs ON crs.subject_id = cvt.cvterm_id ",
+                                            "INNER JOIN cvterm_relationship crt ON crt.subject_id = cvt.cvterm_id ",
+                                            "INNER JOIN cvterm_relationship crh ON crh.subject_id = cvt.cvterm_id ",
                                             "WHERE cvt.cv_id = 1040 ",
                                             "AND crp.type_id = 1200 ",
                                             "AND crm.type_id = 1210 ",
-                                            "AND crs.type_id = 1220 ");
+                                            "AND crs.type_id = 1220 ",
+                                            "AND crt.type_id = 1044 ",
+                                            "AND crh.type_id = 1105 ");
 
     IF (v_measuredinid IS NOT NULL) THEN
             SET @sql = CONCAT(@sql," AND cvt.cvterm_id = ",v_measuredinid);
@@ -36,6 +44,16 @@ begin
 
     IF (v_scaleid IS NOT NULL) THEN
             SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
+    END IF;
+
+    IF (v_storedin IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crt.object_id = ",v_storedin);
+    END IF;
+
+    IF (v_hastype IS NOT NULL and v_hastype = 'C') THEN
+            SET @sql = CONCAT(@sql," AND crh.object_id = 1120");
+    ELSE 
+            SET @sql = CONCAT(@sql," AND crh.object_id = 1110");
     END IF;
 		
 	
@@ -76,7 +94,8 @@ IN v_traitid int,
 iN v_tmethid int,
 IN v_scaleid int,
 IN v_name varchar(255),
-IN v_storedinid int)
+IN v_storedinid int,
+IN v_hastype varchar(255))
 begin
 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
@@ -96,6 +115,13 @@ START TRANSACTION;
 
 	-- insert "has scale" relationship
 	call addCvtermRelationship(1220, @newcvtermid, v_scaleid);
+
+        -- insert "has type" relationship
+        if(v_hastype = 'C') then
+            call addCvtermRelationship(1105, @newcvtermid, 1120);
+        else
+            call addCvtermRelationship(1105, @newcvtermid, 1110);
+        end if;
 
 COMMIT;	
 	

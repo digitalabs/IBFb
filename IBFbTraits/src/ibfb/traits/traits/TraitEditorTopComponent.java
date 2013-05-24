@@ -568,11 +568,11 @@ public final class TraitEditorTopComponent extends TopComponent {
             Measuredin measuredin = new Measuredin(true);
 
 
-            measuredin.setTraitid(this.trait.getTid());
-
+            measuredin.setTraitid(this.trait.getTraitid());
+            measuredin.setStoredinid(this.trait.getTid());
             measuredin.setScaleid(selectedScale.getScaleid());
             measuredin.setScales(selectedScale);
-
+           
             measuredin.setTmethid(selectedMethod.getTmethid());
             measuredin.setTmsMethod(selectedMethod);
 

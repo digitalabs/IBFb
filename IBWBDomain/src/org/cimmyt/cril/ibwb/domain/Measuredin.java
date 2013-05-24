@@ -64,6 +64,10 @@ public class Measuredin extends BaseFilter implements Serializable {
     private String name;
     @Transient
     private Integer storedinid;
+    @Transient
+    private String hasType;
+    @Transient
+    private String isA;
 //    @Basic(optional = true)
 //    @Column(name = "tmethodid", nullable = true)
 //    private Integer tmethodid;
@@ -128,6 +132,23 @@ public class Measuredin extends BaseFilter implements Serializable {
         this.traitid = traitid;
     	this.scaleid = scaleid;
     }
+    
+    public String getIsA() {
+        return isA;
+    }
+
+    public void setIsA(String isA) {
+        this.isA = isA;
+    }
+    
+    public String getHasType() {
+        return hasType;
+    }
+
+    public void setHasType(String hasType) {
+        this.hasType = hasType;
+    }
+
     
     public Integer getTraitid() {
         return traitid;
