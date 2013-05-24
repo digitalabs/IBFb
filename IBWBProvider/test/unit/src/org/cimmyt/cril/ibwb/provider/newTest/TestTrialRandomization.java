@@ -13,6 +13,7 @@ import org.cimmyt.cril.ibwb.domain.LevelCPK;
 import org.cimmyt.cril.ibwb.domain.LevelN;
 import org.cimmyt.cril.ibwb.domain.LevelNPK;
 import org.cimmyt.cril.ibwb.domain.Measuredin;
+import org.cimmyt.cril.ibwb.domain.Variate;
 
 /**
  *
@@ -151,6 +152,19 @@ public class TestTrialRandomization extends TestService {
             System.out.println("NO LEVEL N DATA FOUND");
         }
     }
+    
+    public void testGetVarieteFromVeffects() {
+        System.out.println("testGetVarieteFromVeffects");
+        List<Variate> list = servicios.getCentralCommonService().getVarieteFromVeffects(10015);
+        if (list != null && list.size() > 0) {
+            System.out.println("SIZE : " + list.size());
+            for (Variate variate : list) {
+                System.out.println(variate);
+            }
+        } else {
+            System.out.println("NO VARIETE FOUND");
+        }
+    }
 
     public static void main(String[] args) {
         try {
@@ -165,7 +179,7 @@ public class TestTrialRandomization extends TestService {
             //test.testGetListLevelN();
             //test.testGetLevelsCByLabelid();
             //test.testGetLevelsNByLabelid();
-            
+            //test.testGetVarieteFromVeffects();
 
         } catch(Exception e) {
             e.printStackTrace();
