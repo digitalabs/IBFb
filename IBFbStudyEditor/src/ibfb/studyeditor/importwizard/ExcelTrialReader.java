@@ -586,7 +586,7 @@ public class ExcelTrialReader {
                     log.info("TRAIT: " + traits.get(i) + "   VALUE: " + result);
                 }
             }//fin del IF
-
+            observationsModel.fireTableDataChanged();
         }
     }
 

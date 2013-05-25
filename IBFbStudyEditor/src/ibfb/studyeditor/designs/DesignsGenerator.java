@@ -12,10 +12,7 @@ import ibfb.studyeditor.core.model.ObservationsTableModel;
 import ibfb.studyeditor.core.model.OtherTreatmentFactorsTableModel;
 import ibfb.studyeditor.core.model.TreatmentLabelsTableModel;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumnModel;
@@ -73,7 +70,7 @@ public class DesignsGenerator {
     public void generateUnreplicatedDesignWithRandomization(int trial, ObservationsTableModel model, int totalRep) {
         GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
         int total = Integer.parseInt(this.jTextFieldEntries.getText());
-        int vector[] = randomize(total);
+        List<List<Object>> trialValues = new ArrayList<List<Object>>();
         int otherTreatmentPlot = 1;
         for (int i = 0; i < total; i++) {
             for (int j = 0; j < totalRep; j++) {
@@ -85,8 +82,6 @@ public class DesignsGenerator {
                 if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
                     rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = 1;
                 }
-
-
 
                 //A2*10^(TRUNC(LOG10(MAX(16,5,22)))+1)+B2                
 
@@ -105,7 +100,8 @@ public class DesignsGenerator {
                 int entriesColIndex = 0;
                 for (Factor factor : entriesTableModel.getFactorHeaders()) {
                     String columnHeader = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
-                    rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(vector[i], entriesColIndex);
+                    //rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(vector[i], entriesColIndex);
+                    rowToAdd[model.getHeaderIndex(columnHeader)] = entriesTableModel.getValueAt(i, entriesColIndex);
                     entriesColIndex++;
                 }
 
@@ -114,22 +110,42 @@ public class DesignsGenerator {
                     for (Factor otherFactor : workbook.getOtherFactors()) {
                         String columnHeader = Workbook.getStringWithOutBlanks(otherFactor.getProperty() + otherFactor.getScale());
                         int headerIndex = model.getHeaderIndex(columnHeader);
+                        int factorLevel = 1;
                         for (FactorLabel factorLabel : treatmentLabelsTableModel.getFactorLabels()) {
                             if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
                                 rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = otherTreatmentPlot;
                             }
-                            rowToAdd[headerIndex] = factorLabel.getValue();
-                            model.addRow(rowToAdd);
+                            //rowToAdd[headerIndex] = factorLabel.getValue();
+                            rowToAdd[headerIndex] = factorLevel;
+                            for (Factor childFactor : workbook.getChildFactors(otherFactor.getFactorName())) {
+                                String columnHeaderChild = Workbook.getStringWithOutBlanks(childFactor.getProperty() + childFactor.getScale());
+                                int headerIndexChild = model.getHeaderIndex(columnHeaderChild);
+                                rowToAdd[headerIndexChild] = factorLabel.getValue();
+                            }
+
+                            //model.addRow(rowToAdd);
+                            trialValues.add(new ArrayList<Object>(Arrays.asList(rowToAdd)));
                             otherTreatmentPlot++;
+                            //increase factor level
+                            factorLevel++;
                         }
 
                     }
 
                 } else {
-                    model.addRow(rowToAdd);
+                    //model.addRow(rowToAdd);
+                    trialValues.add(new ArrayList<Object>(Arrays.asList(rowToAdd)));
                 }
             }
         }
+
+        int vector[] = randomize(trialValues.size());
+        List<List<Object>> finalList = new ArrayList<List<Object>>();
+        for (int index = 0; index < vector.length; index++) {
+            finalList.add(trialValues.get(vector[index]));
+        }
+        model.getValues().addAll(finalList);
+
     }
 
     /**
@@ -141,11 +157,11 @@ public class DesignsGenerator {
      * @param factorsDesignCad
      * @param totalRep
      */
-    public void generateUnreplicatedDesignWithoutRandomization(int trial, ObservationsTableModel model, ArrayList<String> otherFactors, String[][] factorsDesignCad, int totalRep) {
+    public void generateUnreplicatedDesignWithoutRandomization(int trial, ObservationsTableModel model, int totalRep) {
         TableColumnModel tcm = this.jTableEntries.getColumnModel();
         GermplasmEntriesTableModel entriesTableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
         int total = Integer.parseInt(this.jTextFieldEntries.getText());
-
+        int otherTreatmentPlot = 1;
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(0);
 
@@ -182,10 +198,34 @@ public class DesignsGenerator {
                     entriesColIndex++;
                 }
                 // tmsanchez
-                if (otherFactors != null) {
-                    for (int k = 0; k < otherFactors.size(); k++) {
-                        //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
+                if (workbook.getOtherFactors() != null && !workbook.getOtherFactors().isEmpty()) {
+                    for (Factor otherFactor : workbook.getOtherFactors()) {
+                        String columnHeader = Workbook.getStringWithOutBlanks(otherFactor.getProperty() + otherFactor.getScale());
+                        int headerIndex = model.getHeaderIndex(columnHeader);
+                        int factorLevel = 1;
+                        for (FactorLabel factorLabel : treatmentLabelsTableModel.getFactorLabels()) {
+                            if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
+                                rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = otherTreatmentPlot;
+                            }
+                            //rowToAdd[headerIndex] = factorLabel.getValue();
+                            rowToAdd[headerIndex] = factorLevel;
+
+                            for (Factor childFactor : workbook.getChildFactors(otherFactor.getFactorName())) {
+                                String columnHeaderChild = Workbook.getStringWithOutBlanks(childFactor.getProperty() + childFactor.getScale());
+                                int headerIndexChild = model.getHeaderIndex(columnHeaderChild);
+                                rowToAdd[headerIndexChild] = factorLabel.getValue();
+                            }
+
+                            model.addRow(rowToAdd);
+                            otherTreatmentPlot++;
+                            //increase factor level
+                            factorLevel++;
+                        }
+
                     }
+
+                } else {
+                    model.addRow(rowToAdd);
                 }
                 model.addRow(rowToAdd);
             }
@@ -197,7 +237,8 @@ public class DesignsGenerator {
         int total = Integer.parseInt(this.jTextFieldEntries.getText());
         int plot = 0;
         int repet = 0;
-
+        int otherTreatmentPlot = 1;
+        List<List<Object>> trialValues = new ArrayList<List<Object>>();
         //A2*10^(TRUNC(LOG10(MAX(16,5,22)))+1)+B2                                
 
         for (int j = 0; j < rep; j++) {
@@ -235,16 +276,53 @@ public class DesignsGenerator {
                         entriesColIndex++;
                     }
 
-                    // tmsanchez
-                    if (otherFactors != null) {
-                        for (int k = 0; k < otherFactors.size(); k++) {
-                            //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
+//                    // tmsanchez
+//                    if (otherFactors != null) {
+//                        for (int k = 0; k < otherFactors.size(); k++) {
+//                            //rowToAdd[findColumn(otherFactors.get(k), model)] = factorsDesignCad[k][j];
+//                        }
+//                    }
+//                    model.addRow(rowToAdd);
+// tmsanchez
+                    if (workbook.getOtherFactors() != null && !workbook.getOtherFactors().isEmpty()) {
+                        for (Factor otherFactor : workbook.getOtherFactors()) {
+                            String columnHeader = Workbook.getStringWithOutBlanks(otherFactor.getProperty() + otherFactor.getScale());
+                            int headerIndex = model.getHeaderIndex(columnHeader);
+                            int factorLevel = 1;
+                            for (FactorLabel factorLabel : treatmentLabelsTableModel.getFactorLabels()) {
+                                if (model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER) > 0) {
+                                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOTNUMBER)] = otherTreatmentPlot;
+                                }
+                                //rowToAdd[headerIndex] = factorLabel.getValue();
+                                //model.addRow(rowToAdd);
+                                rowToAdd[headerIndex] = factorLevel;
+                                for (Factor childFactor : workbook.getChildFactors(otherFactor.getFactorName())) {
+                                    String columnHeaderChild = Workbook.getStringWithOutBlanks(childFactor.getProperty() + childFactor.getScale());
+                                    int headerIndexChild = model.getHeaderIndex(columnHeaderChild);
+                                    rowToAdd[headerIndexChild] = factorLabel.getValue();
+                                }
+
+                                trialValues.add(new ArrayList<Object>(Arrays.asList(rowToAdd)));
+                                otherTreatmentPlot++;
+                                factorLevel++;
+                            }
+
                         }
+
+                    } else {
+                        // model.addRow(rowToAdd);
+                        trialValues.add(new ArrayList<Object>(Arrays.asList(rowToAdd)));
                     }
-                    model.addRow(rowToAdd);
                 }
             }
         }
+        int vector[] = randomize(trialValues.size());
+        List<List<Object>> finalList = new ArrayList<List<Object>>();
+        for (int index = 0; index < vector.length; index++) {
+            finalList.add(trialValues.get(vector[index]));
+        }
+        model.getValues().addAll(finalList);
+
     }
 
     private int[] randomize(int tam) {
@@ -267,5 +345,16 @@ public class DesignsGenerator {
             }
         }
         return vector;
+    }
+
+    public void randomizeEntries(ObservationsTableModel model) {
+        int total = model.getRowCount();
+        int vector[] = randomize(total);
+        List<List<Object>> originalList = model.getValues();
+        List<List<Object>> finalList = new ArrayList<List<Object>>();
+        for (int index = 0; index < total; index++) {
+            finalList.add(originalList.get(vector[index]));
+        }
+        model.setValues(finalList);
     }
 }

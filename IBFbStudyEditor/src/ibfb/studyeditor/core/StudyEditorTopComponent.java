@@ -1,6 +1,7 @@
 package ibfb.studyeditor.core;
 
 import ibfb.domain.core.*;
+import ibfb.lists.report.LabelReportWizardIterator;
 import ibfb.maize.core.MaizeFormulas;
 import ibfb.studyeditor.core.db.FieldbookCSVUtil;
 import ibfb.studyeditor.core.db.WorkbookSavingHelper;
@@ -60,6 +61,7 @@ import org.cimmyt.cril.ibwb.domain.TmsConsistencyChecks;
 import org.cimmyt.cril.ibwb.domain.Traits;
 import org.cimmyt.cril.ibwb.domain.Transformations;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
+import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -2764,7 +2766,11 @@ public final class StudyEditorTopComponent extends TopComponent {
         switch (jTabbedPaneEditor.getSelectedIndex()) {
             case 8://MASTER SHEET
                 storeCellsInEditMode();
-                calculateMasterData();
+                //---- IMPORTANT!!!!
+                // disable temporarilly TRANSFORMATIONS TABLES, SINCE BETA 45
+                //---- IMPORTANT!!!!        
+
+                //calculateMasterData();
                 break;
 
         }
@@ -3083,6 +3089,12 @@ public final class StudyEditorTopComponent extends TopComponent {
         if (this.myWorkbook.getOtherFactors().isEmpty()) {
             combinations = 1;
         } else {
+//            combinations = Integer.parseInt(myWorkbook.getOtherFactors().get(0).getValue().toString());
+//            int levels = 0;
+//            for (int index=1; index < myWorkbook.getOtherFactors().size(); index++) {
+//                levels = Integer.parseInt(myWorkbook.getOtherFactors().get(index).getValue().toString());
+//                combinations = combinations * levels;
+//            }
             combinations = myWorkbook.getOtherFactors().size();
         }
 
@@ -3146,7 +3158,7 @@ public final class StudyEditorTopComponent extends TopComponent {
             } else if (disenio.equals(DesignsClass.UNREPLICATED_DESIGH_WITH_RANDOMIZATION)) {
                 designsGenerator.generateUnreplicatedDesignWithRandomization(i + 1, tableModel, combinations);
             } else if (disenio.equals(DesignsClass.UNREPLICATED_DESIGH_WITHOUT_RANDOMIZATION)) {
-                designsGenerator.generateUnreplicatedDesignWithoutRandomization(i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
+                designsGenerator.generateUnreplicatedDesignWithoutRandomization(i + 1, tableModel, combinations);
             } else {
                 //rep = this.jTableDesign.getValueAt(i, 2).toString();
                 rep = bean.getReplications().toString();
@@ -3269,7 +3281,20 @@ public final class StudyEditorTopComponent extends TopComponent {
     }
 
     public void printLabels() {
-        TraitsReportHelper.printTraitsReport(jTableObservations);
+        // TraitsReportHelper.printTraitsReport(jTableObservations);
+        List<String> fields = new ArrayList<String>();
+        ObservationsTableModel model = (ObservationsTableModel) jTableObservations.getModel();
+        for (Object header : model.getHeaders()) {
+            if (header instanceof Factor) {
+                Factor factor = (Factor) header;
+                fields.add(factor.getFactorName());
+            } else if (header instanceof Variate) {
+                Variate variate = (Variate) header;
+                fields.add(variate.getVariateName());
+            }
+
+        }
+        LabelReportWizardIterator.launchLabelReportWizard(model.getValues(), fields);
     }
 
     private void quitaCellEditors() {

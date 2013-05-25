@@ -3,6 +3,7 @@ package ibfb.studyeditor.designs;
 import com.csvreader.CsvReader;
 import ibfb.domain.core.Factor;
 import ibfb.domain.core.Workbook;
+import ibfb.settings.core.FieldbookSettings;
 import ibfb.studyeditor.core.model.GermplasmEntriesTableModel;
 import ibfb.studyeditor.core.model.ObservationsTableModel;
 import java.io.*;
@@ -35,12 +36,10 @@ public class DesignsClass {
     private String pathR = "";
     private String pathRWD = "";
     public static List<FactorsForDesign> facDesign;         //TRIAL, ENTRY, PLOT, BLOCK, REP, COL, ROW 
-    
     /**
      * workbook object to read if template contains plot nested + number
      */
     private Workbook workbook;
-    
 
     public DesignsClass() {
         if (OSUtils.isMacOS()) {
@@ -50,10 +49,15 @@ public class DesignsClass {
             pathRWD = "/Applications/IBFIELDBOOK/Rdata";
 
         } else {
-            pathR = OSUtils.getRPATH();
+            //pathR = OSUtils.getRPATH();
+            pathR = FieldbookSettings.getSetting(FieldbookSettings.R_HOME_FOLDER);
+            if (pathR == null) {
+                pathR = OSUtils.getRPATH();
+            }
+
             pathRWD = "C:" + File.separator + "R";
         }
-        
+
     }
 
     public void runR_latticeWindows(int treatments, int rep, int blocksize) {
@@ -515,20 +519,21 @@ public class DesignsClass {
 
         int maxPlotsForTrial = getMaxPlotsForTrial(file);
         int zerosToAdd = 1;
-        if (maxPlotsForTrial < 100 ) {
+        if (maxPlotsForTrial < 100) {
             zerosToAdd = 2;
-        }if (maxPlotsForTrial < 1000 ) {
+        }
+        if (maxPlotsForTrial < 1000) {
             zerosToAdd = 3;
         }
-        
+
         int numericPlot = 0;
         int numericPlotCounter = 1;
         String currentReplicate = "-1";
-        
+
         boolean hasFieldPlotNested = workbook.hasPlotNestedNumber();
-        
-        
-        
+
+
+
         try {
             CsvReader csvReader = new CsvReader(file);
             csvReader.readHeaders();
@@ -542,15 +547,15 @@ public class DesignsClass {
                 int entryIntValue = Integer.parseInt(entry) - 1;
 
                 if (!currentReplicate.equals(rep)) {
-                    numericPlotCounter =1;
+                    numericPlotCounter = 1;
                     currentReplicate = rep;
                 }
-                
+
                 if (hasFieldPlotNested) {
                     numericPlot = Integer.valueOf(plot);
                     plot = "" + trial + ConvertUtils.getZeroLeading(numericPlot, zerosToAdd);
                 }
-                
+
                 Object[] rowToAdd = new Object[model.getColumnCount()];
                 rowToAdd[model.getHeaderIndex(ObservationsTableModel.TRIAL)] = trial;
 
@@ -560,8 +565,8 @@ public class DesignsClass {
                 if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
                     rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = block;
                 }
-                
-                
+
+
 
                 if (model.getHeaderIndex(ObservationsTableModel.PLOT) > 0) {
                     rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = plot;
@@ -579,7 +584,7 @@ public class DesignsClass {
                 }
 
                 numericPlotCounter++;
-                
+
                 model.addRow(rowToAdd);
             }
 
@@ -895,11 +900,13 @@ public class DesignsClass {
                 Integer intPlot = Integer.valueOf(plot).intValue();
                 maxPlotForTrial = intPlot;
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-           if (csvReader != null) csvReader.close();
+            if (csvReader != null) {
+                csvReader.close();
+            }
         }
         System.out.println("*****Max plot for trial = " + maxPlotForTrial);
         return maxPlotForTrial;
@@ -908,6 +915,4 @@ public class DesignsClass {
     public void setWorkbook(Workbook workbook) {
         this.workbook = workbook;
     }
-    
-    
 }

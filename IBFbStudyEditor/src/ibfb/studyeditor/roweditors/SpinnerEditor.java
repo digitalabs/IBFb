@@ -1,5 +1,6 @@
 package ibfb.studyeditor.roweditors;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
@@ -22,6 +23,8 @@ public final class SpinnerEditor extends AbstractCellEditor implements TableCell
 
         JFormattedTextField ftf = getTextField(spinner);
         if (ftf != null) {
+            ftf.setEditable(false);
+            ftf.setBackground(Color.white);
             ftf.setHorizontalAlignment((int) JTextField.CENTER_ALIGNMENT);
         }
     }
@@ -29,10 +32,10 @@ public final class SpinnerEditor extends AbstractCellEditor implements TableCell
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
             int row, int column) {
-     
-    spinner.setValue(new Integer(value.toString()).intValue());
-    spinner.setCursor(null);
-    return spinner;
+
+        spinner.setValue(new Integer(value.toString()).intValue());
+        spinner.setCursor(null);
+        return spinner;
     }
 
     @Override

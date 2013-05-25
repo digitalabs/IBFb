@@ -28,8 +28,7 @@ public class ObservationsTableModel extends AbstractTableModel {
     public static final String DESIG = "GERMPLASMIDDBCV";
     public static final String GID = "GERMPLASMIDDBID";
     public static final String CROSS = "CROSSHISTORYPEDIGREESTRING";
-    
-    public static final String CROSSNAME = "CROSSNAMENAME";    
+    public static final String CROSSNAME = "CROSSNAMENAME";
     public static final String SOURCE = "SEEDSOURCENAME";
     public static final String PLOT = "FIELDPLOTNESTEDNUMBER";
     public static final String PLOT_NESTED = "PLOTNESTEDNUMBER";
@@ -145,6 +144,15 @@ public class ObservationsTableModel extends AbstractTableModel {
             }
 
             columnIndex++;
+            for (Factor childFactor : workbook.getChildFactors(otherFactor.getFactorName())) {
+                headers.add(childFactor);
+                headerIndex.put(Workbook.getStringWithOutBlanks(childFactor.getProperty() + childFactor.getScale()), columnIndex);
+                // assisn column index to numeric header only if has a labelid
+                if (childFactor.getLabelId() != null) {
+                    numericHeaderIndex.put(FACTOR_PREFIX + childFactor.getLabelId(), columnIndex);
+                }
+                columnIndex++;
+            }
         }
 
         // add headers from factor section which are PLOT        
@@ -155,13 +163,13 @@ public class ObservationsTableModel extends AbstractTableModel {
             if (factor.getLabelId() != null) {
                 numericHeaderIndex.put(FACTOR_PREFIX + factor.getLabelId(), columnIndex);
             }
-
             columnIndex++;
+
         }
         // add headers from selected variates
         for (Variate variate : variateList) {
             headers.add(variate);
-            headerIndex.put(Workbook.getStringWithOutBlanks(variate.getProperty() + variate.getScale()), columnIndex);            
+            headerIndex.put(Workbook.getStringWithOutBlanks(variate.getProperty() + variate.getScale()), columnIndex);
             // assisn column index to numeric header only if has a labelid
             if (variate.getVariateId() != null) {
                 numericHeaderIndex.put(VARIATE_PREFIX + variate.getVariateId(), columnIndex);
@@ -240,7 +248,7 @@ public class ObservationsTableModel extends AbstractTableModel {
             }
         }
 
-        fireTableCellUpdated(rowIndex, columnIndex);
+        //fireTableCellUpdated(rowIndex, columnIndex);
 
     }
 
@@ -568,7 +576,7 @@ public class ObservationsTableModel extends AbstractTableModel {
         fireTableStructureChanged();
         // after add a column for each row
         for (int row = 0; row < values.size(); row++) {
-            List<Object> columnList = values.get(row);  
+            List<Object> columnList = values.get(row);
             //List<Object> oldValues = new ArrayList<Object>();
             //for (Object object: columnList) {
             //    oldValues.add(object);

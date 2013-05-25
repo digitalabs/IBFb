@@ -620,6 +620,8 @@ public final class TrialWizardVisualPanel9 extends JPanel {
         sorter = new TableRowSorter<TableModel>(modeloTabla);
         this.jTableDesign.setRowSorter(sorter);
         deshabilitaSorters();
+        JTableUtils.ajustaColumnsTable(jTableDesign, 2);
+        JTableUtils.ajustaColumnsTable(jTableDesign, 5);        
     }
 
     /**
