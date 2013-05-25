@@ -473,11 +473,14 @@ START TRANSACTION;
 	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005) 
 	where pp.project_id = v_studyid
 	and pp.type_id = 8006;
-    
-  	select if(INSTR(v_prevname, '#') = 0, 1, max(SUBSTRING_INDEX(name,'#',-1))+1)
-  	,SUBSTRING_INDEX(name,'#',1) into v_postfix,v_prevname 
+	
+  	select name into v_prevname 
 	from project 
 	where project_id = v_studyid;
+	
+	select count(1)+1 into v_postfix 
+	from project p
+	where SUBSTRING_INDEX(name,'#',1) = v_prevname; 
 
 	update project
 	set name = CONCAT(v_prevname,'#',v_postfix)
