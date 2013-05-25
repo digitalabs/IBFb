@@ -3215,6 +3215,8 @@ public interface CommonServices {
      */
     public List<Traits> getListTraits(Traits traitsFilter, int start, int pageSize, boolean paged);
 
+    public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged);
+
     public Traits getTraitsByTrname(Traits traits);
 
     //-----------------------------------Udflds---------------------------

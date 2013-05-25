@@ -2889,7 +2889,9 @@ public class CommonServicesImpl implements CommonServices {
         List<Traits> returnVal = new ArrayList<Traits>(temp.size());
 
         for (CVTermDTO termDTO : temp) {
-            Traits traits = new Traits(null, termDTO.getCvtermid(), termDTO.getCvname(), null, null, 0, null, null);
+
+            // TODO : Factor out the conversion of CVTermDTO to Traits, Scales, and Methods objects
+            Traits traits = new Traits(termDTO.getCvtermid(), termDTO.getCvtermid(), termDTO.getCvname(), null, null, 0, null, null);
 
             returnVal.add(traits);
         }
@@ -2917,6 +2919,30 @@ public class CommonServicesImpl implements CommonServices {
 
             Traits trait = new Traits(dto.getTid(), dto.getTraitId(),dto.getTraitName(), null, dto.getTraitDescription(), null, dto.getTraitGroup(), null);
             returnVal.add(trait);
+        }
+
+        return returnVal;
+    }
+
+    @Override
+    public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged) {
+        if (filter.getGlobalsearch() != null) {
+            if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
+                filter.setTraitid(Integer.parseInt(filter.getGlobalsearch()));
+            } else {
+                filter.setTrname(filter.getGlobalsearch());
+            }
+        }
+
+        CVTermDTO dto = new CVTermDTO(filter.getTraitid(), filter.getTrname(), CVTermDTO.TRAITS_CV_ID);
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize, "searchCVTerm",
+                new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+
+        List<Traits> returnVal = new ArrayList<Traits>(temp.size());
+        for (CVTermDTO termDTO : temp) {
+            Traits traits = new Traits(termDTO.getCvtermid(), termDTO.getCvtermid(), termDTO.getCvname(), null, null, 0, null, null);
+
+            returnVal.add(traits);
         }
 
         return returnVal;
