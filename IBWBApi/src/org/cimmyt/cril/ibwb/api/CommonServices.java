@@ -3706,4 +3706,6 @@ public interface CommonServices {
     public Integer addStock();
     public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId);
     public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId);
+    
+    public void copyCvTermFromCentral(int cvTermId);
 }
