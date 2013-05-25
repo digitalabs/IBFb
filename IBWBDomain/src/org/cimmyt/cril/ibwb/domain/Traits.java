@@ -70,6 +70,8 @@ public class Traits extends BaseFilter implements Serializable, Transferable {
     private Measuredin measuredin;
     @Transient
     private List<Measuredin> measuredins;
+    @Transient
+    private Integer traitGroupId;
 //    @Transient
 //    private Tmethod tmethod;
     
@@ -176,6 +178,14 @@ public class Traits extends BaseFilter implements Serializable, Transferable {
 
     public void setTraitGroup(String traitGroup) {
         this.traitGroup = traitGroup;
+    }
+    
+    public Integer getTraitGroupId() {
+        return traitGroupId;
+    }
+
+    public void setTraitGroupId(Integer traitGroupId) {
+        this.traitGroupId = traitGroupId;
     }
 
     public String getOntology() {
