@@ -533,7 +533,7 @@ public class UtilityDAO extends HibernateDaoSupport {
         }
 	
 	@SuppressWarnings("rawtypes")
-	public int callStoredProcedureForUpdateAndReturnPK(
+	public Integer callStoredProcedureForUpdateAndReturnPK(
 			final Object bean,
             final String procedureName,
             final String... params) {
