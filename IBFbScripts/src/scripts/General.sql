@@ -36,6 +36,16 @@ begin
 
 end$$
 
+drop procedure if exists `addCvtermWithID`$$
+
+CREATE PROCEDURE `addCvtermWithID`(IN cvterm_id_v INT, IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500))
+begin
+	
+	insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (cvterm_id_v, cvidin, cvname, cvdesc, NULL, 0, 0);
+
+
+end$$
+
 drop procedure if exists `addCvtermReturnId`$$
 
 CREATE PROCEDURE `addCvtermReturnId`(IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500), OUT newcvtermidret INT)

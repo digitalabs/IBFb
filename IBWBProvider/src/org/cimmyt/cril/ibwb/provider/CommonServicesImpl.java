@@ -2014,11 +2014,14 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addScales(Scales scales) {
                 //this.scalesDAO.create(scales);
+        Integer cvterm_id = this.utilityDAO.getNextMin("cvterm");
+        scales.setScaleid(cvterm_id);
         LinkedHashMap params = new LinkedHashMap();
+        params.put("cvterm_id", cvterm_id);
         params.put("cvidin", 1030);
         params.put("cvname", scales.getScname());
         params.put("cvdesc", scales.getScname());
-        this.utilityDAO.callStoredProcedureForUpdate("addCvterm", params);
+        this.utilityDAO.callStoredProcedureForUpdate("addCvtermWithID", params);
     }
 
     @Override
@@ -2513,11 +2516,14 @@ public class CommonServicesImpl implements CommonServices {
     public void addTmsMethod(TmsMethod tmsMethod) {       
 
         //this.tmsMethodDAO.create(tmsMethod);
+        Integer cvterm_id = this.utilityDAO.getNextMin("cvterm");
+        tmsMethod.setTmethid(cvterm_id);
         LinkedHashMap params = new LinkedHashMap();
+        params.put("cvterm_id", cvterm_id);
         params.put("cvidin", 1020);
         params.put("cvname", tmsMethod.getTmname());
         params.put("cvdesc", tmsMethod.getTmdesc());
-        this.utilityDAO.callStoredProcedureForUpdate("addCvterm", params);
+        this.utilityDAO.callStoredProcedureForUpdate("addCvtermWithID", params);
     }
 
     @Override
