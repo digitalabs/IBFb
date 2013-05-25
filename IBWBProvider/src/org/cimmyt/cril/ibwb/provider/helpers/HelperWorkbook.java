@@ -427,6 +427,7 @@ public class HelperWorkbook {
             if (!traitsList.isEmpty()) {
                 // retrive trait from list
                 traits = traitsList.get(0);
+                
             } else {
                 // trait don't existe, then add to database
                 traits = ConverterDomainToDTO.getTraits(condition.getProperty());
@@ -453,6 +454,7 @@ public class HelperWorkbook {
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
+                traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -570,6 +572,7 @@ public class HelperWorkbook {
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.TRIAL_ENVT_VAR_TYPE);
+                traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -684,6 +687,7 @@ public class HelperWorkbook {
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,factorDomain.getFactorName(),factorDomain.getDataType());
                 measuredin.setStoredinid(storedInType); 
+                traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -804,6 +808,7 @@ public class HelperWorkbook {
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
+                traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -904,6 +909,7 @@ public class HelperWorkbook {
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
+                traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
             }
 
