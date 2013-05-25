@@ -9,27 +9,25 @@ IN v_scaleid int)
 begin
 
     -- DOES NOT CHECK v_is_local, no info needed from central db ontology
-    SET @sql := CONCAT("SELECT cvt.cvterm_id AS measuredinid, ",
+    SET @sql := CONCAT("SELECT crp.subject_id AS measuredinid, ",
                                             "crp.object_id AS traitid, ",
                                             "crs.object_id AS scaleid, ",
                                             "crm.object_id AS tmethid, ",
                                             "crt.object_id AS storedinid, ",
                                             "if(crt.object_id = 1120, 'C', 'N') AS hasType ",
-                                            "FROM cvterm cvt ",
-                                            "INNER JOIN cvterm_relationship crp ON crp.subject_id = cvt.cvterm_id ",
-                                            "INNER JOIN cvterm_relationship crm ON crm.subject_id = cvt.cvterm_id ",
-                                            "INNER JOIN cvterm_relationship crs ON crs.subject_id = cvt.cvterm_id ",
-                                            "INNER JOIN cvterm_relationship crt ON crt.subject_id = cvt.cvterm_id ",
-                                            "INNER JOIN cvterm_relationship crh ON crh.subject_id = cvt.cvterm_id ",
-                                            "WHERE cvt.cv_id = 1040 ",
-                                            "AND crp.type_id = 1200 ",
+                                            "FROM cvterm_relationship crp ",
+                                            "INNER JOIN cvterm_relationship crm ON crm.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crs ON crs.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crt ON crt.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crh ON crh.subject_id = crp.subject_id ",
+                                            "WHERE crp.type_id = 1200 ",
                                             "AND crm.type_id = 1210 ",
                                             "AND crs.type_id = 1220 ",
                                             "AND crt.type_id = 1044 ",
                                             "AND crh.type_id = 1105 ");
 
     IF (v_measuredinid IS NOT NULL) THEN
-            SET @sql = CONCAT(@sql," AND cvt.cvterm_id = ",v_measuredinid);
+            SET @sql = CONCAT(@sql," AND crp.subject_id = ",v_measuredinid);
     END IF;
 
     IF (v_traitid IS NOT NULL) THEN
@@ -57,16 +55,15 @@ CREATE PROCEDURE `getMeasuredinByTraitidScaleidTmethid`(IN traitId int, IN scale
 BEGIN
 
 	SELECT
-	var.cvterm_id AS measuredinid
+	traitrel.subject_id AS measuredinid
 	, traitrel.object_id AS traitid
 	, scalerel.object_id AS scaleid
 	, CAST(scalerel.object_id AS CHAR(50)) AS standardscale
 	, methrel.object_id AS tmethid
-	FROM cvterm var
-	INNER JOIN cvterm_relationship traitrel ON traitrel.subject_id = var.cvterm_id AND traitrel.type_id = 1200
-	INNER JOIN cvterm_relationship methrel ON methrel.subject_id = var.cvterm_id AND methrel.type_id = 1210
-	INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = var.cvterm_id AND scalerel.type_id = 1220
-	WHERE var.cv_id = 1040
+	FROM cvterm_relationship traitrel  
+	INNER JOIN cvterm_relationship methrel ON methrel.subject_id = traitrel.subject_id AND methrel.type_id = 1210
+	INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = traitrel.subject_id AND scalerel.type_id = 1220
+	WHERE traitrel.type_id = 1200
 	AND traitrel.object_id = traitId
 	AND methrel.object_id = tmethId
 	AND scalerel.object_id = scaleId
