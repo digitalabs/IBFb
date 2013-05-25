@@ -468,6 +468,7 @@
                 <ref bean="sessionFactoryNewLocalDMS" />
             </property>
             <property name="accessType" value="local"/>
+            <property name="centralDatabaseName" value="${dmscentral2.defaultSchema}"/>
         </bean>
     
 </beans>
