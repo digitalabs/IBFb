@@ -31,6 +31,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
 
     private String centralDatabaseName;
+    private String centralDatabaseNameTest;
 
     private static Logger log = Logger.getLogger(UtilityDAO.class);
     private String accessType;
@@ -59,6 +60,15 @@ public class UtilityDAO extends HibernateDaoSupport {
     }
 
 
+    public String getCentralDatabaseNameTest() {
+        return centralDatabaseNameTest;
+    }
+
+    public void setCentralDatabaseNameTest(String centralDatabaseNameTest) {
+        this.centralDatabaseNameTest = centralDatabaseNameTest;
+        if(getCentralDatabaseName() == null && getCentralDatabaseName().equalsIgnoreCase(""))
+            setCentralDatabaseName(centralDatabaseNameTest);
+    }
 
     /**
      * @return the accessType
