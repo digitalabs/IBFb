@@ -1525,7 +1525,7 @@ public class CommonServicesImpl implements CommonServices {
         measuredIn.setTmethid(null); 
     	
     	return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn", 
-    			new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"},
+    			new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
     			new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"});
     }
 
