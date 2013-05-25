@@ -21,11 +21,20 @@ import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
 
     /**
+     * Validate plot factor? (not used when reading germplasm template)
+     */
+    private boolean validatePlotFactor;
+    
+    /**
      * Result of validation
      */
     private String validationResult;
     private static Logger log = Logger.getLogger(WorkbookExcelReaderImpl.class);
 
+    public WorkbookExcelReaderImpl() {
+        this.validatePlotFactor = true;
+    }
+    
     @Override
     public Workbook getWorkbookData(String fileName) throws Exception {
         Workbook workbook = new Workbook();
@@ -70,6 +79,7 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
         if (ExcelUtils.getStringValueFromCell(cellData).startsWith(LABEL_STUDY)) {
             valid = true;
             Workbook workbookTemp = getWorkbookData(fileName);
+            workbookTemp.setValidatePlotFactor(validatePlotFactor);
             if (!workbookTemp.isValidTemplate()) {
                 log.info("------------------- INVALID TEMPLATE: " + fileName);
                 this.validationResult = workbookTemp.getValidationMessage();
@@ -622,4 +632,14 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
     public String getValidationMessage() {
         return this.validationResult;
     }
+
+    public boolean isValidatePlotFactor() {
+        return validatePlotFactor;
+    }
+
+    public void setValidatePlotFactor(boolean validatePlotFactor) {
+        this.validatePlotFactor = validatePlotFactor;
+    }
+    
+    
 }

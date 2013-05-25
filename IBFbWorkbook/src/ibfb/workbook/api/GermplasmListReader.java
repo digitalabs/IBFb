@@ -1,6 +1,8 @@
 package ibfb.workbook.api;
 
+import ibfb.domain.core.Factor;
 import ibfb.domain.core.GermplasmList;
+import java.util.List;
 
 
 
@@ -69,5 +71,11 @@ public interface GermplasmListReader {
      * @param sheetNumber
      */
     public void setSheetNameForGermplasm(String sheetName);
+    
+    /**
+     * Assign the list of factors header to read excel template
+     * @param factorHeader 
+     */
+    public void setEntryFactors(List<Factor> entryFactors);
     
 }

@@ -52,5 +52,10 @@ public interface WorkbookExcelReader {
      * @return String text or empty String if validation success
      */
     public String getValidationMessage();
+    
+    /**
+     * Validate plot factor? (not used when reading germplasm template)
+     */
+    public void setValidatePlotFactor(boolean validatePlotFactor);
 
 }
