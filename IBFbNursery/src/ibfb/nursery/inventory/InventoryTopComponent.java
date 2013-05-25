@@ -430,9 +430,9 @@ public final class InventoryTopComponent extends TopComponent {
             String location = this.jTextFieldLocation.getText();
 
             for (int i = 0; i < this.jTableEntries.getRowCount(); i++) {
-                this.jTableEntries.setValueAt(location, i, 3);
+                this.jTableEntries.setValueAt(location, i, locationColumn);
             }
-            ajustaColumn(jTableEntries, 3, 2);
+            ajustaColumn(jTableEntries, locationColumn, 2);
         } else {
 
             modelo.setEnabledLocation(true);
@@ -520,9 +520,9 @@ public final class InventoryTopComponent extends TopComponent {
             String location = this.jTextFieldComment.getText();
 
             for (int i = 0; i < this.jTableEntries.getRowCount(); i++) {
-                this.jTableEntries.setValueAt(location, i, 4);
+                this.jTableEntries.setValueAt(location, i, commentColumn);
             }
-            ajustaColumn(jTableEntries, 4, 2);
+            ajustaColumn(jTableEntries, commentColumn, 2);
         } else {
             modelo.setEnabledComments(true);
         }
@@ -565,7 +565,7 @@ public final class InventoryTopComponent extends TopComponent {
         if (this.jCheckBoxSameAmount.isSelected()) {
             modelo.setEnabledAmount(false);
             populateAmount();
-            ajustaColumn(jTableEntries, 5, 2);
+            ajustaColumn(jTableEntries, amountColumn, 2);
         } else {
             modelo.setEnabledAmount(true);
         }
@@ -584,9 +584,9 @@ public final class InventoryTopComponent extends TopComponent {
             String location = this.jComboBoxScale.getSelectedItem().toString();
 
             for (int i = 0; i < this.jTableEntries.getRowCount(); i++) {
-                this.jTableEntries.setValueAt(location, i, 6);
+                this.jTableEntries.setValueAt(location, i, scaleColumn);
             }
-            ajustaColumn(jTableEntries, 6, 2);
+            ajustaColumn(jTableEntries, scaleColumn, 2);
         } else {
             modelo.setEnabledScale(true);
         }
@@ -659,7 +659,9 @@ public final class InventoryTopComponent extends TopComponent {
     }
 
     private List<Factor> addColumnsForInventory(List<Factor> factores) {
-        return InventoryFactors.getInventoryFactors();
+        factores.addAll(InventoryFactors.getInventoryFactors());
+        
+        return factores;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

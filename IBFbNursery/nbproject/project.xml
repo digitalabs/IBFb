@@ -196,8 +196,23 @@
             </module-dependencies>
             <public-packages>
                 <package>ibfb.nursery.actions</package>
+                <package>ibfb.nursery.advance</package>
+                <package>ibfb.nursery.advancewizard</package>
                 <package>ibfb.nursery.core</package>
+                <package>ibfb.nursery.editors</package>
+                <package>ibfb.nursery.exportwizard</package>
+                <package>ibfb.nursery.filters</package>
+                <package>ibfb.nursery.importwizard</package>
+                <package>ibfb.nursery.inventory</package>
+                <package>ibfb.nursery.inventorywizard</package>
                 <package>ibfb.nursery.mainwizard</package>
+                <package>ibfb.nursery.maize</package>
+                <package>ibfb.nursery.models</package>
+                <package>ibfb.nursery.naming</package>
+                <package>ibfb.nursery.persons</package>
+                <package>ibfb.nursery.quickcreation</package>
+                <package>ibfb.nursery.savewizard</package>
+                <package>ibfb.nursery.utils</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/balloontip-1.1.1.jar</runtime-relative-path>
