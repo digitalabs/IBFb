@@ -3196,6 +3196,8 @@ public interface CommonServices {
      */
     public List<Traits> getTraitsList();
 
+    public List<Traits> getTraitsListNew();
+
     /**
      * Gets the number of records matching with filter
      *

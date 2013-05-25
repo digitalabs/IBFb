@@ -1947,6 +1947,13 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
     @Override
+    public List<Traits> getTraitsListNew() {
+        List<Traits> traitss = serviciosCentral.getTraitsListNew();
+        traitss.addAll(serviciosLocal.getTraitsListNew());
+        return traitss;
+    }
+
+    @Override
     public List<Traits> getTraitsListGroups() {
         List<Traits> traitss = serviciosCentral.getTraitsList();
         traitss.addAll(serviciosLocal.getTraitsList());

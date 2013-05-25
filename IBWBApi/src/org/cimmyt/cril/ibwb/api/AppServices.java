@@ -1622,6 +1622,8 @@ public interface AppServices {
      */
     public List<Traits> getTraitsList();
 
+    public List<Traits> getTraitsListNew();
+
     /**
      * Gets a list of Objects Groups an traits
      *

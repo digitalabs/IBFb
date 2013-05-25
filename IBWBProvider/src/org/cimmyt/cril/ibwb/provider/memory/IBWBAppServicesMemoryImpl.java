@@ -793,6 +793,16 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
+    public List<Scales> getScalesListNew() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Traits> getTraitsListNew() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public List<Traits> getTraitsListGroups() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

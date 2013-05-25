@@ -2880,6 +2880,24 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     @Override
+    public List<Traits> getTraitsListNew() {
+        CVTermDTO dto = new CVTermDTO();
+        dto.setCvid(CVTermDTO.TRAITS_CV_ID);
+
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"}, new String[] {"cvtermid", "cvname"});
+
+        List<Traits> returnVal = new ArrayList<Traits>(temp.size());
+
+        for (CVTermDTO termDTO : temp) {
+            Traits traits = new Traits(null, termDTO.getCvtermid(), termDTO.getCvname(), null, null, 0, null, null);
+
+            returnVal.add(traits);
+        }
+
+        return returnVal;
+    }
+
+    @Override
     public int getTotalTraits(Traits traits) {
         return this.traitsDAO.getTotal(traits);
     }
