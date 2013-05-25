@@ -187,9 +187,8 @@ public class HelperFactor {
             measuredin = measuredinList.get(0);
         } else {
             measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(), condition.getDataType());
-            //GCP 4122
-            measuredin.setName(condition.getConditionName());
             measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
+            traits.setTid(measuredin.getStoredinid());
             serviceLocal.addMeasuredin(measuredin);
         }
 
