@@ -2712,27 +2712,30 @@ public class IBWBAppServicesImpl implements AppServices {
             typeDB = TypeDB.OTHER;
         }
 
-        moreTables = this.serviciosCentral.existsTratisTable() && this.serviciosLocal.existsTratisTable();
-        if (!moreTables) {
-            return moreTables;
-        }
-        moreTables = serviciosCentral.existsTableTransformations() && serviciosLocal.existsTableTransformations();
-        if (!moreTables) {
-            return moreTables;
-        }
-        moreTables = serviciosCentral.existsTableContinuousConversion() && serviciosLocal.existsTableContinuousConversion();
-        if (!moreTables) {
-            return moreTables;
-        }
-        moreTables = serviciosCentral.existsTableContinuousFunction() && serviciosLocal.existsTableContinuousFunction();
-        if (!moreTables) {
-            return moreTables;
-        }
-        moreTables = serviciosCentral.existsTableDiscreteConversion() && serviciosLocal.existsTableDiscreteConversion();
-        if (!moreTables) {
-            return moreTables;
-        }
-        moreTables = serviciosCentral.existsTableTmsConsistencyChecks() && serviciosLocal.existsTableTmsConsistencyChecks();
+        //---- IMPORTANT!!!!
+        // disable temporarilly TRANSFORMATIONS TABLES, SINCE BETA 45
+        //---- IMPORTANT!!!!        
+//        moreTables = this.serviciosCentral.existsTratisTable() && this.serviciosLocal.existsTratisTable();
+//        if (!moreTables) {
+//            return moreTables;
+//        }
+//        moreTables = serviciosCentral.existsTableTransformations() && serviciosLocal.existsTableTransformations();
+//        if (!moreTables) {
+//            return moreTables;
+//        }
+//        moreTables = serviciosCentral.existsTableContinuousConversion() && serviciosLocal.existsTableContinuousConversion();
+//        if (!moreTables) {
+//            return moreTables;
+//        }
+//        moreTables = serviciosCentral.existsTableContinuousFunction() && serviciosLocal.existsTableContinuousFunction();
+//        if (!moreTables) {
+//            return moreTables;
+//        }
+//        moreTables = serviciosCentral.existsTableDiscreteConversion() && serviciosLocal.existsTableDiscreteConversion();
+//        if (!moreTables) {
+//            return moreTables;
+//        }
+//        moreTables = serviciosCentral.existsTableTmsConsistencyChecks() && serviciosLocal.existsTableTmsConsistencyChecks();
         return moreTables;
     }
 
@@ -2753,45 +2756,49 @@ public class IBWBAppServicesImpl implements AppServices {
             MigrateData.completeDependencyRatioMeasuredinLocal(serviciosLocal, serviciosCentral);
         }
 
-        if (!serviciosCentral.existsTableTransformations()) {
-            serviciosCentral.createTableTransformations();
-        }
-
-        if (!serviciosLocal.existsTableTransformations()) {
-            serviciosLocal.createTableTransformations();
-        }
-
-        if (!serviciosCentral.existsTableContinuousConversion()) {
-            serviciosCentral.createTableContinuousConversion();
-        }
-
-        if (!serviciosLocal.existsTableContinuousConversion()) {
-            serviciosLocal.createTableContinuousConversion();
-        }
-
-        if (!serviciosCentral.existsTableContinuousFunction()) {
-            serviciosCentral.createTableContinuousFunction();
-        }
-
-        if (!serviciosLocal.existsTableContinuousFunction()) {
-            serviciosLocal.createTableContinuousFunction();
-        }
-
-        if (!serviciosCentral.existsTableDiscreteConversion()) {
-            serviciosCentral.createTableDiscreteConversion();
-        }
-
-        if (!serviciosLocal.existsTableDiscreteConversion()) {
-            serviciosLocal.createTableDiscreteConversion();
-        }
-
-        if (!serviciosCentral.existsTableTmsConsistencyChecks()) {
-            serviciosCentral.createTableTmsConsistencyChecks();
-        }
-
-        if (!serviciosLocal.existsTableTmsConsistencyChecks()) {
-            serviciosLocal.createTableTmsConsistencyChecks();
-        }
+                //---- IMPORTANT!!!!
+        // disable temporarilly TRANSFORMATIONS TABLES, SINCE BETA 45
+        //---- IMPORTANT!!!!        
+//
+//        if (!serviciosCentral.existsTableTransformations()) {
+//            serviciosCentral.createTableTransformations();
+//        }
+//
+//        if (!serviciosLocal.existsTableTransformations()) {
+//            serviciosLocal.createTableTransformations();
+//        }
+//
+//        if (!serviciosCentral.existsTableContinuousConversion()) {
+//            serviciosCentral.createTableContinuousConversion();
+//        }
+//
+//        if (!serviciosLocal.existsTableContinuousConversion()) {
+//            serviciosLocal.createTableContinuousConversion();
+//        }
+//
+//        if (!serviciosCentral.existsTableContinuousFunction()) {
+//            serviciosCentral.createTableContinuousFunction();
+//        }
+//
+//        if (!serviciosLocal.existsTableContinuousFunction()) {
+//            serviciosLocal.createTableContinuousFunction();
+//        }
+//
+//        if (!serviciosCentral.existsTableDiscreteConversion()) {
+//            serviciosCentral.createTableDiscreteConversion();
+//        }
+//
+//        if (!serviciosLocal.existsTableDiscreteConversion()) {
+//            serviciosLocal.createTableDiscreteConversion();
+//        }
+//
+//        if (!serviciosCentral.existsTableTmsConsistencyChecks()) {
+//            serviciosCentral.createTableTmsConsistencyChecks();
+//        }
+//
+//        if (!serviciosLocal.existsTableTmsConsistencyChecks()) {
+//            serviciosLocal.createTableTmsConsistencyChecks();
+//        }
     }
 
     /**

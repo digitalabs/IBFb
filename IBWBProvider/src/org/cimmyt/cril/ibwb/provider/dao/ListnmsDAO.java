@@ -180,7 +180,7 @@ public class ListnmsDAO extends AbstractDAO<Listnms, Integer> {
      */
     public boolean existGermplasmListName(String listName) {
         boolean existGermplasm = false;
-        String queryString = " from Listnms as l where  l.listname = ? ";
+        String queryString = " from Listnms as l where  l.listname = ? and l.liststatus <> "+Listnms.LSSTATUS_DELETED;
         existGermplasm = getHibernateTemplate().find(queryString, listName).size() > 0;
         return existGermplasm;
     }
