@@ -166,6 +166,17 @@ public class TestTrialRandomization extends TestService {
         }
     }
 
+    public void copyCvTerm() {
+        int cvTermId = 8170;
+        Measuredin measuredin = new Measuredin(2010, 6000, 4030);
+        List<Measuredin> list = servicios.getListMeasuredin(measuredin, 0, 0, false);
+        if (list != null) {
+            for (Measuredin temp : list) {
+                System.out.println(temp);
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         try {
             TestTrialRandomization test = new TestTrialRandomization();
@@ -180,7 +191,8 @@ public class TestTrialRandomization extends TestService {
             //test.testGetLevelsCByLabelid();
             //test.testGetLevelsNByLabelid();
             //test.testGetVarieteFromVeffects();
-
+            test.copyCvTerm();
+            
         } catch(Exception e) {
             e.printStackTrace();
         }

@@ -4358,5 +4358,13 @@ public class CommonServicesImpl implements CommonServices {
         this.utilityDAO = utilityDAO;
     }
     
+    //NEW SCHEMA
+    @Override
+    public void copyCvTermFromCentral(int cvTermId) {
+        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+        map.put("p_cvTermId", String.valueOf(cvTermId));
+        map.put("centralSchema", utilityDAO.getCentralDatabaseName());
+        this.utilityDAO.callStoredProcedureForUpdate("copyMeasuredInFromCentral", map);
+    }
     
 }

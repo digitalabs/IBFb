@@ -15,6 +15,7 @@ import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
+import org.cimmyt.cril.ibwb.provider.dao.UtilityDAO;
 import org.cimmyt.cril.ibwb.provider.datasources.IBPMiddlewareClient;
 import org.cimmyt.cril.ibwb.provider.helpers.*;
 import org.generationcp.middleware.manager.api.GermplasmDataManager;
@@ -942,10 +943,28 @@ public class IBWBAppServicesImpl implements AppServices {
         return total;
     }
 
-    @Override
+/*    @Override
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
         List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
         measuredins.addAll(serviciosLocal.getListMeasuredin(filter, start, pageSize, paged));
+        return measuredins;
+    }
+*/  //NEW SCHEMA
+    @Override
+    public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
+        List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
+        //copy all central to local
+        System.out.println("Measured in retrieved..");
+        if (measuredins != null && measuredins.size() > 0) {
+            for (Measuredin measuredin : measuredins) {
+                System.out.println("cvterm id = " + measuredin.getMeasuredinid());
+                serviciosLocal.copyCvTermFromCentral(measuredin.getMeasuredinid());
+            }
+        }
+        
+        //query local, all central stuff should already be in local
+        measuredins = serviciosLocal.getListMeasuredin(filter, start, pageSize, paged);
+
         return measuredins;
     }
 
