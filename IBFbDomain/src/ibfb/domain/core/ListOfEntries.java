@@ -30,6 +30,7 @@ public class ListOfEntries {
     public static final String GERMPLASM_ID_DBID = "GERMPLASMIDDBID";
     public static final String SEED_SOURCE_NAME = "SEEDSOURCENAME";
     public static final String CROSS_HISTORY_PEDIGREE_STRING = "CROSSHISTORYPEDIGREESTRING";
+    public static final String CROSS_NAME_NAME = "CROSSNAMENAME";
     private Integer gid;
     private String entryCode;
     private String designation;
@@ -45,10 +46,8 @@ public class ListOfEntries {
     public static final String MTID = "MALETRIALIDNUMBER";
     public static final String MOCC = "MALEOCCURENCEIDNUMBER";
     public static final String MENT = "MALEENTRYNUMBER";
-    
     public static final String CROSS_NAME = "CROSSNAMENAME";
     public static final String SELECTION_HISTORY = "SELECTIONHISTORYNAME";
-    
     private WheatData wheatData;
 
     public ListOfEntries() {
@@ -118,6 +117,8 @@ public class ListOfEntries {
             } else if (columnName.equals(SEED_SOURCE_NAME)) {
                 columnValues.add(source);
             } else if (columnName.equals(CROSS_HISTORY_PEDIGREE_STRING)) {
+                columnValues.add(cross);
+            } else if (columnName.equals(CROSS_NAME_NAME)) {
                 columnValues.add(cross);
             } else if (columnName.equals(FTID) && wheatData != null) {
                 columnValues.add(wheatData.getFtid());
@@ -219,6 +220,4 @@ public class ListOfEntries {
     public void setWheatData(WheatData wheatData) {
         this.wheatData = wheatData;
     }
-    
-    
 }

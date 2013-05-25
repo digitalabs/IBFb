@@ -24,6 +24,8 @@ public class Workbook {
     public static final String GERMPLASM_ENTRYCD_CODE = "GERMPLASMENTRYCODE";
     public static final String GERMPLASM_DESIG_DBCV = "GERMPLASMIDDBCV";
     public static final String GERMPLASM_GID_DBID = "GERMPLASMIDDBID";
+    public static final String CROSSNAME = "CROSSNAMENAME";
+    public static final String SOURCE = "SEEDSOURCENAME";
     public static final String FIELD_PLOT_NUMBER = "FIELDPLOTNUMBER";
     public static final String FIELD_PLOT_NESTEDNUMBER = "FIELDPLOTNESTEDNUMBER";
     public static final String FIELD_PLOT_REP_NUMBER = "REPLICATIONNUMBER";
@@ -40,13 +42,12 @@ public class Workbook {
     private List<Condition> studyConditions;
     private List<Condition> conditions;
     /**
-     * 
+     *
      */
     private List<Factor> factors;
     /**
-     * Constants for study
-     * When reads from template it contains all constants in excel file
-     * When storing contains selected constants
+     * Constants for study When reads from template it contains all constants in
+     * excel file When storing contains selected constants
      */
     private List<Constant> constants;
     private List<Variate> variates;
@@ -59,20 +60,20 @@ public class Workbook {
      */
     private List<Constant> constantsData;
     /**
-     * 
+     *
      */
     /**
      * Conditions with values data
      */
     private List<Condition> conditionsData;
     /**
-     * 
+     *
      */
     private List<Factor> factorsData;
     /**
-     * List of germplasm for curren study
-     * It contents a list of several rows and each row contains it value for each factor with label "ENTRY"
-     * In the same order!
+     * List of germplasm for curren study It contents a list of several rows and
+     * each row contains it value for each factor with label "ENTRY" In the same
+     * order!
      */
     private List<List<Object>> germplasmData;
     /**
@@ -132,6 +133,10 @@ public class Workbook {
      * Message message when validating the template
      */
     private String validationMessage;
+    /**
+     * Validate plot factor? (not used when reading germplasm template)
+     */
+    private boolean validatePlotFactor;
 
     public Workbook() {
         initConstraitWords();
@@ -156,6 +161,8 @@ public class Workbook {
         conditions = new ArrayList<Condition>();
         factors = new ArrayList<Factor>();
         constants = new ArrayList<Constant>();
+        // by default workbok object is used in trial template
+        validatePlotFactor = true;
     }
 
     public String[] getConstantAsArray() {
@@ -184,7 +191,10 @@ public class Workbook {
 
     /**
      * Checks if TRIAL INSTANCE property is present in Study Conditions
-     * @return <code>true</code> if exists, <code>false</code> if does not exits
+     *
+     * @return
+     * <code>true</code> if exists,
+     * <code>false</code> if does not exits
      */
     public boolean hasPropertyTrialInstance() {
         boolean result = false;
@@ -200,8 +210,9 @@ public class Workbook {
 
     /**
      * Gets the desired label for TRIAL_INSTANCE from TEMPLATE
-     * @return Text in column LABEL in row where TRIAL_INSTANCE property is located.
-     * if not TRIAL_INSTANCE property found, then return "INSTANCES"
+     *
+     * @return Text in column LABEL in row where TRIAL_INSTANCE property is
+     * located. if not TRIAL_INSTANCE property found, then return "INSTANCES"
      */
     public String getInstanceLabel() {
         String result = "INSTANCES";
@@ -218,9 +229,9 @@ public class Workbook {
     }
 
     /**
-     * 
+     *
      * @param word
-     * @return 
+     * @return
      */
     private boolean isConstraintWord(String word) {
         boolean result = false;
@@ -232,7 +243,8 @@ public class Workbook {
 
     /**
      * Get a list of Strings for
-     * @return 
+     *
+     * @return
      */
     public List<String> getMeasurementHeaders() {
         List<String> measurementHeaders = new ArrayList<String>();
@@ -247,7 +259,8 @@ public class Workbook {
 
     /**
      * Return a list of OtherTreatmen factors
-     * @return 
+     *
+     * @return
      */
     public List<Factor> getOtherFactors() {
         List<Factor> otherFactors = new ArrayList<Factor>();
@@ -263,7 +276,8 @@ public class Workbook {
 
     /**
      * Gets a list of factors and nested factor for each other treatment factor
-     * @return 
+     *
+     * @return
      */
     public HashMap<String, List<Factor>> getChildFactors() {
         HashMap<String, List<Factor>> childFactors = new HashMap<String, List<Factor>>();
@@ -291,8 +305,10 @@ public class Workbook {
 
     /**
      * Get the All child factors for an OtherTreatment parent
+     *
      * @param parentFactor Other Treatment factor looking for
-     * @return List of factor for that parent or empty list if parent does not exist
+     * @return List of factor for that parent or empty list if parent does not
+     * exist
      */
     public List<Factor> getChildFactors(String parentFactor) {
         List<Factor> childFactors = new ArrayList<Factor>();
@@ -306,6 +322,7 @@ public class Workbook {
 
     /**
      * Get a list of Factors where Label = ENTRY
+     *
      * @return List of Factor with Label = ENTRY or Empty List
      */
     public List<Factor> getEntryFactors() {
@@ -322,6 +339,7 @@ public class Workbook {
 
     /**
      * Get a list of Factors where Label = PLOT
+     *
      * @return List of Factor with Label = PLOT or Empty List
      */
     public List<Factor> getPlotFactors() {
@@ -388,9 +406,9 @@ public class Workbook {
     }
 
     /**
-     * Removes all blank spaces and convert to uppercase all characters\
-     * in the string.
-     * Example "Germ plasm list" will return "GERMPLASMLIST"
+     * Removes all blank spaces and convert to uppercase all characters\ in the
+     * string. Example "Germ plasm list" will return "GERMPLASMLIST"
+     *
      * @param stringValue
      * @return
      */
@@ -503,13 +521,13 @@ public class Workbook {
         if (measurements != null) {
             List<Measurement> measurementsDiferentes = new ArrayList<Measurement>();
             Map<String, Measurement> mapaMeasurements = new HashMap<String, Measurement>();
-            
+
             for (Measurement measurement : this.measurements) {
-                
+
                 Integer repHash = measurement.getReplication();
                 Integer blockHash = measurement.getBlock();
                 Integer plotHash = measurement.getPlot();
-                
+
                 if (repHash == null) {
                     repHash = new Integer("1");
                 }
@@ -519,7 +537,7 @@ public class Workbook {
                 if (plotHash == null) {
                     plotHash = new Integer("1");
                 }
-                
+
                 String conbinacion = plotHash.toString()
                         + "|" + repHash.toString()
                         + "|" + blockHash.toString();
@@ -532,20 +550,20 @@ public class Workbook {
             measurementsRep = measurementsDiferentes;
         }
     }
-    
+
     public void setGroupRepsMeasurementsForNursery() {
         if (measurements != null) {
             List<Measurement> measurementsDiferentes = new ArrayList<Measurement>();
             Map<String, Measurement> mapaMeasurements = new HashMap<String, Measurement>();
 
             for (Measurement measurement : this.measurements) {
-                
+
                 Integer repHash = measurement.getReplication();
                 Integer blockHash = measurement.getBlock();
                 Integer plotHash = measurement.getPlot();
-                
+
                 String convinacion = plotHash.toString();
-                
+
                 if (mapaMeasurements.get(convinacion) == null) {
                     mapaMeasurements.put(convinacion, measurement);
                     measurementsDiferentes.add(measurement);
@@ -554,18 +572,18 @@ public class Workbook {
             measurementsRep = measurementsDiferentes;
         }
     }
-    
+
     public List<Measurement> getMeasurementsRep() {
         return measurementsRep;
     }
-    
+
     public void setMeasurementsRep(List<Measurement> measurementsRep) {
         this.measurementsRep = measurementsRep;
     }
-    
+
     /**
-     * Looks for combination of PROPERTY + SCALE to get text in LABEL column used
-     * to group TRIAL, ENTRY and PLOT
+     * Looks for combination of PROPERTY + SCALE to get text in LABEL column
+     * used to group TRIAL, ENTRY and PLOT
      */
     public void getValuesForGroupingLabels() {
         boolean trialLabelAssigned = false;
@@ -593,14 +611,13 @@ public class Workbook {
                 desigLabel = factor.getFactorName().toUpperCase();
             } else if (GERMPLASM_GID_DBID.equals(text)) {
                 gidLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_NESTEDNUMBER.equals(text) ) {
+            } else if (FIELD_PLOT_NESTEDNUMBER.equals(text)) {
                 //PLOT_LABEL =  factor.getLabel().toUpperCase();
                 plotLabel = factor.getFactorName().toUpperCase();
             } else if (FIELD_PLOT_NUMBER.equals(text)) {
                 //PLOT_LABEL =  factor.getLabel().toUpperCase();
                 plotLabel = factor.getFactorName().toUpperCase();
-            }                     
-            else if (FIELD_PLOT_REP_NUMBER.equals(text)) {
+            } else if (FIELD_PLOT_REP_NUMBER.equals(text)) {
                 repLabel = factor.getFactorName().toUpperCase();
             } else if (FIELD_PLOT_BLOCK_NUMBER.equals(text)) {
                 blockLabel = factor.getFactorName().toUpperCase();
@@ -634,13 +651,13 @@ public class Workbook {
         return variateColumnIndex;
     }
 
-    /* Checks that the template chosen is valid. Checks for valid rows for
-     * TRIAL INSTANCE, FIELD PLOT and GERMPLASM ENTRY
-     * 
-     * @see http://ibp.generationcp.org/confluence/display/MBP/Application+2.2.1+Tool+2.8+-+Study+Templates
-     * @author mtrulat
-     * @param none
-     * @returns boolean true is template is valid
+    /*
+     * Checks that the template chosen is valid. Checks for valid rows for TRIAL
+     * INSTANCE, FIELD PLOT and GERMPLASM ENTRY
+     *
+     * @see
+     * http://ibp.generationcp.org/confluence/display/MBP/Application+2.2.1+Tool+2.8+-+Study+Templates
+     * @author mtrulat @param none @returns boolean true is template is valid
      */
     public boolean isValidTemplate() {
         boolean hasTrialInstance = false;
@@ -672,14 +689,18 @@ public class Workbook {
                     && factor.getFactorName().equals(factor.getLabel())) {
                 hasGermplasmEntry = true;
             }
-            if ((FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N.equals(text)||(FIELD_PLOT_NUMBER_ENUMERATED_N.equals(text)))
+            if ((FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N.equals(text) || (FIELD_PLOT_NUMBER_ENUMERATED_N.equals(text)))
                     && factor.getFactorName().equals(factor.getLabel())) {
                 hasFieldPlot = true;
             }
         }
-        
-        if (! hasGermplasmEntry || ! hasFieldPlot) {
-           validationMessage = "One of following values is missing in template: ";
+
+        if (!hasGermplasmEntry) {
+            validationMessage = "One of following values is missing in template: ";
+        }
+
+        if (!hasFieldPlot && validatePlotFactor) {
+            validationMessage = "One of following values is missing in template: ";
         }
 
         if (!hasGermplasmEntry) {
@@ -687,16 +708,18 @@ public class Workbook {
                     + "Scale = NUMBER \n"
                     + "Method = ENUMERATED";
         }
-        
-        if (!hasFieldPlot) {
+
+        if (!hasFieldPlot && validatePlotFactor) {
             validationMessage = validationMessage + "\nProperty = FIELD PLOT  \n"
                     + "Scale = NESTED NUMBER \n"
                     + "Method = ENUMERATED";
         }
-        
-        
 
-        return (hasTrialInstance && hasGermplasmEntry && hasFieldPlot);
+        if (validatePlotFactor) {
+            return (hasTrialInstance && hasGermplasmEntry && hasFieldPlot);
+        } else {
+            return (hasTrialInstance && hasGermplasmEntry);
+        }
     }
 
     public boolean isValidNurseryTemplate() {
@@ -706,17 +729,17 @@ public class Workbook {
 
     public static boolean isPlotLabel(String text) {
         String cleanText = getStringWithOutBlanks(text).toUpperCase();
-        
-        if(cleanText.equals(FIELD_PLOT_NUMBER)){
-           return true; 
-        }else if(cleanText.equals(FIELD_PLOT_NESTEDNUMBER)){
-              return true; 
-        }else{
-              return false; 
+
+        if (cleanText.equals(FIELD_PLOT_NUMBER)) {
+            return true;
+        } else if (cleanText.equals(FIELD_PLOT_NESTEDNUMBER)) {
+            return true;
+        } else {
+            return false;
         }
-        
-       
-      //  return cleanText.equals(FIELD_PLOT_NUMBER) || cleanText.equals(FIELD_PLOT_NESTEDNUMBER);
+
+
+        //  return cleanText.equals(FIELD_PLOT_NUMBER) || cleanText.equals(FIELD_PLOT_NESTEDNUMBER);
     }
 
     public String getEntryLabel() {
@@ -832,7 +855,7 @@ public class Workbook {
     }
 
     /**
-     * Returns the Condition where propery =  TRIAL_INSTANCE + NUMBER
+     * Returns the Condition where propery = TRIAL_INSTANCE + NUMBER
      */
     public Condition getTrialInstanceCondition() {
         Condition trialInstanceCondition = null;
@@ -860,11 +883,13 @@ public class Workbook {
     /**
      * Return the check factor identify by PROPERTY + SCALE + METHOD acording to
      * <code>CHECK_CODE_ASSIGNED</code> constant
-     * @return Check factor or <code>null</code> if not found
+     *
+     * @return Check factor or
+     * <code>null</code> if not found
      */
     public Factor getCheckFactor() {
         Factor checkFactor = null;
-         for (Factor factor : factors) {
+        for (Factor factor : factors) {
             String text = getStringWithOutBlanks(factor.getProperty() + factor.getScale() + factor.getMethod());
             if (text.equals(CHECK_CODE_ASSIGNED)) {
                 checkFactor = factor;
@@ -873,24 +898,33 @@ public class Workbook {
         }
         return checkFactor;
     }
-    
+
     /**
      * It checks if template has a factor with plot + nested + number
-     * @return 
+     *
+     * @return
      */
     public boolean hasPlotNestedNumber() {
         boolean hasPlotNested = false;
-        
-       for (Factor factor : factors) {
-            String text = getStringWithOutBlanks(factor.getProperty() + factor.getScale() );
+
+        for (Factor factor : factors) {
+            String text = getStringWithOutBlanks(factor.getProperty() + factor.getScale());
 
             if (FIELD_PLOT_NESTEDNUMBER.equals(text)) {
-               hasPlotNested  = true;
-               break;
+                hasPlotNested = true;
+                break;
             }
         }
-        
-        
+
+
         return hasPlotNested;
+    }
+
+    public boolean isValidatePlotFactor() {
+        return validatePlotFactor;
+    }
+
+    public void setValidatePlotFactor(boolean validatePlotFactor) {
+        this.validatePlotFactor = validatePlotFactor;
     }
 }
