@@ -2,7 +2,7 @@ delimiter $$
 
 drop procedure if exists `getAllEffects`$$
 
-CREATE PROCEDURE `getAllEffects`(IN dName varchar(50))
+CREATE PROCEDURE `getAllEffects`()
 begin
 
 select distinct * from (
@@ -29,7 +29,7 @@ end$$
 delimiter $$
 drop procedure if exists getTotalEffectsByEffect$$
 
-CREATE PROCEDURE getTotalEffectsByEffect(IN represNo int, IN factorId int, IN effectId int, IN dName varchar(50))
+CREATE PROCEDURE getTotalEffectsByEffect(IN represNo int, IN factorId int, IN effectId int)
 BEGIN
   SET @myQuery = 'select count(distinct *) as effectCount from(
   SELECT
@@ -71,7 +71,7 @@ delimiter $$
 
 drop procedure if exists `getEffectsByEffectIdList`$$
 
-CREATE PROCEDURE `getEffectsByEffectIdList`(IN idList varchar(200), IN dName varchar(50))
+CREATE PROCEDURE `getEffectsByEffectIdList`(IN idList varchar(200))
   begin
 
     SET @myQuery = 'select distinct * from (
