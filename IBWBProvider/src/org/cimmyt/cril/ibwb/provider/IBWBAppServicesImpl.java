@@ -1976,6 +1976,14 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
     @Override
+    public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged) {
+        List<Traits> traitss = serviciosCentral.getListTraitsNew(filter, start, pageSize, paged);
+        traitss.addAll(serviciosLocal.getListTraitsNew(filter, start, pageSize, paged));
+
+        return traitss;
+    }
+
+    @Override
     public List<Traits> getListTraitsOnly(Traits filter, int start, int pageSize, boolean paged) {
         List<Traits> traitss = serviciosCentral.getListTraits(filter, start, pageSize, paged);
         traitss.addAll(serviciosLocal.getListTraits(filter, start, pageSize, paged));

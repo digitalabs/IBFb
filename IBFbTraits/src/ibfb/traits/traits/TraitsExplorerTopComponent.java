@@ -313,7 +313,9 @@ public final class TraitsExplorerTopComponent extends TopComponent {
         filter.setGlobalsearch(txtSearchTrait.getText());
 
         //int total = AppServicesProxy.getDefault().appServices().getTotalTrait(filter);
-        traitsList = AppServicesProxy.getDefault().appServices().getListTraits(filter, 0, 0, false);
+
+        // GCP-4390
+        traitsList = AppServicesProxy.getDefault().appServices().getListTraitsNew(filter, 0, 0, false);
         lblTraitsFound.setText(traitsList.size() + " Trait(s) found ");
         
         String tid = bundle.getString("TraitsExplorerTopComponent.tid");

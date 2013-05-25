@@ -818,6 +818,11 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
+    public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public void saveWorkbookFull(Workbook workbook) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
