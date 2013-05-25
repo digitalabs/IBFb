@@ -2,9 +2,10 @@ package ibfb.inventory.core;
 
 import ibfb.domain.core.Factor;
 import ibfb.domain.core.GermplasmList;
-import ibfb.inventory.export.ExcelTableExporter;
 import ibfb.inventory.export.InventoryExcelExporter;
 import ibfb.inventory.models.GermplasmEntriesTableModel;
+
+import ibfb.lists.report.LabelReportWizardIterator;
 import ibfb.workbook.api.GermplasmAssigmentTool;
 import ibfb.workbook.api.GermplasmListReader;
 import ibfb.workbook.core.GermplasmAssigmentToolImpl;
@@ -55,6 +56,7 @@ public final class InventoryViewerTopComponent extends TopComponent {
         setToolTipText(NbBundle.getMessage(InventoryViewerTopComponent.class, "CTL_InventoryTopComponent"));
         fillComboListNames();
         this.jButtonExport.setEnabled(false);
+        this.btnPrintLabels.setEnabled(false);
         this.jLabelEntries.setText("0");
     }
 
@@ -72,14 +74,16 @@ public final class InventoryViewerTopComponent extends TopComponent {
 
         jFrame1 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
-        cboGermplasmList = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEntries = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabelEntries = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jButtonExport = new javax.swing.JButton();
+        btnPrintLabels = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cboGermplasmList = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -92,31 +96,15 @@ public final class InventoryViewerTopComponent extends TopComponent {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        cboGermplasmList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECT ONE..." }));
-        cboGermplasmList.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboGermplasmListItemStateChanged(evt);
-            }
-        });
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.jLabel1.text")); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 282, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel1))
+            .addGap(0, 20, Short.MAX_VALUE)
         );
 
         jTableEntries.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,14 +126,6 @@ public final class InventoryViewerTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabelEntries, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.jLabelEntries.text")); // NOI18N
 
-        jButtonExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/inventory/images/excelScript.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButtonExport, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.jButtonExport.text")); // NOI18N
-        jButtonExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -155,41 +135,103 @@ public final class InventoryViewerTopComponent extends TopComponent {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelEntries)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExport)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabelEntries))
-                    .addComponent(jButtonExport))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelEntries))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButtonExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/inventory/images/excelScript.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jButtonExport, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.jButtonExport.text")); // NOI18N
+        jButtonExport.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonExport.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jButtonExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(btnPrintLabels, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.btnPrintLabels.text")); // NOI18N
+        btnPrintLabels.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintLabelsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnPrintLabels, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jButtonExport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrintLabels, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(182, Short.MAX_VALUE))
+        );
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(InventoryViewerTopComponent.class, "InventoryViewerTopComponent.jLabel1.text")); // NOI18N
+
+        cboGermplasmList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECT ONE..." }));
+        cboGermplasmList.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboGermplasmListItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(488, 488, 488))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -258,6 +300,7 @@ public final class InventoryViewerTopComponent extends TopComponent {
         for (InventoryData data: inventoryDataList) {
             List<Object> columns = new ArrayList<Object>();
             
+            columns.add(data.getLotid());
             columns.add(data.getEntry());
             columns.add(data.getDesig());
             columns.add(data.getGid());
@@ -289,6 +332,13 @@ public final class InventoryViewerTopComponent extends TopComponent {
         factores = new ArrayList<Factor>();
 
         Factor factor = new Factor();
+        factor.setFactorName("LOT ID");
+        factor.setProperty("LOTID");
+        factor.setScale("NUMBER");
+        factor.setDataType("N");
+        factores.add(factor);
+        
+        factor = new Factor();
         factor.setFactorName("ENTRY");
         factor.setProperty("GERMPLASM ENTRY");
         factor.setScale("NUMBER");
@@ -347,8 +397,10 @@ public final class InventoryViewerTopComponent extends TopComponent {
         this.jLabelEntries.setText(String.valueOf(entradas));
         if (entradas > 0) {
             this.jButtonExport.setEnabled(true);
+            this.btnPrintLabels.setEnabled(true);
         } else {
             this.jButtonExport.setEnabled(false);
+            this.btnPrintLabels.setEnabled(false);
         }
 
     }//GEN-LAST:event_jTableEntriesPropertyChange
@@ -358,6 +410,10 @@ public final class InventoryViewerTopComponent extends TopComponent {
         openFile();
 
     }//GEN-LAST:event_jButtonExportActionPerformed
+
+    private void btnPrintLabelsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintLabelsActionPerformed
+       launchLabelWizard();
+    }//GEN-LAST:event_btnPrintLabelsActionPerformed
 
     private void exportToExcel(File file) {
 
@@ -425,6 +481,7 @@ public final class InventoryViewerTopComponent extends TopComponent {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrintLabels;
     private javax.swing.JComboBox cboGermplasmList;
     private javax.swing.JButton jButtonExport;
     private javax.swing.JFrame jFrame1;
@@ -433,6 +490,7 @@ public final class InventoryViewerTopComponent extends TopComponent {
     private javax.swing.JLabel jLabelEntries;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEntries;
     // End of variables declaration//GEN-END:variables
@@ -453,5 +511,16 @@ public final class InventoryViewerTopComponent extends TopComponent {
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
 
+    }
+    
+    private void launchLabelWizard() {
+         List<String> fields = new ArrayList<String>();
+         GermplasmEntriesTableModel model = (GermplasmEntriesTableModel)jTableEntries.getModel();
+        
+         for(Factor factor :  model.getFactorHeaders()) {
+             fields.add(factor.getFactorName());
+         }
+         
+         LabelReportWizardIterator.launchLabelReportWizard(model.getGermplasmData(),fields);
     }
 }

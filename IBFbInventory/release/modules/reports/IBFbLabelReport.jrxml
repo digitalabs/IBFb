@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BarCodeReport" language="groovy" columnCount="3" pageWidth="612" pageHeight="792" columnWidth="190" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="label1" class="java.lang.String"/>
+	<field name="label2" class="java.lang.String"/>
+	<field name="label3" class="java.lang.String"/>
+	<field name="label4" class="java.lang.String"/>
+	<field name="label5" class="java.lang.String"/>
+	<field name="label6" class="java.lang.String"/>
+	<field name="label7" class="java.lang.String"/>
+	<field name="label8" class="java.lang.String"/>
+	<field name="lotid" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="98" splitType="Stretch">
+			<componentElement>
+				<reportElement x="2" y="2" width="200" height="31"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{lotid}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+			<textField>
+				<reportElement x="3" y="33" width="118" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="33" width="83" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="51" width="118" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="66" width="118" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="48" width="83" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="81" width="118" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="66" width="83" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="81" width="83" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{label8}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

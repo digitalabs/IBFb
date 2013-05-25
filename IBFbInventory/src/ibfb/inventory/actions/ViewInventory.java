@@ -1,4 +1,3 @@
-
 package ibfb.inventory.actions;
 
 import ibfb.inventory.core.InventoryViewerTopComponent;
@@ -17,25 +16,24 @@ id = "ibfb.inventory.actions.ViewInventory")
 displayName = "#CTL_ViewInventory")
 @ActionReferences({
     @ActionReference(path = "Menu/Database", position = 3533),
-    @ActionReference(path = "Toolbars/File", position =-100)
+    @ActionReference(path = "Toolbars/File", position = -100)
 })
-
 public final class ViewInventory implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         closeBackground();
-        
-     TopComponent inventoryTopComponent = WindowManager.getDefault().findTopComponent("InventoryViewerTopComponent");
-                if (inventoryTopComponent == null) {
-                    inventoryTopComponent = new InventoryViewerTopComponent();
-                }
-                inventoryTopComponent.open();
-                inventoryTopComponent.requestActive();
-        
+        closeBackground();
+
+        TopComponent inventoryTopComponent = WindowManager.getDefault().findTopComponent("InventoryViewerTopComponent");
+        if (inventoryTopComponent == null) {
+            inventoryTopComponent = new InventoryViewerTopComponent();
+        }
+        inventoryTopComponent.open();
+        inventoryTopComponent.requestActive();
+
     }
-    
-     private void closeBackground() {
+
+    private void closeBackground() {
         TopComponent background = WindowManager.getDefault().findTopComponent("BackgroundWindowTopComponent");
         if (background.isOpened()) {
             background.close();

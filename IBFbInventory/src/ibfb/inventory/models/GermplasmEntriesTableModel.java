@@ -1,4 +1,3 @@
-
 package ibfb.inventory.models;
 
 import ibfb.domain.core.Factor;
@@ -6,29 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-
 public class GermplasmEntriesTableModel extends AbstractTableModel {
 
-    private boolean hasChecks=false;
+    private boolean hasChecks = false;
     private List<Factor> factorHeaders;
-    private List<List<Object>> germplasmData;    
-    private String[] checkHeaders={"Initial position","Frequency"};
-    private boolean isForInventory=false;
-    private boolean enabledLocation=false;
-    private boolean enabledComments=false;
-    private boolean enabledAmount=false;
-    private boolean enabledScale=false;
-    
-    private boolean seActualizaGID=false;
+    private List<List<Object>> germplasmData;
+    private String[] checkHeaders = {"Initial position", "Frequency"};
+    private boolean isForInventory = false;
+    private boolean enabledLocation = false;
+    private boolean enabledComments = false;
+    private boolean enabledAmount = false;
+    private boolean enabledScale = false;
+    private boolean seActualizaGID = false;
 
-   
-     public boolean isEnabledAmount() {
+    public boolean isEnabledAmount() {
         return enabledAmount;
     }
-      public boolean isEnabledScale() {
+
+    public boolean isEnabledScale() {
         return enabledScale;
     }
-    
+
     public boolean isEnabledComments() {
         return enabledComments;
     }
@@ -41,8 +38,6 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
         this.seActualizaGID = seActualizaGID;
     }
 
-    
-    
     public void setEnabledComments(boolean enabledComments) {
         this.enabledComments = enabledComments;
     }
@@ -54,24 +49,23 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
     public void setEnabledLocation(boolean enabledLocation) {
         this.enabledLocation = enabledLocation;
     }
-    
-    
-      public void setEnabledAmount(boolean enabledamount) {
-        this.enabledAmount= enabledamount;
+
+    public void setEnabledAmount(boolean enabledamount) {
+        this.enabledAmount = enabledamount;
     }
-        public void setEnabledScale(boolean enabledSclae) {
+
+    public void setEnabledScale(boolean enabledSclae) {
         this.enabledScale = enabledSclae;
     }
-    
 
     public GermplasmEntriesTableModel() {
         clearTable();
     }
-    
-    public GermplasmEntriesTableModel(List<Factor> factorHeaders,List<List<Object>> germplasmData) {
+
+    public GermplasmEntriesTableModel(List<Factor> factorHeaders, List<List<Object>> germplasmData) {
         this.factorHeaders = factorHeaders;
         this.germplasmData = germplasmData;
-      
+
     }
 
     public boolean IsForInventory() {
@@ -82,24 +76,21 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
         this.isForInventory = isForInventory;
     }
 
-    
-    
-
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
 
-       
-           if(SeActualizaGID()){
+
+        if (SeActualizaGID()) {
             if (columnIndex == 2) {
                 return true;
             }
-            
+
         }
-        
-        
-        
-        if(IsForInventory()){
-        
+
+
+
+        if (IsForInventory()) {
+
             switch (columnIndex) {
                 case 3:
                     if (isEnabledLocation()) {
@@ -131,33 +122,28 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
                     }
 
 
-                   
-                 
+
+
             }
- 
+
         }
-        
-        
-        if(!hasChecks){
+
+
+        if (!hasChecks) {
             return false;
-        }else{
-            if(columnIndex>factorHeaders.size()-1){
+        } else {
+            if (columnIndex > factorHeaders.size() - 1) {
                 return false;  //true if position and frequency will be editables
             }
         }
-        
+
         return super.isCellEditable(rowIndex, columnIndex);
     }
 
-    
-    
-    
-    public void setHasChecks(boolean hasChk){
-        this.hasChecks=hasChk;
+    public void setHasChecks(boolean hasChk) {
+        this.hasChecks = hasChk;
     }
-    
-    
-    
+
     @Override
     public int getRowCount() {
         return germplasmData.size();
@@ -165,10 +151,10 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        if(!hasChecks){
-        return factorHeaders.size();}
-        else{
-            return factorHeaders.size()+2;
+        if (!hasChecks) {
+            return factorHeaders.size();
+        } else {
+            return factorHeaders.size() + 2;
         }
     }
 
@@ -191,25 +177,25 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         List<Object> columnValues = germplasmData.get(rowIndex);
-         return columnValues.get(columnIndex);
+        List<Object> columnValues = germplasmData.get(rowIndex);
+        return columnValues.get(columnIndex);
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
-        
-        if(SeActualizaGID()){
+
+        if (SeActualizaGID()) {
             if (columnIndex == 2) {
                 List<Object> columnValues = germplasmData.get(rowIndex);
                 columnValues.set(columnIndex, aValue);
-                fireTableCellUpdated(rowIndex, columnIndex);  
+                fireTableCellUpdated(rowIndex, columnIndex);
             }
-            
+
         }
-        
-        
-        
+
+
+
         if (IsForInventory()) {
             if (columnIndex > 2) {
                 List<Object> columnValues = germplasmData.get(rowIndex);
@@ -231,7 +217,6 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
 
     }
 
-
     public List<Factor> getFactorHeaders() {
         return factorHeaders;
     }
@@ -239,14 +224,12 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
     public List<List<Object>> getGermplasmData() {
         return germplasmData;
     }
-    
+
     public void clearTable() {
-        factorHeaders = new ArrayList<Factor> ();
+        factorHeaders = new ArrayList<Factor>();
         germplasmData = new ArrayList<List<Object>>();
         fireTableDataChanged();
     }
-
-  
     
     
 }
