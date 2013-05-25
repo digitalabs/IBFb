@@ -14,6 +14,7 @@ public class TraitDto {
     private String traitDescription;
     private Integer tnstat;
     private String traitGroup;
+    private Integer traitGroupId;
 
     public TraitDto() {
     }
@@ -73,5 +74,13 @@ public class TraitDto {
 
     public void setTraitGroup(String traitGroup) {
         this.traitGroup = traitGroup;
+    }
+    
+    public Integer getTraitGroupId() {
+        return traitGroupId;
+    }
+
+    public void setTraitGroupId(Integer traitGroupId) {
+        this.traitGroupId = traitGroupId;
     }
 }
