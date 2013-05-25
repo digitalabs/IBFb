@@ -273,13 +273,13 @@ private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         txtOntology.setEditable(editingAllowed);
         btnSave.setEnabled(editingAllowed);
         
-        if (scales.getSctype().equals(Scales.SCALE_TYPE_DISCRETE)) {
+        if (scales.getSctype() != null && scales.getSctype().equals(Scales.SCALE_TYPE_DISCRETE)) {
             cboScaleType.setSelectedIndex(1);
         } else {
             cboScaleType.setSelectedIndex(0);
         }
         
-        if (scales.getDtype().equals(Scales.DATA_TYPE_CHARACTER)) {
+        if (scales.getDtype() != null && scales.getDtype().equals(Scales.DATA_TYPE_CHARACTER)) {
             cboDataType.setSelectedIndex(1);
         } else {
             cboDataType.setSelectedIndex(0);
