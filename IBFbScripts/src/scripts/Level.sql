@@ -13,8 +13,8 @@ IF iscentral = 1 THEN
       , lvalue
     FROM 
        v_level
-    WHERE (isnumeric AND dtypeid NOT IN (1120, 1128)
-      OR NOT isnumeric AND dtypeid IN (1128, 1120))
+    WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
+      OR NOT isnumeric AND dtypeid IN (1120, 1125, 1128, 1130))
       AND labelid = p_labelid
     ORDER BY levelno ASC
     ;
@@ -28,8 +28,8 @@ ELSE
       , lvalue
     FROM 
        v_level
-    WHERE (isnumeric AND dtypeid NOT IN (1120, 1128)
-      OR NOT isnumeric AND dtypeid IN (1128, 1120))
+    WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
+      OR NOT isnumeric AND dtypeid IN (1120, 1125, 1128, 1130))
       AND labelid = p_labelid
     ORDER BY levelno DESC
     ;
@@ -55,9 +55,9 @@ BEGIN
   SET @sql := CONCAT("SELECT labelid AS labelid, factorid, levelno AS levelno, lvalue from v_level ");
 
   IF isnumeric = 1 THEN
-    SET @sql = CONCAT(@sql, " WHERE dtypeid NOT IN (1120, 1128) ");
+    SET @sql = CONCAT(@sql, " WHERE dtypeid NOT IN (1120, 1125, 1128, 1130) ");
   ELSE
-    SET @sql = CONCAT(@sql, " WHERE dtypeid IN (1120, 1128) ");
+    SET @sql = CONCAT(@sql, " WHERE dtypeid IN (1120, 1125, 1128, 1130) ");
   END IF;
 
   IF (labelid IS NOT NULL) THEN

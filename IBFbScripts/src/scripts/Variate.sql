@@ -11,7 +11,7 @@ begin
 	,GROUP_CONCAT(if(relationship = 1220, ontology_id, NULL)) AS 'scaleid' 
 	,GROUP_CONCAT(if(relationship = 1210, ontology_id, NULL)) AS 'tmethid' 
 	,GROUP_CONCAT(if(relationship = 1225, ontology_value, NULL)) AS 'vtype' 
-	,GROUP_CONCAT(if(relationship = 1105, ontology_value, NULL)) AS 'dtype' 
+	,GROUP_CONCAT(if(relationship = 1105, IF(ontology_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS 'dtype' 
 	,GROUP_CONCAT(if(relationship = 1044, ontology_id, NULL)) AS 'tid' 
 	FROM 
 	(SELECT pp.projectprop_id as variatid 
@@ -130,7 +130,7 @@ BEGIN
     , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
     , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
     , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid
-    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1128), 'C', 'N'), NULL)) AS dtype
+    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype
     , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
     , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
   FROM
