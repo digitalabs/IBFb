@@ -113,3 +113,64 @@ START TRANSACTION;
 COMMIT;	
 	
 end$$
+
+
+DROP PROCEDURE IF EXISTS `copyCvTermRelationship`$$
+
+CREATE PROCEDURE `copyCvTermRelationship`(IN p_cvTermId int, IN p_type int, IN centralSchema VARCHAR(100))
+
+BEGIN
+
+    IF NOT EXISTS (select 1 FROM cvterm_relationship WHERE subject_id = p_cvTermId AND type_id = p_type) THEN
+
+      SET @sql := CONCAT("INSERT INTO cvterm_relationship (cvterm_relationship_id, type_id, subject_id, object_id)",
+	     " SELECT cvterm_relationship_id, type_id, subject_id, object_id ",
+         " FROM ", centralSchema, ".cvterm_relationship WHERE subject_id = ", p_cvTermId,
+         " AND type_id = ", p_type);
+
+      PREPARE stmt FROM @sql;
+      EXECUTE stmt;
+
+    END IF;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `copyMeasuredInFromCentral`$$
+
+CREATE PROCEDURE `copyMeasuredInFromCentral`(IN p_cvTermId int, IN centralSchema VARCHAR(100))
+
+BEGIN
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+  IF p_cvTermId > 0 THEN
+
+    START TRANSACTION;
+
+    -- "has property"
+    CALL copyCvTermRelationship(p_cvTermId, 1200, centralSchema);
+
+    -- "has method"
+    CALL copyCvTermRelationship(p_cvTermId, 1210, centralSchema);
+
+    -- "has scale"
+    CALL copyCvTermRelationship(p_cvTermId, 1220, centralSchema);
+
+    -- "is a"
+    CALL copyCvTermRelationship(p_cvTermId, 1225, centralSchema);
+
+    -- "stored in"
+    CALL copyCvTermRelationship(p_cvTermId, 1044, centralSchema);
+
+    -- "has type"
+    CALL copyCvTermRelationship(p_cvTermId, 1105, centralSchema);
+
+    -- "has value"
+    CALL copyCvTermRelationship(p_cvTermId, 1190, centralSchema);
+
+    COMMIT;
+  END IF;
+
+END$$
+
+
