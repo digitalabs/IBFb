@@ -46,11 +46,13 @@ public class UtilityDAO extends HibernateDaoSupport {
            File databaseConfigFile = locator.locate(dbConfigRelativePath, "org.cimmyt.cril.ibwb.provider", false);
            Properties propertiesFile = new Properties();
            try {
-               InputStream streamProperties = new FileInputStream(databaseConfigFile);
-               propertiesFile.load(streamProperties);
+               if(databaseConfigFile != null){
+                   InputStream streamProperties = new FileInputStream(databaseConfigFile);
+                   propertiesFile.load(streamProperties);
 
-               String centralDb = propertiesFile.getProperty("dmscentral2.defaultSchema");
-               this.setCentralDatabaseName(centralDb);
+                   String centralDb = propertiesFile.getProperty("dmscentral2.defaultSchema");
+                   this.setCentralDatabaseName(centralDb);
+               }
            } catch (Exception e) {
                e.printStackTrace();
            }
