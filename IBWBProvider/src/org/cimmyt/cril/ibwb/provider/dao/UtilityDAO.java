@@ -66,7 +66,7 @@ public class UtilityDAO extends HibernateDaoSupport {
 
     public void setCentralDatabaseNameTest(String centralDatabaseNameTest) {
         this.centralDatabaseNameTest = centralDatabaseNameTest;
-        if(getCentralDatabaseName() == null && getCentralDatabaseName().equalsIgnoreCase(""))
+        if(getCentralDatabaseName() == null || getCentralDatabaseName().equalsIgnoreCase(""))
             setCentralDatabaseName(centralDatabaseNameTest);
     }
 
