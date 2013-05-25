@@ -2,6 +2,7 @@ package ibfb.r.core;
 
 import ibfb.r.api.RInterface;
 import ibfb.r.ui.ScriptsWindowTopComponent;
+import ibfb.settings.core.FieldbookSettings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,7 +37,7 @@ public class RforWin extends Thread implements RInterface {
             case 4:
                 this.scriptR = "LineByTester.R";
                 break;
-            
+
         }
     }
 
@@ -55,9 +56,9 @@ public class RforWin extends Thread implements RInterface {
 
         String miArchivo = file.toString();
         int inicio = 0;
-        String sep=File.separator;
+        String sep = File.separator;
         inicio = miArchivo.indexOf(sep);
-        
+
         while (inicio >= 0) {
             inicio = miArchivo.indexOf(sep);
             miArchivo = miArchivo.substring(inicio + 1);
@@ -77,8 +78,8 @@ public class RforWin extends Thread implements RInterface {
         ScriptsWindowTopComponent.hiloEspera.espera.setVisible(false);
         abreExplorador(folder);
     }
-    
-     @Override
+
+    @Override
     public void creaDirectorio(String archivo) {
         try {
             File dir = new File("C:\\DataR\\" + archivo);
@@ -91,11 +92,15 @@ public class RforWin extends Thread implements RInterface {
 
     }
 
-   @Override
+    @Override
     public void creaArchivoR(String myFile) {
         FileWriter fichero = null;
-        PrintWriter pw = null;      
-        String path = OSUtils.getRPATH();
+        PrintWriter pw = null;
+        //String path = OSUtils.getRPATH();
+        String path = FieldbookSettings.getSetting(FieldbookSettings.R_HOME_FOLDER);
+        if (path == null) {
+            path = OSUtils.getRPATH();
+        }
         try {
             File inFile = new File(path + File.separator + "oziel" + File.separator + scriptR);
             File outFile = new File("c:\\DataR\\" + myFile + "\\" + myFile + ".R");
@@ -145,7 +150,6 @@ public class RforWin extends Thread implements RInterface {
 
     }
 
-    
     @Override
     public void copiaArchivoCSV(String myFile, String myArchivo) {
         try {
@@ -169,13 +173,17 @@ public class RforWin extends Thread implements RInterface {
         }
     }
 
-
     @Override
     public void ejecutaR(String myFile) {
         FileWriter ficheroBat = null;
         PrintWriter pwBat = null;
         // String path = "C:" + File.separator + "Program Files" + File.separator + "ibfieldbook"  + File.separator + "R-2.11.1";
-        String path = OSUtils.getRPATH();
+        //String path = OSUtils.getRPATH();
+        String path = FieldbookSettings.getSetting(FieldbookSettings.R_HOME_FOLDER);
+        if (path == null) {
+            path = OSUtils.getRPATH();
+        }
+
 
         try {
             ficheroBat = new FileWriter(path + File.separator + "bat" + File.separator + "ScriptR.bat");
@@ -218,10 +226,7 @@ public class RforWin extends Thread implements RInterface {
         }
     }
 
-    
-
-
-     @Override
+    @Override
     public void abreExplorador(String myFolder) {
         try {
             Process proceso = Runtime.getRuntime().exec("explorer.exe c:\\DataR\\" + myFolder);
@@ -229,6 +234,4 @@ public class RforWin extends Thread implements RInterface {
             System.out.println("Error al abrir el explorador");
         }
     }
-  
-
 }
