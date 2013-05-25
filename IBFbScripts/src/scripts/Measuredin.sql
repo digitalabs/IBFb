@@ -5,9 +5,7 @@ CREATE PROCEDURE `getListMeasuredIn` (
 IN v_measuredinid int,
 IN v_traitid int,
 IN v_tmethid int,
-IN v_scaleid int,
-IN v_storedin int,
-IN v_hastype varchar(255))
+IN v_scaleid int)
 begin
 
     -- DOES NOT CHECK v_is_local, no info needed from central db ontology
