@@ -1464,7 +1464,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addMeasuredin(Measuredin measuredin) {
         utilityDAO.callStoredProcedureForUpdate(measuredin, "addMeasuredin", 
-                new String[]{"traitid","tmethid","scaleid","name","storedinid","hasType"});
+                new String[]{"traitid","tmethid","scaleid","name","storedinid","hasType","isA"});
     }
 
     @Override
