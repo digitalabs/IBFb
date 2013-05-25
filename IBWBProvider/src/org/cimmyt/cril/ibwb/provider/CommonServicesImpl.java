@@ -2013,7 +2013,7 @@ public class CommonServicesImpl implements CommonServices {
     //-----------------------------------Scales---------------------------
     @Override
     public void addScales(Scales scales) {
-        //this.scalesDAO.create(scales);
+                //this.scalesDAO.create(scales);
         LinkedHashMap params = new LinkedHashMap();
         params.put("cvidin", 1030);
         params.put("cvname", scales.getScname());
@@ -2510,7 +2510,7 @@ public class CommonServicesImpl implements CommonServices {
 
 //-----------------------------------TmsMethod---------------------------
     @Override
-    public void addTmsMethod(TmsMethod tmsMethod) {
+    public void addTmsMethod(TmsMethod tmsMethod) {       
 
         //this.tmsMethodDAO.create(tmsMethod);
         LinkedHashMap params = new LinkedHashMap();
@@ -2773,7 +2773,9 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addTraits(Traits traits) {
         //this.traitsDAO.create(traits);
-        this.utilityDAO.callStoredProcedureForUpdate(traits, "addTraits", new String[]{"trname","trdesc","traitGroup"});
+        Integer id = this.utilityDAO.callStoredProcedureForUpdateAndReturnPK(traits, "addTraits", 
+                new String[]{"trname","trdesc","traitGroup"});
+        traits.setTraitid(id);
     }
 
     @Override
