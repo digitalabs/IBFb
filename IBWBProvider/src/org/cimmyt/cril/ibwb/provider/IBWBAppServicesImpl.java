@@ -953,11 +953,9 @@ public class IBWBAppServicesImpl implements AppServices {
     @Override
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
         List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
-        //copy all central to local
-        System.out.println("Measured in retrieved..");
+        //copy all central to local if not found in local
         if (measuredins != null && measuredins.size() > 0) {
             for (Measuredin measuredin : measuredins) {
-                System.out.println("cvterm id = " + measuredin.getMeasuredinid());
                 serviciosLocal.copyCvTermFromCentral(measuredin.getMeasuredinid());
             }
         }
