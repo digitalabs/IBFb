@@ -16,6 +16,7 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
     public static final String DESIG = "GERMPLASMIDDBCV";
     public static final String GID = "GERMPLASMIDDBID";
     public static final String CROSS = "CROSSHISTORYPEDIGREESTRING";
+    public static final String CROSS_NAME = "CROSSNAMENAME";
     public static final String SOURCE = "SEEDSOURCENAME";
     public static final String PLOT = "FIELDPLOTNESTEDNUMBER";
     public static final String PLOT_NESTED = "PLOTNESTEDNUMBER";

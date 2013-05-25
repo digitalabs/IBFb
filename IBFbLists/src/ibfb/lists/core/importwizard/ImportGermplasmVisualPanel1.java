@@ -67,6 +67,8 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
 
         this.txtFilePath.setText(fileChooser.getSelectedFile().toString());
         WorkbookExcelReader validateExcelReader = new WorkbookExcelReaderImpl();
+        validateExcelReader.setValidatePlotFactor(false);
+        
         boolean isValidFile = false;
 
         try {

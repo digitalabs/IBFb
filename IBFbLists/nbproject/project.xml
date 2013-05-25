@@ -63,6 +63,24 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.netbeans.api.progress</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.26.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>org.netbeans.modules.settings</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.33.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.awt</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -79,6 +97,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.openide.modules</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.27.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.util</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -86,12 +112,158 @@
                         <specification-version>8.19.2</specification-version>
                     </run-dependency>
                 </dependency>
+                <dependency>
+                    <code-name-base>org.openide.util.lookup</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>8.11.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>org.openide.windows</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>6.48.2</specification-version>
+                    </run-dependency>
+                </dependency>
             </module-dependencies>
             <public-packages>
                 <package>ibfb.lists.core</package>
                 <package>ibfb.lists.core.importwizard</package>
                 <package>ibfb.lists.core.location</package>
+                <package>ibfb.lists.report</package>
+                <package>ibfb.lists.report.viewer</package>
             </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/balloontip-1.1.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/balloontip-1.1.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-css.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-css.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-beanutils-1.8.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-beanutils-1.8.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-javaflow-20060411.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-javaflow-20060411.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/xml-apis-ext.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/xml-apis-ext.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/groovy-all-1.7.5.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/groovy-all-1.7.5.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-svggen.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-svggen.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-digester-1.7.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-digester-1.7.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/javacsv.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/javacsv.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-script.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-script.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-gvt.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-gvt.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/barcode4j-2.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/barcode4j-2.0.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-logging-1.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-logging-1.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/iText-2.1.7.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/iText-2.1.7.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jasperreports-3.7.6.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jasperreports-3.7.6.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-xml.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-xml.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-util.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-util.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jcalendar-1.3.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jcalendar-1.3.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jxl.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jxl.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jide-oss-3.3.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jide-oss-3.3.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jdesigns.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jdesigns.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-dom.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-dom.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jaxen-1.1.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jaxen-1.1.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-ext.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-ext.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-parser.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-parser.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-collections-3.2.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-collections-3.2.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-awt-util.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-awt-util.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-svg-dom.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-svg-dom.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/iTextAsian.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/iTextAsian.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jasperreports-4.7.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jasperreports-4.7.0.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-bridge.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-bridge.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/batik-anim.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/batik-anim.jar</binary-origin>
+            </class-path-extension>
         </data>
     </configuration>
 </project>

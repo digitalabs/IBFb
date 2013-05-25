@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
+import org.cimmyt.cril.ibwb.commongui.DialogUtil;
 import org.cimmyt.cril.ibwb.commongui.FileUtils;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.openide.DialogDisplayer;
@@ -46,6 +47,8 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         initComponents();
         fillComboBoxes();
         initValues();
+        radConnectEntries.setVisible(false);
+        radOnlyMatch.setVisible(false);
     }
 
     @Override
@@ -111,6 +114,7 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         rowListExcel = new ArrayList<List<Object>>();
         GermplasmListReader germplasmListReader = new GermplasmListReaderImpl();
         germplasmListReader.setSheetNumberForGermplasm(1);
+        germplasmListReader.setEntryFactors(workbook.getEntryFactors());
         boolean validFile = false;
         try {
             validFile = germplasmListReader.isValidTemplate(fileName);
@@ -126,6 +130,8 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
                 ex.printStackTrace();
                 System.out.println("ERROR AL LEER EXCEL GERMPLASM ENTRIES: " + ex);
             }
+        } else {
+            DialogUtil.displayError(bundle.getString("ImportGermplasmWizard.InvalidTemplate"));
         }
     }
 
@@ -200,23 +206,27 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
     public void setWorkbook(Workbook workbook) {
         this.workbook = workbook;
     }
-    
+
     public List<Listdata> getListDataEntries() {
         List<Listdata> listDataEntries = new ArrayList<Listdata>();
-        GermplasmEntriesTableModelChecks model = (GermplasmEntriesTableModelChecks)tblEntries.getModel();
-        
+        GermplasmEntriesTableModelChecks model = (GermplasmEntriesTableModelChecks) tblEntries.getModel();
+
         int gidCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.GID);
         int designationCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.DESIG);
         int entryCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.ENTRY);
         int entryCodeCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.ENTRY_CODE);
         int sourceCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.SOURCE);
-        int crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS);
-        int entryNumber =1 ;
-        for (int row=0; row < model.getRowCount(); row++ ) {
+        int crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS_NAME);
+        if (crossCol == -1) {
+            crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS);
+        }
+
+        int entryNumber = 1;
+        for (int row = 0; row < model.getRowCount(); row++) {
             ListdataPK lpk = new ListdataPK(0, entryNumber);
             Listdata ld = new Listdata();
             ld.setListdataPK(lpk);
-            
+
             if (gidCol != -1) {
                 ld.setGid(Integer.parseInt(model.getValueAt(row, gidCol).toString()));
             }
@@ -226,7 +236,7 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
             if (entryCol != -1) {
                 ld.setEntryid(Integer.parseInt(model.getValueAt(row, entryCol).toString()));
             }
-            if (entryCodeCol !=1) {
+            if (entryCodeCol != 1) {
                 //ld.setEntrycd(model.getValueAt(row, entryCodeCol).toString());
                 ld.setEntrycd(Listdata.ENTRY_PREFIX + ConvertUtils.getZeroLeading(entryNumber, 4));
             }
@@ -238,11 +248,11 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
             }
             ld.setHarvestDate(ConvertUtils.getDateAsInteger(dtDate.getDate()));
             ld.setLrstatus(Listdata.LRSTATUS_ACTIVE);      //*
-            
+
             listDataEntries.add(ld);
             entryNumber++;
         }
-        
+
         return listDataEntries;
     }
 

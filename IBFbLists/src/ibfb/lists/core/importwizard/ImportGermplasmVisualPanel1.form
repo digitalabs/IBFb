@@ -46,14 +46,14 @@
     <Component class="javax.swing.JLabel" name="lblExcelFile">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel1.lblExcelFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel1.lblExcelFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtFilePath">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel1.txtFilePath.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel1.txtFilePath.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -63,7 +63,7 @@
     <Component class="javax.swing.JButton" name="btnBrowse">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel1.btnBrowse.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel1.btnBrowse.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -73,7 +73,7 @@
     <Component class="javax.swing.JButton" name="btnTemplatePreview">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel1.btnTemplatePreview.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel1.btnTemplatePreview.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>

@@ -25,7 +25,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="&lt;ImportGermplasmVisualPanel2.pnlGermplasmInfo.border.title&gt;">
-              <ResourceString PropertyName="titleX" bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.pnlGermplasmInfo.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString PropertyName="titleX" bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.pnlGermplasmInfo.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -106,42 +106,42 @@
         <Component class="javax.swing.JLabel" name="lblBreedingMethod">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblBreedingMethod.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblBreedingMethod.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDate">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblDate.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblDate.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblLocation">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNameType">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblNameType.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.lblNameType.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dtDate">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.dtDate.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.dtDate.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldLocation">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.jTextFieldLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.jTextFieldLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -151,10 +151,10 @@
               <Image iconType="3" name="/ibfb/lists/images/findLocation.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.btnFindLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.btnFindLocation.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.btnFindLocation.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.btnFindLocation.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>
@@ -234,7 +234,7 @@
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radNoPedigree.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radNoPedigree.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -244,7 +244,7 @@
               <ComponentRef name="radGrpInsertMethod"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radConnectEntries.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radConnectEntries.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -254,7 +254,7 @@
               <ComponentRef name="radGrpInsertMethod"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radOnlyMatch.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radOnlyMatch.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
