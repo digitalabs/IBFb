@@ -10,7 +10,8 @@ begin
 	   cvt.name AS trname,
 	   cvt.definition AS trdesc,
 	   1 AS tnstat, 
-	   grp.name AS traitgroup
+	   grp.name AS traitgroup,
+           grp.cvterm_id AS traitGroupId
       FROM cvterm cvt
      INNER JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id
      INNER JOIN cvterm grp ON grp.cvterm_id = gcvr.object_id
@@ -36,7 +37,8 @@ SET @mySQL := 'SELECT DISTINCT
                     cvt.name AS traitName,
                     cvt.definition AS traitDescription,
                     1 AS tnstat, 
-                    grp.name AS traitGroup
+                    grp.name AS traitGroup, 
+                    grp.cvterm_id AS traitGroupId
             FROM cvterm cvt
            INNER JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id
            INNER JOIN cvterm grp ON grp.cvterm_id = gcvr.object_id
