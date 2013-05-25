@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
+import org.cimmyt.cril.ibwb.commongui.DialogUtil;
 import org.cimmyt.cril.ibwb.commongui.FileUtils;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.openide.DialogDisplayer;
@@ -47,6 +48,8 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         initComponents();
         fillComboBoxes();
         initValues();
+        radConnectEntries.setVisible(false);
+        radOnlyMatch.setVisible(false);        
     }
 
     @Override
@@ -112,10 +115,12 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         rowListExcel = new ArrayList<List<Object>>();
         GermplasmListReader germplasmListReader = new GermplasmListReaderImpl();
         germplasmListReader.setSheetNumberForGermplasm(1);
+        germplasmListReader.setEntryFactors(workbook.getEntryFactors());
         boolean validFile = false;
         try {
             validFile = germplasmListReader.isValidTemplate(fileName);
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("ERROR AL VALIDAR ARCHIVO EXCEL");
         }
 
@@ -127,6 +132,9 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
                 ex.printStackTrace();
                 System.out.println("ERROR AL LEER EXCEL GERMPLASM ENTRIES: " + ex);
             }
+        }
+        else {
+            DialogUtil.displayError(bundle.getString("ImportGermplasmWizard.InvalidTemplate"));
         }
     }
 
@@ -360,9 +368,19 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         radGrpInsertMethod.add(radNoPedigree);
         radNoPedigree.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(radNoPedigree, org.openide.util.NbBundle.getMessage(ImportGermplasmVisualPanel2.class, "ImportGermplasmVisualPanel2.radNoPedigree.text")); // NOI18N
+        radNoPedigree.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radNoPedigreeActionPerformed(evt);
+            }
+        });
 
         radGrpInsertMethod.add(radConnectEntries);
         org.openide.awt.Mnemonics.setLocalizedText(radConnectEntries, org.openide.util.NbBundle.getMessage(ImportGermplasmVisualPanel2.class, "ImportGermplasmVisualPanel2.radConnectEntries.text")); // NOI18N
+        radConnectEntries.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radConnectEntriesActionPerformed(evt);
+            }
+        });
 
         radGrpInsertMethod.add(radOnlyMatch);
         org.openide.awt.Mnemonics.setLocalizedText(radOnlyMatch, org.openide.util.NbBundle.getMessage(ImportGermplasmVisualPanel2.class, "ImportGermplasmVisualPanel2.radOnlyMatch.text")); // NOI18N
@@ -432,6 +450,15 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
             this.jTextFieldLocation.setText(value);
         }
     }//GEN-LAST:event_btnFindLocationActionPerformed
+
+    private void radConnectEntriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radConnectEntriesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radConnectEntriesActionPerformed
+
+    private void radNoPedigreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radNoPedigreeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radNoPedigreeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFindLocation;
     private javax.swing.JComboBox cboMethods;
@@ -453,3 +480,4 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
     private javax.swing.JTable tblEntries;
     // End of variables declaration//GEN-END:variables
 }
+

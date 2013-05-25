@@ -237,6 +237,9 @@
               <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radNoPedigree.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radNoPedigreeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radConnectEntries">
           <Properties>
@@ -247,6 +250,9 @@
               <ResourceString bundle="ibfb/germplasmlist/importing/wizard/Bundle.properties" key="ImportGermplasmVisualPanel2.radConnectEntries.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radConnectEntriesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radOnlyMatch">
           <Properties>

@@ -45,6 +45,7 @@ import org.openide.awt.ActionReference;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import ibfb.germplasmlist.utils.SequenceEntry;
+import ibfb.lists.core.importwizard.ImportList;
 import java.util.*;
 
 /**
@@ -123,6 +124,9 @@ public final class addChecksTopComponent extends TopComponent {
         this.jButtonSaveList.setEnabled(true);   
         jRadioButtonWith.setVisible(false);
         jRadioButtonWithout.setVisible(false);
+        // disable excel file tab
+        jTabbedPaneSource.removeTabAt(1);
+        
     }
 
     public void initLists() {
@@ -179,7 +183,8 @@ public final class addChecksTopComponent extends TopComponent {
         jScrollEntriesDb = new javax.swing.JScrollPane();
         jTableEntriesDB = new javax.swing.JTable();
         btnSearchList = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        btnImportList = new javax.swing.JButton();
+        pnlImportExcelFile = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaPath = new javax.swing.JTextArea();
@@ -366,6 +371,13 @@ public final class addChecksTopComponent extends TopComponent {
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(btnImportList, org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.btnImportList.text")); // NOI18N
+        btnImportList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -373,14 +385,15 @@ public final class addChecksTopComponent extends TopComponent {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollEntriesDb, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addComponent(jScrollEntriesDb, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSearchList)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addComponent(btnImportList)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -391,7 +404,8 @@ public final class addChecksTopComponent extends TopComponent {
                     .addComponent(jLabel1)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboGermplasmList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearchList)))
+                        .addComponent(btnSearchList)
+                        .addComponent(btnImportList)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollEntriesDb, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addContainerGap())
@@ -436,27 +450,27 @@ public final class addChecksTopComponent extends TopComponent {
         });
         jScrollEntiresExcel.setViewportView(jTableEntriesExcel);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlImportExcelFileLayout = new javax.swing.GroupLayout(pnlImportExcelFile);
+        pnlImportExcelFile.setLayout(pnlImportExcelFileLayout);
+        pnlImportExcelFileLayout.setHorizontalGroup(
+            pnlImportExcelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlImportExcelFileLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollEntiresExcel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(pnlImportExcelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollEntiresExcel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                    .addGroup(pnlImportExcelFileLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pnlImportExcelFileLayout.setVerticalGroup(
+            pnlImportExcelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlImportExcelFileLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlImportExcelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -465,7 +479,7 @@ public final class addChecksTopComponent extends TopComponent {
                 .addContainerGap())
         );
 
-        jTabbedPaneSource.addTab(org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.jPanel5.TabConstraints.tabTitle"), jPanel5); // NOI18N
+        jTabbedPaneSource.addTab(org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.pnlImportExcelFile.TabConstraints.tabTitle"), pnlImportExcelFile); // NOI18N
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(addChecksTopComponent.class, "addChecksTopComponent.jPanel6.border.title"))); // NOI18N
 
@@ -492,7 +506,7 @@ public final class addChecksTopComponent extends TopComponent {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollFinalSource, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(jScrollFinalSource, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -2199,6 +2213,10 @@ public final class addChecksTopComponent extends TopComponent {
         searchChecksList();
     }//GEN-LAST:event_btnSearchCheckListActionPerformed
 
+    private void btnImportListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportListActionPerformed
+       importGermplasmList();
+    }//GEN-LAST:event_btnImportListActionPerformed
+
     private void recorreIndices(List<List<Object>> germplasmData, int colEntry) {
 
         for (int j = 0; j < germplasmData.size(); j++) {
@@ -2817,6 +2835,7 @@ public final class addChecksTopComponent extends TopComponent {
         return this.jTableFinalChecks.getRowCount();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImportList;
     private javax.swing.JButton btnSearchCheckList;
     private javax.swing.JButton btnSearchList;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -2860,7 +2879,6 @@ public final class addChecksTopComponent extends TopComponent {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -2916,6 +2934,7 @@ public final class addChecksTopComponent extends TopComponent {
     private javax.swing.JToolBar jToolBar4;
     private java.awt.Label label1;
     private java.awt.Label label2;
+    private javax.swing.JPanel pnlImportExcelFile;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -3198,6 +3217,12 @@ public final class addChecksTopComponent extends TopComponent {
 
         for (GermplasmPedigreeTreeNode parent : node.getLinkedNodes()) {
             printNode(parent, level + 1);
+        }
+    }
+    
+    private void importGermplasmList() {
+         if (ImportList.listCreatedFromWizard()) {
+            fillComboListNames();
         }
     }
 }
