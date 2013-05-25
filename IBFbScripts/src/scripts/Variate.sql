@@ -80,27 +80,23 @@ START TRANSACTION;
     WHERE EXISTS (
     SELECT 1 
     FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND (cvtr.type_id = 1044 AND cvt3.cvterm_id = v_tid)
+	WHERE cvtr.object_id = v_tid AND cvtr.type_id = 1044 
+    AND cvt1.cvterm_id = cvtr.subject_id
     ) AND EXISTS ( 
     SELECT 1 
     FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND (cvtr.type_id = 1200 AND cvt3.cvterm_id = v_traitid)
+	WHERE cvtr.object_id = v_traitid AND cvtr.type_id = 1200 
+    AND cvt1.cvterm_id = cvtr.subject_id
     ) AND EXISTS ( 
     SELECT 1 
     FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND (cvtr.type_id = 1220 AND cvt3.cvterm_id = v_scaleid)
+	WHERE cvtr.object_id = v_scaleid AND cvtr.type_id = 1220
+    AND cvt1.cvterm_id = cvtr.subject_id
     ) AND EXISTS ( 
     SELECT 1 
     FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND (cvtr.type_id = 1210 AND cvt3.cvterm_id = v_tmethid)
+	WHERE cvtr.object_id = v_tmethid AND cvtr.type_id = 1210 
+    AND cvt1.cvterm_id = cvtr.subject_id
     );
     
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
