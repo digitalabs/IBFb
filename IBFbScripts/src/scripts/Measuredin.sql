@@ -46,17 +46,6 @@ begin
             SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
     END IF;
 
-    IF (v_storedin IS NOT NULL) THEN
-            SET @sql = CONCAT(@sql," AND crt.object_id = ",v_storedin);
-    END IF;
-
-    IF (v_hastype IS NOT NULL and v_hastype = 'C') THEN
-            SET @sql = CONCAT(@sql," AND crh.object_id = 1120");
-    ELSE 
-            SET @sql = CONCAT(@sql," AND crh.object_id = 1110");
-    END IF;
-		
-	
     SET @sql = CONCAT(@sql, " ORDER BY measuredinid; ");
 	
     PREPARE stmt FROM @sql;
