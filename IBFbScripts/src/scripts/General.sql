@@ -201,3 +201,45 @@ LEFT JOIN nd_experiment_stock es ON es.nd_experiment_id = exp.nd_experiment_id
 LEFT JOIN stock stock ON stock.stock_id = es.stock_id
 LEFT JOIN stockprop sprop ON sprop.stock_id = stock.stock_id AND sprop.type_id = stdvar.varid
 $$
+
+DROP PROCEDURE IF EXISTS `searchCVTerm`$$
+
+CREATE PROCEDURE `searchCVTerm` (IN cvtermid int, IN cvname varchar(255), IN cvid INT)
+  BEGIN
+
+    SET @myQuery = 'select cvterm_id as cvtermid,name as cvname from cvterm';
+
+    SET @myQuery = CONCAT(@myQuery, ' WHERE cv_id = ', cvid);
+
+    IF (cvtermid is not NULL AND cvtermid > 0) THEN
+      SET @myQuery = CONCAT(@myQuery, ' AND cvterm_id = ', cvtermid);
+    END IF;
+
+    IF (cvname IS NOT NULL) THEN
+      SET @myQuery = CONCAT(@myQuery, ' AND name like ''%', cvname, '%''');
+    END IF;
+
+    SET @myQuery = CONCAT(@myQuery, ' ORDER BY cvterm_id, name');
+
+    PREPARE stmt FROM @myQuery;
+    EXECUTE stmt;
+
+  END;
+$$
+
+DROP PROCEDURE IF EXISTS `getCVTermByCvid`$$
+
+CREATE PROCEDURE `getCVTermByCvid` (IN cvid INT)
+  BEGIN
+
+    SET @myQuery = 'select cvterm_id as cvtermid,name as cvname from cvterm';
+
+    SET @myQuery = CONCAT(@myQuery, ' WHERE cv_id = ', cvid);
+
+    SET @myQuery = CONCAT(@myQuery, ' ORDER BY cvterm_id, name');
+
+    PREPARE stmt FROM @myQuery;
+    EXECUTE stmt;
+
+  END;
+$$
