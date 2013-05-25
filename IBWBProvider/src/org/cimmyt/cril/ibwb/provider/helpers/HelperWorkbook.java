@@ -39,6 +39,7 @@ import org.cimmyt.cril.ibwb.domain.Traits;
 import org.cimmyt.cril.ibwb.domain.Variate;
 import org.cimmyt.cril.ibwb.domain.Veffect;
 import org.cimmyt.cril.ibwb.domain.VeffectPK;
+import org.cimmyt.cril.ibwb.provider.utils.ChadoSchemaUtil;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
 /**
@@ -263,27 +264,27 @@ public class HelperWorkbook {
         log.info("Saving levels for entrys....");
         //levelNo here is not needed
         /*
+         levelNo = HelperFactor.saveLavelsFactorsEntrys(
+         getListEntryFactors(),
+         workbook.getGermplasmData(),
+         levelNo,
+         this.localServices);
+         */
+        //we now pass in the nd_experiment_id
         levelNo = HelperFactor.saveLavelsFactorsEntrys(
                 getListEntryFactors(),
                 workbook.getGermplasmData(),
-                levelNo,
-                this.localServices);
-                */
-        //we now pass in the nd_experiment_id
-        levelNo = HelperFactor.saveLavelsFactorsEntrys(
-                        getListEntryFactors(),
-                        workbook.getGermplasmData(),
                 levelNoNdExperimentId,
-                        this.localServices);
+                this.localServices);
         log.info("Saving levels for entrys DONE!");
 
         /*      move to upper part
-        //Salvar levels para grupos de convinaciones de PLOT
-        log.info("Saving levels for plots....");
-        Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
-        //saveLevelsPlots(levelNo);
-        saveLevelsPlots(levelNoNdExperimentId);
-        log.info("Saving levels for plots DONE!");
+         //Salvar levels para grupos de convinaciones de PLOT
+         log.info("Saving levels for plots....");
+         Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+         //saveLevelsPlots(levelNo);
+         saveLevelsPlots(levelNoNdExperimentId);
+         log.info("Saving levels for plots DONE!");
          */
         //=======================
         //Salvar obsunit con todas la convinaciones datos
@@ -451,6 +452,7 @@ public class HelperWorkbook {
                 measuredin = measuredinList.get(0);
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
+                measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -567,6 +569,7 @@ public class HelperWorkbook {
                 measuredin = measuredinList.get(0);
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
+                measuredin.setStoredinid(ChadoSchemaUtil.TRIAL_ENVT_VAR_TYPE);
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -624,6 +627,7 @@ public class HelperWorkbook {
             Traits traits = new Traits();
             Measuredin measuredin;
             Dmsattr dmsattr;
+            int storedInType = ChadoSchemaUtil.getStoredInVariableType(factorDomain.getProperty());
 
             // Check if Method already exists
             TmsMethod tmsMethodFilter = new TmsMethod(true);
@@ -679,6 +683,7 @@ public class HelperWorkbook {
                 measuredin = measuredinList.get(0);
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,factorDomain.getFactorName(),factorDomain.getDataType());
+                measuredin.setStoredinid(storedInType); 
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -789,7 +794,6 @@ public class HelperWorkbook {
             //Verificar existencia de measuredin
             Measuredin measuredinFilter = new Measuredin(true);
             measuredinFilter.setScaleid(scales.getScaleid());
-           
             measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
@@ -799,6 +803,7 @@ public class HelperWorkbook {
                 measuredin = measuredinList.get(0);
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
+                measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -898,6 +903,7 @@ public class HelperWorkbook {
                 measuredin = measuredinList.get(0);
             } else {
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
+                measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 localServices.addMeasuredin(measuredin);
             }
 
@@ -1165,61 +1171,61 @@ public class HelperWorkbook {
     }
 
     public void saveLevelsPlotsOld(Integer levelNo) {
-            Factor factorDeHeader = new Factor();
-            List<String> listHeaders = workbook.getMeasurementHeaders();
-            boolean agregado = false;
-            //for (Factor factorGroupTemp : listPlotFactors) {
-            for (Measurement measurement : workbook.getMeasurementsRep()) {
-                for (String header : listHeaders) {
-                    factorDeHeader = mapPlotFactors.get(header);
-    // TODO: ajusstar los nombres de los factores a la combinacion
-                    if (factorDeHeader != null) {
-                        if (factorDeHeader.getFname().equals(workbook.getPlotLabel())) {
-                            HelperFactor.saveLevel(factorDeHeader,
-                                    levelNo,
-                                    measurement.getPlot(),
-                                    localServices);
-                            agregado = true;
-                        } else if (factorDeHeader.getFname().equals(workbook.getRepLabel())) {//"REP"
-                            HelperFactor.saveLevel(factorDeHeader,
-                                    levelNo,
-                                    measurement.getReplication(),
-                                    localServices);
-                            agregado = true;
-                        } else if (factorDeHeader.getFname().equals(workbook.getBlockLabel())) {//"BLOCK"
-                            HelperFactor.saveLevel(factorDeHeader,
-                                    levelNo,
-                                    measurement.getBlock(),
-                                    localServices);
-                            agregado = true;
-                        } else if (factorDeHeader.getFname().equals(workbook.getRowLabel())) {//"ROW"
-                            HelperFactor.saveLevel(factorDeHeader,
-                                    levelNo,
-                                    measurement.getRow(),
-                                    localServices);
-                            agregado = true;
-                        } else if (factorDeHeader.getFname().equals(workbook.getColLabel())) {//"COL"
-                            HelperFactor.saveLevel(factorDeHeader,
-                                    levelNo,
-                                    measurement.getColumn(),
-                                    localServices);
-                            agregado = true;
-                        } else {
-                            System.out.println("Unrecognized");
-                        }
+        Factor factorDeHeader = new Factor();
+        List<String> listHeaders = workbook.getMeasurementHeaders();
+        boolean agregado = false;
+        //for (Factor factorGroupTemp : listPlotFactors) {
+        for (Measurement measurement : workbook.getMeasurementsRep()) {
+            for (String header : listHeaders) {
+                factorDeHeader = mapPlotFactors.get(header);
+                // TODO: ajusstar los nombres de los factores a la combinacion
+                if (factorDeHeader != null) {
+                    if (factorDeHeader.getFname().equals(workbook.getPlotLabel())) {
+                        HelperFactor.saveLevel(factorDeHeader,
+                                levelNo,
+                                measurement.getPlot(),
+                                localServices);
+                        agregado = true;
+                    } else if (factorDeHeader.getFname().equals(workbook.getRepLabel())) {//"REP"
+                        HelperFactor.saveLevel(factorDeHeader,
+                                levelNo,
+                                measurement.getReplication(),
+                                localServices);
+                        agregado = true;
+                    } else if (factorDeHeader.getFname().equals(workbook.getBlockLabel())) {//"BLOCK"
+                        HelperFactor.saveLevel(factorDeHeader,
+                                levelNo,
+                                measurement.getBlock(),
+                                localServices);
+                        agregado = true;
+                    } else if (factorDeHeader.getFname().equals(workbook.getRowLabel())) {//"ROW"
+                        HelperFactor.saveLevel(factorDeHeader,
+                                levelNo,
+                                measurement.getRow(),
+                                localServices);
+                        agregado = true;
+                    } else if (factorDeHeader.getFname().equals(workbook.getColLabel())) {//"COL"
+                        HelperFactor.saveLevel(factorDeHeader,
+                                levelNo,
+                                measurement.getColumn(),
+                                localServices);
+                        agregado = true;
+                    } else {
+                        System.out.println("Unrecognized");
                     }
+                }
 
 
-                }
-                if (agregado) {
-                    //HelperFactor.addLevels(factorGroupTemp.getFactorid(), levelNo, localServices);
-                    //HelperFactor.addLevels(factorDeHeader.getFactorid(), levelNo, localServices);
-                    levelNo--;
-                    agregado = false;
-                }
             }
-            //}
+            if (agregado) {
+                //HelperFactor.addLevels(factorGroupTemp.getFactorid(), levelNo, localServices);
+                //HelperFactor.addLevels(factorDeHeader.getFactorid(), levelNo, localServices);
+                levelNo--;
+                agregado = false;
+            }
         }
+        //}
+    }
 
     /**
      * Insert into OBSUNIT all records from Represtn
