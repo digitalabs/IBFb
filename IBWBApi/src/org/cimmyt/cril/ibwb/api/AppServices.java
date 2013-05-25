@@ -1064,6 +1064,12 @@ public interface AppServices {
     public List<Scales> getScalesList();
 
     /**
+     * Returns a list of Scales objects. Alternate implementation from the original
+     * @return
+     */
+    public List<Scales> getScalesListNew();
+
+    /**
      * Gets the number of records matching with filter
      *
      * @param scalesFiltro Object to count total items

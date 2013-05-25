@@ -1,7 +1,6 @@
 package org.cimmyt.cril.ibwb.provider;
 
 import ibfb.domain.core.Measurement;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.api.dao.utils.ValidatingDataType;
 import org.cimmyt.cril.ibwb.domain.*;
@@ -15,7 +14,6 @@ import org.cimmyt.cril.ibwb.provider.dto.TraitDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2069,6 +2067,23 @@ public class CommonServicesImpl implements CommonServices {
         return this.utilityDAO.callStoredProcedureForList(new Scales()  , "getScalesList",
             				new String[]{},
             				new String[]{"scaleid","scname", "sctype"});
+    }
+
+    @Override
+    public List<Scales> getScalesListNew() {
+        CVTermDTO dto = new CVTermDTO();
+        dto.setCvid(CVTermDTO.SCALE_CV_ID);
+        List<CVTermDTO> temp = this.utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"},
+                new String[] {"cvtermid", "cvname"});
+
+        List<Scales> returnVal = new ArrayList<Scales>(temp.size());
+
+        for (CVTermDTO cvterm : temp) {
+            Scales scales = new Scales(cvterm.getCvtermid(), cvterm.getCvname(), null, null, null);
+            returnVal.add(scales);
+        }
+
+        return returnVal;
     }
 
     @Override

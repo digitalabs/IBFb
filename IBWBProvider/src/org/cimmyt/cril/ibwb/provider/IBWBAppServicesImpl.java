@@ -1280,6 +1280,12 @@ public class IBWBAppServicesImpl implements AppServices {
         return scaless;
     }
 
+    public List<Scales> getScalesListNew() {
+        List<Scales> scaless = serviciosCentral.getScalesListNew();
+        scaless.addAll(serviciosLocal.getScalesListNew());
+        return scaless;
+    }
+
     @Override
     public int getTotalScales(Scales scales) {
         int total = serviciosCentral.getTotalScales(scales);
