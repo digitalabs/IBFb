@@ -2829,7 +2829,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Traits> getTraitsList() {
     	return this.utilityDAO.callStoredProcedureForList(Traits.class, "getTraitList", 
     			new HashMap(), new String[]{},
-                new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup"});
+                new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup", "traitGroupId"});
     }
 
     @Override
@@ -2845,7 +2845,7 @@ public class CommonServicesImpl implements CommonServices {
         List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
                 start,pageSize, "getTraitListByTrait",
                 new String[] {"tid","traitId", "traitName", "traitDescription", "traitGroup"},
-                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup"});
+                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup", "traitGroupId"});
         List<Traits> returnVal = new ArrayList<Traits>(temp.size());
         for (Object o : temp) {
             dto = (TraitDto) o;
