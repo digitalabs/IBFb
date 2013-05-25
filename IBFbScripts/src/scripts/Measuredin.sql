@@ -82,7 +82,8 @@ iN v_tmethid int,
 IN v_scaleid int,
 IN v_name varchar(255),
 IN v_storedinid int,
-IN v_hastype varchar(255))
+IN v_hastype varchar(255),
+IN v_is_a int)
 begin
 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
@@ -110,10 +111,11 @@ START TRANSACTION;
             call addCvtermRelationship(1105, @newcvtermid, 1110);
         end if;
 
+	call addCvtermRelationship(1225, @newcvtermid, v_is_a);
+
 COMMIT;	
 	
 end$$
-
 
 DROP PROCEDURE IF EXISTS `copyCvTermRelationship`$$
 
