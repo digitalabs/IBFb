@@ -163,15 +163,9 @@ START TRANSACTION;
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	VALUES(v_projectprop_id,v_project_id,1060,v_fname,v_rank);
 	
-	SELECT cvt1.cvterm_id into v_type_id
+	SELECT distinct cvt1.cvterm_id into v_type_id
     FROM cvterm cvt1 
-    WHERE EXISTS (
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id AND cvtr.type_id = 1044 
-    WHERE cvt1.cvterm_id = cvtr.subject_id 
-    AND cvt3.cvterm_id = v_tid
-    ) AND EXISTS ( 
+    WHERE EXISTS ( 
     SELECT 1 
     FROM cvterm_relationship cvtr
 	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id AND cvtr.type_id = 1200 

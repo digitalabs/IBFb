@@ -86,6 +86,9 @@ begin
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
+
+	SET @name = CONCAT(v_name,"-",v_traitid,"-",v_tmethid,"-",v_scaleid);
+	
 	-- insert standard variable
 	call addCvtermReturnId(1040, v_name, v_name, @newcvtermid);
 
