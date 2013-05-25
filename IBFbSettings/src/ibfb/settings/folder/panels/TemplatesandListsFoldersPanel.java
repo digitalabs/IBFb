@@ -47,6 +47,12 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtPathCrosses = new javax.swing.JTextArea();
         btnUseDefaultCrosses = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblRIcon = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtRPath = new javax.swing.JTextArea();
+        btnRBrowse = new javax.swing.JButton();
+        btnRDefault = new javax.swing.JButton();
 
         pnlTemplatesFolder.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.pnlTemplatesFolder.border.title"))); // NOI18N
         pnlTemplatesFolder.setToolTipText(org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.pnlTemplatesFolder.toolTipText")); // NOI18N
@@ -209,22 +215,19 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlSelectionFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSearchSelections, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUseDefaultSelections))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSelectionFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSearchSelections, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                    .addComponent(btnUseDefaultSelections, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         pnlSelectionFolderLayout.setVerticalGroup(
             pnlSelectionFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSelectionFolderLayout.createSequentialGroup()
-                .addGroup(pnlSelectionFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(pnlSelectionFolderLayout.createSequentialGroup()
-                        .addComponent(btnSearchSelections)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnUseDefaultSelections))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImgSelection))
-                .addGap(0, 5, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSelectionFolderLayout.createSequentialGroup()
+                .addComponent(btnSearchSelections)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnUseDefaultSelections))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblImgSelection, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pnlCrossesFolder.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.pnlCrossesFolder.border.title"))); // NOI18N
@@ -272,7 +275,7 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
                 .addGroup(pnlCrossesFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSearchCrosses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUseDefaultCrosses))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         pnlCrossesFolderLayout.setVerticalGroup(
             pnlCrossesFolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,6 +285,56 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
                 .addComponent(btnUseDefaultCrosses))
             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(lbllImgCross, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.jPanel1.border.title"))); // NOI18N
+
+        lblRIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/settings/core/images/R32.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(lblRIcon, org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.lblRIcon.text")); // NOI18N
+        lblRIcon.setToolTipText(org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.lblRIcon.toolTipText")); // NOI18N
+
+        txtRPath.setColumns(20);
+        txtRPath.setRows(5);
+        jScrollPane5.setViewportView(txtRPath);
+
+        org.openide.awt.Mnemonics.setLocalizedText(btnRBrowse, org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.btnRBrowse.text")); // NOI18N
+        btnRBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRBrowseActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(btnRDefault, org.openide.util.NbBundle.getMessage(TemplatesandListsFoldersPanel.class, "TemplatesandListsFoldersPanel.btnRDefault.text")); // NOI18N
+        btnRDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRDefaultActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblRIcon)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRDefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRBrowse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblRIcon)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(btnRBrowse)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRDefault))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -294,7 +347,8 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
                     .addComponent(pnlCrossesFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlFolderGermplasm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlTemplatesFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
-                    .addComponent(pnlSelectionFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlSelectionFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -306,8 +360,10 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlCrossesFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlSelectionFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlSelectionFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -360,6 +416,14 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
         this.txtPathSelections.setText(OSUtils.getSelectionsFilesPath());
     }//GEN-LAST:event_btnUseDefaultSelectionsActionPerformed
 
+    private void btnRBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRBrowseActionPerformed
+       selectFolderForR();
+    }//GEN-LAST:event_btnRBrowseActionPerformed
+
+    private void btnRDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRDefaultActionPerformed
+       txtRPath.setText(OSUtils.getRPATH());
+    }//GEN-LAST:event_btnRDefaultActionPerformed
+
     void load() {
         // TODO read settings and initialize GUI
         // Example:        
@@ -372,6 +436,7 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
         txtPathTempExpert.setText(FieldbookSettings.getSetting(FieldbookSettings.TEMPLATES_DEFAULT_FOLDER, ""));
         txtPathCrosses.setText(FieldbookSettings.getCrossesDefaultFolder());
         txtPathSelections.setText(FieldbookSettings.getSelectionsDefaultFolder());
+        txtRPath.setText(FieldbookSettings.getSetting(FieldbookSettings.R_HOME_FOLDER));
     }
 
     void store() {
@@ -386,6 +451,7 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
         FieldbookSettings.setSetting(FieldbookSettings.GERMPLASM_LIST_DEFAULT_FOLDER, txtPathGSMExpert.getText());
         FieldbookSettings.setSetting(FieldbookSettings.CROSSES_DEFAULT_FOLDER, txtPathCrosses.getText());
         FieldbookSettings.setSetting(FieldbookSettings.SELECTION_DEFAULT_FOLDER, txtPathSelections.getText());
+        FieldbookSettings.setSetting(FieldbookSettings.R_HOME_FOLDER,txtRPath.getText());
     }
 
     boolean valid() {
@@ -408,7 +474,15 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
     private void selectFolderForSelections() {
         txtPathSelections.setText(FileUtils.getSelectedFolder(txtPathSelections.getText()));
     }
+    
+    private void selectFolderForR() {
+        txtRPath.setText(FileUtils.getSelectedFolder(txtRPath.getText()));
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRBrowse;
+    private javax.swing.JButton btnRDefault;
     private javax.swing.JButton btnSearchCrosses;
     private javax.swing.JButton btnSearchGSMExpert;
     private javax.swing.JButton btnSearchSelections;
@@ -417,13 +491,16 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnUseDefaultCrosses;
     private javax.swing.JButton btnUseDefaultGersmplasmFolder;
     private javax.swing.JButton btnUseDefaultSelections;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblImgGermplasm;
     private javax.swing.JLabel lblImgSelection;
     private javax.swing.JLabel lblImgTemplates;
+    private javax.swing.JLabel lblRIcon;
     private javax.swing.JLabel lbllImgCross;
     private javax.swing.JPanel pnlCrossesFolder;
     private javax.swing.JPanel pnlFolderGermplasm;
@@ -433,5 +510,6 @@ public final class TemplatesandListsFoldersPanel extends javax.swing.JPanel {
     private javax.swing.JTextArea txtPathGSMExpert;
     private javax.swing.JTextArea txtPathSelections;
     private javax.swing.JTextArea txtPathTempExpert;
+    private javax.swing.JTextArea txtRPath;
     // End of variables declaration//GEN-END:variables
 }

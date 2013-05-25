@@ -12,6 +12,7 @@ import ibfb.settings.folder.panels.TemplatesandListsFoldersPanel;
 
 /**
  * Proxy for manage all settings in FieldBook prototype
+ *
  * @author TMSANCHEZ
  */
 public class FieldbookSettings {
@@ -19,10 +20,8 @@ public class FieldbookSettings {
 
     public static final String GERMPLASM_LIST_DEFAULT_FOLDER = "GERMPLASM_LIST_DEFAULT_FOLDER";
     public static final String TEMPLATES_DEFAULT_FOLDER = "TEMPLATES_DEFAULT_FOLDER";
-    
     public static final String CROSSES_DEFAULT_FOLDER = "CROSSES_DEFAULT_FOLDER";
     public static final String SELECTION_DEFAULT_FOLDER = "SELECTION_DEFAULT_FOLDER";
-    
     private static final HashMap<String, Class> moduleOptionList = new HashMap<String, Class>();
     // R constants
     public static final String R_HOME_FOLDER = "R_HOME_FOLDER";
@@ -31,11 +30,11 @@ public class FieldbookSettings {
     public static final String LOCAL_GMS_USER_ID_UNASSIGNED = "LOCAL_GMS_USER_ID_UNASSIGNED";
     public static final String LOCAL_DMS_USER_ID = "LOCAL_DMS_USER_ID";
     public static final String LOCAL_DMS_USER_ID_UNASSIGNED = "LOCAL_DMS_USER_ID_UNASSIGNED";
-    
     public static final String READ_ICIS_INI_FILE = "READ_ICIS_INI_FILE";
 
     /**
      * Returns stored setting in NBPreferences
+     *
      * @param settingClass Java class for option panel
      * @param settingName setting name stored in NBPrefences
      * @param defaultSetting default setting value for property
@@ -48,7 +47,7 @@ public class FieldbookSettings {
     }
 
     /**
-     * 
+     *
      * @param settingName
      * @param defaultSetting
      * @return
@@ -64,7 +63,7 @@ public class FieldbookSettings {
     }
 
     /**
-     * 
+     *
      * @param settingName
      * @return
      */
@@ -80,7 +79,7 @@ public class FieldbookSettings {
     }
 
     /**
-     * 
+     *
      * @param settingName
      * @param settingValue
      */
@@ -102,12 +101,14 @@ public class FieldbookSettings {
         moduleOptionList.put(READ_ICIS_INI_FILE, TemplatesandListsFoldersPanel.class);
         moduleOptionList.put(CROSSES_DEFAULT_FOLDER, TemplatesandListsFoldersPanel.class);
         moduleOptionList.put(SELECTION_DEFAULT_FOLDER, TemplatesandListsFoldersPanel.class);
+        moduleOptionList.put(R_HOME_FOLDER, TemplatesandListsFoldersPanel.class);
 
     }
 
     /**
      * Assigns User ID for GMS for local database
-     * @param userId 
+     *
+     * @param userId
      */
     public static void setLocalGmsUserId(String userId) {
         setSetting(LOCAL_GMS_USER_ID, userId);
@@ -115,7 +116,8 @@ public class FieldbookSettings {
 
     /**
      * Assigns User ID for DMS for local database
-     * @param userId 
+     *
+     * @param userId
      */
     public static void setLocalDmsUserId(String userId) {
         setSetting(LOCAL_DMS_USER_ID, userId);
@@ -136,50 +138,51 @@ public class FieldbookSettings {
         }
         return localDmsuser;
     }
-    
+
     /**
      * Returns true if application must read icis ini file at startup
      */
     public static boolean readIcisIniFileAtStartup() {
-        boolean readIcisIniFileAtStartup =  false;
-        
+        boolean readIcisIniFileAtStartup = false;
+
         String readIcisIniFile = getSetting(READ_ICIS_INI_FILE);
-        
+
         if (readIcisIniFile != null) {
-           readIcisIniFileAtStartup = readIcisIniFile.equals("1");
+            readIcisIniFileAtStartup = readIcisIniFile.equals("1");
         }
-        
+
         return readIcisIniFileAtStartup;
     }
-    
+
     /**
      * Returns default folder for crosses
      */
     public static String getCrossesDefaultFolder() {
         String crossesDefaultFolder = "";
-        
+
         crossesDefaultFolder = getSetting(CROSSES_DEFAULT_FOLDER);
-        
+
         if (crossesDefaultFolder == null) {
-            crossesDefaultFolder= "";
+            crossesDefaultFolder = "";
         }
-        
+
         return crossesDefaultFolder;
     }
-    
+
     /**
      * Returns default folder for crosses
      */
     public static String getSelectionsDefaultFolder() {
         String crossesDefaultFolder = "";
-        
+
         crossesDefaultFolder = getSetting(SELECTION_DEFAULT_FOLDER);
-        
+
         if (crossesDefaultFolder == null) {
-            crossesDefaultFolder= "";
+            crossesDefaultFolder = "";
         }
-        
+
         return crossesDefaultFolder;
     }
+    
     
 }
