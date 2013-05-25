@@ -48,7 +48,7 @@ public class ExperimentChildren extends Index.ArrayChildren {
         studytmp.setObjective(studyDto.getObjectiv());
         studytmp.setEndDate(ConvertUtils.getIntegerAsDate(studyDto.getEdate()));
         studytmp.setStarDate(ConvertUtils.getIntegerAsDate(studyDto.getEdate()));
-        studytmp.setPmkey(studyDto.getPmkey()!=null?studyDto.getPmkey().toString():null);
+        studytmp.setPmkey(studyDto.getPmkey().toString());
         studytmp.setShierarchy(studyDto.getShierarchy());
         studytmp.setStudyid(studyDto.getStudyid());
         studytmp.setStudyType(studyDto.getStype());

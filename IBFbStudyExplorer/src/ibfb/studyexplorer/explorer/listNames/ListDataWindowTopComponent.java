@@ -28,6 +28,7 @@ import org.openide.awt.ActionReference;
 import ibfb.inventory.export.InventoryExcelExporter;
 import ibfb.inventory.models.GermplasmEntriesTableModel;
 import ibfb.inventory.update.UpdateInventoryWizardIterator;
+import ibfb.nursery.inventory.InventoryTopComponent;
 import java.text.MessageFormat;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.openide.DialogDisplayer;
@@ -450,16 +451,18 @@ public final class ListDataWindowTopComponent extends TopComponent {
         inventoryTable.setModel(modeloFilter);
 
 
-        List<InventoryData> inventoryListData = new ArrayList<InventoryData>();
-        for (Listdata listdata : this.listdataEntries) {
-            InventoryData id = new InventoryData();
-            id.setDesig(listdata.getDesig());
-            id.setEntry(listdata.getEntryid());
-            id.setGid(listdata.getGid());
-            id.setCross(listdata.getGrpname());
-            inventoryListData.add(id);
-        }
+//        List<InventoryData> inventoryListData = new ArrayList<InventoryData>();
+//        for (Listdata listdata : this.listdataEntries) {
+//            InventoryData id = new InventoryData();
+//            id.setDesig(listdata.getDesig());
+//            id.setEntry(listdata.getEntryid());
+//            id.setGid(listdata.getGid());
+//            id.setCross(listdata.getGrpname());
+//            inventoryListData.add(id);
+//        }
 
+        List<InventoryData> inventoryListData = AppServicesProxy.getDefault().appServices().getInventoryDataFromList(parentListname.getListid());
+        
         InventoryExcelExporter inventoryExcelExporter = new InventoryExcelExporter(inventoryTable, archivo.getAbsolutePath(), inventoryListData, this.parentListname);
         try {
             //exporter = new ExcelTableExporter(tables, archivo, nombreTabs);
@@ -479,14 +482,44 @@ public final class ListDataWindowTopComponent extends TopComponent {
     }
 
     private void importToInventory() {
-        WizardDescriptor wiz = new WizardDescriptor(new UpdateInventoryWizardIterator());
-        // {0} will be replaced by WizardDescriptor.Panel.getComponent().getName()
-        // {1} will be replaced by WizardDescriptor.Iterator.name()
-        wiz.setTitleFormat(new MessageFormat("{0} ({1})"));
-        wiz.setTitle(NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.UpdateSeedInventory"));
-        if (DialogDisplayer.getDefault().notify(wiz) == WizardDescriptor.FINISH_OPTION) {
+//        WizardDescriptor wiz = new WizardDescriptor(new UpdateInventoryWizardIterator());
+//        // {0} will be replaced by WizardDescriptor.Panel.getComponent().getName()
+//        // {1} will be replaced by WizardDescriptor.Iterator.name()
+//        wiz.setTitleFormat(new MessageFormat("{0} ({1})"));
+//        wiz.setTitle(NbBundle.getMessage(ListDataWindowTopComponent.class, "ListDataWindowTopComponent.UpdateSeedInventory"));
+//        if (DialogDisplayer.getDefault().notify(wiz) == WizardDescriptor.FINISH_OPTION) {
+//            
+//        }
+
+        List<List<Object>> germplasmData = new ArrayList<List<Object>>();
+        for (Listdata listdata: listdataEntries) {
+            List<Object> row =  new ArrayList<Object>();
+            row.add(listdata.getGid());
+            row.add(listdata.getDesig());
+            row.add(listdata.getEntrycd());
+            row.add(listdata.getSource());
+            row.add(listdata.getGrpname());
+            row.add(listdata.getEntryid());
+            row.add("");
+            row.add("");
+            row.add("");
+            row.add("");
             
+            germplasmData.add(row);
         }
 
+        InventoryTopComponent inventario = new InventoryTopComponent();
+
+        inventario.assignGermplasmEntries(InventoryFactors.getGermplasmFactors(), germplasmData);
+        inventario.setListName(parentListname.getListname());
+        inventario.setDescription(parentListname.getListdesc());
+        inventario.setListToSave(parentListname);
+
+        if (!inventario.validateSeedStockTrait()) {
+            return;
+        }
+        inventario.open();
+        inventario.setName(this.getName() + " INVENTORY");
+        inventario.requestActive();
     }
 }
