@@ -1295,6 +1295,13 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
     @Override
+    public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged) {
+        List<Scales> scaless = serviciosCentral.getListScalesByScaleNew(scalesFilter, start, pageSize, paged);
+        scaless.addAll(serviciosLocal.getListScalesByScaleNew(scalesFilter, start, pageSize, paged));
+        return scaless;
+    }
+
+    @Override
     public List<Scales> getListScalesCentral(Scales filter, int start, int pageSize, boolean paged) {
         return serviciosCentral.getListScales(filter, start, pageSize, paged);
     }
@@ -1686,7 +1693,7 @@ public class IBWBAppServicesImpl implements AppServices {
      * Gets an Object of type TmsScaleCon Finding the record by its ID
      * TmsScaleCon in String format
      *
-     * @param idTmethod
+     * @param tmsScaleConId
      * @return TmsScaleCon
      */
     @Override
@@ -1711,7 +1718,7 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets the number of records matching with filter
      *
-     * @param tmsScaleConFiltro Object to count total items
+     * @param tmsScaleConFilter Object to count total items
      */
     @Override
     public int getTotalTmsScaleCon(TmsScaleCon tmsScaleConFilter) {
@@ -1721,9 +1728,9 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets a list of Objects for pagination
      *
-     * @param tmethodFiltro	The filter object
-     * @param inicio initial record
-     * @param tamanioPagina page size
+     * @param tmsScaleConFilter	The filter object
+     * @param start initial record
+     * @param pageSize page size
      * @return List
      */
     @Override
@@ -1807,7 +1814,7 @@ public class IBWBAppServicesImpl implements AppServices {
      * Gets an Object of type TmsScaleDis Finding the record by its ID
      * TmsScaleDis in String format
      *
-     * @param idTmethod
+     * @param tmsScaleDisId
      * @return TmsScaleDis
      */
     @Override
@@ -1832,7 +1839,7 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets the number of records matching with filter
      *
-     * @param tmsScaleDisFiltro Object to count total items
+     * @param tmsScaleDisFilter Object to count total items
      */
     @Override
     public int getTotalTmsScaleDis(TmsScaleDis tmsScaleDisFilter) {
@@ -1842,9 +1849,9 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets a list of Objects for pagination
      *
-     * @param tmethodFiltro	The filter object
-     * @param inicio initial record
-     * @param tamanioPagina page size
+     * @param tmsScaleDisFilter	The filter object
+     * @param start initial record
+     * @param pageSize page size
      * @return List
      */
     @Override
@@ -2993,7 +3000,7 @@ public class IBWBAppServicesImpl implements AppServices {
      * Get number of rows for an effect id. For example you can retrieve row
      * number for Measurement Effect
      *
-     * @param effectId
+     * @param studyId
      * @return
      */
     @Override
@@ -3029,7 +3036,7 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets a list of observations unit for a effect id
      *
-     * @param effectId Effect Id to search
+     * @param studyId Effect Id to search
      * @return List of observations units or empty list
      */
     @Override
@@ -3061,7 +3068,7 @@ public class IBWBAppServicesImpl implements AppServices {
     /**
      * Gets a list of observations unit for a effect id
      *
-     * @param effectId Effect Id to search
+     * @param studyId Effect Id to search
      * @return List of observations units or empty list
      */
     @Override

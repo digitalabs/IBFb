@@ -9,6 +9,7 @@ import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 import org.cimmyt.cril.ibwb.provider.dao.*;
+import org.cimmyt.cril.ibwb.provider.dto.CVTermDTO;
 import org.cimmyt.cril.ibwb.provider.dto.EffectDto;
 import org.cimmyt.cril.ibwb.provider.dto.TraitDto;
 import org.springframework.context.ApplicationContext;
@@ -2068,6 +2069,37 @@ public class CommonServicesImpl implements CommonServices {
         return this.utilityDAO.callStoredProcedureForList(new Scales()  , "getScalesList",
             				new String[]{},
             				new String[]{"scaleid","scname", "sctype"});
+    }
+
+    @Override
+    public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged) {
+
+
+
+        if (scalesFilter.getGlobalsearch() != null) {
+            if (ValidatingDataType.isNumeric(scalesFilter.getGlobalsearch())) {
+                scalesFilter.setScaleid(Integer.parseInt(scalesFilter.getGlobalsearch()));
+            } else {
+                scalesFilter.setScname(scalesFilter.getGlobalsearch());
+            }
+        }
+
+        CVTermDTO dto = new CVTermDTO(scalesFilter.getScaleid(),
+                scalesFilter.getScname(), CVTermDTO.SCALE_CV_ID);
+
+
+        List<CVTermDTO> temp = this.utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize,
+                "searchCVTerm", new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+
+        List<Scales> returnVal = new ArrayList<Scales>(temp.size());
+
+        for (CVTermDTO cvTermDTO : temp) {
+            Scales scale = new Scales(cvTermDTO.getCvtermid(), cvTermDTO.getCvname(), null, null, null);
+
+            returnVal.add(scale);
+        }
+
+        return returnVal;
     }
 
     @Override
@@ -4359,7 +4391,7 @@ public class CommonServicesImpl implements CommonServices {
     }
     
     //NEW SCHEMA
-    @Override
+
     public void copyCvTermFromCentral(int cvTermId) {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("p_cvTermId", String.valueOf(cvTermId));

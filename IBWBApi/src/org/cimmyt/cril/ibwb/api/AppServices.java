@@ -1080,6 +1080,8 @@ public interface AppServices {
      */
     public List<Scales> getListScales(Scales scalesFilter, int start, int pageSize, boolean paged);
 
+    public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged);
+
     /**
      * Gets a list of Objects Local for pagination
      *

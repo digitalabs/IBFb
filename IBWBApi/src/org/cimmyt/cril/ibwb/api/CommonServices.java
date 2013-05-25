@@ -2327,6 +2327,8 @@ public interface CommonServices {
      */
     public List<Scales> getScalesList();
 
+    public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged);
+
     /**
      * Gets the number of records matching with filter
      *

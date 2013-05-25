@@ -778,6 +778,11 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
+    public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public void addStudy(Study study) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -317,7 +317,8 @@ public final class ScalesBrowserTopComponent extends TopComponent {
         filter.setGlobalsearch(txtSearch.getText());
 
         //int total = AppServicesProxy.getDefault().appServices().getTotalTrait(filter);
-        scales = AppServicesProxy.getDefault().appServices().getListScales(filter, 0, 0, false);
+
+        scales = AppServicesProxy.getDefault().appServices().getListScalesByScaleNew(filter, 0, 0, false);
         lblRecordsFound.setText(scales.size() + " Record(s) found ");
         
         String scaleId = bundle.getString("ScalesBrowserTopComponent.scaleId");
