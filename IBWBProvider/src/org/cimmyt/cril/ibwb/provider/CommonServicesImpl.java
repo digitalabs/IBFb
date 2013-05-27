@@ -2447,7 +2447,7 @@ public class CommonServicesImpl implements CommonServices {
     @SuppressWarnings("unchecked")
 	@Override
     public List<Study> getStudyList() {
-    	//return studyDAO.findAll();
+    	//return studyDAO.findAll(); - not used last check 5/27/2013
     	Study study = new Study();
     	return utilityDAO.callStoredProcedureForList(study, "getStudyList",null,
     			new String[]{"studyid", "sname", "pmkey","title","objectiv","investid","stype","sdate","edate","userid","sstatus","shierarchy"});
@@ -2463,11 +2463,10 @@ public class CommonServicesImpl implements CommonServices {
 	@Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
-    	filter.setSstatus(1);
     	return utilityDAO.callStoredProcedureForListPaged(filter, paged,
     				start, pageSize, "getStudy",
     				new String[]{"studyid","sname","pmkey","title","objectiv",
-                    "investid","stype","sdate","edate","userid","sstatus","shierarchy"},
+                    "investid","stype","sdate","edate","userid","shierarchy"},
             		new String[]{"studyid", "sname", "pmkey","title","objectiv",
     				"investid","stype","sdate","edate","userid","sstatus","shierarchy"});
     	

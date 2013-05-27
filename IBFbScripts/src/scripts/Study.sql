@@ -237,7 +237,7 @@ SET foreign_key_checks = 0;
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8006 as type_id, cvterm_id as value, 10 as rank
 	FROM cvterm
-	WHERE name = 1
+	WHERE name = v_sstatus
   	AND cv_id = 2005;
   	
 
@@ -320,7 +320,7 @@ START TRANSACTION;
 	and pp.type_id = 8020;
 	
 	update projectprop pp
-	set value = (select cvterm_id from cvterm where name = 1 and cv_id = 2005) 
+	set value = (select cvterm_id from cvterm where name = v_sstatus and cv_id = 2005) 
 	where pp.project_id = v_studyid
 	and pp.type_id = 8006;
 		
@@ -394,7 +394,6 @@ IN v_stype varchar(3),
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
-IN v_sstatus int,
 IN v_shierarchy int)
 begin
        
@@ -413,7 +412,7 @@ begin
 	"LEFT JOIN cvterm ct2 ON ct2.cvterm_id = value.value ",  
 	"WHERE value.project_id = p.project_id ", 
   	"AND value.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020) ",  
-	"GROUP BY p.project_id HAVING 1=1 ");
+	"GROUP BY p.project_id HAVING (sstatus IS NULL OR sstatus != 9) ");
 	IF(v_studyid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND studyid = ",v_studyid);
 	END IF;
@@ -446,9 +445,6 @@ begin
 	END IF;
 	IF(v_userid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND userid = ",v_userid);
-	END IF;
-	IF(v_sstatus IS NOT NULL) THEN
-	SET @sql = CONCAT(@sql," AND sstatus = ",v_sstatus);
 	END IF;
 	
 	
