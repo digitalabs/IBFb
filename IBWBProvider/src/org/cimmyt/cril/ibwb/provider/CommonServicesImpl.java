@@ -2592,7 +2592,14 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public TmsMethod getTmsMethod(Integer idTmethod) {
-        return this.tmsMethodDAO.findById(idTmethod);
+        TmsMethod filter = new TmsMethod();
+        filter.setTmethid(idTmethod);
+        //override default values
+        filter.setTmname(null);
+        filter.setTmdesc(null);
+        return this.utilityDAO.callStoredProcedureForObject(filter, "getListTmsMethod", 
+				new String[]{"tmethid","tmname", "tmdesc"},
+				new String[]{"tmethid","tmname", "tmdesc"});
     }
 
     @Override
