@@ -480,18 +480,15 @@ public class HelperWorkbookReader {
  */     //NEW SCHEMA  
         String consultaSQL = "SELECT " 
                 + "  fname.value AS FNAME "
-                + "  , trait.name AS TRNAME " 
-                + "  , scale.name AS SCNAME " 
+                + "  , factor.traitid AS TRNAME " 
+                + "  , scalerel.object_id AS SCNAME " 
                 + "  , factor.projectprop_id AS LABELID " 
+                + "  , factor.varid AS FACTORTERM "
                 + " FROM " 
                 + "  v_factor factor " 
                 + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = fname.rank " 
                 + "      AND fname.type_id = factor.storedinid " 
-                + "  INNER JOIN cvterm trait ON trait.cvterm_id = factor.traitid "
                 + "  INNER JOIN cvterm_relationship scalerel ON scalerel.type_id = 1220 AND scalerel.subject_id = factor.varid " 
-                + "  INNER JOIN cvterm scale ON scale.cvterm_id = scalerel.object_id "
-                + "  INNER JOIN cvterm_relationship methodrel ON methodrel.type_id = 1210 AND methodrel.subject_id = factor.varid " 
-                + "  INNER JOIN cvterm method ON method.cvterm_id = methodrel.object_id " 
                 + " WHERE "
                 + "  factor.factorid = factor.projectprop_id "
                 + "  AND factor.project_id = " + studyid 
@@ -504,6 +501,7 @@ public class HelperWorkbookReader {
         query.addScalar("TRNAME", Hibernate.STRING);
         query.addScalar("SCNAME", Hibernate.STRING);
         query.addScalar("LABELID", Hibernate.INTEGER);
+        query.addScalar("FACTORTERM", Hibernate.STRING);
         resultado = query.list();
         if(resultado == null){
             log.error("No se encontraron factores principales.");
@@ -543,18 +541,16 @@ public class HelperWorkbookReader {
         //NEW SCHEMA
         String consultaSQL = "SELECT " 
                 + "  fname.value AS FNAME " 
-                + "  , trait.name AS TRNAME " 
-                + "  , scale.name AS SCNAME " 
+                + "  , factor.traitid AS TRNAME " 
+                + "  , scalerel.object_id AS SCNAME " 
                 + "  , factor.projectprop_id AS LABELID " 
+                + "  , factorprop.value AS FACTORTERM "
                 + " FROM " 
                 + "  v_factor factor " 
                 + "  INNER JOIN projectprop fname ON fname.project_id = factor.project_id AND fname.rank = factor.rank " 
                 + "      AND fname.type_id = factor.storedinid " 
-                + "  INNER JOIN cvterm trait ON trait.cvterm_id = factor.traitid " 
                 + "  INNER JOIN cvterm_relationship scalerel ON scalerel.type_id = 1220 AND scalerel.subject_id = factor.varid " 
-                + "  INNER JOIN cvterm scale ON scale.cvterm_id = scalerel.object_id " 
-                + "  INNER JOIN cvterm_relationship methodrel ON methodrel.type_id = 1210 AND methodrel.subject_id = factor.varid " 
-                + "  INNER JOIN cvterm method ON method.cvterm_id = methodrel.object_id " 
+                + "  INNER JOIN projectprop factorprop ON factorprop.projectprop_id = factor.factorid "
                 + " WHERE " 
                 + "  factor.project_id = " + studyid 
                 + "  AND factor.factorid = " + numberEntry
@@ -566,6 +562,7 @@ public class HelperWorkbookReader {
         query.addScalar("TRNAME", Hibernate.STRING);
         query.addScalar("SCNAME", Hibernate.STRING);
         query.addScalar("LABELID", Hibernate.INTEGER);
+        query.addScalar("FACTORTERM", Hibernate.STRING);
         resultado = query.list();
         if(resultado == null){
             log.error("No se encontro ningun factor para los facores de salida.");
@@ -832,7 +829,7 @@ public class HelperWorkbookReader {
         String condicionWhere = "fname.value IN (" + factoresResultadoStr + ")"
                 + " AND (prs.subject_project_id = " + studyid + " OR prd.subject_project_id = " + represNo + ") "
                 ;
-        if (trial > 0) {
+        if (trial != null && trial > 0) {
             String consultaSQL = "SELECT " 
                     + "  level.nd_experiment_id AS OUNITID" 
                     + " FROM " 

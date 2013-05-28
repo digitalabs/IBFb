@@ -84,7 +84,7 @@ public class HelperGmsReader {
         
         for(Object filaTemp : resultado){
             Object[] fila = (Object[]) filaTemp;
-            String nombre = Workbook.getStringWithOutBlanks((String)fila[1] + (String)fila[2]);
+            /*String nombre = Workbook.getStringWithOutBlanks((String)fila[1] + (String)fila[2]);
 
             if(Workbook.STUDY_NAME.equals(nombre)){
                 nameStudy = (String)fila[0];
@@ -96,7 +96,20 @@ public class HelperGmsReader {
             }else if(Workbook.FIELD_PLOT_NUMBER.equals(nombre) ||
                     Workbook.FIELD_PLOT_NESTEDNUMBER.equals(nombre)){
                 namePlot = (String)fila[0];
+            }*/
+            //NEW SCHEMA use id instead of name
+            String nombre = (String) fila[4];
+            if ("8005".equals(nombre) || "8150".equals(nombre)) { //STUDY OR DATASET
+                nameStudy = (String) fila[0];
+            } else if ("8170".equals(nombre)) { //TRIAL INSTANCE OR GEOLOCATION
+                nameTrial = (String) fila[0];
+            } else if ("8230".equals(nombre)) {
+                nameEntry = (String) fila[0];
+                numberEntry = (Integer) fila[3];
+            } else if ("8200".equals(nombre) || "8380".equals(nombre)) {
+                namePlot = (String) fila[0];
             }
+                
         }
 
         if(nameStudy != null){
@@ -184,10 +197,15 @@ public class HelperGmsReader {
                 );
         for(Object filaTemp : resultado){
             Object[] fila = (Object[]) filaTemp;
-            String nombre = Workbook.getStringWithOutBlanks((String)fila[1] + (String)fila[2]);
+            /*String nombre = Workbook.getStringWithOutBlanks((String)fila[1] + (String)fila[2]);
             
             if(Workbook.GERMPLASM_GID_DBID.equals(nombre)){
                 nameGID = (String)fila[0];
+                break;
+            }*/
+            //NEW SCHEMA
+            if ("8240".equals(fila[4])) {
+                nameGID = (String) fila[0];
                 break;
             }
         }
@@ -204,8 +222,14 @@ public class HelperGmsReader {
         /*****Implementando recuperacion de informacion******/
         
         log.info("Getting trial randomization");
-        Integer numeroDeFactoresPrincipales = factoresPrincipales.size();
         String factoresResultadoStr = DMSReaderDAO.getFactoresParaUsoInQuery(factoresSalida);
+        Integer numeroDeFactoresPrincipales = factoresPrincipales.size();
+        
+        //NEW SCHEMA (removed study / dataset factor)
+        if (nameStudy != null && !"".equals(nameStudy)) {
+            numeroDeFactoresPrincipales--;
+        }
+        
         ResultSet pr;
         
         String factoresPrincipalesStr = DMSReaderDAO.getFactoresParaUsoInQuery(factoresPrincipales);
@@ -280,7 +304,7 @@ public class HelperGmsReader {
         int tlvalue = 0;
         for (Object fila : resultado) {
             Object[] celdas = (Object[]) fila;
-
+            
             tounitidActual = (Integer) celdas[ounitid];
             if (tounitidAnt != tounitidActual) {
                 if (tounitidAnt != 0) {
@@ -294,25 +318,27 @@ public class HelperGmsReader {
             fname = (String) celdas[FNAME];
             String ltypeTemp = (String) celdas[LTYPE];
             ltypeTemp = ltypeTemp.trim().toUpperCase();
-            if (ltypeTemp.equals("N")) {
-                if (celdas[2] instanceof String) {
-                    String valueTemp = (String) celdas[LVALUE];
-                    tlvalue = Integer.valueOf(valueTemp).intValue();
+            if (celdas[LVALUE] != null) {
+                if (ltypeTemp.equals("N")) {
+                    if (celdas[2] instanceof String) {
+                        String valueTemp = (String) celdas[LVALUE];
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    }
+                    crs.updateInt(fname, tlvalue);
                 } else {
-                    byte[] bytes = (byte[]) celdas[LVALUE];
-                    String valueTemp = new String(bytes);
-                    tlvalue = Integer.valueOf(valueTemp).intValue();
-                }
-                crs.updateInt(fname, tlvalue);
-            } else {
-                if (celdas[2] instanceof String) {
-                    crs.updateString(fname, (String) celdas[LVALUE]);
-                } else {
-                    byte[] bytes = (byte[]) celdas[LVALUE];
-                    String valueTemp = new String(bytes);
-                    crs.updateString(fname, valueTemp);
-                }
+                    if (celdas[2] instanceof String) {
+                        crs.updateString(fname, (String) celdas[LVALUE]);
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        crs.updateString(fname, valueTemp);
+                    }
 
+                }
             }
             tounitidAnt = tounitidActual;
         }

@@ -4,8 +4,10 @@
  */
 package org.cimmyt.cril.ibwb.provider.newTest;
 
+import com.sun.rowset.CachedRowSetImpl;
 import ibfb.domain.core.Measurement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.Arrays;
 import java.util.List;
 import org.cimmyt.cril.ibwb.domain.LevelC;
@@ -13,6 +15,7 @@ import org.cimmyt.cril.ibwb.domain.LevelCPK;
 import org.cimmyt.cril.ibwb.domain.LevelN;
 import org.cimmyt.cril.ibwb.domain.LevelNPK;
 import org.cimmyt.cril.ibwb.domain.Measuredin;
+import org.cimmyt.cril.ibwb.domain.StudySearch;
 import org.cimmyt.cril.ibwb.domain.Variate;
 
 /**
@@ -178,6 +181,29 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
+    public void testGetListGermplasmAndPlotByStudyidAndTrial() {
+        System.out.println("testGetListGermplasmAndPlotByStudyidAndTrial");
+        StudySearch studySearch = new StudySearch();
+        studySearch.setStudyId(5739);
+        studySearch = servicios.getCentralCommonService().getListGermplasmAndPlotByStudyidAndTrial(studySearch);
+        System.out.println(studySearch);
+        CachedRowSetImpl rs = (CachedRowSetImpl) studySearch.getRst();
+        try {
+            if (rs != null) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                while (rs.next()) {
+                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                        System.out.println(rsmd.getColumnName(i) + " - " + rs.getObject(i));
+                    }
+                }
+            } else {
+                System.out.println("no result set");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void main(String[] args) {
         try {
             TestTrialRandomization test = new TestTrialRandomization();
@@ -192,7 +218,8 @@ public class TestTrialRandomization extends TestService {
             //test.testGetLevelsCByLabelid();
             //test.testGetLevelsNByLabelid();
             //test.testGetVarieteFromVeffects();
-            test.testCopyCvTerm();
+            //test.testCopyCvTerm();
+            test.testGetListGermplasmAndPlotByStudyidAndTrial();
             
         } catch(Exception e) {
             e.printStackTrace();
