@@ -18,7 +18,8 @@ CREATE PROCEDURE `getNextMinReturn`(
 IN tableName varchar(255), OUT idnew INT)
 begin
 set @c1 = 0;
-SET @sql := CONCAT("select IF(min(",tableName,"_id) is NULL, -1, min(",tableName,"_id) -1) into @c1 from ",tableName);
+
+SET @sql := CONCAT("select IF(min(",tableName,"_id) is NULL or min(",tableName,"_id) >= 0, -1, min(",tableName,"_id) -1)  into @c1 from ",tableName);
 PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 set idnew = @c1; 	
