@@ -220,37 +220,37 @@ public interface AppServices {
      */
     public List<Datattr> getListDatattr(Datattr datattrFilter, int start, int pageSize, boolean paged);
 
-    //-----------------------------------Dmsattr---------------------------
-    /**
-     * Gets a list of Objects Dmsattr
-     *
-     * @return List
-     */
-    public List<Dmsattr> getDmsattrList();
-
-    /**
-     * Gets the number of records matching with filter
-     *
-     * @param dmsattrFiltro Object to count total items
-     */
-    public int getTotalDmsattr(Dmsattr dmsattrFilter);
-
-    /**
-     * Gets a list of Objects for pagination
-     *
-     * @param dmsattrFiltro	The filter object
-     * @param inicio initial record
-     * @param tamanioPagina page size
-     * @return List
-     */
-    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged);
-
-    /**
-     * Returns a unique object type based Dmsattr Dmsatrec fields and DmsaType
-     * @param dmsattr
-     * @return unique Dmsattr
-     */
-    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr);
+//    //-----------------------------------Dmsattr---------------------------
+//    /**
+//     * Gets a list of Objects Dmsattr
+//     *
+//     * @return List
+//     */
+//    public List<Dmsattr> getDmsattrList();
+//
+//    /**
+//     * Gets the number of records matching with filter
+//     *
+//     * @param dmsattrFiltro Object to count total items
+//     */
+//    public int getTotalDmsattr(Dmsattr dmsattrFilter);
+//
+//    /**
+//     * Gets a list of Objects for pagination
+//     *
+//     * @param dmsattrFiltro	The filter object
+//     * @param inicio initial record
+//     * @param tamanioPagina page size
+//     * @return List
+//     */
+//    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged);
+//
+//    /**
+//     * Returns a unique object type based Dmsattr Dmsatrec fields and DmsaType
+//     * @param dmsattr
+//     * @return unique Dmsattr
+//     */
+//    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr);
 
     //-----------------------------------Dudflds---------------------------
     /**

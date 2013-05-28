@@ -543,76 +543,76 @@ public interface CommonServices {
      */
     public List<Datattr> getListDatattr(Datattr datattrFilter, int start, int pageSize, boolean paged);
 
-    //-----------------------------------Dmsattr---------------------------
-    /**
-     * Adds an Object Dmsattr to database
-     *
-     * @param dmsattr Objeto a agregar
-     */
-    public void addDmsattr(Dmsattr dmsattr);
-
-    /**
-     * Updates a record of type Dmsattr in database
-     *
-     * @param dmsattr Objeto a actualizar
-     */
-    public void updateDmsattr(Dmsattr dmsattr);
-
-    /**
-     * Deletes an object Dmsattr from database
-     *
-     * @param dmsattr Objeto a eliminar
-     */
-    public void deleteDmsattr(Dmsattr dmsattr);
-
-    /**
-     * Gets an Object from database Dmsattr of the type Dmsattr
-     *
-     * @param dmsattr
-     * @return Dmsattr
-     */
-    public Dmsattr getDmsattr(Dmsattr dmsattr);
-
-    /**
-     * Gets an Object of type Dmsattr Finding the record by its ID Dmsattr in
-     * String format
-     *
-     * @param idDmsattr
-     * @return Dmsattr
-     */
-    public Dmsattr getDmsattr(Integer idDmsattr);
-
-    /**
-     * Gets an Object of type Dmsattr by Dmsatrec And Dmsatype
-     *
-     * @param dmsattr
-     * @return Dmsattr
-     */
-    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr);
-
-    /**
-     * Gets a list of Objects Dmsattr
-     *
-     * @return List
-     */
-    public List<Dmsattr> getDmsattrList();
-
-    /**
-     * Gets the number of records matching with filter
-     *
-     * @param dmsattrFiltro Object to count total items
-     */
-    public int getTotalDmsattr(Dmsattr dmsattrFilter);
-
-    /**
-     * Gets a list of Objects for pagination
-     *
-     * @param dmsattrFiltro	The filter object
-     * @param inicio initial record
-     * @param tamanioPagina page size
-     * @return List
-     */
-    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged);
+//    //-----------------------------------Dmsattr---------------------------
+//    /**
+//     * Adds an Object Dmsattr to database
+//     *
+//     * @param dmsattr Objeto a agregar
+//     */
+//    public void addDmsattr(Dmsattr dmsattr);
+//
+//    /**
+//     * Updates a record of type Dmsattr in database
+//     *
+//     * @param dmsattr Objeto a actualizar
+//     */
+//    public void updateDmsattr(Dmsattr dmsattr);
+//
+//    /**
+//     * Deletes an object Dmsattr from database
+//     *
+//     * @param dmsattr Objeto a eliminar
+//     */
+//    public void deleteDmsattr(Dmsattr dmsattr);
+//
+//    /**
+//     * Gets an Object from database Dmsattr of the type Dmsattr
+//     *
+//     * @param dmsattr
+//     * @return Dmsattr
+//     */
+//    public Dmsattr getDmsattr(Dmsattr dmsattr);
+//
+//    /**
+//     * Gets an Object of type Dmsattr Finding the record by its ID Dmsattr in
+//     * String format
+//     *
+//     * @param idDmsattr
+//     * @return Dmsattr
+//     */
+//    public Dmsattr getDmsattr(Integer idDmsattr);
+//
+//    /**
+//     * Gets an Object of type Dmsattr by Dmsatrec And Dmsatype
+//     *
+//     * @param dmsattr
+//     * @return Dmsattr
+//     */
+//    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr);
+//
+//    /**
+//     * Gets a list of Objects Dmsattr
+//     *
+//     * @return List
+//     */
+//    public List<Dmsattr> getDmsattrList();
+//
+//    /**
+//     * Gets the number of records matching with filter
+//     *
+//     * @param dmsattrFiltro Object to count total items
+//     */
+//    public int getTotalDmsattr(Dmsattr dmsattrFilter);
+//
+//    /**
+//     * Gets a list of Objects for pagination
+//     *
+//     * @param dmsattrFiltro	The filter object
+//     * @param inicio initial record
+//     * @param tamanioPagina page size
+//     * @return List
+//     */
+//    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged);
 
     //-----------------------------------Dudflds---------------------------
     /**
@@ -2288,7 +2288,7 @@ public interface CommonServices {
      * @param scales Objeto a agregar
      */
     public void addScales(Scales scales);
-
+    
     /**
      * Updates a record of type Scales in database
      *
@@ -2843,7 +2843,7 @@ public interface CommonServices {
      * @param tmsMethod Objeto a agregar
      */
     public void addTmsMethod(TmsMethod tmsMethod);
-
+    
     /**
      * Updates a record of type TmsMethod in database
      *
@@ -3078,6 +3078,8 @@ public interface CommonServices {
      * @param trait Objeto a agregar
      */
     public void addTrait(Trait trait);
+    
+    
 
     /**
      * Updates a record of type Trait in database
@@ -3141,7 +3143,7 @@ public interface CommonServices {
      * @param traits Objeto a agregar
      */
     public void addTraits(Traits traits);
-
+  
     /**
      * Gets a list of all different trait groups
      *
