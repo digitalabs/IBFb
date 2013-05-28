@@ -482,7 +482,7 @@ public class JDNewSTD extends javax.swing.JDialog {
         studyDto.setSdate(ConvertUtils.getDateAsInteger(study.getStarDate()));
         studyDto.setEdate(ConvertUtils.getDateAsInteger(study.getEndDate()));
         studyDto.setShierarchy(0);
-        studyDto.setSstatus(0);
+        studyDto.setSstatus(1);
         studyDto.setStype(org.cimmyt.cril.ibwb.domain.Study.STYPE_EXPERIMENT);
         AppServicesProxy.getDefault().appServices().addStudyToLocal(studyDto);
 
