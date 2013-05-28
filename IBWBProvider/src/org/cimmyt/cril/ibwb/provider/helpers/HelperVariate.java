@@ -41,9 +41,9 @@ public class HelperVariate {
 
         Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, variateDto.getVariatid(), null);
         if(variateDto.getVariatid() > 0){
-            variateDto.setDmsattr(servicesCentral.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
+//            variateDto.setDmsattr(servicesCentral.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         }else{
-            variateDto.setDmsattr(servicesLocal.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
+//            variateDto.setDmsattr(servicesLocal.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         }
         
 //        List<Dmsattr> dmsattrs = servicio.getListDmsattr(dmsattrFilter, 0, 0, false);
@@ -141,7 +141,7 @@ public class HelperVariate {
 ////        }else{
 ////            variateDto.setDmsattr(servicesLocal.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
 ////        }
-        variateDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
+//        variateDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         
         Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(variateDto.getTid(), variateDto.getScaleid(), variateDto.getTmethid());
         variateDto.setMeasuredin(measuredin);

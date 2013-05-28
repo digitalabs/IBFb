@@ -32,8 +32,8 @@ public class HelperFactor {
             Integer dmsaType) {
         log.info("Factor Name: " + factorDto.getFname() + " " + "  FactorId: " + factorDto.getFactorid());
 
-        Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
-        factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
+//        Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
+//        factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
 
         log.info("Cargando Measuredin con tid: " + factorDto.getTid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
         Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTid(), factorDto.getScaleid(), factorDto.getTmethid());
@@ -78,8 +78,8 @@ public class HelperFactor {
             Integer dmsaType) {
         log.info("Factor Name: " + factorDto.getFname() + " " + "  FactorId: " + factorDto.getFactorid());
 
-        Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
-        factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
+//        Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
+//        factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         log.info("Cargando Measuredin con tid: " + factorDto.getTid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
         Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTid(), factorDto.getScaleid(), factorDto.getTmethid());
         factorDto.setMeasuredin(measuredin);
@@ -211,8 +211,8 @@ public class HelperFactor {
 
         //Verificar dmsattr
         if (condition.getDescription() != null) {
-            dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, factor.getLabelid(), condition.getDescription());
-            serviceLocal.addDmsattr(dmsattr);
+//            dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, factor.getLabelid(), condition.getDescription());
+//            serviceLocal.addDmsattr(dmsattr);
         }
 
         return factor;

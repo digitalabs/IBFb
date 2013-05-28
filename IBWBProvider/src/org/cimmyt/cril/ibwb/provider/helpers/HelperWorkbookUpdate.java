@@ -499,6 +499,9 @@ public class HelperWorkbookUpdate {
                     measuredin = measuredinList.get(0);
                 } else {
                     measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(), variateDomain.getDataType());
+                    //GCP 4122
+                    measuredin.setName(variateDomain.getVariateName());
+                    measuredin.setStoredinid(1043); //???
                     localServices.addMeasuredin(measuredin);
                 }
 
@@ -514,7 +517,7 @@ public class HelperWorkbookUpdate {
 
                 //Verificar dmsattr
                 dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), variateDomain.getDescription());
-                localServices.addDmsattr(dmsattr);
+//                localServices.addDmsattr(dmsattr);
 
                 variateDomain.setVariateId(variate.getVariatid());
                 

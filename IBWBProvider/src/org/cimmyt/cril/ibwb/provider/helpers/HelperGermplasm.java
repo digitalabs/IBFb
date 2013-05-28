@@ -424,19 +424,19 @@ public class HelperGermplasm {
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_SOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_SENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
         }
 
         //Para cruzas
@@ -445,37 +445,37 @@ public class HelperGermplasm {
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_FOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_FENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MTID);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
         }
         return listdata;
     }
@@ -1257,19 +1257,19 @@ public class HelperGermplasm {
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_SOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_SENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
         }
 
         //Para cruzas
@@ -1278,37 +1278,37 @@ public class HelperGermplasm {
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_FOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_FENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsf.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MTID);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getStudyId().toString());//Studyid
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MOCC);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getTrial().toString());//Ocurrence
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
 
             dmsattr.setDmsatype(Dmsattr.DMSATYPE_MENT);
             dmsattr.setDmsatab(Dmsattr.DMSATYPE_LIST);
             dmsattr.setDmsatrec(listdata.getListdataPK().getLrecid());
             dmsattr.setDmsatval(gsm.getPlot().toString());//Plot
-            servicioLocal.addDmsattr(dmsattr);
+//            servicioLocal.addDmsattr(dmsattr);
         }
     }
 }

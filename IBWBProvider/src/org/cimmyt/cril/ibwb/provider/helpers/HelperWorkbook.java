@@ -480,7 +480,7 @@ public class HelperWorkbook {
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, factor.getLabelid(), condition.getDescription());
-            localServices.addDmsattr(dmsattr);
+//            localServices.addDmsattr(dmsattr);
 
             mapStudyFactors.put(factor.getFname(), factor);
             listStudyFactors.add(factor);
@@ -597,7 +597,7 @@ public class HelperWorkbook {
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, factor.getLabelid(), condition.getDescription());
-            localServices.addDmsattr(dmsattr);
+//            localServices.addDmsattr(dmsattr);
 
             mapTrialFactors.put(factor.getFname(), factor);
             listTrialFactors.add(factor);
@@ -712,7 +712,7 @@ public class HelperWorkbook {
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, factor.getLabelid(), factorDomain.getDescription());
-            localServices.addDmsattr(dmsattr);
+//            localServices.addDmsattr(dmsattr);
 
             // Categorize each factor used to identify different groups (ENTRY and PLOT)
             if (factorDomain.getLabel().equals(workbook.getEntryLabel())) {//ENTRY_LABEL
@@ -824,7 +824,7 @@ public class HelperWorkbook {
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), constant.getDescription());
-            localServices.addDmsattr(dmsattr);
+//            localServices.addDmsattr(dmsattr);
 
 
             mapConstantsVariates.put(variate.getVname(), variate);
@@ -925,7 +925,7 @@ public class HelperWorkbook {
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), variateDomain.getDescription());
-            localServices.addDmsattr(dmsattr);
+//            localServices.addDmsattr(dmsattr);
 
             mapVariatesPure.put(variate.getVname(), variate);
             listVariatesPure.add(variate);
