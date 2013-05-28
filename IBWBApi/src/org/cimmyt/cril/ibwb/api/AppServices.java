@@ -1354,6 +1354,8 @@ public interface AppServices {
      */
     public List<Tmethod> getTmethodList();
 
+
+
     /**
      * Gets the number of records matching with filter
      *
@@ -1386,6 +1388,8 @@ public interface AppServices {
      */
     public List<TmsMethod> getTmsMethodList();
 
+    public List<TmsMethod> getTmsMethodListNew();
+
     /**
      * Gets the number of records matching with filter
      *
@@ -1402,6 +1406,8 @@ public interface AppServices {
      * @return List
      */
     public List<TmsMethod> getListTmsMethod(TmsMethod tmsMethodFilter, int start, int pageSize, boolean paged);
+
+    public List<TmsMethod> getListTmsMethodNew(TmsMethod tmsMethodFilter, int start, int pageSize, boolean paged);
 
     /**
      * Add a tmsmethod to local database

@@ -518,7 +518,9 @@ public final class TraitEditorTopComponent extends TopComponent {
         dcbm.removeAllElements();
         dcbm.addElement(NbBundle.getMessage(TraitEditorTopComponent.class, "CboMethod.SelectOneMethod"));
 
-        methodList = AppServicesProxy.getDefault().appServices().getTmsMethodList();
+
+        // GCP - 4410
+        methodList = AppServicesProxy.getDefault().appServices().getTmsMethodListNew();
 
         for (TmsMethod tmsMethod : methodList) {
             dcbm.addElement(tmsMethod);

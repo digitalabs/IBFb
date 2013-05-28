@@ -2819,6 +2819,14 @@ public interface CommonServices {
      */
     public List<Tmethod> getTmethodList();
 
+
+    /**
+     * Method for retrieving tmethods without using the cvterm_relationship table
+     *
+     * @return
+     */
+    public List<TmsMethod> getTmsMethodListNew();
+
     /**
      * Gets the number of records matching with filter
      *
@@ -2835,6 +2843,17 @@ public interface CommonServices {
      * @return List
      */
     public List<Tmethod> getListTmethod(Tmethod tmethodFilter, int start, int pageSize, boolean paged);
+
+    /**
+     * Returns a list of Tmethod objects given a filter. Items are retrieved without making use of the cvterm_relationship table.
+     *
+     * @param filter
+     * @param start
+     * @param pageSize
+     * @param paged
+     * @return
+     */
+    public List<TmsMethod> getListTmsMethodNew(TmsMethod filter, int start, int pageSize, boolean paged);
 
 //-----------------------------------Tmethod---------------------------
     /**
@@ -2881,6 +2900,8 @@ public interface CommonServices {
      * @return List
      */
     public List<TmsMethod> getTmsMethodList();
+
+
 
     /**
      * Gets the number of records matching with filter

@@ -316,7 +316,9 @@ public final class MethodBrowserTopComponent extends TopComponent {
         filter.setGlobalsearch(txtSearch.getText());
 
         //int total = AppServicesProxy.getDefault().appServices().getTotalTrait(filter);
-        methodLists = AppServicesProxy.getDefault().appServices().getListTmsMethod(filter, 0, 0, false);
+
+        // GCP - 4411
+        methodLists = AppServicesProxy.getDefault().appServices().getListTmsMethodNew(filter, 0, 0, false);
         
         lblRecordsFound.setText(methodLists.size() + bundle.getString("MethodBrowserTopComponent.recordsfound"));
         

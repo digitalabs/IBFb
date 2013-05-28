@@ -989,6 +989,16 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
+    public List<TmsMethod> getListTmsMethodNew(TmsMethod tmsMethodFilter, int start, int pageSize, boolean paged) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<TmsMethod> getTmsMethodListNew() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public int getTotalTmsMethod(TmsMethod tmesMthodFilter) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

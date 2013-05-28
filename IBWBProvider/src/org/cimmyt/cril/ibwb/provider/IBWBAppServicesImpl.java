@@ -1593,6 +1593,8 @@ public class IBWBAppServicesImpl implements AppServices {
         return tmethods;
     }
 
+
+
     @Override
     public int getTotalTmethod(Tmethod tmethod) {
         int total = serviciosCentral.getTotalTmethod(tmethod);
@@ -1624,6 +1626,13 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
     @Override
+    public List<TmsMethod> getTmsMethodListNew() {
+        List<TmsMethod> tmsMethods = serviciosCentral.getTmsMethodListNew();
+        tmsMethods.addAll(serviciosLocal.getTmsMethodListNew());
+        return tmsMethods;
+    }
+
+    @Override
     public int getTotalTmsMethod(TmsMethod tmsMethod) {
         int total = serviciosCentral.getTotalTmsMethod(tmsMethod);
         total += serviciosLocal.getTotalTmsMethod(tmsMethod);
@@ -1634,6 +1643,13 @@ public class IBWBAppServicesImpl implements AppServices {
     public List<TmsMethod> getListTmsMethod(TmsMethod filter, int start, int pageSize, boolean paged) {
         List<TmsMethod> tmsMethods = serviciosCentral.getListTmsMethod(filter, start, pageSize, paged);
         tmsMethods.addAll(serviciosLocal.getListTmsMethod(filter, start, pageSize, paged));
+        return tmsMethods;
+    }
+
+    @Override
+    public List<TmsMethod> getListTmsMethodNew(TmsMethod filter, int start, int pageSize, boolean paged) {
+        List<TmsMethod> tmsMethods = serviciosCentral.getListTmsMethodNew(filter, start, pageSize, paged);
+        tmsMethods.addAll(serviciosLocal.getListTmsMethodNew(filter, start, pageSize, paged));
         return tmsMethods;
     }
 

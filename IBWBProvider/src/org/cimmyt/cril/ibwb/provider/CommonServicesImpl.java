@@ -2558,6 +2558,46 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     @Override
+    public List<TmsMethod> getTmsMethodListNew() {
+        CVTermDTO dto = new CVTermDTO();
+        dto.setCvid(CVTermDTO.METHOD_CV_ID);
+
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"}, new String[] {"cvtermid", "cvname"});
+        List<TmsMethod> returnVal = new ArrayList<TmsMethod>(temp.size());
+
+        for (CVTermDTO termDTO : temp) {
+            TmsMethod method = new TmsMethod(termDTO.getCvtermid(), termDTO.getCvname(), null, null);
+            returnVal.add(method);
+        }
+
+        return returnVal;
+    }
+
+    @Override
+    public List<TmsMethod> getListTmsMethodNew(TmsMethod filter, int start, int pageSize, boolean paged) {
+        if (filter.getGlobalsearch() != null) {
+            if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
+                filter.setTmethid(Integer.parseInt(filter.getGlobalsearch()));
+            } else {
+                filter.setTmname(filter.getGlobalsearch());
+            }
+        }
+
+        CVTermDTO dto = new CVTermDTO(filter.getTmethid(), filter.getTmname(), CVTermDTO.METHOD_CV_ID);
+
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize, "searchCVTerm",
+                new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+        List<TmsMethod> returnVal = new ArrayList<TmsMethod>(temp.size());
+
+        for (CVTermDTO termDTO : temp) {
+            TmsMethod method = new TmsMethod(termDTO.getCvtermid(), termDTO.getCvname(), null, null);
+            returnVal.add(method);
+        }
+
+        return returnVal;
+    }
+
+    @Override
     public int getTotalTmethod(Tmethod tmethod) {
         return this.tmethodDAO.getTotal(tmethod);
     }
