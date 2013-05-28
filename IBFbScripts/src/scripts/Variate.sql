@@ -41,8 +41,8 @@ IN v_vname varchar(50),
 IN v_traitid int,
 IN v_scaleid int,
 IN v_tmethid int,
-IN v_dtype int,
-IN v_vtype int,
+IN v_dtype varchar(1),
+IN v_vtype varchar(10),
 IN v_tid int)
 begin
 
