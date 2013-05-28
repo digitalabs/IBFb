@@ -163,24 +163,14 @@ START TRANSACTION;
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	VALUES(v_projectprop_id,v_project_id,1060,v_fname,v_rank);
 	
-	SELECT distinct cvt1.cvterm_id into v_type_id
-    FROM cvterm cvt1 
-    WHERE EXISTS ( 
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	WHERE cvtr.object_id = v_traitid AND cvtr.type_id = 1200 
-    AND cvt1.cvterm_id = cvtr.subject_id
-    ) AND EXISTS ( 
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	WHERE cvtr.object_id = v_scaleid AND cvtr.type_id = 1220 
-    AND cvt1.cvterm_id = cvtr.subject_id
-    ) AND EXISTS ( 
-    SELECT 1 
-    FROM cvterm_relationship cvtr
-	WHERE cvtr.object_id = v_tmethid AND cvtr.type_id = 1210
-    AND cvt1.cvterm_id = cvtr.subject_id
-    );
+	SELECT distinct cvttrait.subject_id into v_type_id 
+    FROM cvterm_relationship cvttrait
+    INNER JOIN cvterm_relationship cvtscale ON cvtscale.subject_id = cvttrait.subject_id 
+    INNER JOIN cvterm_relationship cvtmethod ON cvtmethod.subject_id = cvttrait.subject_id  
+	WHERE cvttrait.object_id = v_traitid AND cvttrait.type_id = 1200
+	AND cvtscale.object_id = v_scaleid AND cvtscale.type_id = 1220 
+	AND cvtmethod.object_id = v_tmethid AND cvtmethod.type_id = 1210
+	LIMIT 1;    
     
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
