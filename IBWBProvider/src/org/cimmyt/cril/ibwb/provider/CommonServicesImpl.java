@@ -401,10 +401,14 @@ public class CommonServicesImpl implements CommonServices {
         this.utilityDAO.callStoredProcedureForUpdate("addNdGeolocation", params);
         return id;
     }
-    public Integer addStock(){
+    public Integer addStock(String uniquename,String dbxref_id,String name,String value){
         Integer id = this.utilityDAO.getNextMin("stock");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
+        params.put("uniquename", uniquename);
+        params.put("dbxref_id", dbxref_id);
+        params.put("name", name);
+        params.put("value", value);
         this.utilityDAO.callStoredProcedureForUpdate("addStock", params);
         return id;
     }

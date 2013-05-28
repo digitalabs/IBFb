@@ -501,8 +501,25 @@ public class HelperFactor {
         Factor factorTemp = new Factor();
         Integer ndExperimentId = levelNo;
         for (List<Object> objectList : germplasmData) {
-            //we need to add new stock for every new germplasm entry values
-            Integer levelNoStockId = serviceLocal.addStock();
+        	String uniquename = null;
+        	String dbxref_id = null;
+        	String name = null;
+        	String svalue = null;
+        	for (int i = 0; i < listEntryFactors.size(); i++) {
+        		factorTemp = listEntryFactors.get(i);
+        		if(factorTemp.getTid().equals(new Integer(1041))) {
+        			uniquename = (String) objectList.get(i);
+        		} else if(factorTemp.getTid().equals(new Integer(1042))) {
+        			dbxref_id = (String) objectList.get(i);
+        		} else if(factorTemp.getTid().equals(new Integer(1046))) {
+        			name = (String) objectList.get(i);
+        		} else if(factorTemp.getTid().equals(new Integer(1047))) {
+        			svalue = (String) objectList.get(i);
+        		}    
+        	}
+        	
+        	//we need to add new stock for every new germplasm entry values
+            Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
             //we need to add here the nd_experiment_stock relationship
             serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {

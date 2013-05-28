@@ -105,10 +105,16 @@ end$$
 
 drop procedure if exists `addStock`$$
 
-CREATE PROCEDURE `addStock`(IN stock_id_in int)
+CREATE PROCEDURE `addStock`(
+IN stock_id_in int,
+IN uniquename varchar(50),
+IN dbxref_id varchar(50),
+IN name varchar(50),
+IN value varchar(50))
 begin
 
-insert into stock (stock_id, type_id, is_obsolete) value (stock_id_in, 8300,0);
+insert into stock (stock_id, type_id, uniquename, dbxref_id, name, value, is_obsolete) 
+value (stock_id_in, 8230, uniquename, dbxref_id, name, value, 0);
 
 end$$
 
