@@ -493,25 +493,27 @@ public class HelperGmsReader {
             fname = (String) celdas[FNAME];
             String ltypeTemp = (String) celdas[LTYPE];
             ltypeTemp = ltypeTemp.trim().toUpperCase();
-            if (ltypeTemp.equals("N")) {
-                if (celdas[2] instanceof String) {
-                    String valueTemp = (String) celdas[LVALUE];
-                    tlvalue = Integer.valueOf(valueTemp).intValue();
+            if (celdas[LVALUE] != null) {
+                if (ltypeTemp.equals("N")) {
+                    if (celdas[2] instanceof String) {
+                        String valueTemp = (String) celdas[LVALUE];
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        tlvalue = Integer.valueOf(valueTemp).intValue();
+                    }
+                    crs.updateInt(fname, tlvalue);
                 } else {
-                    byte[] bytes = (byte[]) celdas[LVALUE];
-                    String valueTemp = new String(bytes);
-                    tlvalue = Integer.valueOf(valueTemp).intValue();
-                }
-                crs.updateInt(fname, tlvalue);
-            } else {
-                if (celdas[2] instanceof String) {
-                    crs.updateString(fname, (String) celdas[LVALUE]);
-                } else {
-                    byte[] bytes = (byte[]) celdas[LVALUE];
-                    String valueTemp = new String(bytes);
-                    crs.updateString(fname, valueTemp);
-                }
+                    if (celdas[2] instanceof String) {
+                        crs.updateString(fname, (String) celdas[LVALUE]);
+                    } else {
+                        byte[] bytes = (byte[]) celdas[LVALUE];
+                        String valueTemp = new String(bytes);
+                        crs.updateString(fname, valueTemp);
+                    }
 
+                }
             }
             tounitidAnt = tounitidActual;
         }

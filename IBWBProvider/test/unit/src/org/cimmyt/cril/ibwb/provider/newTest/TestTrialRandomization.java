@@ -204,6 +204,31 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
+    public void testGetListGermplasmAndPlotByStudyidAndTrial2() {
+        StudySearch studySearch = new StudySearch();
+        studySearch.setNameTrial("SETNO");
+        studySearch.setStudyId(5739);
+        List<String> factoresPrincipales = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
+        List<String> factoresSalida = Arrays.asList("SETNO", "ENTNO", "PLOTNO");
+        studySearch = servicios.getCentralCommonService().getListGermplasmAndPlotByStudyidAndTrial(studySearch, factoresPrincipales, factoresSalida);
+        System.out.println(studySearch);
+        CachedRowSetImpl rs = (CachedRowSetImpl) studySearch.getRst();
+        try {
+            if (rs != null) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                while (rs.next()) {
+                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                        System.out.println(rsmd.getColumnName(i) + " - " + rs.getObject(i));
+                    }
+                }
+            } else {
+                System.out.println("no result set");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void main(String[] args) {
         try {
             TestTrialRandomization test = new TestTrialRandomization();
@@ -219,7 +244,8 @@ public class TestTrialRandomization extends TestService {
             //test.testGetLevelsNByLabelid();
             //test.testGetVarieteFromVeffects();
             //test.testCopyCvTerm();
-            test.testGetListGermplasmAndPlotByStudyidAndTrial();
+            //test.testGetListGermplasmAndPlotByStudyidAndTrial();
+            test.testGetListGermplasmAndPlotByStudyidAndTrial2();
             
         } catch(Exception e) {
             e.printStackTrace();
