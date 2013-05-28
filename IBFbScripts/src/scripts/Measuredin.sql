@@ -175,4 +175,43 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE IF EXISTS updateMeasuredIn $$
+
+CREATE PROCEDURE updateMeasuredIn(
+IN v_measuredinid int,
+IN v_traitid int,
+iN v_tmethid int,
+IN v_scaleid int)
+begin
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
+
+START TRANSACTION;
+	
+	
+	IF (v_traitid IS NOT NULL) THEN
+		UPDATE cvterm_relationship
+		   SET object_id = v_traitid
+		 WHERE type_id = 1200
+		   AND subject_id = v_measuredinid;
+	END IF;
+
+	IF (v_tmethid IS NOT NULL) THEN
+		UPDATE cvterm_relationship
+		   SET object_id = v_tmethid
+		 WHERE type_id = 1210
+		   AND subject_id = v_measuredinid;
+	END IF;
+
+	IF (v_scaleid IS NOT NULL) THEN
+		UPDATE cvterm_relationship
+		   SET object_id = v_scaleid
+		 WHERE type_id = 1220
+		   AND subject_id = v_measuredinid;
+	END IF;
+
+COMMIT;	
+	
+end$$
+
 
