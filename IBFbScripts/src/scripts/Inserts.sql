@@ -1,3 +1,18 @@
+insert into cv(cv_id,name,definition)
+select * from (select 1000 as cv_id,'IBDB TERMS' as name,
+'CV of terms used to annotate relationships and identify objects in the ibdb database' as definition) as tmp
+where not exists (select cv_id from cv where cv_id = 1000) limit 1;
+
+insert into cv(cv_id,name,definition)
+select * from (select 2005 as cv_id,'8006' as name,
+'Study status - Assigned (code)' as definition) as tmp
+where not exists (select cv_id from cv where cv_id = 2005) limit 1;
+
+insert into cv(cv_id,name,definition)
+select * from (select 2010 as cv_id,'8070' as name,
+'Study type - assigned (type)' as definition) as tmp
+where not exists (select cv_id from cv where cv_id = 2005) limit 1;		
+
 insert into cvterm(cvterm_id,cv_id,name,definition,is_obsolete,is_relationshiptype)
 select * from (select 12960 as cvterm_id,2005 as cv_id,'1' as name,
 'Active study visable to all users with access' as definition,0 as is_obsolete,0 as is_relationshiptype) as tmp
