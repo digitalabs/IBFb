@@ -575,7 +575,14 @@ public class UtilityDAO extends HibernateDaoSupport {
             }
         });
       
-        return (Integer)result;
+        //return (Integer)result;
+
+        if(result instanceof BigInteger){
+            BigInteger id = (BigInteger) result;
+            return new Integer(id.intValue());
+
+        }else
+            return (Integer)result;
     }
 
     private String buildSQLQuery(String procedureName, HashMap params) {
