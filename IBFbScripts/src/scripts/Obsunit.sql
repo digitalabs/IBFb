@@ -45,22 +45,3 @@ order by ounitid desc;
 end if;
 
 end$$
-
-drop procedure if exists `addObsunit`$$
-
-CREATE PROCEDURE `addObsunit`(IN nd_experimentidin int, IN effectidin int)
-begin
---get the study id of that effect id
---insert into nd_experiment(nd_experiment_id, nd_geolocation_id,type_id) value (nd_experimentidin,nd_geolocation_id,type_id) ; 
---to get the the nd_experiment_id
---need to get nd_geolocation_id by effectid
-
---select projectprop_id from projectprop where project_id = effectidin and type_id = 1021;
-
-insert into nd_experiment_project (project_id, nd_experiment_id) value (effectidin, nd_experimentidin);
---insert into project_relationship(subject_project_id,object_project_id,type_id) value (effectidin, ?, 1050)
-
-
-
-
-end$$
