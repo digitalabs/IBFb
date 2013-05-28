@@ -212,7 +212,7 @@ CREATE PROCEDURE `searchCVTerm` (IN cvtermid int, IN cvname varchar(255), IN cvi
 
     SET @myQuery = CONCAT(@myQuery, ' WHERE cv_id = ', cvid);
 
-    IF (cvtermid is not NULL AND cvtermid > 0) THEN
+    IF (cvtermid is not NULL AND cvtermid <> 0) THEN
       SET @myQuery = CONCAT(@myQuery, ' AND cvterm_id = ', cvtermid);
     END IF;
 
