@@ -1468,7 +1468,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void updateMeasuredin(Measuredin measuredin) {
-        this.measuredinDAO.update(measuredin);
+        utilityDAO.callStoredProcedureForUpdate(measuredin, "updateMeasuredin", 
+                new String[]{"measuredinid","traitid","tmethid","scaleid"});
     }
 
     @Override
@@ -1531,7 +1532,16 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public void addOrUpdateMeasuredIn(Measuredin measuredin) {
-        this.measuredinDAO.addOrUpdate(measuredin);
+        if (isLocal()){
+            
+            if (measuredin.getMeasuredinid() != null){
+                updateMeasuredin(measuredin);
+            } else {
+                addMeasuredin(measuredin);
+            }
+            
+        }
+        
     }
 
 //-----------------------------------Methods---------------------------
