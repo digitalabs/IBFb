@@ -153,20 +153,20 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    @Override
-    public List<Dmsattr> getDmsattrList() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    @Override
-    public int getTotalDmsattr(Dmsattr dmsattrFilter) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    @Override
-    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+//    @Override
+//    public List<Dmsattr> getDmsattrList() {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+//    
+//    @Override
+//    public int getTotalDmsattr(Dmsattr dmsattrFilter) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
+//    
+//    @Override
+//    public List<Dmsattr> getListDmsattr(Dmsattr dmsattrFilter, int start, int pageSize, boolean paged) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
     
     @Override
     public List<Dudflds> getDudfldsList() {
@@ -1084,10 +1084,10 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+//    @Override
+//    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
 
     @Override
     public List<Effect> getEffectsByEffectsids(List effectsIds) {
