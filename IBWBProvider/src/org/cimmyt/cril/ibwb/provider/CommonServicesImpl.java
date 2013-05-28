@@ -584,49 +584,49 @@ public class CommonServicesImpl implements CommonServices {
     }
 
 //-----------------------------------Dmsattr---------------------------
-    @Override
-    public void addDmsattr(Dmsattr dmsattr) {
-        this.dmsattrDAO.create(dmsattr);
-    }
-
-    @Override
-    public void updateDmsattr(Dmsattr dmsattr) {
-        this.dmsattrDAO.update(dmsattr);
-    }
-
-    @Override
-    public void deleteDmsattr(Dmsattr dmsattr) {
-        this.dmsattrDAO.delete(dmsattr);
-    }
-
-    @Override
-    public Dmsattr getDmsattr(Dmsattr dmsattr) {
-        return this.dmsattrDAO.findById(dmsattr.getDmsatid());
-    }
-
-    @Override
-    public Dmsattr getDmsattr(Integer idDmsattr) {
-        return this.dmsattrDAO.findById(idDmsattr);
-    }
-
-    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
-        return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
-    }
-
-    @Override
-    public List<Dmsattr> getDmsattrList() {
-        return dmsattrDAO.findAll();
-    }
-
-    @Override
-    public int getTotalDmsattr(Dmsattr dmsattr) {
-        return this.dmsattrDAO.getTotal(dmsattr);
-    }
-
-    @Override
-    public List<Dmsattr> getListDmsattr(Dmsattr filter, int start, int pageSize, boolean paged) {
-        return dmsattrDAO.getList(filter, start, pageSize, paged);
-    }
+//    @Override
+//    public void addDmsattr(Dmsattr dmsattr) {
+//        this.dmsattrDAO.create(dmsattr);
+//    }
+//
+//    @Override
+//    public void updateDmsattr(Dmsattr dmsattr) {
+//        this.dmsattrDAO.update(dmsattr);
+//    }
+//
+//    @Override
+//    public void deleteDmsattr(Dmsattr dmsattr) {
+//        this.dmsattrDAO.delete(dmsattr);
+//    }
+//
+//    @Override
+//    public Dmsattr getDmsattr(Dmsattr dmsattr) {
+//        return this.dmsattrDAO.findById(dmsattr.getDmsatid());
+//    }
+//
+//    @Override
+//    public Dmsattr getDmsattr(Integer idDmsattr) {
+//        return this.dmsattrDAO.findById(idDmsattr);
+//    }
+//
+//    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
+//        return dmsattrDAO.getDmsattrByDmsatrecAndDmsatype(dmsattr);
+//    }
+//
+//    @Override
+//    public List<Dmsattr> getDmsattrList() {
+//        return dmsattrDAO.findAll();
+//    }
+//
+//    @Override
+//    public int getTotalDmsattr(Dmsattr dmsattr) {
+//        return this.dmsattrDAO.getTotal(dmsattr);
+//    }
+//
+//    @Override
+//    public List<Dmsattr> getListDmsattr(Dmsattr filter, int start, int pageSize, boolean paged) {
+//        return dmsattrDAO.getList(filter, start, pageSize, paged);
+//    }
 
 //-----------------------------------Dudflds---------------------------
     @Override

@@ -232,38 +232,38 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
 //-----------------------------------Dmsattr---------------------------
-    @Override
-    public List<Dmsattr> getDmsattrList() {
-        List<Dmsattr> dmsattrs = serviciosCentral.getDmsattrList();
-        dmsattrs.addAll(serviciosLocal.getDmsattrList());
-        return dmsattrs;
-    }
-
-    @Override
-    public int getTotalDmsattr(Dmsattr dmsattr) {
-        int total = serviciosCentral.getTotalDmsattr(dmsattr);
-        total += serviciosLocal.getTotalDmsattr(dmsattr);
-        return total;
-    }
-
-    @Override
-    public List<Dmsattr> getListDmsattr(Dmsattr filter, int start, int pageSize, boolean paged) {
-        List<Dmsattr> dmsattrs = serviciosCentral.getListDmsattr(filter, start, pageSize, paged);
-        dmsattrs.addAll(serviciosLocal.getListDmsattr(filter, start, pageSize, paged));
-        return dmsattrs;
-    }
-
-    @Override
-    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
-        if (dmsattr == null) {
-            return null;
-        }
-        if (dmsattr.getDmsatrec() > 0) {
-            return serviciosCentral.getDmsattrByDmsatrecAndDmsatype(dmsattr);
-        } else {
-            return serviciosLocal.getDmsattrByDmsatrecAndDmsatype(dmsattr);
-        }
-    }
+//    @Override
+//    public List<Dmsattr> getDmsattrList() {
+//        List<Dmsattr> dmsattrs = serviciosCentral.getDmsattrList();
+//        dmsattrs.addAll(serviciosLocal.getDmsattrList());
+//        return dmsattrs;
+//    }
+//
+//    @Override
+//    public int getTotalDmsattr(Dmsattr dmsattr) {
+//        int total = serviciosCentral.getTotalDmsattr(dmsattr);
+//        total += serviciosLocal.getTotalDmsattr(dmsattr);
+//        return total;
+//    }
+//
+//    @Override
+//    public List<Dmsattr> getListDmsattr(Dmsattr filter, int start, int pageSize, boolean paged) {
+//        List<Dmsattr> dmsattrs = serviciosCentral.getListDmsattr(filter, start, pageSize, paged);
+//        dmsattrs.addAll(serviciosLocal.getListDmsattr(filter, start, pageSize, paged));
+//        return dmsattrs;
+//    }
+//
+//    @Override
+//    public Dmsattr getDmsattrByDmsatrecAndDmsatype(Dmsattr dmsattr) {
+//        if (dmsattr == null) {
+//            return null;
+//        }
+//        if (dmsattr.getDmsatrec() > 0) {
+//            return serviciosCentral.getDmsattrByDmsatrecAndDmsatype(dmsattr);
+//        } else {
+//            return serviciosLocal.getDmsattrByDmsatrecAndDmsatype(dmsattr);
+//        }
+//    }
 
 //-----------------------------------Dudflds---------------------------
     @Override
