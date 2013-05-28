@@ -47,9 +47,9 @@ public class ConverterDTOtoDomain {
             }else{
                 condition.setProperty(null);
             }
-            if (factorDto.getDmsattr() != null) {
-                condition.setDescription(factorDto.getDmsattr().getDmsatval());
-            }
+//            if (factorDto.getDmsattr() != null) {
+//                condition.setDescription(factorDto.getDmsattr().getDmsatval());
+//            }
             if (factorDto.getMeasuredin().getTmsMethod() != null) {
                 condition.setMethod(factorDto.getMeasuredin().getTmsMethod().getTmname());
             } else {
@@ -115,9 +115,9 @@ public class ConverterDTOtoDomain {
             }else{
                 condition.setProperty(null);
             }
-            if (factorDto.getDmsattr() != null) {
-                condition.setDescription(factorDto.getDmsattr().getDmsatval());
-            }
+//            if (factorDto.getDmsattr() != null) {
+//                condition.setDescription(factorDto.getDmsattr().getDmsatval());
+//            }
             if (factorDto.getMeasuredin().getTmsMethod() != null) {
                 condition.setMethod(factorDto.getMeasuredin().getTmsMethod().getTmname());
             } else {
@@ -180,9 +180,9 @@ public class ConverterDTOtoDomain {
             }else{
                 factor.setProperty(null);
             }
-            if (factorDto.getDmsattr() != null) {
-                factor.setDescription(factorDto.getDmsattr().getDmsatval());
-            }
+//            if (factorDto.getDmsattr() != null) {
+//                factor.setDescription(factorDto.getDmsattr().getDmsatval());
+//            }
             if (factorDto.getMeasuredin().getTmsMethod() != null) {
                 factor.setMethod(factorDto.getMeasuredin().getTmsMethod().getTmname());
             } else {
@@ -228,11 +228,11 @@ public class ConverterDTOtoDomain {
             }else{
                 constant.setProperty("");
             }
-            if (variateDto.getDmsattr() != null) {
-                constant.setDescription(variateDto.getDmsattr().getDmsatval());
-            }else{
+//            if (variateDto.getDmsattr() != null) {
+//                constant.setDescription(variateDto.getDmsattr().getDmsatval());
+//            }else{
                 constant.setDescription("");
-            }
+//            }
             if (variateDto.getMeasuredin().getTmsMethod() != null) {
                 constant.setMethod(variateDto.getMeasuredin().getTmsMethod().getTmname());
             } else {
@@ -271,11 +271,11 @@ public class ConverterDTOtoDomain {
                 }else{
                     variate.setProperty("");
                 }
-                if (variateDto.getDmsattr() != null) {
-                    variate.setDescription(variateDto.getDmsattr().getDmsatval());
-                }else{
+//                if (variateDto.getDmsattr() != null) {
+//                    variate.setDescription(variateDto.getDmsattr().getDmsatval());
+//                }else{
                     variate.setDescription("");
-                }
+//                }
                 if (variateDto.getMeasuredin().getTmsMethod() != null) {
                     variate.setMethod(variateDto.getMeasuredin().getTmsMethod().getTmname());
                 } else {
