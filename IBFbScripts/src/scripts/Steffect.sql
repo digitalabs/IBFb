@@ -12,14 +12,14 @@ IF iscentral = 1 then
 	select pr.subject_project_id as effectid
 	from project_relationship pr where pr.type_id = 1150
 	and pr.object_project_id = studyid
-	order by s.effectid asc;
+	order by effectid asc;
 
 else
 
 	select pr.subject_project_id as effectid
 	from project_relationship pr where pr.type_id = 1150
 	and pr.object_project_id = studyid
-	order by s.effectid desc;
+	order by effectid desc;
 
 	
 end if;
