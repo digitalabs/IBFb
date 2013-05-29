@@ -508,13 +508,13 @@ public class HelperFactor {
         	for (int i = 0; i < listEntryFactors.size(); i++) {
         		factorTemp = listEntryFactors.get(i);
         		if(factorTemp.getTid().equals(new Integer(1041))) {
-        			uniquename = (String) objectList.get(i);
+        			uniquename = castingToString(objectList.get(i));
         		} else if(factorTemp.getTid().equals(new Integer(1042))) {
-        			dbxref_id = (String) objectList.get(i);
+        			dbxref_id = castingToString(objectList.get(i));
         		} else if(factorTemp.getTid().equals(new Integer(1046))) {
-        			name = (String) objectList.get(i);
+        			name = castingToString(objectList.get(i));
         		} else if(factorTemp.getTid().equals(new Integer(1047))) {
-        			svalue = (String) objectList.get(i);
+        			svalue = castingToString(objectList.get(i));
         		}    
         	}
         	
