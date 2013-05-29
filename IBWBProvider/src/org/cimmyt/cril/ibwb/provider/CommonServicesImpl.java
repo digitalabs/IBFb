@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- *
  * @author jgcamarena
  */
 public class CommonServicesImpl implements CommonServices {
@@ -89,7 +88,7 @@ public class CommonServicesImpl implements CommonServices {
     private DiscreteConversionDAO discreteConversionDAO;
     private TransformationsDAO transformationsDAO;
     private TmsConsistencyChecksDAO tmsConsistencyChecksDAO;
-    
+
     private CvDAO cvDAO;
     private CvtermDAO cvtermDAO;
     private CvtermRelationshipDAO cvtermRelationshipDAO;
@@ -116,7 +115,6 @@ public class CommonServicesImpl implements CommonServices {
         CommonServices servicios = (CommonServices) context.getBean("ibWorbenchServiceImpl");
         return servicios;
     }
-
 
 
     //-----------------------------------Atributs---------------------------
@@ -246,7 +244,7 @@ public class CommonServicesImpl implements CommonServices {
         return changesDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Cntry---------------------------
+    //-----------------------------------Cntry---------------------------
     @Override
     public void addCntry(Cntry cntry) {
         this.cntryDAO.create(cntry);
@@ -287,38 +285,38 @@ public class CommonServicesImpl implements CommonServices {
         return cntryDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------DataC---------------------------
+    //-----------------------------------DataC---------------------------
     @Override
     public void addDataC(DataC dataC) {
         //this.dataCDAO.create(dataC);
-    	addOrUpdateDataC(dataC);
+        addOrUpdateDataC(dataC);
     }
 
     @Override
     public void addOrUpdateDataC(DataC dataC) {
-    	//this.dataCDAO.addOrUpdate(dataC);
-    	if(isLocal()) {
+        //this.dataCDAO.addOrUpdate(dataC);
+        if (isLocal()) {
             LinkedHashMap map = new LinkedHashMap();
-	    	map.put("ounitid",dataC.getDataCPK().getOunitid());
-	    	map.put("variatid",dataC.getDataCPK().getVariatid());
-	    	map.put("dvalue", dataC.getDvalue());
-	    	this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC",map);
-    	}
+            map.put("ounitid", dataC.getDataCPK().getOunitid());
+            map.put("variatid", dataC.getDataCPK().getVariatid());
+            map.put("dvalue", dataC.getDvalue());
+            this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC", map);
+        }
     }
 
     @Override
     public void updateDataC(DataC dataC) {
         //this.dataCDAO.update(dataC);
-    	addOrUpdateDataC(dataC);
+        addOrUpdateDataC(dataC);
     }
 
     @Override
     public void deleteDataC(DataC dataC) {
         //this.dataCDAO.delete(dataC);
-    	//not used - last check: 5-17-2013  
+        //not used - last check: 5-17-2013
     }
 
-//    @Override
+    //    @Override
 //    public DataC getDataC(DataC dataC) {
 //        return this.dataCDAO.findById(dataC.getDataCPK());
 //    }
@@ -329,15 +327,15 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataC> getDataCList() {
         //return dataCDAO.findAll();
-         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList", 
-        		 new HashMap(), new String[]{},new String[]{"ounitid", "variatid", "dvalue"});
+        return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCList",
+                new HashMap(), new String[]{}, new String[]{"ounitid", "variatid", "dvalue"});
     }
 
     @Override
     public int getTotalDataC(DataC dataC) {
         //return this.dataCDAO.getTotal(dataC);
-    	return 0;
-    	//not used - last check 5/17/2013
+        return 0;
+        //not used - last check 5/17/2013
     }
 
     @Override
@@ -349,7 +347,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getListDataC", params,
                 new String[]{"variatid", "iscentral"},
-        		new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
@@ -363,11 +361,11 @@ public class CommonServicesImpl implements CommonServices {
     public List<DataC> getDataCByEffectId(final Integer effectId) {
 
         HashMap params = new HashMap();
-       params.put("effectid", effectId);
-       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        params.put("effectid", effectId);
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataC.class, "getDataCByEffectId", params,
                 new String[]{"effectid", "iscentral"},
-        		new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
 
         //return dataCDAO.getDataNByEffectId(effectId);
     }
@@ -376,24 +374,24 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addDataN(DataN dataN) {
         //this.dataNDAO.create(dataN);
-    	addOrUpdateDataN(dataN);
+        addOrUpdateDataN(dataN);
     }
 
     @Override
     public void addOrUpdateDataN(DataN dataN) {
         //this.dataNDAO.addOrUpdate(dataN);
-    	//reusing addOrUpdateDataC as they are both saved in the same db
-    	if(isLocal()) {
+        //reusing addOrUpdateDataC as they are both saved in the same db
+        if (isLocal()) {
             LinkedHashMap map = new LinkedHashMap();
-	    	map.put("ounitid",dataN.getDataNPK().getOunitid());
-	    	map.put("variatid",dataN.getDataNPK().getVariatid());
-	    	map.put("dvalue", dataN.getDvalue());
-	    	this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC",map);
-    	}
+            map.put("ounitid", dataN.getDataNPK().getOunitid());
+            map.put("variatid", dataN.getDataNPK().getVariatid());
+            map.put("dvalue", dataN.getDvalue());
+            this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC", map);
+        }
     }
 
     //new functions
-    public Integer addNdGeolocation(){
+    public Integer addNdGeolocation() {
         //daniel
         Integer id = this.utilityDAO.getNextMin("nd_geolocation");
         LinkedHashMap params = new LinkedHashMap();
@@ -401,7 +399,8 @@ public class CommonServicesImpl implements CommonServices {
         this.utilityDAO.callStoredProcedureForUpdate("addNdGeolocation", params);
         return id;
     }
-    public Integer addStock(String uniquename,String dbxref_id,String name,String value){
+
+    public Integer addStock(String uniquename, String dbxref_id, String name, String value) {
         Integer id = this.utilityDAO.getNextMin("stock");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
@@ -412,16 +411,18 @@ public class CommonServicesImpl implements CommonServices {
         this.utilityDAO.callStoredProcedureForUpdate("addStock", params);
         return id;
     }
-    public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId){
-            Integer id = this.utilityDAO.getNextMin("nd_experiment_stock");
-            LinkedHashMap params = new LinkedHashMap();
-            params.put("id", id);
-            params.put("ndExperimentId", ndExperimentId);
-            params.put("stockId", stockId);
-            this.utilityDAO.callStoredProcedureForUpdate("addNdExperimentStock", params);
-            return id;
-        }
-    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId){
+
+    public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId) {
+        Integer id = this.utilityDAO.getNextMin("nd_experiment_stock");
+        LinkedHashMap params = new LinkedHashMap();
+        params.put("id", id);
+        params.put("ndExperimentId", ndExperimentId);
+        params.put("stockId", stockId);
+        this.utilityDAO.callStoredProcedureForUpdate("addNdExperimentStock", params);
+        return id;
+    }
+
+    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId) {
         Integer id = this.utilityDAO.getNextMin("nd_experiment");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
@@ -434,16 +435,16 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void updateDataN(DataN dataN) {
         //this.dataNDAO.update(dataN);
-    	addOrUpdateDataN(dataN);
+        addOrUpdateDataN(dataN);
     }
 
     @Override
     public void deleteDataN(DataN dataN) {
         //this.dataNDAO.delete(dataN);
-    	//not used - last check 05/17/2013
+        //not used - last check 05/17/2013
     }
 
-//    @Override
+    //    @Override
 //    public DataN getDataN(DataN dataN) {
 //        return this.dataNDAO.findById(dataN.getDataCPK());
 //    }
@@ -454,15 +455,15 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataN> getDataNList() {
         //return dataNDAO.findAll();
-       return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap(),
-               new String[]{},
-    		   new String[]{"ounitid", "variatid", "dvalue"});
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNList", new HashMap(),
+                new String[]{},
+                new String[]{"ounitid", "variatid", "dvalue"});
     }
 
     @Override
     public int getTotalDataN(DataN dataN) {
         //return this.dataNDAO.getTotal(dataN);
-    	return 0;//not used - last check 05/17/2013
+        return 0;//not used - last check 05/17/2013
     }
 
     @Override
@@ -471,12 +472,12 @@ public class CommonServicesImpl implements CommonServices {
         //does not do pagination
 
         HashMap params = new HashMap();
-       params.put("variatid", filter.getDataNPK().getVariatid());
-       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        params.put("variatid", filter.getDataNPK().getVariatid());
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
 
-        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN",params,
+        return this.utilityDAO.callStoredProcedureForList(DataN.class, "getListDataN", params,
                 new String[]{"variatid", "iscentral"},
-     		   new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
@@ -490,34 +491,34 @@ public class CommonServicesImpl implements CommonServices {
     public List<DataN> getDataNByEffectId(final Integer effectId) {
 
         HashMap params = new HashMap();
-       params.put("effectid", effectId);
-       params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        params.put("effectid", effectId);
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(DataN.class, "getDataNByEffectId", params,
                 new String[]{"effectid", "iscentral"},
-     		   new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
 
     }
 
-//-----------------------------------DataT---------------------------
+    //-----------------------------------DataT---------------------------
     @Override
     public void addDataT(DataT dataT) {
         //this.dataTDAO.create(dataT);
-    	//not used - last check 05/17/2013
+        //not used - last check 05/17/2013
     }
 
     @Override
     public void updateDataT(DataT dataT) {
         //this.dataTDAO.update(dataT);
-    	//not used - last check 05/17/2013
+        //not used - last check 05/17/2013
     }
 
     @Override
     public void deleteDataT(DataT dataT) {
         //this.dataTDAO.delete(dataT);
-    	//not used - last check 05/17/2013
+        //not used - last check 05/17/2013
     }
 
-//    @Override
+    //    @Override
 //    public DataT getDataT(DataT dataT) {
 //        throw new UnsupportedOperationException("Not supported yet.");
 //    }
@@ -528,25 +529,25 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<DataT> getDataTList() {
         //return dataTDAO.findAll();
-    	return null;
-    	//not used - last check 05/17/2013
+        return null;
+        //not used - last check 05/17/2013
     }
 
     @Override
     public int getTotalDataT(DataT dataT) {
         //return this.dataTDAO.getTotal(dataT);
-    	return 0;
-    	//not used - last check 05/17/2013
+        return 0;
+        //not used - last check 05/17/2013
     }
 
     @Override
     public List<DataT> getListDataT(DataT filter, int start, int pageSize, boolean paged) {
         //return dataTDAO.getList(filter, start, pageSize, paged);
-    	return null;
-    	//not used - last check 05/17/2013
+        return null;
+        //not used - last check 05/17/2013
     }
 
-//-----------------------------------Datattr---------------------------
+    //-----------------------------------Datattr---------------------------
     @Override
     public void addDatattr(Datattr datattr) {
         this.datattrDAO.create(datattr);
@@ -632,7 +633,7 @@ public class CommonServicesImpl implements CommonServices {
 //        return dmsattrDAO.getList(filter, start, pageSize, paged);
 //    }
 
-//-----------------------------------Dudflds---------------------------
+    //-----------------------------------Dudflds---------------------------
     @Override
     public void addDudflds(Dudflds dudflds) {
         this.dudfldsDAO.create(dudflds);
@@ -673,7 +674,7 @@ public class CommonServicesImpl implements CommonServices {
         return dudfldsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Effect---------------------------
+    //-----------------------------------Effect---------------------------
     @Override
     public void addEffect(Effect effect) {
 
@@ -691,7 +692,7 @@ public class CommonServicesImpl implements CommonServices {
         this.effectDAO.delete(effect);
     }
 
-//    @Override
+    //    @Override
 //    public Effect getEffect(Effect effect) {
 //        return this.dudfldsDAO.findById(effect.getFldno());
 //    }
@@ -702,7 +703,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Effect> getEffectList() {
         List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getAllEffects", new HashMap(), null,
-                new String[] {"represNo", "factorId", "effectId"});
+                new String[]{"represNo", "factorId", "effectId"});
 
         List<Effect> returnVal = new ArrayList<Effect>(temp.size());
 
@@ -737,7 +738,7 @@ public class CommonServicesImpl implements CommonServices {
         for (int i = 0; i < effectsIds.size(); i++) {
             buffer.append(effectsIds.get(i));
 
-            if ( (i + 1) < effectsIds.size() ) {
+            if ((i + 1) < effectsIds.size()) {
                 buffer.append(",");
 
             }
@@ -747,12 +748,12 @@ public class CommonServicesImpl implements CommonServices {
 
 
         List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getEffectsByEffectIdList",
-                params, new String[] {"idList"}, new String[] {"represNo", "factorId", "effectId"});
+                params, new String[]{"idList"}, new String[]{"represNo", "factorId", "effectId"});
         List<Effect> returnVal = new ArrayList<Effect>(temp.size());
 
         for (Object o : temp) {
             EffectDto dto = (EffectDto) o;
-            Effect effect = new Effect(dto.getRepresNo(), dto.getFactorId(),dto.getEffectId());
+            Effect effect = new Effect(dto.getRepresNo(), dto.getFactorId(), dto.getEffectId());
 
             returnVal.add(effect);
         }
@@ -760,28 +761,28 @@ public class CommonServicesImpl implements CommonServices {
         return returnVal;
     }
 
-//-----------------------------------Factor---------------------------
+    //-----------------------------------Factor---------------------------
     @Override
     public void addFactor(Factor factor) {
         //this.factorDAO.create(factor);
-    	if(isLocal()) {
-    		Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addFactor", new String[]{
-    				"labelid","factorid","studyid","fname","traitid","scaleid","tmethid","ltype","tid"});
-    		factor.setLabelid(id);
-    		Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"}, 
-    				new String[]{"factorid"});
-                
-                System.out.println("addFactor id = " + id);
-    		factor.setFactorid(newFactor.getFactorid());
-    		
-    	}
+        if (isLocal()) {
+            Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addFactor", new String[]{
+                    "labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+            factor.setLabelid(id);
+            Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"},
+                    new String[]{"factorid"});
+
+            System.out.println("addFactor id = " + id);
+            factor.setFactorid(newFactor.getFactorid());
+
+        }
     }
 
     @Override
     public void updateFactor(Factor factor) {
         //this.factorDAO.update(factor);
-    	//BY TRACING - this is only used for updating the factorid after addFactor, 
-    	//but since factorid is just a derived field in the new schema, this is no longer needed
+        //BY TRACING - this is only used for updating the factorid after addFactor,
+        //but since factorid is just a derived field in the new schema, this is no longer needed
     }
 
     @Override
@@ -830,26 +831,26 @@ public class CommonServicesImpl implements CommonServices {
 
     public List<Factor> getMainFactorsByStudyid(Integer studyid) {
         //return this.factorDAO.getMainFactorsByStudyid(studyid);
-    	Factor factor = new Factor();
-    	factor.setStudyid(studyid);
-    	if(isLocal()) {
-    		factor.setIslocal(1);
-    	} else {
-    		factor.setIslocal(0);
-    	}
-    	return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid","islocal"}, 
-    			new String[] {"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
-    	
-    	
+        Factor factor = new Factor();
+        factor.setStudyid(studyid);
+        if (isLocal()) {
+            factor.setIslocal(1);
+        } else {
+            factor.setIslocal(0);
+        }
+        return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid", "islocal"},
+                new String[]{"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
+
+
     }
 
     public List<Factor> getGroupFactorsByStudyidAndFactorid(Integer studyid, Integer factorid) {
         //return this.factorDAO.getGroupFactorsByStudyidAndFactorid(studyid, factorid);
-    	Factor factor = new Factor();
-    	factor.setStudyid(studyid);
+        Factor factor = new Factor();
+        factor.setStudyid(studyid);
         factor.setFactorid(factorid);
-    	return this.utilityDAO.callStoredProcedureForList(factor, "getGroupFactorsByStudyidAndFactorid", new String[]{"studyid","factorid"}, 
-    			new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});        
+        return this.utilityDAO.callStoredProcedureForList(factor, "getGroupFactorsByStudyidAndFactorid", new String[]{"studyid", "factorid"},
+                new String[]{"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
     }
 
     public List<Factor> getFactorsByFactorsids(List factorIds) {
@@ -858,14 +859,14 @@ public class CommonServicesImpl implements CommonServices {
 
     public Factor getFactorByStudyidAndFname(Integer studyid, String fname) {
         Factor factor = new Factor();
-    	factor.setStudyid(studyid);
+        factor.setStudyid(studyid);
         factor.setFname(fname);
-        return this.utilityDAO.callStoredProcedureForObject(factor, "getFactorByStudyidAndFname", new String[]{"studyid","fname"}, 
-                        new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});        
+        return this.utilityDAO.callStoredProcedureForObject(factor, "getFactorByStudyidAndFname", new String[]{"studyid", "fname"},
+                new String[]{"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
         //return this.factorDAO.getFactorByStudyidAndFname(studyid, fname);
     }
 
-//-----------------------------------Georef---------------------------
+    //-----------------------------------Georef---------------------------
     @Override
     public void addGeoref(Georef georef) {
         this.georefDAO.create(georef);
@@ -906,7 +907,7 @@ public class CommonServicesImpl implements CommonServices {
         return georefDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Germplsm---------------------------
+    //-----------------------------------Germplsm---------------------------
     @Override
     public void addGermplsm(Germplsm germplsm) {
         this.germplsmDAO.create(germplsm);
@@ -947,7 +948,7 @@ public class CommonServicesImpl implements CommonServices {
         return germplsmDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Institut---------------------------
+    //-----------------------------------Institut---------------------------
     @Override
     public void addInstitut(Institut institut) {
         this.institutDAO.create(institut);
@@ -1034,7 +1035,7 @@ public class CommonServicesImpl implements CommonServices {
         return instlnDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------LevelC---------------------------
+    //-----------------------------------LevelC---------------------------
     @Override
     public void addLevelC(LevelC levelC) {
         //this.levelCDAO.create(levelC);
@@ -1050,7 +1051,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void updateLevelC(LevelC levelC) {
 //        this.levelCDAO.update(levelC);
-    	LinkedHashMap params = new LinkedHashMap();
+        LinkedHashMap params = new LinkedHashMap();
         params.put("labelid", levelC.getLevelCPK().getLabelid());
         params.put("factorid", levelC.getFactorid());
         params.put("levelno", levelC.getLevelCPK().getLevelno());
@@ -1098,9 +1099,9 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", 0);
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelC.class, "searchLevels", params,
-                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
-      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
-        
+                new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
+                new String[]{"labelid", "factorid", "levelno", "lvalue"});
+
     }
 
     public List<LevelC> getLevelsCByLabelid(Integer labelid) {
@@ -1110,12 +1111,12 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", new Integer(0));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelC.class, "getLevelsByLabelId", params,
-                   new String[]{"p_labelid", "isnumeric", "iscentral"},
-      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
- 
+                new String[]{"p_labelid", "isnumeric", "iscentral"},
+                new String[]{"labelid", "factorid", "levelno", "lvalue"});
+
     }
 
-//-----------------------------------LevelN---------------------------
+    //-----------------------------------LevelN---------------------------
     @Override
     public void addLevelN(LevelN levelN) {
         LinkedHashMap params = new LinkedHashMap();
@@ -1130,8 +1131,8 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void updateLevelN(LevelN levelN) {
         //this.levelNDAO.update(levelN);
-    	
-    	LinkedHashMap params = new LinkedHashMap();
+
+        LinkedHashMap params = new LinkedHashMap();
         params.put("labelid", levelN.getLevelNPK().getLabelid());
         params.put("factorid", levelN.getFactorid());
         params.put("levelno", levelN.getLevelNPK().getLevelno());
@@ -1144,7 +1145,7 @@ public class CommonServicesImpl implements CommonServices {
         this.levelNDAO.delete(levelN);
     }
 
-//    @Override
+    //    @Override
 //    public LevelN getLevelN(LevelN levelN) {
 //        return this.levelNDAO.findById(levelN.getAdmin());
 //    }
@@ -1178,8 +1179,8 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", 1);
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "searchLevels", params,
-                   new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
-      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
+                new String[]{"labelid", "levelno", "factorid", "lvalue1", "lvalue2", "isnumeric", "iscentral"},
+                new String[]{"labelid", "factorid", "levelno", "lvalue"});
 
     }
 
@@ -1190,12 +1191,12 @@ public class CommonServicesImpl implements CommonServices {
         params.put("isnumeric", new Integer(1));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "getLevelsByLabelId", params,
-                   new String[]{"p_labelid", "isnumeric", "iscentral"},
-      		   new String[]{"labelid", "factorid", "levelno","lvalue"});
-        
+                new String[]{"p_labelid", "isnumeric", "iscentral"},
+                new String[]{"labelid", "factorid", "levelno", "lvalue"});
+
     }
 
-//-----------------------------------LevelT---------------------------
+    //-----------------------------------LevelT---------------------------
     @Override
     public void addLevelT(LevelT levelT) {
         this.levelTDAO.create(levelT);
@@ -1211,7 +1212,7 @@ public class CommonServicesImpl implements CommonServices {
         this.levelTDAO.delete(levelT);
     }
 
-//    public LevelT getLevelT(LevelT levelT) {
+    //    public LevelT getLevelT(LevelT levelT) {
 //        return this.levelNDAO.findById(levelN.getAdmin());
 //    }
 //
@@ -1233,7 +1234,7 @@ public class CommonServicesImpl implements CommonServices {
         return levelTDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Levels---------------------------
+    //-----------------------------------Levels---------------------------
     @Override
     public void addLevels(Levels levels) {
         //this.levelsDAO.create(levels);
@@ -1253,7 +1254,7 @@ public class CommonServicesImpl implements CommonServices {
         return this.levelsDAO.getNextLevelNo();
     }
 
-//    public Levels getLevels(Levels levels) {
+    //    public Levels getLevels(Levels levels) {
 //        return this.levelsDAO.findById(levels.getAdmin());
 //    }
 //
@@ -1275,7 +1276,7 @@ public class CommonServicesImpl implements CommonServices {
         return levelsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Listdata---------------------------
+    //-----------------------------------Listdata---------------------------
     @Override
     public void addListdata(Listdata listdata) {
         this.listdataDAO.create(listdata);
@@ -1291,7 +1292,7 @@ public class CommonServicesImpl implements CommonServices {
         this.listdataDAO.logicalDelete(listdata);
     }
 
-//    public Listdata getListdata(Listdata listdata) {
+    //    public Listdata getListdata(Listdata listdata) {
 //        return this.listdataDAO.findById(listdata.getListdataPK());
 //    }
 //
@@ -1328,7 +1329,7 @@ public class CommonServicesImpl implements CommonServices {
         return listdataDAO.getListdataByIdlistnms(idListnms, dmsattrList);
     }
 
-//-----------------------------------Listnms---------------------------
+    //-----------------------------------Listnms---------------------------
     @Override
     public void addListnms(Listnms listnms) {
         this.listnmsDAO.create(listnms);
@@ -1424,7 +1425,7 @@ public class CommonServicesImpl implements CommonServices {
         return locationDAO.getLocationsByCountryLocidRange(countryId, fromLocid, toLocid);
     }
 
-//-----------------------------------Locdes---------------------------
+    //-----------------------------------Locdes---------------------------
     @Override
     public void addLocdes(Locdes locdes) {
         this.locdesDAO.create(locdes);
@@ -1463,17 +1464,17 @@ public class CommonServicesImpl implements CommonServices {
         return locdesDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Measuredin---------------------------
+    //-----------------------------------Measuredin---------------------------
     @Override
     public void addMeasuredin(Measuredin measuredin) {
-        utilityDAO.callStoredProcedureForUpdate(measuredin, "addMeasuredin", 
-                new String[]{"traitid","tmethid","scaleid","name","storedinid","hasType","isA"});
+        utilityDAO.callStoredProcedureForUpdate(measuredin, "addMeasuredin",
+                new String[]{"traitid", "tmethid", "scaleid", "name", "storedinid", "hasType", "isA"});
     }
 
     @Override
     public void updateMeasuredin(Measuredin measuredin) {
-        utilityDAO.callStoredProcedureForUpdate(measuredin, "updateMeasuredin", 
-                new String[]{"measuredinid","traitid","tmethid","scaleid"});
+        utilityDAO.callStoredProcedureForUpdate(measuredin, "updateMeasuredin",
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid"});
     }
 
     @Override
@@ -1491,11 +1492,11 @@ public class CommonServicesImpl implements CommonServices {
 
     public Measuredin getMeasuredinByTraitidScaleidTmethid(Measuredin measuredin) {
         //return this.measuredinDAO.getMeasuredinByTraitidScaleidTmethid(measuredin);
-        
-        List<Measuredin> list = this.utilityDAO.callStoredProcedureForList(measuredin, "getMeasuredinByTraitidScaleidTmethid", 
-                new String[] {"traitid", "scaleid", "tmethid"}, 
-                new String[] {"measuredinid", "traitid", "scaleid", "standardscale", "tmethid"});
-        
+
+        List<Measuredin> list = this.utilityDAO.callStoredProcedureForList(measuredin, "getMeasuredinByTraitidScaleidTmethid",
+                new String[]{"traitid", "scaleid", "tmethid"},
+                new String[]{"measuredinid", "traitid", "scaleid", "standardscale", "tmethid"});
+
         return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
@@ -1515,40 +1516,40 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
-    	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredIn", 
-				new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
-				new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"});
+        return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredIn",
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType"});
     }
 
     @Override
     public List<Measuredin> getMeasuredInListByTrait(Integer traitId) {
-    	// use filter to set getting by trait id
-    	Measuredin measuredIn = new Measuredin();
-    	measuredIn.setTraitid(traitId);
+        // use filter to set getting by trait id
+        Measuredin measuredIn = new Measuredin();
+        measuredIn.setTraitid(traitId);
         //override default values
-        measuredIn.setScaleid(null); 
-        measuredIn.setTmethid(null); 
-    	
-    	return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn", 
-    			new String[]{"measuredinid","traitid", "tmethid", "scaleid"},
-    			new String[]{"measuredinid","traitid", "tmethid", "scaleid","storedinid","hasType"});
+        measuredIn.setScaleid(null);
+        measuredIn.setTmethid(null);
+
+        return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn",
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType"});
     }
 
     @Override
     public void addOrUpdateMeasuredIn(Measuredin measuredin) {
-        if (isLocal()){
-            
-            if (measuredin.getMeasuredinid() != null){
+        if (isLocal()) {
+
+            if (measuredin.getMeasuredinid() != null) {
                 updateMeasuredin(measuredin);
             } else {
                 addMeasuredin(measuredin);
             }
-            
+
         }
-        
+
     }
 
-//-----------------------------------Methods---------------------------
+    //-----------------------------------Methods---------------------------
     @Override
     public void addMethods(Methods methods) {
         this.methodsDAO.create(methods);
@@ -1587,7 +1588,7 @@ public class CommonServicesImpl implements CommonServices {
         return methodsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Names---------------------------
+    //-----------------------------------Names---------------------------
     @Override
     public void addNames(Names names) {
         this.namesDAO.create(names);
@@ -1658,7 +1659,7 @@ public class CommonServicesImpl implements CommonServices {
         return namesDAO.getDataForCimmytWheat(listId);
     }
 
-//-----------------------------------Obsunit---------------------------
+    //-----------------------------------Obsunit---------------------------
     @Override
     public void addObsunit(Obsunit obsunit) {
         //daniel
@@ -1668,11 +1669,11 @@ public class CommonServicesImpl implements CommonServices {
         this.utilityDAO.callStoredProcedureForUpdate(obsunit, "addObsunit", new String[]{"ounitid", "effectid"});*/
         //System.out.println(isCentral()+"========================= id is "+id);
         //this.obsunitDAO.create(obsunit);
-    	
-    	//05-18-2013 - this method should not be used
-    	//an nd_experiment record is already inserted by adding level entries 
-    	//this method cannot retrieve the created nd_experiment_id as it has no information on it
-    	//addOindex will be used instead to create the nd_experiment_project
+
+        //05-18-2013 - this method should not be used
+        //an nd_experiment record is already inserted by adding level entries
+        //this method cannot retrieve the created nd_experiment_id as it has no information on it
+        //addOindex will be used instead to create the nd_experiment_project
     }
 
     @Override
@@ -1698,7 +1699,7 @@ public class CommonServicesImpl implements CommonServices {
 
         return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitList", new HashMap(),
                 new String[]{},
-     		   new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
         //return obsunitDAO.findAll();
     }
 
@@ -1734,40 +1735,40 @@ public class CommonServicesImpl implements CommonServices {
     public List<Obsunit> getObsunitListByEffectid(final Integer effectId) {
 //        return obsunitDAO.getObsunitListByEffectid(effectId);
         HashMap params = new HashMap();
-        params.put("iscentral", isCentral()?new Integer(1): new Integer(0));
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         params.put("effectid", effectId);
         return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitListByEffectid", params,
                 new String[]{"effectid", "iscentral"},
-             		   new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"ounitid", "variatid", "dvalue"});
         //getObsunitListByEffectid
     }
 //-----------------------------------Oindex---------------------------
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
     public void addOindex(Oindex oindex) {
         //this.oindexDAO.create(oindex);
-    	if(isLocal()) {
+        if (isLocal()) {
             LinkedHashMap params = new LinkedHashMap();
-    		params.put("factorid", oindex.getOindexPK().getFactorid());
-    		params.put("levelno", oindex.getOindexPK().getLevelno());
-    		this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
-    	}
+            params.put("factorid", oindex.getOindexPK().getFactorid());
+            params.put("levelno", oindex.getOindexPK().getLevelno());
+            this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
+        }
     }
 
     @Override
     public void updateOindex(Oindex oindex) {
         //this.oindexDAO.update(oindex);
-    	//not used - last check 05/18/2013
+        //not used - last check 05/18/2013
     }
 
     @Override
     public void deleteOindex(Oindex oindex) {
         //this.oindexDAO.delete(oindex);
-      //not used - last check 05/18/2013
+        //not used - last check 05/18/2013
     }
 
-//    public Oindex getOindex(Oindex oindex) {
+    //    public Oindex getOindex(Oindex oindex) {
 //        return this.obsunitDAO.findById(obsunit.getOunitid());
 //    }
 //
@@ -1777,22 +1778,22 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Oindex> getOindexList() {
         //return oindexDAO.findAll();
-    	return null;
-    	//not used - last check 05/18/2013
+        return null;
+        //not used - last check 05/18/2013
     }
 
     @Override
     public int getTotalOindex(Oindex oindex) {
         //return this.oindexDAO.getTotal(oindex);
-    	return 0;
-    	//not used - last check 05/18/2013
+        return 0;
+        //not used - last check 05/18/2013
     }
 
     @Override
     public List<Oindex> getListOindex(Oindex filter, int start, int pageSize, boolean paged) {
         //return oindexDAO.getList(filter, start, pageSize, paged);
-    	return null;
-    	//not used - last check 05/18/2013
+        return null;
+        //not used - last check 05/18/2013
     }
 
     /**
@@ -1803,8 +1804,8 @@ public class CommonServicesImpl implements CommonServices {
      */
     public List<Oindex> getOindexListByRepresno(final Integer represno) {
         //return oindexDAO.getOindexListByRepresno(represno);
-    	return null;
-    	//not used - last check 05/18/2013
+        return null;
+        //not used - last check 05/18/2013
     }
 //-----------------------------------Persons---------------------------
 
@@ -1846,7 +1847,7 @@ public class CommonServicesImpl implements CommonServices {
         return personsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Progntrs---------------------------
+    //-----------------------------------Progntrs---------------------------
     @Override
     public void addProgntrs(Progntrs progntrs) {
         this.progntrsDAO.create(progntrs);
@@ -1862,7 +1863,7 @@ public class CommonServicesImpl implements CommonServices {
         this.progntrsDAO.delete(progntrs);
     }
 
-//    public Progntrs getProgntrs(Progntrs progntrs) {
+    //    public Progntrs getProgntrs(Progntrs progntrs) {
 //        return this.progntrsDAO.findById(progntrs.get);
 //    }
 //
@@ -1884,7 +1885,7 @@ public class CommonServicesImpl implements CommonServices {
         return progntrsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Represtn---------------------------
+    //-----------------------------------Represtn---------------------------
     @Override
     public void addReprestn(Represtn represtn) {
         // functionally, at this point in the UI the data contained in the Represtn object has already been saved into the system. Hence the quick return
@@ -1921,15 +1922,15 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Represtn> getListReprestn(Represtn filter, int start, int pageSize, boolean paged) {
-        String[] paramNames = new String[] {"represno", "represname", "effectid"};
-        return utilityDAO.callStoredProcedureForListPaged(filter, paged,start, pageSize, "getReprestnForReprestn",
+        String[] paramNames = new String[]{"represno", "represname", "effectid"};
+        return utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getReprestnForReprestn",
                 paramNames, paramNames);
     }
 
     /**
      * Gests a Representation object for a Study
      *
-     * @param studyId Study number
+     * @param studyId    Study number
      * @param represName Representation name to find
      * @return
      */
@@ -1941,11 +1942,12 @@ public class CommonServicesImpl implements CommonServices {
         params.put("represName", represName);
 
         return utilityDAO.callStoredProcedureForObject(new Represtn(), "getReprestnForStudyId", params,
-                new String[] {"represno", "represname", "effectid"});
+                new String[]{"represno", "represname", "effectid"});
 
         /*return utilityDAO.*/
     }
-//-----------------------------------Scale---------------------------
+
+    //-----------------------------------Scale---------------------------
     @Override
     public void addScale(Scale scale) {
         this.scaleDAO.create(scale);
@@ -1991,7 +1993,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScale", params,
                 new String[]{"traitid", "iscentral"},
-      		   new String[]{"scaleid", "scname", "traitid","sctype"});
+                new String[]{"scaleid", "scname", "traitid", "sctype"});
     }
 
     @Override
@@ -1999,15 +2001,15 @@ public class CommonServicesImpl implements CommonServices {
         //return scaleDAO.getScaleGroups();
         List<Scale> resultLst = new ArrayList<Scale>();
         List<Scale> resultLstTemp = this.getListScaleAll();
-        HashMap<String,Scale> diffScales = new HashMap<String, Scale>();
-        for (Scale scale:resultLstTemp) {
-            diffScales.put(scale.getScname()+scale.getSctype(), scale);
+        HashMap<String, Scale> diffScales = new HashMap<String, Scale>();
+        for (Scale scale : resultLstTemp) {
+            diffScales.put(scale.getScname() + scale.getSctype(), scale);
         }
 
-        for (Scale scale: diffScales.values()) {
+        for (Scale scale : diffScales.values()) {
             resultLst.add(scale);
         }
-        return  resultLst;
+        return resultLst;
     }
 
     public void migrateScaleToTmsscalesDirect() {
@@ -2019,14 +2021,14 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         return this.utilityDAO.callStoredProcedureForList(Scale.class, "getListScaleAll", params,
-                new String[]{ "iscentral"},
-       		   new String[]{"scaleid", "scname", "traitid","sctype"});
+                new String[]{"iscentral"},
+                new String[]{"scaleid", "scname", "traitid", "sctype"});
     }
 
     //-----------------------------------Scales---------------------------
     @Override
     public void addScales(Scales scales) {
-                //this.scalesDAO.create(scales);
+        //this.scalesDAO.create(scales);
         Integer cvterm_id = this.utilityDAO.getNextMin("cvterm");
         scales.setScaleid(cvterm_id);
         LinkedHashMap params = new LinkedHashMap();
@@ -2042,10 +2044,10 @@ public class CommonServicesImpl implements CommonServices {
 
         //this.scalesDAO.update(scales);
         LinkedHashMap params = new LinkedHashMap();
-       params.put("cvtermid", scales.getScaleid());
-       params.put("cvname", scales.getScname());
-       params.put("cvdesc", scales.getScname());
-       this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
+        params.put("cvtermid", scales.getScaleid());
+        params.put("cvname", scales.getScname());
+        params.put("cvdesc", scales.getScname());
+        this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
     }
 
     @Override
@@ -2061,16 +2063,16 @@ public class CommonServicesImpl implements CommonServices {
         Scales scales = new Scales();
         scales.setScaleid(idScale);
         //override default values
-        scales.setScname(null); 
+        scales.setScname(null);
         scales.setSctype(null);
-        
-        List<Scales> list =  this.utilityDAO.callStoredProcedureForList(scales, "getScales", 
-                new String[]{"scaleid","scname", "sctype"}, 
-                new String[]{"scaleid","scname", "sctype"});
-        
-        if (list!=null)
+
+        List<Scales> list = this.utilityDAO.callStoredProcedureForList(scales, "getScales",
+                new String[]{"scaleid", "scname", "sctype"},
+                new String[]{"scaleid", "scname", "sctype"});
+
+        if (list != null)
             return list.get(0);
-        
+
         return null;
     }
 
@@ -2078,17 +2080,17 @@ public class CommonServicesImpl implements CommonServices {
     public List<Scales> getScalesList() {
         //return scalesDAO.findAll();
         //System.out.println("DB Name"+getCentralDbName());
-        return this.utilityDAO.callStoredProcedureForList(new Scales()  , "getScalesList",
-            				new String[]{},
-            				new String[]{"scaleid","scname", "sctype"});
+        return this.utilityDAO.callStoredProcedureForList(new Scales(), "getScalesList",
+                new String[]{},
+                new String[]{"scaleid", "scname", "sctype"});
     }
 
     @Override
     public List<Scales> getScalesListNew() {
         CVTermDTO dto = new CVTermDTO();
         dto.setCvid(CVTermDTO.SCALE_CV_ID);
-        List<CVTermDTO> temp = this.utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"},
-                new String[] {"cvtermid", "cvname"});
+        List<CVTermDTO> temp = this.utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[]{"cvid"},
+                new String[]{"cvtermid", "cvname"});
 
         List<Scales> returnVal = new ArrayList<Scales>(temp.size());
 
@@ -2104,13 +2106,13 @@ public class CommonServicesImpl implements CommonServices {
     public List<Scales> getListScalesByScaleNew(Scales scalesFilter, int start, int pageSize, boolean paged) {
 
 
-
         if (scalesFilter.getGlobalsearch() != null) {
             if (ValidatingDataType.isNumeric(scalesFilter.getGlobalsearch())) {
                 scalesFilter.setScaleid(Integer.parseInt(scalesFilter.getGlobalsearch()));
-            } else {
-                scalesFilter.setScname(scalesFilter.getGlobalsearch());
             }
+
+            scalesFilter.setScname(scalesFilter.getGlobalsearch());
+
         }
 
         CVTermDTO dto = new CVTermDTO(scalesFilter.getScaleid(),
@@ -2118,7 +2120,7 @@ public class CommonServicesImpl implements CommonServices {
 
 
         List<CVTermDTO> temp = this.utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize,
-                "searchCVTerm", new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+                "searchCVTerm", new String[]{"cvtermid", "cvname", "cvid"}, new String[]{"cvtermid", "cvname"});
 
         List<Scales> returnVal = new ArrayList<Scales>(temp.size());
 
@@ -2138,39 +2140,39 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Scales> getListScales(Scales filter, int start, int pageSize, boolean paged) {
-    	//return scalesDAO.getList(filter, start, pageSize, paged);
-    	if (filter.getGlobalsearch() == null) {
-    		return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getScales",  
-    				new String[]{"scaleid","scname", "sctype"},
-    				new String[]{"scaleid","scname", "sctype"});
-    	} else {
-    		Scales copy = new Scales();
-    		if(ValidatingDataType.isNumeric(filter.getGlobalsearch())){
-    			copy.setScaleid(new Integer(filter.getGlobalsearch()));
-    		} else {
-    			copy.setScaleid(null);
-    		}
-    		copy.setScname(filter.getGlobalsearch());
-    		copy.setSctype(filter.getGlobalsearch());
-    		return this.utilityDAO.callStoredProcedureForListPaged(copy, paged, start, pageSize, "searchScales", 
-    				new String[]{"scaleid","scname", "sctype"},
-    				new String[]{"scaleid","scname", "sctype"});
-    	}
+        //return scalesDAO.getList(filter, start, pageSize, paged);
+        if (filter.getGlobalsearch() == null) {
+            return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getScales",
+                    new String[]{"scaleid", "scname", "sctype"},
+                    new String[]{"scaleid", "scname", "sctype"});
+        } else {
+            Scales copy = new Scales();
+            if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
+                copy.setScaleid(new Integer(filter.getGlobalsearch()));
+            } else {
+                copy.setScaleid(null);
+            }
+            copy.setScname(filter.getGlobalsearch());
+            copy.setSctype(filter.getGlobalsearch());
+            return this.utilityDAO.callStoredProcedureForListPaged(copy, paged, start, pageSize, "searchScales",
+                    new String[]{"scaleid", "scname", "sctype"},
+                    new String[]{"scaleid", "scname", "sctype"});
+        }
     }
 
     public Scales getScalesByScnameAndSctype(Scales scales) {
         //return scalesDAO.getScalesByScnameAndSctype(scales);
         //no need for ordering since it reutrns only 1 object
         return this.utilityDAO.callStoredProcedureForObject(scales, "getScalesByScnameAndSctype",
-                                    new String[]{"scname", "sctype"},
-                    				new String[]{"scaleid","scname", "sctype"});
+                new String[]{"scname", "sctype"},
+                new String[]{"scaleid", "scname", "sctype"});
     }
 
     public Scales getScalesByScname(Scales scales) {
         return scalesDAO.getScalesByScname(scales);
     }
 
-//-----------------------------------Scalecon---------------------------
+    //-----------------------------------Scalecon---------------------------
     @Override
     public void addScalecon(Scalecon scalecon) {
         this.scaleconDAO.create(scalecon);
@@ -2186,7 +2188,7 @@ public class CommonServicesImpl implements CommonServices {
         this.scaleconDAO.delete(scalecon);
     }
 
-//    public Scalecon getScalecon(Scalecon scalecon) {
+    //    public Scalecon getScalecon(Scalecon scalecon) {
 //        return this.scaleDAO.findById(scale.getScaleid());
 //    }
 //
@@ -2208,7 +2210,7 @@ public class CommonServicesImpl implements CommonServices {
         return scaleconDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Scaledis---------------------------
+    //-----------------------------------Scaledis---------------------------
     @Override
     public void addScaledis(Scaledis scaledis) {
         this.scaledisDAO.create(scaledis);
@@ -2224,7 +2226,7 @@ public class CommonServicesImpl implements CommonServices {
         this.scaledisDAO.delete(scaledis);
     }
 
-//    public Scaledis getScaledis(Scaledis scaledis) {
+    //    public Scaledis getScaledis(Scaledis scaledis) {
 //        return this.scaledisDAO.findById(scaledis.getScaleid());
 //    }
 //
@@ -2246,7 +2248,7 @@ public class CommonServicesImpl implements CommonServices {
         return scaledisDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Scaletab---------------------------
+    //-----------------------------------Scaletab---------------------------
     @Override
     public void addScaletab(Scaletab scaletab) {
         this.scaletabDAO.create(scaletab);
@@ -2285,7 +2287,7 @@ public class CommonServicesImpl implements CommonServices {
         return scaletabDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Sndivs---------------------------
+    //-----------------------------------Sndivs---------------------------
     @Override
     public void addSndivs(Sndivs sndivs) {
         this.sndivsDAO.create(sndivs);
@@ -2324,52 +2326,52 @@ public class CommonServicesImpl implements CommonServices {
         return sndivsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Steffect---------------------------
+    //-----------------------------------Steffect---------------------------
     @Override
     public void addSteffect(Steffect steffect) {
         //this.steffectDAO.create(steffect);
-    	if(isLocal()) {
-    		utilityDAO.callStoredProcedureForUpdate(steffect,"addSteffect","effectid",
-    			"studyid","effectname");
-    	}
+        if (isLocal()) {
+            utilityDAO.callStoredProcedureForUpdate(steffect, "addSteffect", "effectid",
+                    "studyid", "effectname");
+        }
     }
 
     @Override
     public void updateSteffect(Steffect steffect) {
         //this.steffectDAO.update(steffect);
-    	//not used - last check 5/17/2013
+        //not used - last check 5/17/2013
     }
 
     @Override
     public void deleteSteffect(Steffect steffect) {
         //this.steffectDAO.delete(steffect);
-    	//not used - last check 5/17/2013
+        //not used - last check 5/17/2013
     }
 
     public Steffect getSteffect(Steffect steffect) {
         //return this.steffectDAO.findById(steffect.getEffectid());
-    	return null;
-    	//not used - last check 5/17/2013
+        return null;
+        //not used - last check 5/17/2013
     }
 
     public Steffect getSteffect(Integer idSteffect) {
         //return this.steffectDAO.findById(idSteffect);
-    	return null;
-    	//not used - last check 5/17/2013
+        return null;
+        //not used - last check 5/17/2013
     }
 
     @Override
     public List<Steffect> getSteffectList() {
         //return steffectDAO.findAll();
-    	return null;
-      //not used - last check 5/17/2013
+        return null;
+        //not used - last check 5/17/2013
     }
 
     @Override
     public int getTotalSteffect(Steffect steffect) {
         //return this.steffectDAO.getTotal(steffect);
-    	return 0;
-    	//not used - last check 5/17/2013
+        return 0;
+        //not used - last check 5/17/2013
     }
 
     @Override
@@ -2379,8 +2381,8 @@ public class CommonServicesImpl implements CommonServices {
 
         HashMap params = new HashMap();
         params.put("studyid", filter.getStudyid());
-        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getListSteffect", params, new String[]{"studyid"},new String[]{"effectid", "studyid", "effectname"} );
-        if(list != null)
+        List list = this.utilityDAO.callStoredProcedureForList(Steffect.class, "getListSteffect", params, new String[]{"studyid"}, new String[]{"effectid", "studyid", "effectname"});
+        if (list != null)
             return list;
         return new ArrayList();
 
@@ -2388,20 +2390,20 @@ public class CommonServicesImpl implements CommonServices {
 
     public List<Steffect> getSteffectByStudyid(Integer studyid) {
         ////not used - last check 5/17/2013
-       // return steffectDAO.getSteffectByStudyid(studyid);
-    	return null;
+        // return steffectDAO.getSteffectByStudyid(studyid);
+        return null;
     }
 
     public List<Integer> getEffectidsByStudyid(Integer studyid) {
         //return steffectDAO.getEffectidsByStudyid(studyid);
         HashMap params = new HashMap();
         params.put("studyid", studyid);
-        params.put("iscentral", isCentral()?new Integer(1) : new Integer(0));
+        params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
         //List list =  this.utilityDAO.callStoredProcedureForList(Integer.class, "getEffectidsByStudyid", params);
-        List list =  this.utilityDAO.callStoredProcedureForList(Steffect.class, "getEffectidsByStudyid", params, new String[]{"studyid", "iscentral"},new String[]{"effectid"} );
-        if(list != null){
+        List list = this.utilityDAO.callStoredProcedureForList(Steffect.class, "getEffectidsByStudyid", params, new String[]{"studyid", "iscentral"}, new String[]{"effectid"});
+        if (list != null) {
             List temp = new ArrayList();
-            for(int i = 0 ; i < list.size() ; i++){
+            for (int i = 0; i < list.size(); i++) {
                 Steffect eff = (Steffect) list.get(i);
                 temp.add(eff.getEffectid());
             }
@@ -2413,59 +2415,59 @@ public class CommonServicesImpl implements CommonServices {
 
     }
 
-//-----------------------------------Study---------------------------
+    //-----------------------------------Study---------------------------
     @Override
     public void addStudy(Study study) {
         //this.studyDAO.create(study);
 
-    	if(isLocal()) {
-    		Integer id = this.utilityDAO.getNextMin("project");
-    		study.setStudyid(id);
-    		this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy", 
-                "studyid","sname","pmkey","title","objectiv",
-                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
-    	}
+        if (isLocal()) {
+            Integer id = this.utilityDAO.getNextMin("project");
+            study.setStudyid(id);
+            this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy",
+                    "studyid", "sname", "pmkey", "title", "objectiv",
+                    "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy");
+        }
     }
 
     @Override
     public void updateStudy(Study study) {
         //this.studyDAO.update(study);
-    	if(isLocal()) {
-	    	this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy", 
-	    			"studyid","sname","pmkey","title","objectiv",
-	                "investid","stype","sdate","edate","userid","sstatus","shierarchy");
-    	}
+        if (isLocal()) {
+            this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy",
+                    "studyid", "sname", "pmkey", "title", "objectiv",
+                    "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy");
+        }
     }
 
     @Override
     public void deleteStudy(Study study) {
         //this.studyDAO.logicalDelete(study);
-    	if(isLocal()) {
-    		utilityDAO.callStoredProcedureForUpdate(study, "deleteStudy", "studyid");
-    	}
+        if (isLocal()) {
+            utilityDAO.callStoredProcedureForUpdate(study, "deleteStudy", "studyid");
+        }
     }
 
     public Study getStudy(Study study) {
         //return this.studyDAO.findById(study.getStudyid());
-    	return getStudy(study.getStudyid());
+        return getStudy(study.getStudyid());
     }
 
     public Study getStudy(Integer idStudy) {
-    	Study study = new Study();
-    	study.setStudyid(idStudy);
+        Study study = new Study();
+        study.setStudyid(idStudy);
         //this.studyDAO.findById(idStudy);
-    	return utilityDAO.callStoredProcedureForObject(study, "getStudyById", new String[]{"studyid"},
-       		   new String[]{"studyid", "sname", "pmkey","title","objectiv","investid","stype","sdate","edate","userid","sstatus","shierarchy"});
+        return utilityDAO.callStoredProcedureForObject(study, "getStudyById", new String[]{"studyid"},
+                new String[]{"studyid", "sname", "pmkey", "title", "objectiv", "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy"});
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<Study> getStudyList() {
-    	//return studyDAO.findAll(); - not used last check 5/27/2013
-    	Study study = new Study();
-    	return utilityDAO.callStoredProcedureForList(study, "getStudyList",null,
-    			new String[]{"studyid", "sname", "pmkey","title","objectiv","investid","stype","sdate","edate","userid","sstatus","shierarchy"});
-        
+        //return studyDAO.findAll(); - not used last check 5/27/2013
+        Study study = new Study();
+        return utilityDAO.callStoredProcedureForList(study, "getStudyList", null,
+                new String[]{"studyid", "sname", "pmkey", "title", "objectiv", "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy"});
+
     }
 
     @Override
@@ -2474,16 +2476,16 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
-    	return utilityDAO.callStoredProcedureForListPaged(filter, paged,
-    				start, pageSize, "getStudy",
-    				new String[]{"studyid","sname","pmkey","title","objectiv",
-                    "investid","stype","sdate","edate","userid","shierarchy"},
-            		new String[]{"studyid", "sname", "pmkey","title","objectiv",
-    				"investid","stype","sdate","edate","userid","sstatus","shierarchy"});
-    	
+        return utilityDAO.callStoredProcedureForListPaged(filter, paged,
+                start, pageSize, "getStudy",
+                new String[]{"studyid", "sname", "pmkey", "title", "objectiv",
+                        "investid", "stype", "sdate", "edate", "userid", "shierarchy"},
+                new String[]{"studyid", "sname", "pmkey", "title", "objectiv",
+                        "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy"});
+
     }
 
     public ResultSet getTrialRandomization(
@@ -2532,7 +2534,7 @@ public class CommonServicesImpl implements CommonServices {
         return studyDAO.getStudysOnlyTrial();
     }
 
-//-----------------------------------Tmethod---------------------------
+    //-----------------------------------Tmethod---------------------------
     @Override
     public void addTmethod(Tmethod tmethod) {
         this.tmethodDAO.create(tmethod);
@@ -2566,7 +2568,7 @@ public class CommonServicesImpl implements CommonServices {
         CVTermDTO dto = new CVTermDTO();
         dto.setCvid(CVTermDTO.METHOD_CV_ID);
 
-        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"}, new String[] {"cvtermid", "cvname"});
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[]{"cvid"}, new String[]{"cvtermid", "cvname"});
         List<TmsMethod> returnVal = new ArrayList<TmsMethod>(temp.size());
 
         for (CVTermDTO termDTO : temp) {
@@ -2582,15 +2584,16 @@ public class CommonServicesImpl implements CommonServices {
         if (filter.getGlobalsearch() != null) {
             if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
                 filter.setTmethid(Integer.parseInt(filter.getGlobalsearch()));
-            } else {
-                filter.setTmname(filter.getGlobalsearch());
             }
+
+            filter.setTmname(filter.getGlobalsearch());
+
         }
 
         CVTermDTO dto = new CVTermDTO(filter.getTmethid(), filter.getTmname(), CVTermDTO.METHOD_CV_ID);
 
         List<CVTermDTO> temp = utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize, "searchCVTerm",
-                new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+                new String[]{"cvtermid", "cvname", "cvid"}, new String[]{"cvtermid", "cvname"});
         List<TmsMethod> returnVal = new ArrayList<TmsMethod>(temp.size());
 
         for (CVTermDTO termDTO : temp) {
@@ -2611,9 +2614,9 @@ public class CommonServicesImpl implements CommonServices {
         return tmethodDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------TmsMethod---------------------------
+    //-----------------------------------TmsMethod---------------------------
     @Override
-    public void addTmsMethod(TmsMethod tmsMethod) {       
+    public void addTmsMethod(TmsMethod tmsMethod) {
 
         //this.tmsMethodDAO.create(tmsMethod);
         Integer cvterm_id = this.utilityDAO.getNextMin("cvterm");
@@ -2630,10 +2633,10 @@ public class CommonServicesImpl implements CommonServices {
     public void updateTmsMethod(TmsMethod tmsMethod) {
         //this.tmsMethodDAO.update(tmsMethod);
         LinkedHashMap params = new LinkedHashMap();
-       params.put("cvtermid", tmsMethod.getTmethid());
-       params.put("cvname", tmsMethod.getTmname());
-       params.put("cvdesc", tmsMethod.getTmdesc());
-       this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
+        params.put("cvtermid", tmsMethod.getTmethid());
+        params.put("cvname", tmsMethod.getTmname());
+        params.put("cvdesc", tmsMethod.getTmdesc());
+        this.utilityDAO.callStoredProcedureForUpdate("updateCvterm", params);
     }
 
     @Override
@@ -2651,15 +2654,15 @@ public class CommonServicesImpl implements CommonServices {
         //override default values
         filter.setTmname(null);
         filter.setTmdesc(null);
-        return this.utilityDAO.callStoredProcedureForObject(filter, "getListTmsMethod", 
-				new String[]{"tmethid","tmname", "tmdesc"},
-				new String[]{"tmethid","tmname", "tmdesc"});
+        return this.utilityDAO.callStoredProcedureForObject(filter, "getListTmsMethod",
+                new String[]{"tmethid", "tmname", "tmdesc"},
+                new String[]{"tmethid", "tmname", "tmdesc"});
     }
 
     @Override
     public List<TmsMethod> getTmsMethodList() {
         //return tmsMethodDAO.findAll();
-        return this.utilityDAO.callStoredProcedureForList(new TmsMethod(), "getTmsMethodList", new String[]{},new String[]{"tmethid","tmname", "tmdesc"});
+        return this.utilityDAO.callStoredProcedureForList(new TmsMethod(), "getTmsMethodList", new String[]{}, new String[]{"tmethid", "tmname", "tmdesc"});
     }
 
     @Override
@@ -2669,12 +2672,12 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<TmsMethod> getListTmsMethod(TmsMethod filter, int start, int pageSize, boolean paged) {
-    	return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListTmsMethod", 
-				new String[]{"tmethid","tmname", "tmdesc"},
-				new String[]{"tmethid","tmname", "tmdesc"});
+        return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListTmsMethod",
+                new String[]{"tmethid", "tmname", "tmdesc"},
+                new String[]{"tmethid", "tmname", "tmdesc"});
     }
 
-//-----------------------------------TmsScaleCon---------------------------
+    //-----------------------------------TmsScaleCon---------------------------
     @Override
     public void addTmsScaleCon(TmsScaleCon tmsScaleCon) {
         this.tmsScaleConDAO.create(tmsScaleCon);
@@ -2739,11 +2742,11 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public TmsScaleCon getScaleConByMeasuredinId(final Integer measuredinId) {
         //return tmsScaleConDAO.getScaleConByMeasuredinId(measuredinId);
-    	TmsScaleCon scalecon = new TmsScaleCon();
-    	scalecon.setMeasuredinid(measuredinId);
-    	return utilityDAO.callStoredProcedureForObject(scalecon, "getScaleConByMeasuredinId", 
-                        new String[]{"measuredinid"},
-    			new String[]{"tmsscaleconid", "measuredinid", "slevel", "elevel"});
+        TmsScaleCon scalecon = new TmsScaleCon();
+        scalecon.setMeasuredinid(measuredinId);
+        return utilityDAO.callStoredProcedureForObject(scalecon, "getScaleConByMeasuredinId",
+                new String[]{"measuredinid"},
+                new String[]{"tmsscaleconid", "measuredinid", "slevel", "elevel"});
     }
 
     //-----------------------------------TmsScaleDis---------------------------
@@ -2800,11 +2803,11 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<TmsScaleDis> getTmsScaleDisByMeasuredinId(final Integer measuredindid) {
         //return tmsScaleDisDAO.getTmsScaleDisByMeasuredinId(measuredindid);
-    	TmsScaleDis scaledis = new TmsScaleDis();
-    	scaledis.setMeasuredinid(measuredindid);
-    	return utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId", 
-                        new String[]{"measuredinid"},
-    			new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
+        TmsScaleDis scaledis = new TmsScaleDis();
+        scaledis.setMeasuredinid(measuredindid);
+        return utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId",
+                new String[]{"measuredinid"},
+                new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
     }
 
     /**
@@ -2816,11 +2819,11 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public TmsScaleDis getScaleDisByMeasuredinId(final Integer measuredinId) {
         //return tmsScaleDisDAO.getScaleDisByMeasuredinId(measuredinId);
-    	TmsScaleDis scaledis = new TmsScaleDis();
-    	scaledis.setMeasuredinid(measuredinId);
-    	List<TmsScaleDis> sdList = utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId", 
-                        new String[]{"measuredinid"},
-    			new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
+        TmsScaleDis scaledis = new TmsScaleDis();
+        scaledis.setMeasuredinid(measuredinId);
+        List<TmsScaleDis> sdList = utilityDAO.callStoredProcedureForList(scaledis, "getScaleDisByMeasuredinId",
+                new String[]{"measuredinid"},
+                new String[]{"tmsscaledisid", "measuredinid", "value", "valdesc"});
         return sdList != null && sdList.size() > 0 ? sdList.get(0) : null;
     }
 
@@ -2850,8 +2853,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Trait> getTraitList() {
-    	return this.utilityDAO.callStoredProcedureForList(Trait.class, "getTraitList", 
-    			new HashMap(), new String[]{},
+        return this.utilityDAO.callStoredProcedureForList(Trait.class, "getTraitList",
+                new HashMap(), new String[]{},
                 new String[]{"tid", "traitid", "trname", "trdesc", "nstat", "traitgroup"});
     }
 
@@ -2867,9 +2870,9 @@ public class CommonServicesImpl implements CommonServices {
                 filter.getTrdesc(), filter.getTnstat(), filter.getTraitGroup());
 
         List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
-                start,pageSize, "getTraitListByTrait",
-                new String[] {"tid","traitId", "traitName", "traitDescription", "traitGroup"},
-                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup"});
+                start, pageSize, "getTraitListByTrait",
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "traitGroup"},
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "tnstat", "traitGroup"});
         List<Trait> returnVal = new ArrayList<Trait>(temp.size());
         for (Object o : temp) {
             dto = (TraitDto) o;
@@ -2886,29 +2889,29 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addTraits(Traits traits) {
         //this.traitsDAO.create(traits);
-        Integer id = this.utilityDAO.callStoredProcedureForUpdateAndReturnPK(traits, "addTraits", 
-                new String[]{"trname","trdesc","traitGroup"});
+        Integer id = this.utilityDAO.callStoredProcedureForUpdateAndReturnPK(traits, "addTraits",
+                new String[]{"trname", "trdesc", "traitGroup"});
         traits.setTraitid(id);
     }
 
     @Override
     public List<String> getTraitGroups() {
 
-        List<TraitDto> list = this.utilityDAO.callStoredProcedureForList(new TraitDto(), "getTraitGroups", 
-       		 new String[]{},new String[]{"traitGroup"});
-        
+        List<TraitDto> list = this.utilityDAO.callStoredProcedureForList(new TraitDto(), "getTraitGroups",
+                new String[]{}, new String[]{"traitGroup"});
+
         List<String> groupList = new ArrayList<String>();
-        for (TraitDto dto : list){
+        for (TraitDto dto : list) {
             groupList.add(dto.getTraitGroup());
         }
-        
+
         return groupList;
     }
 
     @Override
     public void updateTraits(Traits traits) {
-        if(isLocal()) {
-            this.utilityDAO.callStoredProcedureForUpdate(traits, "updateTraits", "tid","trname","trdesc","tnstat","traitGroup");
+        if (isLocal()) {
+            this.utilityDAO.callStoredProcedureForUpdate(traits, "updateTraits", "tid", "trname", "trdesc", "tnstat", "traitGroup");
         }
     }
 
@@ -2922,10 +2925,10 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Traits getTraits(Integer idTrait) {
-    	Traits traits = new Traits();
-    	traits.setTraitid(idTrait);
-    	return utilityDAO.callStoredProcedureForObject(traits, "getTraitsById", new String[]{"traitid"},
-    			new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup"});
+        Traits traits = new Traits();
+        traits.setTraitid(idTrait);
+        return utilityDAO.callStoredProcedureForObject(traits, "getTraitsById", new String[]{"traitid"},
+                new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup"});
     }
 
     public Traits getTraitsByTraitid(Integer idTrait) {
@@ -2934,8 +2937,8 @@ public class CommonServicesImpl implements CommonServices {
 
     @Override
     public List<Traits> getTraitsList() {
-    	return this.utilityDAO.callStoredProcedureForList(Traits.class, "getTraitList", 
-    			new HashMap(), new String[]{},
+        return this.utilityDAO.callStoredProcedureForList(Traits.class, "getTraitList",
+                new HashMap(), new String[]{},
                 new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup", "traitGroupId"});
     }
 
@@ -2944,7 +2947,7 @@ public class CommonServicesImpl implements CommonServices {
         CVTermDTO dto = new CVTermDTO();
         dto.setCvid(CVTermDTO.TRAITS_CV_ID);
 
-        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[] {"cvid"}, new String[] {"cvtermid", "cvname"});
+        List<CVTermDTO> temp = utilityDAO.callStoredProcedureForList(dto, "getCVTermByCvid", new String[]{"cvid"}, new String[]{"cvtermid", "cvname"});
 
         List<Traits> returnVal = new ArrayList<Traits>(temp.size());
 
@@ -2970,14 +2973,14 @@ public class CommonServicesImpl implements CommonServices {
                 filter.getTrdesc(), filter.getTnstat(), filter.getTraitGroup());
 
         List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
-                start,pageSize, "getTraitListByTrait",
-                new String[] {"tid","traitId", "traitName", "traitDescription", "traitGroup"},
-                new String[] {"tid","traitId", "traitName", "traitDescription", "tnstat", "traitGroup", "traitGroupId"});
+                start, pageSize, "getTraitListByTrait",
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "traitGroup"},
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "tnstat", "traitGroup", "traitGroupId"});
         List<Traits> returnVal = new ArrayList<Traits>(temp.size());
         for (Object o : temp) {
             dto = (TraitDto) o;
 
-            Traits trait = new Traits(dto.getTid(), dto.getTraitId(),dto.getTraitName(), null, dto.getTraitDescription(), null, dto.getTraitGroup(), null);
+            Traits trait = new Traits(dto.getTid(), dto.getTraitId(), dto.getTraitName(), null, dto.getTraitDescription(), null, dto.getTraitGroup(), null);
             returnVal.add(trait);
         }
 
@@ -2989,14 +2992,15 @@ public class CommonServicesImpl implements CommonServices {
         if (filter.getGlobalsearch() != null) {
             if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
                 filter.setTraitid(Integer.parseInt(filter.getGlobalsearch()));
-            } else {
-                filter.setTrname(filter.getGlobalsearch());
             }
+
+            filter.setTrname(filter.getGlobalsearch());
+
         }
 
         CVTermDTO dto = new CVTermDTO(filter.getTraitid(), filter.getTrname(), CVTermDTO.TRAITS_CV_ID);
         List<CVTermDTO> temp = utilityDAO.callStoredProcedureForListPaged(dto, paged, start, pageSize, "searchCVTerm",
-                new String[] {"cvtermid", "cvname", "cvid"}, new String[] {"cvtermid", "cvname"});
+                new String[]{"cvtermid", "cvname", "cvid"}, new String[]{"cvtermid", "cvname"});
 
         List<Traits> returnVal = new ArrayList<Traits>(temp.size());
         for (CVTermDTO termDTO : temp) {
@@ -3012,7 +3016,7 @@ public class CommonServicesImpl implements CommonServices {
         return traitsDAO.getTraitsByTrname(traits);
     }
 
-//-----------------------------------Udflds---------------------------
+    //-----------------------------------Udflds---------------------------
     @Override
     public void addUdflds(Udflds udflds) {
         this.udfldsDAO.create(udflds);
@@ -3051,7 +3055,7 @@ public class CommonServicesImpl implements CommonServices {
         return udfldsDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------Users---------------------------
+    //-----------------------------------Users---------------------------
     @Override
     public void addUsers(Users users) {
         this.usersDAO.create(users);
@@ -3101,28 +3105,28 @@ public class CommonServicesImpl implements CommonServices {
         return usersDAO.getLoggedUserId();
     }
 
-//-----------------------------------Variate---------------------------
+    //-----------------------------------Variate---------------------------
     @Override
     public void addVariate(Variate variate) {
         //this.variateDAO.create(variate);
-    	if(isLocal()) {
-    		Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(variate, "addVariate", new String[]{"studyid",
-    			"vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
-    		variate.setVariatid(id);
-    		
-    	}
+        if (isLocal()) {
+            Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(variate, "addVariate", new String[]{"studyid",
+                    "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+            variate.setVariatid(id);
+
+        }
     }
 
     @Override
     public void updateVariate(Variate variate) {
         //this.variateDAO.update(variate);
-    	//not used - last check 5/17/2013
+        //not used - last check 5/17/2013
     }
 
     @Override
     public void deleteVariate(Variate variate) {
         //this.variateDAO.delete(variate);
-    	//not used - last check 5/17/2013
+        //not used - last check 5/17/2013
     }
 
     public Variate getVariate(Variate variate) {
@@ -3132,25 +3136,25 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public Variate getVariate(Integer idVariate) {
-    	//return this.variateDAO.findById(idVariate);
-    	Variate variate = new Variate();
-    	variate.setVariatid(idVariate);
-    	return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", new String[]{"variatid"},
-        		   new String[]{"variatid", "studyid", "vname","traitid","scaleid","tmethid","dtype","vtype","tid"});
+        //return this.variateDAO.findById(idVariate);
+        Variate variate = new Variate();
+        variate.setVariatid(idVariate);
+        return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", new String[]{"variatid"},
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
     }
 
     @Override
     public List<Variate> getVariateList() {
         //return variateDAO.findAll();
-    	return null;
-    	//not used - last check 5/17/2013
+        return null;
+        //not used - last check 5/17/2013
     }
 
     @Override
     public int getTotalVariate(Variate variate) {
         //return this.variateDAO.getTotal(variate);
-    	return 0;
-    	//not used - last check 5/17/2013
+        return 0;
+        //not used - last check 5/17/2013
     }
 
     @Override
@@ -3162,12 +3166,12 @@ public class CommonServicesImpl implements CommonServices {
         return variateDAO.getVariateConvinacionesTraitScaleMethod();
     }
 
-//-----------------------------------Veffect---------------------------
+    //-----------------------------------Veffect---------------------------
     @Override
     public void addVeffect(Veffect veffect) {
         //this.veffectDAO.create(veffect);
-    	//05-18-2013 - this is no longer needed in the new schema
-    	/*
+        //05-18-2013 - this is no longer needed in the new schema
+        /*
     	 
     	In addVariate, all entries for the variate are inserted in projectprop
     	
@@ -3183,16 +3187,16 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void updateVeffect(Veffect veffect) {
         //this.veffectDAO.update(veffect);
-    	//same comment in addVeffect
+        //same comment in addVeffect
     }
 
     @Override
     public void deleteVeffect(Veffect veffect) {
         //this.veffectDAO.delete(veffect);
-    	//not used - last check 05-18-2013
+        //not used - last check 05-18-2013
     }
 
-//    public Veffect getVeffect(Veffect veffect) {
+    //    public Veffect getVeffect(Veffect veffect) {
 //        return this.veffectDAO.findById(veffect.get);
 //    }
 //
@@ -3201,26 +3205,26 @@ public class CommonServicesImpl implements CommonServices {
 //    }
     @Override
     public List<Veffect> getVeffectList() {
-       // return veffectDAO.findAll();
-    	//not used - last check 05-18-2013
+        // return veffectDAO.findAll();
+        //not used - last check 05-18-2013
         return new ArrayList();
     }
 
     @Override
     public int getTotalVeffect(Veffect veffect) {
         //return this.veffectDAO.getTotal(veffect);
-    	return 0;
-    	//not used - last check 05-18-2013
+        return 0;
+        //not used - last check 05-18-2013
     }
 
     @Override
     public List<Veffect> getListVeffect(Veffect filter, int start, int pageSize, boolean paged) {
         //return veffectDAO.getList(filter, start, pageSize, paged);
-    	return null;
-    	//not used - last check 05-18-2013
+        return null;
+        //not used - last check 05-18-2013
     }
 
-//---------------------------------------------Seters and Getter of DAO
+    //---------------------------------------------Seters and Getter of DAO
     public AtributsDAO getAtributsDAO() {
         return atributsDAO;
     }
@@ -3640,9 +3644,8 @@ public class CommonServicesImpl implements CommonServices {
     /**
      * Checks if Tratis, Scales and Measuredin tables already exists in database
      *
-     * @return
-     * <code>true</code> if exists,
-     * <code>false</code> if does not exist.
+     * @return <code>true</code> if exists,
+     *         <code>false</code> if does not exist.
      */
     @Override
     public boolean existsTratisTable() {
@@ -3669,9 +3672,9 @@ public class CommonServicesImpl implements CommonServices {
         HashMap params = new HashMap();
         params.put("p_represno", represenoId);
         return this.utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromVeffects", params,
-                   new String[]{"p_represno"},
-      		   new String[]{"variatid", "studyid", "vname","traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
-        
+                new String[]{"p_represno"},
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+
     }
 
     /**
@@ -3710,7 +3713,7 @@ public class CommonServicesImpl implements CommonServices {
         return accessType.equals("central");
     }
 
-//-----------------------------------ImsLabelOtherinfo---------------------------
+    //-----------------------------------ImsLabelOtherinfo---------------------------
     @Override
     public void addImsLabelOtherinfo(ImsLabelOtherinfo imsLabelOtherinfo) {
         this.imsLabelOtherinfoDAO.create(imsLabelOtherinfo);
@@ -3741,7 +3744,7 @@ public class CommonServicesImpl implements CommonServices {
         return imsLabelOtherinfoDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------ImsLabelinfo---------------------------
+    //-----------------------------------ImsLabelinfo---------------------------
     @Override
     public void addImsLabelinfo(ImsLabelinfo imsLabelinfo) {
         this.imsLabelinfoDAO.create(imsLabelinfo);
@@ -3772,7 +3775,7 @@ public class CommonServicesImpl implements CommonServices {
         return imsLabelinfoDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------ImsLot---------------------------
+    //-----------------------------------ImsLot---------------------------
     @Override
     public void addImsLot(ImsLot imsLot) {
         this.imsLotDAO.create(imsLot);
@@ -3803,7 +3806,7 @@ public class CommonServicesImpl implements CommonServices {
         return imsLotDAO.getList(filter, start, pageSize, paged);
     }
 
-//-----------------------------------ImsTransaction---------------------------
+    //-----------------------------------ImsTransaction---------------------------
     @Override
     public void addImsTransaction(ImsTransaction imsTransaction) {
         this.imsTransactionDAO.create(imsTransaction);
@@ -3994,11 +3997,11 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public DiscreteConversion getDiscreteConversion(Integer transid) {
 
-       DiscreteConversion discreteConversion = new DiscreteConversion();
-       discreteConversion.setTransid(transid);
-       return this.utilityDAO.callStoredProcedureForObject(discreteConversion, "getDiscreteConversion", new String[] {"transid"}, new String[] {"transid", "value1", "value2"} );
+        DiscreteConversion discreteConversion = new DiscreteConversion();
+        discreteConversion.setTransid(transid);
+        return this.utilityDAO.callStoredProcedureForObject(discreteConversion, "getDiscreteConversion", new String[]{"transid"}, new String[]{"transid", "value1", "value2"});
 
-       // return this.getDiscreteConversionDAO().findById(transid);
+        // return this.getDiscreteConversionDAO().findById(transid);
     }
 
     @Override
@@ -4185,8 +4188,7 @@ public class CommonServicesImpl implements CommonServices {
     public void setTransformationsDAO(TransformationsDAO transformationsDAO) {
         this.transformationsDAO = transformationsDAO;
     }
-    
-    
+
 
     /**
      * @return the accessUrlDms
@@ -4229,8 +4231,8 @@ public class CommonServicesImpl implements CommonServices {
     public void setTmsConsistencyChecksDAO(TmsConsistencyChecksDAO tmsConsistencyChecksDAO) {
         this.tmsConsistencyChecksDAO = tmsConsistencyChecksDAO;
     }
-    
-    
+
+
     /**
      * Gets a list of Udffields accoding to a table and a field related
      *
@@ -4508,7 +4510,7 @@ public class CommonServicesImpl implements CommonServices {
     public void setUtilityDAO(UtilityDAO utilityDAO) {
         this.utilityDAO = utilityDAO;
     }
-    
+
     //NEW SCHEMA
 
     public void copyCvTermFromCentral(int cvTermId) {
@@ -4517,5 +4519,5 @@ public class CommonServicesImpl implements CommonServices {
         map.put("centralSchema", utilityDAO.getCentralDatabaseName());
         this.utilityDAO.callStoredProcedureForUpdate("copyMeasuredInFromCentral", map);
     }
-    
+
 }
