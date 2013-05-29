@@ -630,7 +630,8 @@ public class HelperWorkbook {
             Traits traits = new Traits();
             Measuredin measuredin;
             Dmsattr dmsattr;
-            int storedInType = ChadoSchemaUtil.getStoredInVariableType(factorDomain.getProperty());
+            int storedInType = ChadoSchemaUtil.getStoredInVariableType(
+                    factorDomain.getProperty(), factorDomain.getScale());
 
             // Check if Method already exists
             TmsMethod tmsMethodFilter = new TmsMethod(true);
