@@ -181,6 +181,7 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
+    //GCP-4243
     public void testGetListGermplasmAndPlotByStudyidAndTrial() {
         System.out.println("testGetListGermplasmAndPlotByStudyidAndTrial");
         StudySearch studySearch = new StudySearch();
@@ -204,6 +205,7 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
+    //GCP-4240
     public void testGetListGermplasmAndPlotByStudyidAndTrial2() {
         StudySearch studySearch = new StudySearch();
         studySearch.setNameTrial("SETNO");
