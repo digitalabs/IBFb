@@ -854,7 +854,21 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     public List<Factor> getFactorsByFactorsids(List factorIds) {
-        return this.factorDAO.getFactorsByFactorsids(factorIds);
+        // build comma separated factor IDs
+        StringBuilder sb = new StringBuilder();
+        for (Object obj : factorIds){
+            Integer id = (Integer) obj;
+            if (sb.length() > 0){
+                sb.append(", ");
+            }
+            sb.append(id);
+        }
+        
+        HashMap params = new LinkedHashMap();
+        params.put("factorIds", sb.toString());
+           
+        return this.utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByFactorIds", params, new String[]{"factorIds"}, 
+                new String[]{"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
     }
 
     public Factor getFactorByStudyidAndFname(Integer studyid, String fname) {
