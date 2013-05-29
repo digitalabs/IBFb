@@ -810,8 +810,9 @@ public class HelperFactor {
         Factor factorEntry = null;
         for (Factor factor : factors) {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
-            String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_NAME.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            String trait = factor.getMeasuredin().getTraits().getTrname();
+            String traitScale = trait + factor.getMeasuredin().getScales().getScname();
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
                 studySearch.setNameStudy(factor.getFname());
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 studySearch.setNameTrial(factor.getFname());
@@ -819,7 +820,7 @@ public class HelperFactor {
                 factorEntry = factor;
                 studySearch.setNameEntry(factor.getFname());
             } else if (Workbook.FIELD_PLOT_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))
-                    || Workbook.FIELD_PLOT_NESTEDNUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                    || Workbook.FIELD_PLOT_NESTED_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 studySearch.setNamePlot(factor.getFname());
             }
         }
@@ -831,7 +832,7 @@ public class HelperFactor {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
 
             String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.GERMPLASM_GID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            if (Workbook.GERMPLASM_ID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 studySearch.setNameGid(factor.getFname());
             }
         }
