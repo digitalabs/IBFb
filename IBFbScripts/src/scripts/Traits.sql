@@ -42,16 +42,27 @@ end$$
 DROP PROCEDURE IF EXISTS `updateTraits`$$
 
 CREATE PROCEDURE `updateTraits` (
-IN v_tid int,
-IN v_trname varchar(200),
-IN v_definition varchar(255),
-IN v_nstat int,
-IN v_traitgroup varchar(200)
+IN v_tid int
+,IN v_trname varchar(200)
+,IN v_definition varchar(255)
+,IN v_nstat int
+,IN v_traitgroup varchar(200)
 )
 
 begin
 
-UPDATE cvterm cvt
+PREPARE statement FROM 
+'
+   UPDATE cvterm 
+   SET name = ? 
+   WHERE cvterm_id = ?;
+';
+SET @cvtermname = v_trname;
+SET @cvterm_id = v_tid;
+EXECUTE statement USING @cvtermname, @cvterm_id;
+
+
+/*UPDATE cvterm cvt
 INNER JOIN cvterm_relationship cvr ON cvr.object_id = cvt.cvterm_id
 INNER JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id
 INNER JOIN cvterm grp ON grp.cvterm_id = gcvr.object_id
@@ -62,6 +73,7 @@ grp.name = v_traitgroup
 WHERE gcvr.type_id = 1225 -- get "is a" relationship to get group name
 AND cvr.type_id = 1200 -- get "has property" relationships
 AND cvt.cvterm_id = v_tid;
+*/
 
 end$$
 
