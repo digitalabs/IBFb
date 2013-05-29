@@ -3734,7 +3734,7 @@ public interface CommonServices {
     public List <Udflds> getUdfldsList(final String tableName, final String fieldName);
 
     public Integer addNdGeolocation();
-    public Integer addStock();
+    public Integer addStock(String uniquename,String dbxref_id,String name,String value);
     public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId);
     public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId);
     
