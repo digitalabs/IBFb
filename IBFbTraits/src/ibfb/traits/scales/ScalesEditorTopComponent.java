@@ -63,13 +63,9 @@ public final class ScalesEditorTopComponent extends TopComponent {
         txtScaleId = new javax.swing.JTextField();
         lblScaleName = new javax.swing.JLabel();
         txtScaleName = new javax.swing.JTextField();
-        lblType = new javax.swing.JLabel();
-        cboScaleType = new javax.swing.JComboBox();
         lblOntology = new javax.swing.JLabel();
         txtOntology = new javax.swing.JTextField();
         btnBrowse = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cboDataType = new javax.swing.JComboBox();
         btnSave = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(lblScaleId, org.openide.util.NbBundle.getMessage(ScalesEditorTopComponent.class, "ScalesEditorTopComponent.lblScaleId.text")); // NOI18N
@@ -84,10 +80,6 @@ public final class ScalesEditorTopComponent extends TopComponent {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${scales.scname}"), txtScaleName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        org.openide.awt.Mnemonics.setLocalizedText(lblType, org.openide.util.NbBundle.getMessage(ScalesEditorTopComponent.class, "ScalesEditorTopComponent.lblType.text")); // NOI18N
-
-        cboScaleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CONTINOUS", "DISCRETE" }));
-
         org.openide.awt.Mnemonics.setLocalizedText(lblOntology, org.openide.util.NbBundle.getMessage(ScalesEditorTopComponent.class, "ScalesEditorTopComponent.lblOntology.text")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${scales.ontology}"), txtOntology, org.jdesktop.beansbinding.BeanProperty.create("text"));
@@ -100,10 +92,6 @@ public final class ScalesEditorTopComponent extends TopComponent {
                 btnBrowseActionPerformed(evt);
             }
         });
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ScalesEditorTopComponent.class, "ScalesEditorTopComponent.jLabel1.text")); // NOI18N
-
-        cboDataType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NUMERIC", "CHARACTER", " " }));
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/save.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(btnSave, org.openide.util.NbBundle.getMessage(ScalesEditorTopComponent.class, "ScalesEditorTopComponent.btnSave.text")); // NOI18N
@@ -125,22 +113,20 @@ public final class ScalesEditorTopComponent extends TopComponent {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblScaleId)
-                            .addComponent(lblScaleName)
-                            .addComponent(lblType))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblScaleName))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtScaleId, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtScaleName, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-                            .addComponent(cboDataType, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboScaleType, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1)
+                            .addComponent(txtScaleName, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblOntology)
-                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtOntology, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(txtOntology, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
@@ -156,26 +142,17 @@ public final class ScalesEditorTopComponent extends TopComponent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtScaleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblScaleName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboScaleType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblType))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cboDataType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addGap(6, 6, 6)
                         .addComponent(lblOntology))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtOntology, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBrowse))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtOntology, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBrowse)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSave)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -195,13 +172,9 @@ private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cboDataType;
-    private javax.swing.JComboBox cboScaleType;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblOntology;
     private javax.swing.JLabel lblScaleId;
     private javax.swing.JLabel lblScaleName;
-    private javax.swing.JLabel lblType;
     private javax.swing.JTextField txtOntology;
     private javax.swing.JTextField txtScaleId;
     private javax.swing.JTextField txtScaleName;
@@ -268,12 +241,12 @@ private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             editingAllowed = false;
         }
         txtScaleName.setEditable(editingAllowed);
-        cboScaleType.setEditable(editingAllowed);
-        cboDataType.setEditable(editingAllowed);
+        /*cboScaleType.setEditable(editingAllowed);
+        cboDataType.setEditable(editingAllowed);*/
         txtOntology.setEditable(editingAllowed);
         btnSave.setEnabled(editingAllowed);
         
-        if (scales.getSctype() != null && scales.getSctype().equals(Scales.SCALE_TYPE_DISCRETE)) {
+        /*if (scales.getSctype() != null && scales.getSctype().equals(Scales.SCALE_TYPE_DISCRETE)) {
             cboScaleType.setSelectedIndex(1);
         } else {
             cboScaleType.setSelectedIndex(0);
@@ -283,12 +256,12 @@ private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             cboDataType.setSelectedIndex(1);
         } else {
             cboDataType.setSelectedIndex(0);
-        }
+        }*/
 
     }
 
     private void saveOrUpdateRecord() {
-        switch (cboScaleType.getSelectedIndex()) {
+        /*switch (cboScaleType.getSelectedIndex()) {
             case 0:
                 scales.setSctype(Scales.SCALE_TYPE_CONTINOUS);
                 break;
@@ -303,7 +276,7 @@ private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 break;
             case 1:
                 scales.setDtype(Scales.DATA_TYPE_CHARACTER);
-        }
+        }*/
         if (scales.getScaleid() == 0) {
             AppServicesProxy.getDefault().appServices().addScalesLocal(scales);
             DialogUtil.displayInfo(bundle.getString("ScalesEditorTopComponent.scaleAdded"));
