@@ -282,16 +282,16 @@ public final class TraitEditorTopComponent extends TopComponent {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblTraitname)
-                                        /*
-                                    .addComponent(lblTraitAbbr)
+
+                                    //.addComponent(lblTraitAbbr)
                                     .addComponent(lblDescription)
-                                    .addComponent(lblTnstat)
-                                    */
+                                    //.addComponent(lblTnstat)
+
                                 )
                                 //.addGap(36, 36, 36)
-                                    .addGap(72, 72, 72)
+                                    .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    //.addComponent(txtTraitDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                                    .addComponent(txtTraitDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
                                     .addComponent(txtTraitName, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     //.addComponent(txtTraitAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -333,10 +333,12 @@ public final class TraitEditorTopComponent extends TopComponent {
                     .addComponent(lblTraitAbbr)
                     )
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                */
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTraitDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDescription))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    /*
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboTnstat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTnstat))
