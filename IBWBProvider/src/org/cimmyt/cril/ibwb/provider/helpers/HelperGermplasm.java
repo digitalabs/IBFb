@@ -574,16 +574,17 @@ public class HelperGermplasm {
         Factor factorEntry = null;
         for (Factor factor : factors) {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
-            String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_NAME.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            String trait = factor.getMeasuredin().getTraits().getTrname();
+            String traitScale = trait + factor.getMeasuredin().getScales().getScname();
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameStudy = factor.getFname();
-            } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(trait))) {
                 nameTrial = factor.getFname();
             } else if (Workbook.GERMPLASM_ENTRY_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 factorEntry = factor;
                 nameEntry = factor.getFname();
             } else if (Workbook.FIELD_PLOT_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))
-                    || Workbook.FIELD_PLOT_NESTEDNUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                    || Workbook.FIELD_PLOT_NESTED_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 namePlot = factor.getFname();
             }
         }
@@ -596,9 +597,9 @@ public class HelperGermplasm {
 
             String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
 
-            if (Workbook.GERMPLASM_DESIG_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            if (Workbook.GERMPLASM_ID_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameDesig = factor.getFname();
-            } else if (Workbook.GERMPLASM_GID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            } else if (Workbook.GERMPLASM_ID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameGid = factor.getFname();
             }
         }
@@ -662,8 +663,9 @@ public class HelperGermplasm {
             Factor factorEntry = null;
             for (Factor factor : factors) {
                 factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
-                String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-                if (Workbook.STUDY_NAME.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                String trait = factor.getMeasuredin().getTraits().getTrname();
+                String traitScale = trait + factor.getMeasuredin().getScales().getScname();
+                if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
                     studySearchTemp.setNameStudy(factor.getFname());
                 } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNameTrial(factor.getFname());
@@ -671,7 +673,7 @@ public class HelperGermplasm {
                     factorEntry = factor;
                     studySearchTemp.setNameEntry(factor.getFname());
                 } else if (Workbook.FIELD_PLOT_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))
-                        || Workbook.FIELD_PLOT_NESTEDNUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                        || Workbook.FIELD_PLOT_NESTED_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNamePlot(factor.getFname());
                 }
             }
@@ -684,9 +686,9 @@ public class HelperGermplasm {
 
                 String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
 
-                if (Workbook.GERMPLASM_DESIG_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                if (Workbook.GERMPLASM_ID_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNameDesig(factor.getFname());
-                } else if (Workbook.GERMPLASM_GID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                } else if (Workbook.GERMPLASM_ID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNameGid(factor.getFname());
                 }
             }
@@ -1057,8 +1059,9 @@ public class HelperGermplasm {
         Factor factorEntry = null;
         for (Factor factor : factors) {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
-            String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_NAME.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            String trait = factor.getMeasuredin().getTraits().getTrname();
+            String traitScale = trait + factor.getMeasuredin().getScales().getScname();
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
                 nameStudy = factor.getFname();
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameTrial = factor.getFname();
@@ -1066,7 +1069,7 @@ public class HelperGermplasm {
                 factorEntry = factor;
                 nameEntry = factor.getFname();
             } else if (Workbook.FIELD_PLOT_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))
-                    || Workbook.FIELD_PLOT_NESTEDNUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                    || Workbook.FIELD_PLOT_NESTED_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 namePlot = factor.getFname();
             }
         }
@@ -1079,9 +1082,9 @@ public class HelperGermplasm {
 
             String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
 
-            if (Workbook.GERMPLASM_DESIG_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            if (Workbook.GERMPLASM_ID_DBCV.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameDesig = factor.getFname();
-            } else if (Workbook.GERMPLASM_GID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            } else if (Workbook.GERMPLASM_ID_DBID.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameGid = factor.getFname();
             }
         }
@@ -1184,15 +1187,16 @@ public class HelperGermplasm {
 
         for (Factor factor : factors) {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
-            String traitScale = factor.getMeasuredin().getTraits().getTrname() + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_NAME.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+            String trait = factor.getMeasuredin().getTraits().getTrname();
+            String traitScale = trait + factor.getMeasuredin().getScales().getScname();
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
                 nameStudy = factor.getFname();
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameTrial = factor.getFname();
             } else if (Workbook.GERMPLASM_ENTRY_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameEntry = factor.getFname();
             } else if (Workbook.FIELD_PLOT_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))
-                    || Workbook.FIELD_PLOT_NESTEDNUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
+                    || Workbook.FIELD_PLOT_NESTED_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 namePlot = factor.getFname();
             }
         }
