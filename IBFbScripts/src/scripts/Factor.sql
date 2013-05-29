@@ -81,6 +81,41 @@ EXECUTE stmt USING @studyid, @fname;
 	
 end$$ 
 
+drop procedure if exists `getFactorsByFactorIds`$$
+
+CREATE PROCEDURE `getFactorsByFactorIds`(IN v_factorids varchar(1000))
+begin
+
+SET @sql := CONCAT("select labelid, studyid, fname, factorid ",
+",GROUP_CONCAT(if(relationship = 1200, ontology_id, NULL)) AS 'traitid' ", 
+",GROUP_CONCAT(if(relationship = 1220, ontology_id, NULL)) AS 'scaleid' ",
+",GROUP_CONCAT(if(relationship = 1210, ontology_id, NULL)) AS 'tmethid' ",
+",GROUP_CONCAT(if(relationship = 1105, if(ontology_value IN (1120,1125,1128,1130), 'C', 'N') , NULL)) AS 'ltype' ", 
+",GROUP_CONCAT(if(relationship = 1044, ontology_id, NULL)) AS 'tid' ", 
+"FROM ", 
+"(SELECT pp.projectprop_id as labelid  ",
+",label.value as fname ", 
+",cvtr.type_id as relationship ",
+",cvt3.cvterm_id as ontology_id  ",
+",cvt3.name as ontology_value ",	
+",pp.project_id as studyid ", 
+"FROM cvterm cvt1 ", 
+"INNER JOIN cvterm_relationship cvtr ON cvt1.cvterm_id = cvtr.subject_id  ",
+"INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id ", 
+"INNER JOIN projectprop pp ON pp.value = cvt1.cvterm_id ", 
+"INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank  ",
+"WHERE pp.type_id = 1070 ", 
+"and label.type_id in (1010, 1011, 1012, 1015, 1016, 1017, 1020, 1021, 1022, 1023, 1024, 1025, 1030, 1040, 1041, 1042, 1046, 1047)  ",
+"AND NOT EXISTS ( select 1 from phenotype ph where ph.observable_id = pp.value )  ",
+") factor left join v_factor v on factor.labelid = v.projectprop_id ",
+"WHERE factorid IN ( ", v_factorids, ") ",
+"GROUP BY labelid  ");
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+	
+end$$ 
+
 
 drop procedure if exists `getGroupFactorsByStudyidAndFactorid`$$
 
@@ -119,6 +154,7 @@ SET @factorid = p_factorid;
 EXECUTE stmt USING @studyid, @factorid;
 	
 end$$
+
 
 drop procedure if EXISTS addFactor$$
 
