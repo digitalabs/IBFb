@@ -11,32 +11,82 @@ import java.util.Map;
  */
 public class Workbook {
 
-    private static final String TRIAL_INSTANCE_PROPERTY = "TRIALINSTANCE";
-//    public static String ENTRY_LABEL = "ENTRY";
-//    public static String PLOT_LABEL = "PLOT";
+//    private static final String TRIAL_INSTANCE_PROPERTY = "TRIALINSTANCE";
+////    public static String ENTRY_LABEL = "ENTRY";
+////    public static String PLOT_LABEL = "PLOT";
+//    public static final String STUDY = "STUDY";
+//    public static final String STUDY_NAME = "STUDYNAME";
+////    public static String TRIAL_LABEL = "TRIAL";
+//    public static final String TRIAL_INSTANCE_NUMBER = "TRIALINSTANCENUMBER";
+//    public static final String NURSERY_INSTANCE_NUMBER = "NURSERYINSTANCENUMBER";
+//    public static final String GERMPLASM_ENTRY_NUMBER = "GERMPLASMENTRYNUMBER";
+//    public static final String GERMPLASM_ENTRY_NESTED_NUMBER = "GERMPLASMENTRYNESTEDNUMBER";
+//    public static final String GERMPLASM_ENTRYCD_CODE = "GERMPLASMENTRYCODE";
+//    public static final String GERMPLASM_DESIG_DBCV = "GERMPLASMIDDBCV";
+//    public static final String GERMPLASM_GID_DBID = "GERMPLASMIDDBID";
+//    public static final String CROSSNAME = "CROSSNAMENAME";
+//    public static final String SOURCE = "SEEDSOURCENAME";
+//    public static final String FIELD_PLOT_NUMBER = "FIELDPLOTNUMBER";
+//    public static final String FIELD_PLOT_NESTEDNUMBER = "FIELDPLOTNESTEDNUMBER";
+//    public static final String FIELD_PLOT_REP_NUMBER = "REPLICATIONNUMBER";
+//    public static final String FIELD_PLOT_BLOCK_NUMBER = "BLOCKNUMBER";
+//    public static final String FIELD_PLOT_ROW_NUMBER = "ROWINLAYOUTNUMBER";
+//    public static final String FIELD_PLOT_COL_NUMBER = "COLUMNINLAYOUTNUMBER";
+//    public static final String TRIAL_INSTANCE_NUMBER_ENUMERATED_N = "TRIALINSTANCENUMBERENUMERATEDN";
+//    public static final String GERMPLASM_ENTRY_NUMBER_ENUMERATED_N = "GERMPLASMENTRY NUMBERENUMERATEDN";
+//    public static final String FIELD_PLOT_NUMBER_ENUMERATED_N = "FIELDPLOTNUMBERENUMERATEDN";
+//    public static final String FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N = "FIELDPLOT NESTED NUMBER ENUMERATEDN";
+//    public static final String CHECK_CODE_ASSIGNED = "CHECKCODEASSIGNED";
+    
+    /* CHADO (New) Schema Constants */
+    
+    public static final String ENUMERATED_N = "ENUMERATEDN";
+    
     public static final String STUDY = "STUDY";
-    public static final String STUDY_NAME = "STUDYNAME";
-//    public static String TRIAL_LABEL = "TRIAL";
-    public static final String TRIAL_INSTANCE_NUMBER = "TRIALINSTANCENUMBER";
-    public static final String NURSERY_INSTANCE_NUMBER = "NURSERYINSTANCENUMBER";
+    public static final String STUDY_TITLE = "STUDYTITLE";
+    
+    public static final String TRIAL_INSTANCE = "TRIALINSTANCE"; 
+    public static final String TRIAL_INSTANCE_NUMBER = "TRIALINSTANCENUMBER"; 
+    public static final String TRIAL_INSTANCE_NUMBER_ENUMERATED_N = TRIAL_INSTANCE_NUMBER + ENUMERATED_N;
+    public static final String NURSERY = "NURSERY";
+    public static final String NURSERY_NUMBER = "NURSERYNUMBER";
+    
+    public static final String GERMPLASM_ENTRY = "GERMPLASMENTRY";
     public static final String GERMPLASM_ENTRY_NUMBER = "GERMPLASMENTRYNUMBER";
+    public static final String GERMPLASM_ENTRY_NUMBER_ENUMERATED_N = GERMPLASM_ENTRY_NUMBER + ENUMERATED_N;
     public static final String GERMPLASM_ENTRY_NESTED_NUMBER = "GERMPLASMENTRYNESTEDNUMBER";
-    public static final String GERMPLASM_ENTRYCD_CODE = "GERMPLASMENTRYCODE";
-    public static final String GERMPLASM_DESIG_DBCV = "GERMPLASMIDDBCV";
-    public static final String GERMPLASM_GID_DBID = "GERMPLASMIDDBID";
-    public static final String CROSSNAME = "CROSSNAMENAME";
-    public static final String SOURCE = "SEEDSOURCENAME";
+    public static final String GERMPLASM_ENTRY_CODE = "GERMPLASMENTRYCODE";
+    
+    public static final String GERMPLASM_ID = "GERMPLASMID";
+    public static final String GERMPLASM_ID_DBCV = "GERMPLASMIDDBCV";
+    public static final String GERMPLASM_ID_DBID = "GERMPLASMIDDBID";
+    
+    public static final String CROSS_HISTORY = "CROSSHISTORY";
+    public static final String CROSS_HISTORY_NAME = "CROSSHISTORYNAME";
+    
+    public static final String SEED_SOURCE = "SEEDSOURCE";
+    public static final String SEED_SOURCE_NAME = "SEEDSOURCENAME";
+    
+    public static final String FIELD_PLOT = "FIELDPLOT";
     public static final String FIELD_PLOT_NUMBER = "FIELDPLOTNUMBER";
-    public static final String FIELD_PLOT_NESTEDNUMBER = "FIELDPLOTNESTEDNUMBER";
-    public static final String FIELD_PLOT_REP_NUMBER = "REPLICATIONNUMBER";
-    public static final String FIELD_PLOT_BLOCK_NUMBER = "BLOCKNUMBER";
-    public static final String FIELD_PLOT_ROW_NUMBER = "ROWINLAYOUTNUMBER";
-    public static final String FIELD_PLOT_COL_NUMBER = "COLUMNINLAYOUTNUMBER";
-    public static final String TRIAL_INSTANCE_NUMBER_ENUMERATED_N = "TRIALINSTANCENUMBERENUMERATEDN";
-    public static final String GERMPLASM_ENTRY_NUMBER_ENUMERATED_N = "GERMPLASMENTRYNUMBERENUMERATEDN";
-    public static final String FIELD_PLOT_NUMBER_ENUMERATED_N = "FIELDPLOTNUMBERENUMERATEDN";
-    public static final String FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N = "FIELDPLOTNESTEDNUMBERENUMERATEDN";
-    public static final String CHECK_CODE_ASSIGNED = "CHECKCODEASSIGNED";
+    public static final String FIELD_PLOT_NUMBER_ENUMERATED_N = FIELD_PLOT_NUMBER + ENUMERATED_N;
+    public static final String FIELD_PLOT_NESTED_NUMBER = "FIELDPLOTNESTEDNUMBER";
+    public static final String FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N = FIELD_PLOT_NESTED_NUMBER + ENUMERATED_N;
+        
+    public static final String REPLICATION_FACTOR = "REPLICATIONFACTOR";
+    public static final String REPLICATION_FACTOR_NUMBER = "REPLICATIONFACTORNUMBER";
+    
+    public static final String BLOCKING_FACTOR = "BLOCKINGFACTOR";
+    public static final String BLOCKING_FACTOR_NUMBER = "BLOCKINGFACTORNUMBER";
+    
+    public static final String ROW_IN_LAYOUT = "ROWINLAYOUT";
+    public static final String ROW_IN_LAYOUT_NUMBER = "ROWINLAYOUTNUMBER";
+    
+    public static final String COLUMN_IN_LAYOUT = "COLUMNINLAYOUT";
+    public static final String COLUMN_IN_LAYOUT_NUMBER = "COLUMNINLAYOUTNUMBER";
+    
+    public static final String LOCAL_CHECK = "LOCALCHECK";
+    public static final String LOCAL_CHECK_CODE_ASSIGNED = LOCAL_CHECK + "CODEASSIGNED";
     private static final List<String> constraintWords = new ArrayList<String>();
     private Study study;
     private List<Condition> studyConditions;
@@ -200,7 +250,7 @@ public class Workbook {
         boolean result = false;
         for (Condition condition : conditions) {
             String conditionProperty = condition.getProperty();
-            if (getStringWithOutBlanks(conditionProperty).equals(TRIAL_INSTANCE_PROPERTY)) {
+            if (getStringWithOutBlanks(conditionProperty).equals(TRIAL_INSTANCE)) {
                 result = true;
                 break;
             }
@@ -219,7 +269,7 @@ public class Workbook {
 
         for (Condition condition : conditions) {
             String conditionProperty = condition.getProperty();
-            if (getStringWithOutBlanks(conditionProperty).equals(TRIAL_INSTANCE_PROPERTY)) {
+            if (getStringWithOutBlanks(conditionProperty).equals(TRIAL_INSTANCE)) {
                 result = condition.getLabel();
                 break;
             }
@@ -605,25 +655,25 @@ public class Workbook {
 
                 entryLabel = factor.getFactorName().toUpperCase();
                 entryLabelAssigned = true;
-            } else if (GERMPLASM_ENTRYCD_CODE.equals(text)) {
+            } else if (GERMPLASM_ENTRY_CODE.equals(text)) {
                 entryCdLabel = factor.getFactorName().toUpperCase();
-            } else if (GERMPLASM_DESIG_DBCV.equals(text)) {
+            } else if (GERMPLASM_ID_DBCV.equals(text)) {
                 desigLabel = factor.getFactorName().toUpperCase();
-            } else if (GERMPLASM_GID_DBID.equals(text)) {
+            } else if (GERMPLASM_ID_DBID.equals(text)) {
                 gidLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_NESTEDNUMBER.equals(text)) {
+            } else if (FIELD_PLOT_NESTED_NUMBER.equals(text)) {
                 //PLOT_LABEL =  factor.getLabel().toUpperCase();
                 plotLabel = factor.getFactorName().toUpperCase();
             } else if (FIELD_PLOT_NUMBER.equals(text)) {
                 //PLOT_LABEL =  factor.getLabel().toUpperCase();
                 plotLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_REP_NUMBER.equals(text)) {
+            } else if (REPLICATION_FACTOR_NUMBER.equals(text)) {
                 repLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_BLOCK_NUMBER.equals(text)) {
+            } else if (BLOCKING_FACTOR_NUMBER.equals(text)) {
                 blockLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_ROW_NUMBER.equals(text)) {
+            } else if (ROW_IN_LAYOUT_NUMBER.equals(text)) {
                 rowLabel = factor.getFactorName().toUpperCase();
-            } else if (FIELD_PLOT_COL_NUMBER.equals(text)) {
+            } else if (COLUMN_IN_LAYOUT_NUMBER.equals(text)) {
                 colLabel = factor.getFactorName().toUpperCase();
             }
         }
@@ -732,7 +782,7 @@ public class Workbook {
 
         if (cleanText.equals(FIELD_PLOT_NUMBER)) {
             return true;
-        } else if (cleanText.equals(FIELD_PLOT_NESTEDNUMBER)) {
+        } else if (cleanText.equals(FIELD_PLOT_NESTED_NUMBER)) {
             return true;
         } else {
             return false;
@@ -891,7 +941,7 @@ public class Workbook {
         Factor checkFactor = null;
         for (Factor factor : factors) {
             String text = getStringWithOutBlanks(factor.getProperty() + factor.getScale() + factor.getMethod());
-            if (text.equals(CHECK_CODE_ASSIGNED)) {
+            if (text.equals(LOCAL_CHECK_CODE_ASSIGNED)) {
                 checkFactor = factor;
                 break;
             }
@@ -910,7 +960,7 @@ public class Workbook {
         for (Factor factor : factors) {
             String text = getStringWithOutBlanks(factor.getProperty() + factor.getScale());
 
-            if (FIELD_PLOT_NESTEDNUMBER.equals(text)) {
+            if (FIELD_PLOT_NESTED_NUMBER.equals(text)) {
                 hasPlotNested = true;
                 break;
             }
