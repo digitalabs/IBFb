@@ -1,4 +1,3 @@
-
 package ibfb.studyexplorer.actions;
 
 import ibfb.domain.core.SelectedStudy;
@@ -28,14 +27,14 @@ import org.openide.util.Mutex;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@ActionID(category = "File",
-id = "ibfb.studyexplorer.actions.NewTrialPanelAction")
-@ActionRegistration(iconBase = "ibfb/studyexplorer/images/newTrial16.png",
-displayName = "#CTL_NewTrialPanelAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/IBFieldbookTools", position = 300),
-    @ActionReference(path = "Toolbars/IBFieldbookTools", position = 300)
-})
+//@ActionID(category = "File",
+//id = "ibfb.studyexplorer.actions.NewTrialPanelAction")
+//@ActionRegistration(iconBase = "ibfb/studyexplorer/images/newTrial16.png",
+//displayName = "#CTL_NewTrialPanelAction")
+//@ActionReferences({
+//    @ActionReference(path = "Menu/IBFieldbookTools", position = 300),
+//    @ActionReference(path = "Toolbars/IBFieldbookTools", position = 300)
+//})
 public final class NewTrialPanelAction implements ActionListener {
 
     private final Study context;
@@ -44,48 +43,45 @@ public final class NewTrialPanelAction implements ActionListener {
         this.context = context;
     }
 
-
     @Override
     public void actionPerformed(ActionEvent ev) {
-      
-        
-        
-        
-        JPTrialOptions myPanel = new JPTrialOptions();
-        
-       
-        NotifyDescriptor nd = new NotifyDescriptor(
-                myPanel, 
-                "IBFIELDBOOK - Trial", 
-                NotifyDescriptor.OK_CANCEL_OPTION, 
-                NotifyDescriptor.QUESTION_MESSAGE, 
-                null,                     
-                     
-                NotifyDescriptor.OK_OPTION // default option is "Yes"
-        );
 
-        
+
+
+
+        JPTrialOptions myPanel = new JPTrialOptions();
+
+
+        NotifyDescriptor nd = new NotifyDescriptor(
+                myPanel,
+                "IBFIELDBOOK - Trial",
+                NotifyDescriptor.OK_CANCEL_OPTION,
+                NotifyDescriptor.QUESTION_MESSAGE,
+                null,
+                NotifyDescriptor.OK_OPTION // default option is "Yes"
+                );
+
+
         if (DialogDisplayer.getDefault().notify(nd) == NotifyDescriptor.OK_OPTION) {
-          
-            
+
+
             switch (myPanel.getOption()) {
-                   case 0:
+                case 0:
                     runWizard();
                     break;
-                    
-                    case 1:
+
+                case 1:
                     runQuickCreation();
-                     break;  
-                
+                    break;
+
             }
-            
-            
-        } 
-        
+
+
+        }
+
     }
-    
-    
-    private void runQuickCreation(){
+
+    private void runQuickCreation() {
         changeCursorWaitStatus(true);
         TopComponent background = WindowManager.getDefault().findTopComponent("BackgroundWindowTopComponent");
         if (background.isOpened()) {
@@ -120,9 +116,9 @@ public final class NewTrialPanelAction implements ActionListener {
         }
         changeCursorWaitStatus(false);
     }
-    
-    private void runWizard(){
-         changeCursorWaitStatus(true);
+
+    private void runWizard() {
+        changeCursorWaitStatus(true);
         if (existeTrial(SelectedStudy.selected.getStudy())) {
             int opcion = JOptionPane.showConfirmDialog(null, "TRIAL ALREADY GENERATED. Do you want to overwrite it?", "Caution!", JOptionPane.YES_NO_OPTION);
             if (opcion == 0) {
@@ -147,7 +143,7 @@ public final class NewTrialPanelAction implements ActionListener {
         }
         changeCursorWaitStatus(false);
     }
-    
+
     @SuppressWarnings("unchecked")
     private void launchWizard(StudyEditorTopComponent studyEditor) {
 
@@ -235,7 +231,7 @@ public final class NewTrialPanelAction implements ActionListener {
             } else {
                 studyEditor.jTabbedPaneEditor.setEnabledAt(4, true);
             }
-            
+
             studyEditor.defineTabs();
             studyEditor.open();
             studyEditor.requestActive();
@@ -250,7 +246,7 @@ public final class NewTrialPanelAction implements ActionListener {
             ArrayList<TopComponent> opened = new ArrayList<TopComponent>(WindowManager.getDefault().getRegistry().getOpened());
 
             for (TopComponent t : opened) {
-                
+
                 if (t.getName().equals(trial)) {
                     existe = true;
                 }
@@ -291,5 +287,4 @@ public final class NewTrialPanelAction implements ActionListener {
             }
         });
     }
-    
 }
