@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
+
 import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 
 /**
@@ -65,6 +66,7 @@ public class Factor extends BaseFilter implements Serializable {
     private Dmsattr dmsattr;
     @Transient
     private Map<Integer, LevelN> mapLevels;
+    @Transient
     private int islocal;
 
     public Factor() {
