@@ -744,7 +744,10 @@ public class CommonServicesImpl implements CommonServices {
             }
         }
         HashMap params = new HashMap();
-        params.put("idList", buffer.toString());
+        if(buffer.toString().equalsIgnoreCase(""))
+            params.put("idList", null);
+        else
+            params.put("idList", buffer.toString());
 
 
         List temp = utilityDAO.callStoredProcedureForList(EffectDto.class, "getEffectsByEffectIdList",
