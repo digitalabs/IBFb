@@ -187,6 +187,16 @@ public class Workbook {
      * Validate plot factor? (not used when reading germplasm template)
      */
     private boolean validatePlotFactor;
+    
+    /**
+     * List fields for germplasm template
+     */
+    private ListFields listFields;
+    
+    /**
+     * Is it a Germplamsm template?
+     */
+    private boolean germplasmTemplate;
 
     public Workbook() {
         initConstraitWords();
@@ -213,6 +223,8 @@ public class Workbook {
         constants = new ArrayList<Constant>();
         // by default workbok object is used in trial template
         validatePlotFactor = true;
+        // by default this is not a germplasm tempalte
+        germplasmTemplate = false;
     }
 
     public String[] getConstantAsArray() {
@@ -714,6 +726,12 @@ public class Workbook {
         boolean hasGermplasmEntry = false;
         boolean hasFieldPlot = false;
 
+        // if is a germplasm tempalte then return allwas true
+        
+        if (germplasmTemplate) {
+            return true;
+        }
+        
         for (Condition condition : conditions) {
 
             String text = getStringWithOutBlanks(condition.getProperty() + condition.getScale() + condition.getMethod() + condition.getDataType());
@@ -977,4 +995,22 @@ public class Workbook {
     public void setValidatePlotFactor(boolean validatePlotFactor) {
         this.validatePlotFactor = validatePlotFactor;
     }
+
+    public ListFields getListFields() {
+        return listFields;
+    }
+
+    public void setListFields(ListFields listFields) {
+        this.listFields = listFields;
+    }
+
+    public boolean isGermplasmTemplate() {
+        return germplasmTemplate;
+    }
+
+    public void setGermplasmTemplate(boolean germplasmTemplate) {
+        this.germplasmTemplate = germplasmTemplate;
+    }
+    
+    
 }
