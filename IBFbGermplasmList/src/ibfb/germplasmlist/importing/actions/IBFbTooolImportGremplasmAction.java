@@ -9,7 +9,7 @@ import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "IBFieldbookTools",
 id = "ibfb.germplasmlist.importing.wizard.ImportGermplasmListAction")
-@ActionRegistration(displayName = "#CTL_ImportGermplasmListAction")
+@ActionRegistration(iconBase="ibfb/germplasmlist/images/import.png",displayName = "#CTL_ImportGermplasmListAction")
 @ActionReferences({
     @ActionReference(path = "Menu/IBFieldbookTools", position = 100 ),
     @ActionReference(path = "Toolbars/IBFieldbookTools", position = 100)

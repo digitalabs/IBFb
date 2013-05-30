@@ -21,7 +21,7 @@ import org.openide.util.NbBundle;
 
 @ActionID(category = "BreedingManager",
 id = "ibfb.germplasmlist.importing.wizard.ImportGermplasmListAction")
-@ActionRegistration(displayName = "#CTL_ImportGermplasmListAction")
+@ActionRegistration(iconBase="ibfb/germplasmlist/images/import.png", displayName = "#CTL_ImportGermplasmListAction")
 @ActionReferences({
     @ActionReference(path = "Menu/BreedingManager", position = 100),
     @ActionReference(path = "Toolbars/BreedingManager", position = 100)

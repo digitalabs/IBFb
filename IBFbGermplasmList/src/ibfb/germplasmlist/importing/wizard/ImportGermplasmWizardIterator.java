@@ -71,7 +71,7 @@ public class ImportGermplasmWizardIterator implements WizardDescriptor.Iterator<
             importGermplasmWizardPanel2.getComponent().setWorkbook(importGermplasmWizardPanel1.getComponent().getWorkbook());
             importGermplasmWizardPanel2.getComponent().setFileName(importGermplasmWizardPanel1.getComponent().getTxtFilePath().getText());
             importGermplasmWizardPanel2.getComponent().readGermplasmList();
-            
+             importGermplasmWizardPanel3.getComponent().setListFields(importGermplasmWizardPanel1.getComponent().getWorkbook().getListFields());
         }
         if (!hasNext()) {
             throw new NoSuchElementException();

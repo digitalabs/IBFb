@@ -116,17 +116,17 @@ public final class addChecksTopComponent extends TopComponent {
         asignaTransferSource();
         asignaTransferChecks();
         asignaTableModelsDefault();
-        
-        
+
+
         // disable panel for checks
         //jTabbedPaneChecks.setEnabledAt(1, false);
         jTabbedPaneChecks.remove(jPanel2);
-        this.jButtonSaveList.setEnabled(true);   
+        this.jButtonSaveList.setEnabled(true);
         jRadioButtonWith.setVisible(false);
         jRadioButtonWithout.setVisible(false);
         // disable excel file tab
         jTabbedPaneSource.removeTabAt(1);
-        
+
     }
 
     public void initLists() {
@@ -1656,8 +1656,8 @@ public final class addChecksTopComponent extends TopComponent {
     private void jTabbedPaneChecksStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneChecksStateChanged
 
         switch (jTabbedPaneChecks.getSelectedIndex()) {
-           // case 2://final list
-            case 1 : //final list
+            // case 2://final list
+            case 1: //final list
 
                 //
                 //if (this.jRadioButtonWith.isSelected()) {
@@ -2091,11 +2091,12 @@ public final class addChecksTopComponent extends TopComponent {
         List<List<Object>> toRemoveLocal = new ArrayList<List<Object>>();
         int[] selectedRows = sourceTable.getSelectedRows();
         for (int i = 0; i < selectedRows.length; i++) {
-
-            toAdd.add(sourceEntries.get(selectedRows[i]));
+            if (!toAdd.contains(sourceEntries.get(selectedRows[i]))) {
+                toAdd.add(sourceEntries.get(selectedRows[i]));
+            }
             toRemoveLocal.add(sourceEntries.get(selectedRows[i]));
         }
-        sourceEntries.removeAll(toRemoveLocal);
+        //sourceEntries.removeAll(toRemoveLocal);
 
         GermplasmEntriesTableModelChecks tableModel = new GermplasmEntriesTableModelChecks(factores, toAdd);
         jTableFinalSource.setModel(tableModel);
@@ -2214,7 +2215,7 @@ public final class addChecksTopComponent extends TopComponent {
     }//GEN-LAST:event_btnSearchCheckListActionPerformed
 
     private void btnImportListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportListActionPerformed
-       importGermplasmList();
+        importGermplasmList();
     }//GEN-LAST:event_btnImportListActionPerformed
 
     private void recorreIndices(List<List<Object>> germplasmData, int colEntry) {
@@ -3219,9 +3220,9 @@ public final class addChecksTopComponent extends TopComponent {
             printNode(parent, level + 1);
         }
     }
-    
+
     private void importGermplasmList() {
-         if (ImportList.listCreatedFromWizard()) {
+        if (ImportList.listCreatedFromWizard()) {
             fillComboListNames();
         }
     }
