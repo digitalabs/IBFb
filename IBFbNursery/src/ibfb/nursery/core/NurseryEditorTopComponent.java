@@ -2932,24 +2932,27 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
         sorterMeasurements = new TableRowSorter<TableModel>(tableModel);
         this.jTableObservations.setRowSorter(sorterMeasurements);
         int factorLabelColumn = 0;
-        for (Measurement measurement : myWorkbook.getMeasurements()) {
-            Object[] rowToAdd = new Object[tableModel.getColumnCount()];
-            factorLabelColumn = 0;
-            for (Object factorLabel : measurement.getFactorLabelData()) {
-                rowToAdd[factorLabelColumn] = factorLabel;
-                factorLabelColumn++;
-            }
-            for (MeasurementData data : measurement.getMeasurementsData()) {
-                if (data.getVariateid() != null) {
-                    int variateColumIndex = tableModel.getHeaderIndexForVariate(data.getVariateid());
-                    if (variateColumIndex != -1) {
-                        rowToAdd[variateColumIndex] = data.getValueData();
+        //GCP-4378 null pointer
+        if (myWorkbook.getMeasurements() != null) {
+            for (Measurement measurement : myWorkbook.getMeasurements()) {
+                Object[] rowToAdd = new Object[tableModel.getColumnCount()];
+                factorLabelColumn = 0;
+                for (Object factorLabel : measurement.getFactorLabelData()) {
+                    rowToAdd[factorLabelColumn] = factorLabel;
+                    factorLabelColumn++;
+                }
+                for (MeasurementData data : measurement.getMeasurementsData()) {
+                    if (data.getVariateid() != null) {
+                        int variateColumIndex = tableModel.getHeaderIndexForVariate(data.getVariateid());
+                        if (variateColumIndex != -1) {
+                            rowToAdd[variateColumIndex] = data.getValueData();
+                        }
                     }
                 }
+                tableModel.addRow(rowToAdd);
             }
-            tableModel.addRow(rowToAdd);
         }
-
+        
         int entriesTot = this.jTableEntries.getRowCount();
         this.jTextFieldEntries.setText(String.valueOf(entriesTot));
 
