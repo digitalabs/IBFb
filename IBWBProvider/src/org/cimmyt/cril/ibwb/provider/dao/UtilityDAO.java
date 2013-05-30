@@ -624,4 +624,29 @@ public class UtilityDAO extends HibernateDaoSupport {
         return pattern.matcher(value).matches();
     }
 
+    public Integer getStoredInId(final int traitid, final int scaleid, final int methodid){
+        //expects only 1, if returned more than 1, that's a data issue, and just get the first one.
+        final String sql = buildSQLQuery("getStoredInId", "traitid", "scaleid", "methodid");
+               System.out.println("sql = " + sql);
+               Object result = getHibernateTemplate().execute(new HibernateCallback() {
+
+                   @Override
+                   public Object doInHibernate(Session session)
+                           throws HibernateException, SQLException {
+                       SQLQuery query = session.
+                               createSQLQuery(sql);
+                       query.setParameter("traitid", traitid);
+                       query.setParameter("scaleid", scaleid);
+                       query.setParameter("methodid", methodid);
+                       query.addScalar("storedinid", Hibernate.INTEGER);
+                       return query.uniqueResult();
+                   }
+               });
+
+            if (result != null) {
+                return (Integer) result;
+            } else {
+                return null;
+            }
+    }
 }

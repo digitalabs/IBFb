@@ -407,37 +407,39 @@ public class HelperWorkbookRead {
     }
 
     private void fillGermplasmData() {
-        int totalFilas = factorsDtoEntrys.get(0).getSizeLevels();
-        int factorFila = factorsDtoEntrys.get(0).getLevelNo(0);
-        if(factorFila < 0){
-            factorFila = factorFila * -1;
-        }
-        
-        for (int i = 0; i < totalFilas; i++) {
-            List<Object> row = new ArrayList<Object>();
-            for(int j=0 ; j < factorsDtoEntrys.size() ; j++){
-                row.add("");
+        //GCP-4378 indexoutofboundsexception
+        if (factorsDtoEntrys != null && factorsDtoEntrys.size() > 0) {
+            int totalFilas = factorsDtoEntrys.get(0).getSizeLevels();
+            int factorFila = factorsDtoEntrys.get(0).getLevelNo(0);
+            if(factorFila < 0){
+                factorFila = factorFila * -1;
             }
-            germplasmData.add(row);
-        }
-        for(Factor factor : factorsDtoEntrys){
-            int columna = factorsDtoEntrys.indexOf(factor);
-            if(factor.getLtype().equals("N")){
-                for(LevelN levelN : factor.getLevelsN()){
-                    Double value = (Double) levelN.getLvalue();
-                    if (DecimalUtils.isIntegerValue(value)) {
-                        germplasmData.get(levelN.getLevelNPK().getLevelnoAbs() - factorFila).set(columna, DecimalUtils.getValueAsInteger(value));
-                    }else{
-                        germplasmData.get(levelN.getLevelNPK().getLevelnoAbs() - factorFila).set(columna, DecimalUtils.getValueAsString(value));
+
+            for (int i = 0; i < totalFilas; i++) {
+                List<Object> row = new ArrayList<Object>();
+                for(int j=0 ; j < factorsDtoEntrys.size() ; j++){
+                    row.add("");
+                }
+                germplasmData.add(row);
+            }
+            for(Factor factor : factorsDtoEntrys){
+                int columna = factorsDtoEntrys.indexOf(factor);
+                if(factor.getLtype().equals("N")){
+                    for(LevelN levelN : factor.getLevelsN()){
+                        Double value = (Double) levelN.getLvalue();
+                        if (DecimalUtils.isIntegerValue(value)) {
+                            germplasmData.get(levelN.getLevelNPK().getLevelnoAbs() - factorFila).set(columna, DecimalUtils.getValueAsInteger(value));
+                        }else{
+                            germplasmData.get(levelN.getLevelNPK().getLevelnoAbs() - factorFila).set(columna, DecimalUtils.getValueAsString(value));
+                        }
+                    }
+                }else{
+                    for(LevelC levelC : factor.getLevelsC()){
+                        germplasmData.get(levelC.getLevelCPK().getLevelnoAbs() - factorFila).set(columna, levelC.getLvalue());
                     }
                 }
-            }else{
-                for(LevelC levelC : factor.getLevelsC()){
-                    germplasmData.get(levelC.getLevelCPK().getLevelnoAbs() - factorFila).set(columna, levelC.getLvalue());
-                }
             }
         }
-        
         System.out.print("");
     }
 
@@ -574,24 +576,27 @@ public class HelperWorkbookRead {
      */
     private void transformVariatesToView() {
 
-        // transform Variate list to Constants
-        List<Constant> constantsData = new ArrayList<Constant>();
-        Integer numeroDeInstancias = factorsDtoTrial.get(0).getSizeLevels();
-        for (Variate variate : variatesDtoConstants) {
-            for (int i = 0; i < numeroDeInstancias; i++) {
-                ibfb.domain.core.Constant constant = ConverterDTOtoDomain.getConstant(variate);
-                // TODO ajustar estructura para que se recupere los datos tipo numero sin el .0
-//                if(variate.getDtype().equals("N")){
-//                    constant.setValue(DecimalUtils.getValueAsString((Double)variate.getDataObject(i)));
-//                }else{
-//                    constant.setValue(variate.getDataObject(i));
-                    constant.setValue(DecimalUtils.getValueAsString(variate.getDataObject(i)));
-//                }
-                constant.setInstance(i + 1);
-//                constant.setOunitid(variate.getOunitidObject(i));
-                constant.setVariateId(variate.getVariatid());
-                constant.setStudyId(variate.getStudyid());
-                constants.add(constant);
+        //GCP-4378 NEW SCHEMA CHANGES - indexoutofboundsexception
+        if (factorsDtoTrial != null && factorsDtoTrial.size() > 0) {
+            // transform Variate list to Constants
+            List<Constant> constantsData = new ArrayList<Constant>();
+            Integer numeroDeInstancias = factorsDtoTrial.get(0).getSizeLevels();
+            for (Variate variate : variatesDtoConstants) {
+                for (int i = 0; i < numeroDeInstancias; i++) {
+                    ibfb.domain.core.Constant constant = ConverterDTOtoDomain.getConstant(variate);
+                    // TODO ajustar estructura para que se recupere los datos tipo numero sin el .0
+    //                if(variate.getDtype().equals("N")){
+    //                    constant.setValue(DecimalUtils.getValueAsString((Double)variate.getDataObject(i)));
+    //                }else{
+    //                    constant.setValue(variate.getDataObject(i));
+                        constant.setValue(DecimalUtils.getValueAsString(variate.getDataObject(i)));
+    //                }
+                    constant.setInstance(i + 1);
+    //                constant.setOunitid(variate.getOunitidObject(i));
+                    constant.setVariateId(variate.getVariatid());
+                    constant.setStudyId(variate.getStudyid());
+                    constants.add(constant);
+                }
             }
         }
 

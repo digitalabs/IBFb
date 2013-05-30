@@ -310,15 +310,19 @@ public class IBWBAppServicesImpl implements AppServices {
     }
 
     public List<Effect> getEffectsByEffectsids(final List effectsIds) {
-        List<Effect> effects = serviciosCentral.getEffectsByEffectsids(effectsIds);
-        if (effects != null) {
-            if (effects.size() > 0) {
-                return effects;
+        if (effectsIds != null && effectsIds.size() > 0) {
+            List<Effect> effects = serviciosCentral.getEffectsByEffectsids(effectsIds);
+            if (effects != null) {
+                if (effects.size() > 0) {
+                    return effects;
+                } else {
+                    return serviciosLocal.getEffectsByEffectsids(effectsIds);
+                }
             } else {
                 return serviciosLocal.getEffectsByEffectsids(effectsIds);
-            }
+            } 
         } else {
-            return serviciosLocal.getEffectsByEffectsids(effectsIds);
+            return new ArrayList<Effect>();
         }
     }
 
@@ -3573,4 +3577,15 @@ public class IBWBAppServicesImpl implements AppServices {
         list.addAll(serviciosLocal.getUdfldsList(tableName, fieldName));
         return list;
     }    
+    
+    
+    @Override
+    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
+        Integer id = serviciosCentral.getStoredInId(traitid, scaleid, methodid);
+        if (id == null) {
+            id = serviciosLocal.getStoredInId(traitid, scaleid, methodid);
+        }
+        
+        return id;
+    }
 }

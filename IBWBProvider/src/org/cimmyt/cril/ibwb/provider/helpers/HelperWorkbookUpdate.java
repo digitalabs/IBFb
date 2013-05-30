@@ -479,9 +479,11 @@ public class HelperWorkbookUpdate {
                 List<Traits> traitsList = appServices.getListTraitsOnly(traitsFilter, 0, 0, false);
                 if (!traitsList.isEmpty()) {
                     traits = traitsList.get(0);
+                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 } else {
                     traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty());
                     traits.setTraittype(String.valueOf(traitsType));
+                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                     localServices.addTraits(traits);
                 }
                 //TODO agregar algoritmo para determinacion del standard scale

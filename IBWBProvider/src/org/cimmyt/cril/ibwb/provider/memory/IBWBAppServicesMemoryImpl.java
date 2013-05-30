@@ -1582,4 +1582,9 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Udflds> getUdfldsList(String tableName, String fieldName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

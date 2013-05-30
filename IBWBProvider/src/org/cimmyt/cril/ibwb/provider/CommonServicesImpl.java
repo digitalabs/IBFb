@@ -843,7 +843,7 @@ public class CommonServicesImpl implements CommonServices {
             factor.setIslocal(0);
         }
         return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid", "islocal"},
-                new String[]{"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "vtype", "dtype", "tid"});
+                new String[]{"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid"});
 
 
     }
@@ -2946,7 +2946,8 @@ public class CommonServicesImpl implements CommonServices {
         Traits traits = new Traits();
         traits.setTraitid(idTrait);
         return utilityDAO.callStoredProcedureForObject(traits, "getTraitsById", new String[]{"traitid"},
-                new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitgroup"});
+                new String[]{"tid", "traitid", "trname", "trdesc", "tnstat", "traitGroup"});
+        //return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
     public Traits getTraitsByTraitid(Integer idTrait) {
@@ -4537,5 +4538,16 @@ public class CommonServicesImpl implements CommonServices {
         map.put("centralSchema", utilityDAO.getCentralDatabaseName());
         this.utilityDAO.callStoredProcedureForUpdate("copyMeasuredInFromCentral", map);
     }
+ 
+    @Override
+    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
+        HashMap<String, Integer> input = new HashMap<String, Integer>();
+        input.put("traitid", traitid);
+        input.put("scaleid", scaleid);
+        input.put("methodid", methodid);
+        Integer id = utilityDAO.getStoredInId(traitid, scaleid, methodid);
 
+        return id;
+    }
+    
 }

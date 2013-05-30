@@ -427,11 +427,13 @@ public class HelperWorkbook {
             if (!traitsList.isEmpty()) {
                 // retrive trait from list
                 traits = traitsList.get(0);
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 
             } else {
                 // trait don't existe, then add to database
                 traits = ConverterDomainToDTO.getTraits(condition.getProperty());
                 traits.setTraittype(String.valueOf(traitsType));
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 // add trait to database
                 localServices.addTraits(traits);
             }
@@ -551,9 +553,11 @@ public class HelperWorkbook {
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
                 traits = ConverterDomainToDTO.getTraits(condition.getProperty());
                 traits.setTraittype(String.valueOf(traitsType));
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
             }
 
@@ -668,9 +672,11 @@ public class HelperWorkbook {
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
                 traits = ConverterDomainToDTO.getTraits(factorDomain.getProperty());
                 traits.setTraittype(String.valueOf(traitsType));
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
             }
 
@@ -789,9 +795,11 @@ public class HelperWorkbook {
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
                 traits = ConverterDomainToDTO.getTraits(constant.getProperty()+"_"+study.getSname());
                 traits.setTraittype(String.valueOf(traitsType));
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
             }
 
@@ -890,9 +898,11 @@ public class HelperWorkbook {
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
                 traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty()+"_"+study.getSname());
                 traits.setTraittype(String.valueOf(traitsType));
+                traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
             }
 

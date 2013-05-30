@@ -123,7 +123,7 @@ public class HelperEffect {
             Factor factorTrial,
             Factor factorEntry,
             Factor factorPlot
-            ){
+            ){ 
         
         List<Integer> effectsIds = servicios.getEffectidsByStudyid(studyId);
         List<Effect> effects = servicios.getEffectsByEffectsids(effectsIds);
