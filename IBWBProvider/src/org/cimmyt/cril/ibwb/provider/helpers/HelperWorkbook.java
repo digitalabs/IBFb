@@ -462,7 +462,8 @@ public class HelperWorkbook {
             traits.setMeasuredin(measuredin);
             measuredin.setScales(scales);
             measuredin.setTmsMethod(tmsMethod);
-
+            traits.setTid(measuredin.getStoredinid());
+            
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
@@ -580,7 +581,7 @@ public class HelperWorkbook {
             traits.setMeasuredin(measuredin);
             measuredin.setScales(scales);
             measuredin.setTmsMethod(tmsMethod);
-
+            traits.setTid(measuredin.getStoredinid());
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
@@ -696,7 +697,7 @@ public class HelperWorkbook {
             traits.setMeasuredin(measuredin);
             measuredin.setScales(scales);
             measuredin.setTmsMethod(tmsMethod);
-
+            traits.setTid(measuredin.getStoredinid());
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(factorDomain.getFactorName(), factorDomain.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
