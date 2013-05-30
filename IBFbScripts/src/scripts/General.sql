@@ -219,14 +219,19 @@ CREATE PROCEDURE `searchCVTerm` (IN cvtermid int, IN cvname varchar(255), IN cvi
     SET @myQuery = CONCAT(@myQuery, ' WHERE cv_id = ', cvid);
 
     IF (cvtermid is not NULL AND cvtermid <> 0) THEN
-      SET @myQuery = CONCAT(@myQuery, ' AND cvterm_id = ', cvtermid);
+      SET @myQuery = CONCAT(@myQuery, ' AND (cvterm_id = ', cvtermid);
     END IF;
 
     IF (cvname IS NOT NULL) THEN
-      SET @myQuery = CONCAT(@myQuery, ' AND name like ''%', cvname, '%''');
+      IF (cvtermid is not NULL AND cvtermid <> 0) THEN
+        SET @myQuery = CONCAT(@myQuery, ' OR ');
+      ELSE
+        SET @myQuery = CONCAT(@myQuery, ' AND (');
+      END IF;
+      SET @myQuery = CONCAT(@myQuery, 'name like ''%', cvname, '%''');
     END IF;
 
-    SET @myQuery = CONCAT(@myQuery, ' ORDER BY cvterm_id, name');
+    SET @myQuery = CONCAT(@myQuery, ') ORDER BY cvterm_id, name');
 
     PREPARE stmt FROM @myQuery;
     EXECUTE stmt;
