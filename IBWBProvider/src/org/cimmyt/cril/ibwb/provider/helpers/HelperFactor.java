@@ -205,9 +205,9 @@ public class HelperFactor {
 
         //Verificar si es factor encabezado
         if (condition.getConditionName().equals(condition.getLabel())) {
-            factorCabecera = factor.getLabelid();
-            factor.setFactorid(factorCabecera);
-            serviceLocal.updateFactor(factor);
+            //factorCabecera = factor.getLabelid();
+            //factor.setFactorid(factorCabecera);
+            //serviceLocal.updateFactor(factor);
         }
 
         //Verificar dmsattr

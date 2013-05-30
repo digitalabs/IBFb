@@ -72,10 +72,12 @@ public class Workbook {
     public static final String FIELD_PLOT_NUMBER_ENUMERATED_N = FIELD_PLOT_NUMBER + ENUMERATED_N;
     public static final String FIELD_PLOT_NESTED_NUMBER = "FIELDPLOTNESTEDNUMBER";
     public static final String FIELD_PLOT_NESTED_NUMBER_ENUMERATED_N = FIELD_PLOT_NESTED_NUMBER + ENUMERATED_N;
-        
+
+    public static final String REPLICATION = "REPLICATION";
     public static final String REPLICATION_FACTOR = "REPLICATIONFACTOR";
     public static final String REPLICATION_FACTOR_NUMBER = "REPLICATIONFACTORNUMBER";
     
+    public static final String BLOCK = "BLOCK";
     public static final String BLOCKING_FACTOR = "BLOCKINGFACTOR";
     public static final String BLOCKING_FACTOR_NUMBER = "BLOCKINGFACTORNUMBER";
     

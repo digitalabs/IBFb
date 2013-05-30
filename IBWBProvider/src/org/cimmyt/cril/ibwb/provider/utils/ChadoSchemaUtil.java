@@ -55,15 +55,16 @@ public class ChadoSchemaUtil {
         Workbook.FIELD_PLOT, Workbook.REPLICATION_FACTOR, Workbook.BLOCKING_FACTOR
     };
     public static final String[] TRIAL_DESIGN_PROPS_SCALES = {
-        Workbook.FIELD_PLOT_NUMBER, Workbook.FIELD_PLOT_NESTED_NUMBER, 
-        Workbook.REPLICATION_FACTOR_NUMBER, Workbook.BLOCKING_FACTOR_NUMBER
+        Workbook.FIELD_PLOT_NUMBER, Workbook.FIELD_PLOT_NESTED_NUMBER, Workbook.REPLICATION,  
+        Workbook.REPLICATION_FACTOR_NUMBER, Workbook.BLOCK, 
+        Workbook.BLOCKING_FACTOR_NUMBER
     };
     
     public static final String[] GERMPLASM_PROPS = {
-        Workbook.GERMPLASM_ENTRY, Workbook.GERMPLASM_ID
+        Workbook.GERMPLASM_ENTRY, Workbook.SEED_SOURCE, Workbook.CROSS_HISTORY 
     };
     public static final String[] GERMPLASM_PROPS_SCALES = {
-        Workbook.GERMPLASM_ENTRY_CODE, Workbook.GERMPLASM_ENTRY_NUMBER, Workbook.GERMPLASM_ENTRY_NESTED_NUMBER,
+    	Workbook.GERMPLASM_ENTRY, Workbook.GERMPLASM_ID, Workbook.GERMPLASM_ENTRY_CODE, Workbook.GERMPLASM_ENTRY_NUMBER, Workbook.GERMPLASM_ENTRY_NESTED_NUMBER,
         Workbook.GERMPLASM_ID_DBCV, Workbook.GERMPLASM_ID_DBID
     };
     public static final int STUDY_VAR_TYPE = 1010;
@@ -71,6 +72,10 @@ public class ChadoSchemaUtil {
     public static final int TRIAL_ENVT_VAR_TYPE = 1020;
     public static final int TRIAL_DESIGN_VAR_TYPE = 1030;
     public static final int GERMPLASM_VAR_TYPE = 1040;
+    public static final int GERMPLASM_ENTRY_NUMBER_VAR_TYPE = 1041;
+    public static final int GERMPLASM_GID_VAR_TYPE = 1042;
+    public static final int GERMPLASM_DESIG_VAR_TYPE = 1046;
+    public static final int GERMPLASM_ENTRY_CODE_VAR_TYPE = 1047;
     public static final int OBSERVATION_VARIATE_TYPE = 1043;
     
     public static final int DEFAULT_TRAIT_GROUP = 1050;
@@ -96,7 +101,18 @@ public class ChadoSchemaUtil {
             varType = TRIAL_DESIGN_VAR_TYPE;
             
         } else if (ArrayUtils.contains(GERMPLASM_PROPS_SCALES, compareStr)){
-            varType = GERMPLASM_VAR_TYPE;
+        	if("DBCV".equals(scale)) {
+        		varType = GERMPLASM_DESIG_VAR_TYPE;
+        	} else if("DBID".equals(scale)) {
+        		varType = GERMPLASM_GID_VAR_TYPE;
+        	} else if("NUMBER".equals(scale)) {
+        		varType = GERMPLASM_ENTRY_NUMBER_VAR_TYPE;
+        	} else if("CODE".equals(scale)) {
+        		varType = GERMPLASM_ENTRY_CODE_VAR_TYPE;
+        	} else {
+        		varType = GERMPLASM_VAR_TYPE;
+        	}
+            
         }
         
         if (varType == -1){
