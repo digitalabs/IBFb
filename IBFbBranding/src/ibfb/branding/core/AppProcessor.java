@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import org.cimmyt.cril.ibwb.commongui.AppConstants;
 import org.netbeans.api.sendopts.CommandException;
 import org.netbeans.spi.sendopts.Env;
 import org.netbeans.spi.sendopts.Option;
@@ -54,6 +55,7 @@ public class AppProcessor extends OptionProcessor {
             }
         
         }
+        AppConstants.setCurrentApp(IBPApplication.CURRENT_APP);
     }
     
 }
