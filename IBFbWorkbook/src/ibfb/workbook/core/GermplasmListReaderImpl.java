@@ -53,6 +53,10 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
     private Integer crossHeaderIndex;
     private Integer sourceHeaderIndex;
     private Integer entryIdHeaderIndex;
+    /**
+     * Is it a Germplamsm template?
+     */
+    private boolean isGermplasmTemplate;
 
     @Override
     public boolean isValidTemplate(String fileName) throws Exception {
@@ -81,32 +85,27 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
         if (rowHeader > -1) {
             rowData = sheet.getRow(rowHeader);
             // check if has entry factors
-            int gidIndex = COLUMN_GID;
-            int entryCodeIndex = COLUMN_ENTRY_CODE;
+            int entryIdIndex = COLUMN_ENTRY_CODE;
             int designationIndex = COLUMN_DESIGNATION;
-            String gidTextHeader = HEADER_GID;
-            String entryCodeTextHeader = HEADER_ENTRY_CODE;
+            String entryIdTextHeader = HEADER_ENTRY_ID;
             String designationTextHeader = HEADER_DESIGNATION;
             if (hasEntryFactors()) {
-                gidIndex = gidHeaderIndex;
-                entryCodeIndex = entryCodeHeaderIndex;
+                //gidIndex = gidHeaderIndex;
+                entryIdIndex = entryIdHeaderIndex;
                 designationIndex = designationHeaderIndex;
                 // if any of following factore is null then template does not containt minimal factors required
-                if (gidHeaderIndex == null || entryCodeHeaderIndex == null || designationHeaderIndex == null) {
+                if (entryIdHeaderIndex == null || designationHeaderIndex == null) {
                     return false;
                 }
-                gidTextHeader = entryFactors.get(gidIndex).getFactorName();
-                entryCodeTextHeader = entryFactors.get(entryCodeIndex).getFactorName();
+                entryIdTextHeader = entryFactors.get(entryIdIndex).getFactorName();
                 designationTextHeader = entryFactors.get(designationIndex).getFactorName();
 
 
             }
 
-            cellDataGid = rowData.getCell(gidIndex);
-            cellDataEntryCode = rowData.getCell(entryCodeIndex);
+            cellDataEntryCode = rowData.getCell(entryIdIndex);
             cellDataDesignation = rowData.getCell(designationIndex);
-            if (ExcelUtils.getStringValueFromCell(cellDataGid).toUpperCase().startsWith(gidTextHeader)
-                    && ExcelUtils.getStringValueFromCell(cellDataEntryCode).toUpperCase().startsWith(entryCodeTextHeader)
+            if (ExcelUtils.getStringValueFromCell(cellDataEntryCode).toUpperCase().startsWith(entryIdTextHeader)
                     && ExcelUtils.getStringValueFromCell(cellDataDesignation).toUpperCase().startsWith(designationTextHeader)) {
                 valid = true;
             }
@@ -316,8 +315,12 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
                 listEntry.setNumber(rowCounter);
 
                 // assign data
-                cellData = rowData.getCell(gidHeaderIndex);
-                listEntry.setGid(ExcelUtils.getIntValueFromCell(cellData));
+                if (gidHeaderIndex != null) {
+                    cellData = rowData.getCell(gidHeaderIndex);
+                    listEntry.setGid(ExcelUtils.getIntValueFromCell(cellData));
+                } else {
+                    listEntry.setGid(0);
+                }
 
                 if (entryCodeHeaderIndex != null) {
                     cellData = rowData.getCell(entryCodeHeaderIndex);
@@ -408,23 +411,23 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
         Sheet sheet = excelBook.getSheetAt(sheetNumber);
         Cell cellData = null;
         Row rowData = null;
-        int gidColumn = COLUMN_GID;
-        String gidTextValue = HEADER_GID;
+        int entryIdCol = COLUMN_ENTRY_ID;
+        String entryIdTextValue = HEADER_ENTRY_ID;
 
         // if versino of template
         if (hasEntryFactors()) {
-            gidColumn = gidHeaderIndex;
-            gidTextValue = entryFactors.get(gidHeaderIndex).getFactorName();
+            entryIdCol = entryIdHeaderIndex;
+            entryIdTextValue = entryFactors.get(entryIdHeaderIndex).getFactorName();
         }
 
         for (int index = 0; index < MAX_ROW; index++) {
 
             rowData = sheet.getRow(index);
             if (rowData != null) {
-                cellData = rowData.getCell(gidColumn);
+                cellData = rowData.getCell(entryIdCol);
                 String cell = ExcelUtils.getStringValueFromCell(cellData);
 
-                if (cell.equals(gidTextValue)) {
+                if (cell.equals(entryIdTextValue)) {
                     gidRowIndex = index;
                     break;
                 }
@@ -565,15 +568,24 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
             columnMap.put(Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale()), columnIndex);
             columnIndex++;
         }
-        gidHeaderIndex = columnMap.get(Workbook.GERMPLASM_ID_DBID);
-        entryCodeHeaderIndex = columnMap.get(Workbook.GERMPLASM_ENTRY_CODE);
-        designationHeaderIndex = columnMap.get(Workbook.GERMPLASM_ID_DBCV);
-        crossHeaderIndex = columnMap.get(Workbook.CROSS_HISTORY_NAME);
-        sourceHeaderIndex = columnMap.get(Workbook.SEED_SOURCE_NAME);
+        gidHeaderIndex = columnMap.get(Workbook.GERMPLASM_GID_DBID);
+        entryCodeHeaderIndex = columnMap.get(Workbook.GERMPLASM_ENTRYCD_CODE);
+        designationHeaderIndex = columnMap.get(Workbook.GERMPLASM_DESIG_DBCV);
+        crossHeaderIndex = columnMap.get(Workbook.CROSSNAME);
+        sourceHeaderIndex = columnMap.get(Workbook.SOURCE);
         entryIdHeaderIndex = columnMap.get(Workbook.GERMPLASM_ENTRY_NUMBER);
     }
 
     private boolean hasEntryFactors() {
         return !this.entryFactors.isEmpty();
+    }
+
+    public boolean isIsGermplasmTemplate() {
+        return isGermplasmTemplate;
+    }
+
+    @Override
+    public void setIsGermplasmTemplate(boolean isGermplasmTemplate) {
+        this.isGermplasmTemplate = isGermplasmTemplate;
     }
 }

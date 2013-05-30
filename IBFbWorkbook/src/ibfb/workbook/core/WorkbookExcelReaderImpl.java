@@ -24,17 +24,21 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
      * Validate plot factor? (not used when reading germplasm template)
      */
     private boolean validatePlotFactor;
-    
     /**
      * Result of validation
      */
     private String validationResult;
     private static Logger log = Logger.getLogger(WorkbookExcelReaderImpl.class);
+    /**
+     * Is it a Germplamsm template?
+     */
+    private boolean isGermplasmTemplate;
 
     public WorkbookExcelReaderImpl() {
         this.validatePlotFactor = true;
+        this.isGermplasmTemplate = false;
     }
-    
+
     @Override
     public Workbook getWorkbookData(String fileName) throws Exception {
         Workbook workbook = new Workbook();
@@ -76,21 +80,36 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
 
         rowData = sheet.getRow(listRowIndex);
         cellData = rowData.getCell(labelColNumber);
-        if (ExcelUtils.getStringValueFromCell(cellData).startsWith(LABEL_STUDY)) {
-            valid = true;
-            Workbook workbookTemp = getWorkbookData(fileName);
-            workbookTemp.setValidatePlotFactor(validatePlotFactor);
-            if (!workbookTemp.isValidTemplate()) {
-                log.info("------------------- INVALID TEMPLATE: " + fileName);
-                this.validationResult = workbookTemp.getValidationMessage();
-                valid = false;
+        if (isGermplasmTemplate) {
+            if (ExcelUtils.getStringValueFromCell(cellData).startsWith(GERMPLASM_TEMPLATE_LIST_NAME)) {
+                valid = true;
+                Workbook workbookTemp = getWorkbookData(fileName);
+                workbookTemp.setValidatePlotFactor(validatePlotFactor);
+                workbookTemp.setGermplasmTemplate(true);
+                if (!workbookTemp.isValidTemplate()) {
+                    log.info("------------------- INVALID TEMPLATE: " + fileName);
+                    this.validationResult = workbookTemp.getValidationMessage();
+                    valid = false;
+                } else {
+                    this.validationResult = "Template must start with LIST NAME in cell A1";
+                }
             }
         } else {
-            this.validationResult = "Template must start with STUDY in cell A1";
+            if (ExcelUtils.getStringValueFromCell(cellData).startsWith(LABEL_STUDY)) {
+                valid = true;
+                Workbook workbookTemp = getWorkbookData(fileName);
+                workbookTemp.setValidatePlotFactor(validatePlotFactor);
+                if (!workbookTemp.isValidTemplate()) {
+                    log.info("------------------- INVALID TEMPLATE: " + fileName);
+                    this.validationResult = workbookTemp.getValidationMessage();
+                    valid = false;
+                }
+
+            } else {
+                this.validationResult = "Template must start with STUDY in cell A1";
+            }
+
         }
-
-
-
         return valid;
     }
 
@@ -118,8 +137,8 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
 
         }
 
-       //  System.out.println("TENEMOS DB: " + tipo.getNombre());
-       // System.out.println("TENEMOS DB type: " + tipo.getType());
+        //  System.out.println("TENEMOS DB: " + tipo.getNombre());
+        // System.out.println("TENEMOS DB type: " + tipo.getType());
 
         return theCrop;
     }
@@ -153,10 +172,6 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
                 valid = true;
             }
 
-
-
-
-
             if (!getWorkbookData(fileName).isValidNurseryTemplate()) {
                 log.info("------------------- INVALID TEMPLATE: " + fileName);
                 valid = false;
@@ -179,7 +194,11 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
         Cell cellEntryNo = null;
         Row rowData = null;
 
-        fillStudyData(workbook, excelBook);
+        if (isGermplasmTemplate) {
+            fillListData(workbook, excelBook);
+        } else {
+            fillStudyData(workbook, excelBook);
+        }
         fillConditions(workbook, excelBook);
         fillFactors(workbook, excelBook);
         fillConstants(workbook, excelBook);
@@ -241,6 +260,42 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
         //    log.info("Data for Study: " + study.toString());
 
         workbook.setStudy(study);
+    }
+
+    private void fillListData(Workbook workbook, org.apache.poi.ss.usermodel.Workbook excelBook) {
+        int listDataColNumber = 1;
+        int listRowIndex = 0;
+
+        ListFields listFields = new ListFields();
+
+        Sheet sheet = excelBook.getSheetAt(0);
+
+        Cell cellData = null;
+        Row rowData = null;
+
+        rowData = sheet.getRow(listRowIndex);
+        cellData = rowData.getCell(listDataColNumber);
+        listFields.setListName(getStringValueFromCell(cellData));
+
+        listRowIndex++;
+        rowData = sheet.getRow(listRowIndex);
+        cellData = rowData.getCell(listDataColNumber);
+        listFields.setListdDesc(getStringValueFromCell(cellData));
+
+        listRowIndex++;
+        rowData = sheet.getRow(listRowIndex);
+        cellData = rowData.getCell(listDataColNumber);
+        listFields.setListType(getStringValueFromCell(cellData));
+
+        listRowIndex++;
+        rowData = sheet.getRow(listRowIndex);
+        cellData = rowData.getCell(listDataColNumber);
+        listFields.setListDate(getIntValueFromCell(cellData));
+
+
+        //    log.info("Data for Study: " + study.toString());
+
+        workbook.setListFields(listFields);
     }
 
     /**
@@ -637,9 +692,17 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
         return validatePlotFactor;
     }
 
+    @Override
     public void setValidatePlotFactor(boolean validatePlotFactor) {
         this.validatePlotFactor = validatePlotFactor;
     }
-    
-    
+
+    public boolean isIsGermplasmTemplate() {
+        return isGermplasmTemplate;
+    }
+
+    @Override
+    public void setIsGermplasmTemplate(boolean isGermplasmTemplate) {
+        this.isGermplasmTemplate = isGermplasmTemplate;
+    }
 }

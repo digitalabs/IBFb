@@ -78,4 +78,10 @@ public interface GermplasmListReader {
      */
     public void setEntryFactors(List<Factor> entryFactors);
     
+    /**
+     * Is it a germplasm template
+     * @param isGermplasmTemplate 
+     */
+    public void setIsGermplasmTemplate(boolean isGermplasmTemplate);
+    
 }
