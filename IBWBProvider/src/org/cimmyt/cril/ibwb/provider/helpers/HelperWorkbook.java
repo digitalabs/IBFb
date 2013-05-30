@@ -818,7 +818,7 @@ public class HelperWorkbook {
             traits.setMeasuredin(measuredin);
             measuredin.setScales(scales);
             measuredin.setTmsMethod(tmsMethod);
-
+            traits.setTid(measuredin.getStoredinid());
             //Verificar variate
             variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
@@ -919,7 +919,7 @@ public class HelperWorkbook {
             traits.setMeasuredin(measuredin);
             measuredin.setScales(scales);
             measuredin.setTmsMethod(tmsMethod);
-
+            traits.setTid(measuredin.getStoredinid());
             //Verificar factor
             variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
@@ -943,10 +943,11 @@ public class HelperWorkbook {
      */
     public List<Steffect> saveStefectsStudy() {
         List<Steffect> steffects = new ArrayList<Steffect>();
-
+        
         Steffect steffect = new Steffect();
         steffect.setStudyid(study.getStudyid());
-        steffect.setEffectname(steffectNameStudy);
+        
+        steffect.setEffectname(steffectNameStudy+"_"+study.getSname());
         localServices.addSteffect(steffect);
         steffects.add(steffect);
 
@@ -969,7 +970,7 @@ public class HelperWorkbook {
 
         Steffect steffect = new Steffect();
         steffect.setStudyid(study.getStudyid());
-        steffect.setEffectname(steffectNameTrial);
+        steffect.setEffectname(steffectNameTrial+"_"+study.getSname());
         localServices.addSteffect(steffect);
         steffects.add(steffect);
 
@@ -990,7 +991,7 @@ public class HelperWorkbook {
         Steffect steffectt = new Steffect();
         steffectt.setStudyid(study.getStudyid());
         // TODO: ajusstar los nombres de los factores a la combinacion
-        steffectt.setEffectname(steffectNameMeasurement);
+        steffectt.setEffectname(steffectNameMeasurement+"_"+study.getSname());
         localServices.addSteffect(steffectt);
         steffects.add(steffectt);
         represtnFactors.add(listGroupAllFactors);
@@ -1010,11 +1011,11 @@ public class HelperWorkbook {
             represtn.setEffectid(steffect.getEffectid());
             represtn.setRepresname(steffect.getEffectname());
 
-            if (represtn.getRepresname().equals(steffectNameStudy)) {
+            if (represtn.getRepresname().equals(steffectNameStudy+"_"+study.getSname())) {
                 List<Factor> factorsTemp = new ArrayList<Factor>(0);
                 factorsTemp.add(mapGroupAllFactors.get(Workbook.STUDY));
                 represtn.setFactors(factorsTemp);
-            } else if (represtn.getRepresname().equals(steffectNameTrial)) {
+            } else if (represtn.getRepresname().equals(steffectNameTrial+"_"+study.getSname())) {
                 represtn.setFactors(listGroupConditionFactors);
             } else {
                 represtn.setFactors(listGroupAllFactors);
@@ -1388,18 +1389,18 @@ public class HelperWorkbook {
 
         for (Obsunit obsunit : obsunits) {
 
-            if (oindexs.size() > 0 && represtn.getRepresname().equals(steffectNameStudy)) {//represtn.getFactors().size() == 2 && repeticiones == 0
+            if (oindexs.size() > 0 && represtn.getRepresname().equals(steffectNameStudy+"_"+study.getSname())) {//represtn.getFactors().size() == 2 && repeticiones == 0
                 iterando++;
                 if (represtns.get(iterando - 1).getFactors().size() == 1 && repeticiones == 0) {
                     represtn = represtns.get(iterando);
-                    repeticiones = represtn.getRepeticiones(steffectNameTrial) - 1;
+                    repeticiones = represtn.getRepeticiones(steffectNameTrial+"_"+study.getSname()) - 1;
                 }
             } else {
                 if (repeticiones != 0) {
                     if (repeticion == repeticiones) {
                         iterando++;
                         represtn = represtns.get(iterando);
-                    } else if (represtn.getRepresname().equals(steffectNameMeasurement)) {
+                    } else if (represtn.getRepresname().equals(steffectNameMeasurement+"_"+study.getSname())) {
                         if (repeticion > repeticiones) {
                             repeticion = -1;
                             iterandoEntry = 0;
@@ -1415,7 +1416,7 @@ public class HelperWorkbook {
 
                 oindex = new Oindex();
 
-                if (represtn.getRepresname().equals(steffectNameMeasurement)) {
+                if (represtn.getRepresname().equals(steffectNameMeasurement+"_"+study.getSname())) {
                     //if (factorTemp.getFname().equals(Workbook.ENTRY_LABEL)) {
                     if (factorTemp.getFname().equals(workbook.getEntryLabel())) {
                         OindexPK oindexPK = new OindexPK(

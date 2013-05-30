@@ -509,7 +509,7 @@ public class HelperWorkbookUpdate {
                 traits.setMeasuredin(measuredin);
                 measuredin.setScales(scales);
                 measuredin.setTmsMethod(tmsMethod);
-
+                traits.setTid(measuredin.getStoredinid());
                 //Verificar factor
                 variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), dbStudy, traits, tmsMethod);
                 variate.setVtype(vtype);

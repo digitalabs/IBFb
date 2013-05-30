@@ -772,6 +772,7 @@ public class CommonServicesImpl implements CommonServices {
             Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addFactor", new String[]{
                     "labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid"});
             factor.setLabelid(id);
+            
             Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"},
                     new String[]{"factorid"});
 
