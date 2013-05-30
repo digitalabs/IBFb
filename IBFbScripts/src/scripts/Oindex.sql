@@ -10,7 +10,7 @@ begin
 DECLARE v_nd_experiment_project_id int;
 DECLARE v_project_id int;
 DECLARE v_nd_experiment_id int;
-DECLARE v_etype varchar(10);
+DECLARE v_etype varchar(20);
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
