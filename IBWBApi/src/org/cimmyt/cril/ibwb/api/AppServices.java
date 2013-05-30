@@ -2302,4 +2302,7 @@ public interface AppServices {
      * @return List of Udflds objects
      */
     public List <Udflds> getUdfldsList(final String tableName, final String fieldName);   
+    
+    
+    public Integer getStoredInId(int traitid, int scaleid, int methodid);
 }

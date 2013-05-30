@@ -3739,4 +3739,6 @@ public interface CommonServices {
     public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId);
     
     public void copyCvTermFromCentral(int cvTermId);
+    
+    public Integer getStoredInId(int traitid, int scaleid, int methodid);
 }
