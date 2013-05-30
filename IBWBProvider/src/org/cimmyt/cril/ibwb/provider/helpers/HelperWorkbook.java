@@ -758,7 +758,7 @@ public class HelperWorkbook {
             // Check if Method already exists
             TmsMethod tmsMethodFilter = new TmsMethod(true);
             // to search method by name
-            tmsMethodFilter.setTmname(constant.getMethod());
+            tmsMethodFilter.setTmname(constant.getMethod()+"_"+study.getSname());
             // method seach 
             List<TmsMethod> tmsMethodsList = servicioApp.getListTmsMethod(tmsMethodFilter, 0, 0, false);
             // if method found then retrieve it
@@ -767,30 +767,30 @@ public class HelperWorkbook {
                 tmsMethod = tmsMethodsList.get(0);
             } else {
                 // method not found, then add to database
-                tmsMethod = ConverterDomainToDTO.getTmsMethod(constant.getMethod());
+                tmsMethod = ConverterDomainToDTO.getTmsMethod(constant.getMethod()+"_"+study.getSname());
                 // add a new method
                 localServices.addTmsMethod(tmsMethod);
             }
 
             //Verificar existencia de scales
             Scales scalesFilter = new Scales(true);
-            scalesFilter.setScname(constant.getScale());
+            scalesFilter.setScname(constant.getScale()+"_"+study.getSname());
             List<Scales> scalesList = servicioApp.getListScales(scalesFilter, 0, 0, false);
             if (!scalesList.isEmpty()) {
                 scales = scalesList.get(0);
             } else {
-                scales = ConverterDomainToDTO.getScales(constant.getScale(), '-');
+                scales = ConverterDomainToDTO.getScales(constant.getScale()+"_"+study.getSname(), '-');
                 localServices.addScales(scales);
             }
 
             //Verificar existencia de traits
             Traits traitsFilter = new Traits(true);
-            traitsFilter.setTrname(constant.getProperty());
+            traitsFilter.setTrname(constant.getProperty()+"_"+study.getSname());
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
             } else {
-                traits = ConverterDomainToDTO.getTraits(constant.getProperty());
+                traits = ConverterDomainToDTO.getTraits(constant.getProperty()+"_"+study.getSname());
                 traits.setTraittype(String.valueOf(traitsType));
                 localServices.addTraits(traits);
             }
@@ -803,12 +803,12 @@ public class HelperWorkbook {
             measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
-            measuredinFilter.setName(constant.getConstantName());
+            measuredinFilter.setName(constant.getConstantName()+"_"+study.getSname());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName()+"_"+study.getSname(), constant.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -868,30 +868,30 @@ public class HelperWorkbook {
                 tmsMethod = tmsMethodsList.get(0);
             } else {
                 // method not found, then add to database
-                tmsMethod = ConverterDomainToDTO.getTmsMethod(variateDomain.getMethod());
+                tmsMethod = ConverterDomainToDTO.getTmsMethod(variateDomain.getMethod()+"_"+study.getSname());
                 // add a new method
                 localServices.addTmsMethod(tmsMethod);
             }
 
             //Verificar existencia de scales
             Scales scalesFilter = new Scales(true);
-            scalesFilter.setScname(variateDomain.getScale());
+            scalesFilter.setScname(variateDomain.getScale()+"_"+study.getSname());
             List<Scales> scalesList = servicioApp.getListScales(scalesFilter, 0, 0, false);
             if (!scalesList.isEmpty()) {
                 scales = scalesList.get(0);
             } else {
-                scales = ConverterDomainToDTO.getScales(variateDomain.getScale(), '-');
+                scales = ConverterDomainToDTO.getScales(variateDomain.getScale()+"_"+study.getSname(), '-');
                 localServices.addScales(scales);
             }
 
             //Verificar existencia de traits
             Traits traitsFilter = new Traits(true);
-            traitsFilter.setTrname(variateDomain.getProperty());
+            traitsFilter.setTrname(variateDomain.getProperty()+"_"+study.getSname());
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
             } else {
-                traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty());
+                traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty()+"_"+study.getSname());
                 traits.setTraittype(String.valueOf(traitsType));
                 localServices.addTraits(traits);
             }
@@ -904,12 +904,12 @@ public class HelperWorkbook {
             measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
-            measuredinFilter.setName(variateDomain.getVariateName());
+            measuredinFilter.setName(variateDomain.getVariateName()+"_"+study.getSname());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName()+"_"+study.getSname(),variateDomain.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
