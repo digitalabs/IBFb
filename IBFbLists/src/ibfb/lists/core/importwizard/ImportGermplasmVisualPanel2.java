@@ -5,6 +5,7 @@
 package ibfb.lists.core.importwizard;
 
 import ibfb.domain.core.GermplasmList;
+import ibfb.domain.core.ListFields;
 import ibfb.domain.core.Workbook;
 import ibfb.lists.core.location.SelectLocationPanel;
 
@@ -39,6 +40,7 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
     private Workbook workbook;
     private List<List<Object>> rowListExcel;
     private String fileName;
+    private ListFields listFields;
 
     /**
      * Creates new form ImportGermplasmVisualPanel2
@@ -256,6 +258,16 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         return listDataEntries;
     }
 
+    public ListFields getListFields() {
+        return listFields;
+    }
+
+    public void setListFields(ListFields listFields) {
+        this.listFields = listFields;
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

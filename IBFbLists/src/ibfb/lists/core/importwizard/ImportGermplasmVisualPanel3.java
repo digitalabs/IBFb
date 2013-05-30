@@ -4,6 +4,7 @@
  */
 package ibfb.lists.core.importwizard;
 
+import ibfb.domain.core.ListFields;
 import ibfb.settings.core.FieldbookSettings;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import org.openide.util.NbBundle;
 public final class ImportGermplasmVisualPanel3 extends JPanel {
 
     private ResourceBundle bundle = NbBundle.getBundle(ImportGermplasmVisualPanel3.class);
+    private ListFields listFields;
 
     /**
      * Creates new form ImportGermplasmVisualPanel3
@@ -67,7 +69,7 @@ public final class ImportGermplasmVisualPanel3 extends JPanel {
         listnms.setListdesc(txtDescription.getText());
         listnms.setListdate(ConvertUtils.getDateAsInteger(dtDate.getDate()));
         listnms.setListtype(selectedListType.getFcode());
-        listnms.setListuid(loggedUserid);        
+        listnms.setListuid(loggedUserid);
         listnms.setLhierarchy(0);
         listnms.setListstatus(Listnms.LSSTATUS_OPEN_LIST);
 
@@ -80,6 +82,22 @@ public final class ImportGermplasmVisualPanel3 extends JPanel {
 
     public JTextField getTxtListName() {
         return txtListName;
+    }
+
+    public ListFields getListFields() {
+        return listFields;
+    }
+
+    public void setListFields(ListFields listFields) {
+        this.listFields = listFields;
+        this.txtListName.setText(listFields.getListName());
+        this.txtDescription.setText(listFields.getListdDesc());
+        Integer numericDate = ConvertUtils.getValueAsInteger(listFields.getListDate());
+        if (numericDate != null && numericDate.intValue() > 0) {
+            dtDate.setDate(ConvertUtils.getIntegerAsDate(numericDate));
+        }
+
+
     }
 
     /**
