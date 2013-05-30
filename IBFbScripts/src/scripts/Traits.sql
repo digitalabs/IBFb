@@ -36,7 +36,8 @@ begin
      WHERE gcvr.type_id = 1225 
        AND cvt.cv_id = 1010
        AND cvt.cvterm_id = v_traitid
-     ORDER BY traitid, tid;
+     ORDER BY traitid, tid
+     LIMIT 1;
 end$$
 
 DROP PROCEDURE IF EXISTS `updateTraits`$$
