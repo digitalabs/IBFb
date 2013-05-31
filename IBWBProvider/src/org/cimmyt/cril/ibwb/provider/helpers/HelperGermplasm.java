@@ -665,7 +665,7 @@ public class HelperGermplasm {
                 factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
                 String trait = factor.getMeasuredin().getTraits().getTrname();
                 String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-                if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
+                if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNameStudy(factor.getFname());
                 } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                     studySearchTemp.setNameTrial(factor.getFname());
@@ -1061,7 +1061,7 @@ public class HelperGermplasm {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
             String trait = factor.getMeasuredin().getTraits().getTrname();
             String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameStudy = factor.getFname();
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameTrial = factor.getFname();
@@ -1189,7 +1189,7 @@ public class HelperGermplasm {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
             String trait = factor.getMeasuredin().getTraits().getTrname();
             String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameStudy = factor.getFname();
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 nameTrial = factor.getFname();
