@@ -869,7 +869,7 @@ public class CommonServicesImpl implements CommonServices {
         }
         
         HashMap params = new LinkedHashMap();
-        params.put("factorIds", sb.toString());
+        params.put("factorIds", "'" + sb.toString() + "'");
            
         return this.utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByFactorIds", params, new String[]{"factorIds"}, 
                 new String[]{"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
@@ -2349,8 +2349,9 @@ public class CommonServicesImpl implements CommonServices {
     public void addSteffect(Steffect steffect) {
         //this.steffectDAO.create(steffect);
         if (isLocal()) {
-            utilityDAO.callStoredProcedureForUpdate(steffect, "addSteffect", "effectid",
+            int id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(steffect, "addSteffect", "effectid",
                     "studyid", "effectname");
+            steffect.setEffectid(id);
         }
     }
 

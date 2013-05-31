@@ -35,8 +35,8 @@ public class HelperFactor {
 //        Dmsattr dmsattrFilter = new Dmsattr(null, dmsaType, null, factorDto.getLabelid(), null);
 //        factorDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
 
-        log.info("Cargando Measuredin con tid: " + factorDto.getTid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
-        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTid(), factorDto.getScaleid(), factorDto.getTmethid());
+        log.info("Cargando Measuredin con tid: " + factorDto.getTraitid() + " scaleid: " + factorDto.getScaleid() + " tmethid: " + factorDto.getTmethid());
+        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(factorDto.getTraitid(), factorDto.getScaleid(), factorDto.getTmethid());
         factorDto.setMeasuredin(measuredin);
 
         log.info("Cargando levels del factor: " + factorDto.getFname() + " labelid: " + factorDto.getLabelid());

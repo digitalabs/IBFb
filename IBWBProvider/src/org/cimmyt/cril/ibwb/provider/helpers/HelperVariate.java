@@ -51,7 +51,8 @@ public class HelperVariate {
 //            variateDto.setDmsattr(dmsattrs.get(0));
 //        }
         
-        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(variateDto.getTid(), variateDto.getScaleid(), variateDto.getTmethid());
+        //NEW SCHEMA use traitid not tid
+        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(variateDto.getTraitid(), variateDto.getScaleid(), variateDto.getTmethid());
         variateDto.setMeasuredin(measuredin);
 
         //------Llenado de traits
@@ -143,7 +144,8 @@ public class HelperVariate {
 ////        }
 //        variateDto.setDmsattr(appServices.getDmsattrByDmsatrecAndDmsatype(dmsattrFilter));
         
-        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(variateDto.getTid(), variateDto.getScaleid(), variateDto.getTmethid());
+        //NEW SCHEMA use traitid not tid
+        Measuredin measuredin = appServices.getMeasuredinByTraitidScaleidTmethid(variateDto.getTraitid(), variateDto.getScaleid(), variateDto.getTmethid());
         variateDto.setMeasuredin(measuredin);
         
         //------Llenado de traits

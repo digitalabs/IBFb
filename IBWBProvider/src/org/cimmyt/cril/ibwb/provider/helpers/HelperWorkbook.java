@@ -169,6 +169,7 @@ public class HelperWorkbook {
         factorCabecera = saveFactorsStudy(factorCabecera);
         log.info("Saving Factors for study DONE!");
 
+        //NEW SCHEMA GCP-4378 saving dataset factors.  factors will not be saved yet
         log.info("Saving Factors for trial....");
         factorCabecera = saveFactorsTrial(factorCabecera);
         log.info("Saving Factors for trial DONE!");
@@ -177,21 +178,26 @@ public class HelperWorkbook {
         factorCabecera = saveFactorsFactor(factorCabecera);
         log.info("Saving Factors for each factor DONE!");
 
+        //VARIATES at the STUDY LEVEL
         log.info("Saving Variates for each constant....");
         saveVariatesConstants();
         log.info("Saving Variates for each constant DONE!");
 
+        //VARIATES at the DATASET LEVEL - Measurement Dataset
         log.info("Saving Variates for each constant....");
         saveVariatesVariate();
         log.info("Saving Variates for each constant DONE!");
 
+        
         //=======================
         //Guardando STEFECTS
         //=======================
-        log.info("Saving Steffects for each study....");
-        List<Steffect> steffects = saveStefectsStudy();
-        log.info("Saving Steffects for each study DONE!");
-
+        //GCP-4378 no dataset needs to be created for steffects that represents study level factors
+        //log.info("Saving Steffects for each study....");
+        //List<Steffect> steffects = saveStefectsStudy();
+        //log.info("Saving Steffects for each study DONE!");
+        List<Steffect> steffects = new ArrayList<Steffect>();
+        
         log.info("Saving Steffects for each trial....");
         saveStefectsTrial(steffects);
         log.info("Saving Steffects for each trial DONE!");
@@ -210,9 +216,11 @@ public class HelperWorkbook {
         //=======================
         //Guardando VEFFECT
         //=======================
-        log.info("Saving VEFFECT....");
-        saveVefects(represtns);
-        log.info("Saving VEFFECT DONE!");
+        //GCP-4378 not used anymore, commented out bec it's causing an issue
+        //since we removed the study dataset.
+        //log.info("Saving VEFFECT....");
+        //saveVefects(represtns);
+        //log.info("Saving VEFFECT DONE!");
 
         //=======================
         //Guardar effect
@@ -589,7 +597,7 @@ public class HelperWorkbook {
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
-            localServices.addFactor(factor);
+            //localServices.addFactor(factor);
 
             //Verificar si es factor encabezado
             if (condition.getConditionName().equals(condition.getLabel())) {
@@ -707,7 +715,7 @@ public class HelperWorkbook {
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(factorDomain.getFactorName(), factorDomain.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
-            localServices.addFactor(factor);
+            //localServices.addFactor(factor);
 
             //Verificar si es factor encabezado
             if (factorDomain.getFactorName().equals(factorDomain.getLabel())) {
@@ -933,10 +941,10 @@ public class HelperWorkbook {
             //Verificar factor
             variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
-            localServices.addVariate(variate);
+            //localServices.addVariate(variate);
 
             //Verificar dmsattr
-            dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), variateDomain.getDescription());
+            //dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), variateDomain.getDescription());
 //            localServices.addDmsattr(dmsattr);
 
             mapVariatesPure.put(variate.getVname(), variate);
@@ -991,6 +999,13 @@ public class HelperWorkbook {
 
             represtnFactors.add(listGroupConditionFactors);
         }
+        
+        //save the dataset factors
+        for (Factor factor : this.listTrialFactors) {
+            factor.setStudyid(steffect.getEffectid());
+            localServices.addFactor(factor);
+        }
+ 
     }
 
     /**
@@ -1005,6 +1020,18 @@ public class HelperWorkbook {
         localServices.addSteffect(steffectt);
         steffects.add(steffectt);
         represtnFactors.add(listGroupAllFactors);
+        
+        //save dataset factors
+        for (Factor factor : this.listEntryFactors) {
+            factor.setStudyid(steffectt.getEffectid());
+            localServices.addFactor(factor);
+        }
+        
+        //save variates
+        for (Variate variate : this.listVariatesPure) {
+            variate.setStudyid(steffectt.getEffectid());
+            localServices.addVariate(variate);
+        }
     }
 
     /**
@@ -1259,8 +1286,10 @@ public class HelperWorkbook {
         List<Obsunit> obsunits = new ArrayList<Obsunit>();
         if (mapAllFactors.get(Workbook.STUDY) != null) {
             obsunit = new Obsunit();
-            obsunit.setEffectid(represtns.get(iterando).getEffectid());
-            iterando++;
+            //GCP-4378 study level variates
+            //obsunit.setEffectid(represtns.get(iterando).getEffectid());
+            obsunit.setEffectid(study.getStudyid());
+            //iterando++;
             localServices.addObsunit(obsunit);
             obsunits.add(obsunit);
         }
