@@ -46,7 +46,7 @@ public class HelperEffect {
                 mapAllMainFactors.put(factor.getFactorid(), factor);
                 String trait = factor.getMeasuredin().getTraits().getTrname();
                 String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-                if( Workbook.STUDY_TITLE.equals( Workbook.getStringWithOutBlanks( trait ) ) ){
+                if( Workbook.STUDY_TITLE.equals( Workbook.getStringWithOutBlanks( traitScale ) ) ){
                     factorStudy = factor;
                 }else if( Workbook.TRIAL_INSTANCE_NUMBER.equals( Workbook.getStringWithOutBlanks( traitScale ) ) ){
                     factorTrial = factor;
@@ -140,7 +140,7 @@ public class HelperEffect {
                 mapAllMainFactors.put(factor.getFactorid(), factor);
                 String trait = factor.getMeasuredin().getTraits().getTrname();
                 String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-                if( Workbook.STUDY_TITLE.equals( Workbook.getStringWithOutBlanks( trait ) ) ){
+                if( Workbook.STUDY_TITLE.equals( Workbook.getStringWithOutBlanks( traitScale ) ) ){
                     factorStudy = factor;
                 }else if( Workbook.TRIAL_INSTANCE_NUMBER.equals( Workbook.getStringWithOutBlanks( traitScale ) ) ){
                     factorTrial = factor;
