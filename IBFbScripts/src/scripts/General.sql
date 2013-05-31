@@ -156,6 +156,7 @@ SELECT
   LEFT JOIN projectprop mfactors ON mfactors.project_id = prop.project_id AND mfactors.type_id = 1070 
     AND mfactors.value in ('8005', '8150', '8230', '8170', '8200', '8380')
   WHERE prop.type_id = 1070 
+    AND stinrel.object_id NOT IN (1043, 1048)
   GROUP BY prop.projectprop_id
 $$
 
