@@ -43,7 +43,7 @@ public class Workbook {
     public static final String ENUMERATED_N = "ENUMERATEDN";
     
     public static final String STUDY = "STUDY";
-    public static final String STUDY_TITLE = "STUDYTITLE";
+    public static final String STUDY_TITLE = "STUDYDBCV";
     
     public static final String TRIAL_INSTANCE = "TRIALINSTANCE"; 
     public static final String TRIAL_INSTANCE_NUMBER = "TRIALINSTANCENUMBER"; 
