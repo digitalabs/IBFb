@@ -44,6 +44,7 @@ IN v_effectname varchar(50))
 begin
 
 DECLARE v_project_relationship_id int;
+DECLARE v_projectprop_id int;
 DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
@@ -57,7 +58,29 @@ CALL getNextMinReturn('project_relationship',v_project_relationship_id);
 
 INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
 VALUE(v_project_relationship_id,1150,v_studyid,v_effectid);
-	
+
+CALL getNextMinReturn('projectprop',v_projectprop_id);
+
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1016,'DATASET',1);
+SET v_projectprop_id := v_projectprop_id - 1;
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1060,'DATASET NAME',1);
+SET v_projectprop_id := v_projectprop_id - 1;
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1070,'8150',1);
+
+SET v_projectprop_id := v_projectprop_id - 1;
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1016,'DATASET TITLE',2);
+SET v_projectprop_id := v_projectprop_id - 1;
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1060,'DATASET TITLE',2);
+SET v_projectprop_id := v_projectprop_id - 1;
+INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+VALUES(v_projectprop_id,v_effectid,1070,'8155',2);
+
+
 COMMIT;
 
 SELECT v_effectid;
