@@ -104,8 +104,8 @@ public class HelperFactor {
         condition.setConditionName("STUDY");
         condition.setDescription("STUDY");
         condition.setProperty("STUDY");
-        condition.setScale("NAME");
-        condition.setMethod("NOT SPECIFIED");
+        condition.setScale("DBCV");
+        condition.setMethod("ASSIGNED");
         condition.setDataType("C");
         condition.setValue("");
         condition.setLabel("STUDY");
@@ -815,7 +815,7 @@ public class HelperFactor {
             factor = HelperFactor.getFactorFillingFullWhitoutLevels(factor, appServices, 801);
             String trait = factor.getMeasuredin().getTraits().getTrname();
             String traitScale = trait + factor.getMeasuredin().getScales().getScname();
-            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(trait))) {
+            if (Workbook.STUDY_TITLE.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 studySearch.setNameStudy(factor.getFname());
             } else if (Workbook.TRIAL_INSTANCE_NUMBER.equals(Workbook.getStringWithOutBlanks(traitScale))) {
                 studySearch.setNameTrial(factor.getFname());
