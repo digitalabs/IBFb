@@ -52,11 +52,6 @@ SET foreign_key_checks = 0;
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8005,v_sname,1);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	VALUES(v_projectprop_id,v_studyid,1012,'TITLE',2);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
@@ -68,11 +63,6 @@ SET foreign_key_checks = 0;
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
 	VALUES(v_projectprop_id,v_studyid,1070,8007,2);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8007,v_title,2);
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
