@@ -603,7 +603,7 @@ public class HelperWorkbook {
             if (condition.getConditionName().equals(condition.getLabel())) {
                 factorCabecera = factor.getLabelid();
                 factor.setFactorid(factorCabecera);
-                localServices.updateFactor(factor);
+                //localServices.updateFactor(factor);
                 mapGroupAllFactors.put(factor.getFname(), factor);
                 listGroupAllFactors.add(factor);
             }
@@ -721,7 +721,7 @@ public class HelperWorkbook {
             if (factorDomain.getFactorName().equals(factorDomain.getLabel())) {
                 factorCabecera = factor.getLabelid();
                 factor.setFactorid(factorCabecera);
-                localServices.updateFactor(factor);
+                //localServices.updateFactor(factor);
                 mapGroupAllFactors.put(factor.getFname(), factor);
                 listGroupAllFactors.add(factor);
             }
@@ -1026,6 +1026,14 @@ public class HelperWorkbook {
             factor.setStudyid(steffectt.getEffectid());
             localServices.addFactor(factor);
         }
+        for (Factor factor : this.listPlotFactors) {
+            factor.setStudyid(steffectt.getEffectid());
+            localServices.addFactor(factor);
+        }
+        for (Factor factor : this.listOtherFactors) {
+            factor.setStudyid(steffectt.getEffectid());
+            localServices.addFactor(factor);
+        }        
         
         //save variates
         for (Variate variate : this.listVariatesPure) {

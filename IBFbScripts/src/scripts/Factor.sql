@@ -19,10 +19,11 @@ begin
 	",pp.project_id as studyid ", 
 	"FROM cvterm_relationship cvtr ", 
 	"INNER JOIN projectprop pp ON pp.value = cvtr.subject_id ",
-	"INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank ", 
+	"INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank ",
+	"LEFT JOIN project_relationship pr ON pr.subject_project_id = pp.project_id and pr.type_id = 1150 ", 
 	"WHERE pp.type_id = 1070 ",
-	"and label.type_id in (1011, 1016, 1017, 1021, 1030, 1041) ", 
-	"and pp.project_id = ",v_studyid,
+	"and ((label.type_id = 1011 and pp.project_id = ",v_studyid,") OR "
+	"(label.type_id in (1016, 1017, 1021, 1030, 1041) and pr.object_project_id = ",v_studyid,")) " 
 	" AND NOT EXISTS ( select 1 from phenotype ph where ph.observable_id = pp.value ) ",
 	") factor left join v_factor v on factor.labelid = v.projectprop_id ",
 	"WHERE factor.labelid = v.factorid ",
