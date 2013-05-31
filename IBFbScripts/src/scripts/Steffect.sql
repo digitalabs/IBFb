@@ -60,6 +60,8 @@ VALUE(v_project_relationship_id,1150,v_studyid,v_effectid);
 	
 COMMIT;
 
+SELECT v_effectid;
+
 end$$
 
 

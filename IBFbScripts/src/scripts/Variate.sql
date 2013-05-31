@@ -115,7 +115,7 @@ BEGIN
     projectprop pp
     INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
     INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
-    INNER JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
+    LEFT JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
     INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
   WHERE
     pp.type_id = 1070 
