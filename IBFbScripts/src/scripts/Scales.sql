@@ -11,10 +11,10 @@ begin
 	SET @sql := CONCAT("select distinct cvsc.cvterm_id as scaleid, ",
 	"cvsc.name as scname, ",
 	"case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
-	"from cvterm_relationship cvr ",
-	"inner join cvterm_relationship cvrsb on cvrsb.subject_id = cvr.subject_id ",
-	"inner join cvterm cvsc on cvsc.cvterm_id = cvrsb.object_id and cvrsb.type_id = 1220 ",
-	"inner join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
+	"from cvterm cvsc ",
+	"left join cvterm_relationship cvrsb on cvrsb.object_id = cvsc.cvterm_id and cvrsb.type_id = 1220 ",
+	"left join cvterm_relationship cvr on cvr.subject_id = cvrsb.subject_id ",
+	"left join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
 	"having 1=1 ");
 	IF(v_scaleid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND scaleid = ",v_scaleid);
