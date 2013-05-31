@@ -10,25 +10,22 @@ begin
 	,GROUP_CONCAT(if(relationship = 1200, ontology_id, NULL)) AS 'traitid' 
 	,GROUP_CONCAT(if(relationship = 1220, ontology_id, NULL)) AS 'scaleid' 
 	,GROUP_CONCAT(if(relationship = 1210, ontology_id, NULL)) AS 'tmethid' 
-	,GROUP_CONCAT(if(relationship = 1225, ontology_value, NULL)) AS 'vtype' 
+	,GROUP_CONCAT(if(relationship = 1225, ontology_id, NULL)) AS 'vtype' 
 	,GROUP_CONCAT(if(relationship = 1105, IF(ontology_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS 'dtype' 
 	,GROUP_CONCAT(if(relationship = 1044, ontology_id, NULL)) AS 'tid' 
 	FROM 
 	(SELECT pp.projectprop_id as variatid 
 	,label.value as vname 
 	,cvtr.type_id as relationship 
-	,cvt3.cvterm_id as ontology_id 
-	,cvt3.name as ontology_value	
+	,cvtr.object_id as ontology_id 
 	,pr.object_project_id as studyid 
-	FROM cvterm cvt1 
-	INNER JOIN cvterm_relationship cvtr ON cvt1.cvterm_id = cvtr.subject_id 
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id 
-	INNER JOIN projectprop pp ON pp.value = cvt1.cvterm_id 
+	FROM cvterm_relationship cvtr 
+	INNER JOIN projectprop pp ON pp.value = cvtr.subject_id 
 	INNER JOIN projectprop label ON label.project_id = pp.project_id AND label.rank = pp.rank 
 	INNER JOIN project_relationship pr ON pr.subject_project_id = pp.project_id AND pr.type_id = 1150
 	WHERE pp.type_id = 1070 AND label.type_id in (1043,1048) AND pp.projectprop_id = v_variatid 
 	AND EXISTS ( SELECT 1 FROM phenotype ph WHERE ph.observable_id = pp.value ) 
-	GROUP BY variatid, cvtr.type_id, cvt3.cvterm_id, cvt3.name, pp.project_id
+	GROUP BY variatid, cvtr.type_id, cvtr.object_id, pp.project_id
 	) as variate;
 	
 end$$
