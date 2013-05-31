@@ -90,7 +90,7 @@ START TRANSACTION;
 	SET @name = CONCAT(v_name,"-",v_traitid,"-",v_tmethid,"-",v_scaleid);
 	
 	-- insert standard variable
-	call addCvtermReturnId(1040, v_name, v_name, @newcvtermid);
+	call addCvtermReturnId(1040, @name, @name, @newcvtermid);
 
 	-- insert "stored in" relationship
 	call addCvtermRelationship(1044, @newcvtermid, v_storedinid);
