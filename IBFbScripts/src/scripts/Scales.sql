@@ -15,7 +15,7 @@ begin
 	"left join cvterm_relationship cvrsb on cvrsb.object_id = cvsc.cvterm_id and cvrsb.type_id = 1220 ",
 	"left join cvterm_relationship cvr on cvr.subject_id = cvrsb.subject_id ",
 	"left join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
-	"having cvsc.cv_id = 1030 ");
+	"WHERE cvsc.cv_id = 1030 HAVING 1=1 ");
 	IF(v_scaleid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND scaleid = ",v_scaleid);
 	END IF;
