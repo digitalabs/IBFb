@@ -764,7 +764,7 @@ public class HelperWorkbook {
             // Check if Method already exists
             TmsMethod tmsMethodFilter = new TmsMethod(true);
             // to search method by name
-            tmsMethodFilter.setTmname(constant.getMethod()+"_"+study.getSname());
+            tmsMethodFilter.setTmname(constant.getMethod());
             // method seach 
             List<TmsMethod> tmsMethodsList = servicioApp.getListTmsMethod(tmsMethodFilter, 0, 0, false);
             // if method found then retrieve it
@@ -773,31 +773,31 @@ public class HelperWorkbook {
                 tmsMethod = tmsMethodsList.get(0);
             } else {
                 // method not found, then add to database
-                tmsMethod = ConverterDomainToDTO.getTmsMethod(constant.getMethod()+"_"+study.getSname());
+                tmsMethod = ConverterDomainToDTO.getTmsMethod(constant.getMethod());
                 // add a new method
                 localServices.addTmsMethod(tmsMethod);
             }
 
             //Verificar existencia de scales
             Scales scalesFilter = new Scales(true);
-            scalesFilter.setScname(constant.getScale()+"_"+study.getSname());
+            scalesFilter.setScname(constant.getScale());
             List<Scales> scalesList = servicioApp.getListScales(scalesFilter, 0, 0, false);
             if (!scalesList.isEmpty()) {
                 scales = scalesList.get(0);
             } else {
-                scales = ConverterDomainToDTO.getScales(constant.getScale()+"_"+study.getSname(), '-');
+                scales = ConverterDomainToDTO.getScales(constant.getScale(), '-');
                 localServices.addScales(scales);
             }
 
             //Verificar existencia de traits
             Traits traitsFilter = new Traits(true);
-            traitsFilter.setTrname(constant.getProperty()+"_"+study.getSname());
+            traitsFilter.setTrname(constant.getProperty());
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
                 traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
-                traits = ConverterDomainToDTO.getTraits(constant.getProperty()+"_"+study.getSname());
+                traits = ConverterDomainToDTO.getTraits(constant.getProperty());
                 traits.setTraittype(String.valueOf(traitsType));
                 traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
@@ -811,12 +811,12 @@ public class HelperWorkbook {
             measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
-            measuredinFilter.setName(constant.getConstantName()+"_"+study.getSname());
+            measuredinFilter.setName(constant.getConstantName());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName()+"_"+study.getSname(), constant.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -876,31 +876,31 @@ public class HelperWorkbook {
                 tmsMethod = tmsMethodsList.get(0);
             } else {
                 // method not found, then add to database
-                tmsMethod = ConverterDomainToDTO.getTmsMethod(variateDomain.getMethod()+"_"+study.getSname());
+                tmsMethod = ConverterDomainToDTO.getTmsMethod(variateDomain.getMethod());
                 // add a new method
                 localServices.addTmsMethod(tmsMethod);
             }
 
             //Verificar existencia de scales
             Scales scalesFilter = new Scales(true);
-            scalesFilter.setScname(variateDomain.getScale()+"_"+study.getSname());
+            scalesFilter.setScname(variateDomain.getScale());
             List<Scales> scalesList = servicioApp.getListScales(scalesFilter, 0, 0, false);
             if (!scalesList.isEmpty()) {
                 scales = scalesList.get(0);
             } else {
-                scales = ConverterDomainToDTO.getScales(variateDomain.getScale()+"_"+study.getSname(), '-');
+                scales = ConverterDomainToDTO.getScales(variateDomain.getScale(), '-');
                 localServices.addScales(scales);
             }
 
             //Verificar existencia de traits
             Traits traitsFilter = new Traits(true);
-            traitsFilter.setTrname(variateDomain.getProperty()+"_"+study.getSname());
+            traitsFilter.setTrname(variateDomain.getProperty());
             List<Traits> traitsList = servicioApp.getListTraitsOnly(traitsFilter, 0, 0, false);
             if (!traitsList.isEmpty()) {
                 traits = traitsList.get(0);
                 traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
             } else {
-                traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty()+"_"+study.getSname());
+                traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty());
                 traits.setTraittype(String.valueOf(traitsType));
                 traits.setTid(servicioApp.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
                 localServices.addTraits(traits);
@@ -914,12 +914,12 @@ public class HelperWorkbook {
             measuredinFilter.setTraitid(traits.getTraitid());
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
-            measuredinFilter.setName(variateDomain.getVariateName()+"_"+study.getSname());
+            measuredinFilter.setName(variateDomain.getVariateName());
             List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName()+"_"+study.getSname(),variateDomain.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -1021,11 +1021,11 @@ public class HelperWorkbook {
             represtn.setEffectid(steffect.getEffectid());
             represtn.setRepresname(steffect.getEffectname());
 
-            if (represtn.getRepresname().equals(steffectNameStudy+"_"+study.getSname())) {
+            if (represtn.getRepresname().equals(steffectNameStudy)) {
                 List<Factor> factorsTemp = new ArrayList<Factor>(0);
                 factorsTemp.add(mapGroupAllFactors.get(Workbook.STUDY));
                 represtn.setFactors(factorsTemp);
-            } else if (represtn.getRepresname().equals(steffectNameTrial+"_"+study.getSname())) {
+            } else if (represtn.getRepresname().equals(steffectNameTrial)) {
                 represtn.setFactors(listGroupConditionFactors);
             } else {
                 represtn.setFactors(listGroupAllFactors);
@@ -1399,18 +1399,18 @@ public class HelperWorkbook {
 
         for (Obsunit obsunit : obsunits) {
 
-            if (oindexs.size() > 0 && represtn.getRepresname().equals(steffectNameStudy+"_"+study.getSname())) {//represtn.getFactors().size() == 2 && repeticiones == 0
+            if (oindexs.size() > 0 && represtn.getRepresname().equals(steffectNameStudy)) {//represtn.getFactors().size() == 2 && repeticiones == 0
                 iterando++;
                 if (represtns.get(iterando - 1).getFactors().size() == 1 && repeticiones == 0) {
                     represtn = represtns.get(iterando);
-                    repeticiones = represtn.getRepeticiones(steffectNameTrial+"_"+study.getSname()) - 1;
+                    repeticiones = represtn.getRepeticiones(steffectNameTrial) - 1;
                 }
             } else {
                 if (repeticiones != 0) {
                     if (repeticion == repeticiones) {
                         iterando++;
                         represtn = represtns.get(iterando);
-                    } else if (represtn.getRepresname().equals(steffectNameMeasurement+"_"+study.getSname())) {
+                    } else if (represtn.getRepresname().equals(steffectNameMeasurement)) {
                         if (repeticion > repeticiones) {
                             repeticion = -1;
                             iterandoEntry = 0;
@@ -1426,7 +1426,7 @@ public class HelperWorkbook {
 
                 oindex = new Oindex();
 
-                if (represtn.getRepresname().equals(steffectNameMeasurement+"_"+study.getSname())) {
+                if (represtn.getRepresname().equals(steffectNameMeasurement)) {
                     //if (factorTemp.getFname().equals(Workbook.ENTRY_LABEL)) {
                     if (factorTemp.getFname().equals(workbook.getEntryLabel())) {
                         OindexPK oindexPK = new OindexPK(
