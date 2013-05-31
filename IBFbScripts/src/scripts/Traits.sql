@@ -28,14 +28,13 @@ begin
 	   1 AS tnstat, 
 	   grp.name AS traitgroup
       FROM cvterm cvt
-     INNER JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id
-     INNER JOIN cvterm grp ON grp.cvterm_id = gcvr.object_id
-     INNER JOIN cvterm_relationship traitcvr ON traitcvr.object_id = cvt.cvterm_id and traitcvr.type_id = 1200
-     INNER JOIN cvterm label ON label.cvterm_id = traitcvr.subject_id
-     INNER JOIN cvterm_relationship tcvr ON tcvr.subject_id = label.cvterm_id and tcvr.type_id = 1044
-     WHERE gcvr.type_id = 1225 
-       AND cvt.cv_id = 1010
-       AND cvt.cvterm_id = v_traitid
+     LEFT JOIN cvterm_relationship gcvr ON gcvr.subject_id = cvt.cvterm_id AND gcvr.type_id = 1225
+     LEFT JOIN cvterm grp ON grp.cvterm_id = gcvr.object_id
+     LEFT JOIN cvterm_relationship traitcvr ON traitcvr.object_id = cvt.cvterm_id and traitcvr.type_id = 1200
+     LEFT JOIN cvterm label ON label.cvterm_id = traitcvr.subject_id
+     LEFT JOIN cvterm_relationship tcvr ON tcvr.subject_id = label.cvterm_id and tcvr.type_id = 1044
+     WHERE cvt.cv_id = 1010
+     AND cvt.cvterm_id = v_traitid
      ORDER BY traitid, tid
      LIMIT 1;
 end$$
