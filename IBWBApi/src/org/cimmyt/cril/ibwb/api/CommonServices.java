@@ -1940,7 +1940,7 @@ public interface CommonServices {
      *
      * @param oindex Objeto a agregar
      */
-    public void addOindex(Oindex oindex);
+    public void addOindex(int experimentId, int projectId);
 
     /**
      * Updates a record of type Oindex in database
