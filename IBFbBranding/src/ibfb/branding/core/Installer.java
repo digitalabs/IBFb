@@ -233,7 +233,7 @@ public class Installer extends ModuleInstall {
                 String appTitle = "";
                 if (IBPApplication.CURRENT_APP.equals(IBPApplication.BREEDING_MANAGER)) {
                     appTitle = NbBundle.getMessage(Installer.class, "ApplicationBreedingManager");
-                } else if (IBPApplication.CURRENT_APP.equals(IBPApplication.BREEDING_MANAGER)) {
+                } else if (IBPApplication.CURRENT_APP.equals(IBPApplication.FIELDBOOK_TOOLS)) {
                     appTitle = NbBundle.getMessage(Installer.class, "ApplicationIBFieldbookTools");
                 } else {
                     appTitle = frame.getTitle();

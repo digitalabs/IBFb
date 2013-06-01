@@ -13,8 +13,11 @@
         <folder name="IBFieldbookTools_hidden">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/IBFieldbookTools"/>
             <attr name="position" intvalue="400"/>
-            
         </folder>               
+        <folder name="nurseryManagerMenu_hidden">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="800"/>
+        </folder>
         <file name="Edit_hidden"/>
         <file name="File_hidden"/>
         <folder name="Study">
@@ -131,6 +134,10 @@
             <attr name="position" intvalue="400"/>
             <file name="ibfb-studyexplorer-explorer-listNames-GermplasmListAction.shadow_hidden"/>            
         </folder>     
+        <folder name="nurseryManagerMenu_hidden">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="800"/>
+        </folder>            
         <file name="IBFLabels_hidden"/>
         <file name="IBF_hidden"/>
         <file name="Memory_hidden"/>

@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
-    <folder name="breedingManagerMenu">
+    
+    <folder name="Menu">
+       
         
+        <folder name="breedingManagerMenu">
+        
+        </folder>
+        <folder name="fieldbookToolsMenu">
+        
+        </folder>
+        <folder name="nurseryManagerMenu">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="800"/>
+        </folder>
     </folder>
-    <folder name="fieldbookToolsMenu">
+    
+    <folder name="Toolbars">
         
+        
+        <folder name="breedingManagerMenu">
+        
+        </folder>
+        <folder name="fieldbookToolsMenu">
+        
+        </folder>
+          
+        <folder name="nurseryManagerMenu">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="800"/>
+        </folder>          
     </folder>
     
 </filesystem>

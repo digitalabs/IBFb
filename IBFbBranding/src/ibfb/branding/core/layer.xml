@@ -13,8 +13,11 @@
         <folder name="IBFieldbookTools">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/IBFieldbookTools"/>
             <attr name="position" intvalue="400"/>
-            
-        </folder>               
+        </folder>             
+        <folder name="nurseryManagerMenu">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="500"/>
+        </folder>           
         <file name="Edit_hidden"/>
         <file name="File_hidden"/>
         <folder name="Study">
@@ -100,10 +103,6 @@
     </folder>
     <folder name="Toolbars">
         <folder name="File">
-            <file name="ibfb-nursery-actions-NewNurseryAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/ibfb-nursery-actions-NewNurseryAction.instance"/>
-                <attr name="position" intvalue="100"/>
-            </file>
             <file name="ibfb-nursery-actions-QuickCreationAction.shadow_hidden"/>
             <file name="ibfb-studyexplorer-actions-NewTrialAction.shadow_hidden"/>
             <file name="ibfb-studyexplorer-actions-QuickCreationAction.shadow_hidden"/>
@@ -131,6 +130,10 @@
             <attr name="position" intvalue="400"/>
             <file name="ibfb-studyexplorer-explorer-listNames-GermplasmListAction.shadow_hidden"/>            
         </folder>     
+        <folder name="nurseryManagerMenu">
+            <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
+            <attr name="position" intvalue="500"/>
+        </folder>           
         <file name="IBFLabels_hidden"/>
         <file name="IBF_hidden"/>
         <file name="Memory_hidden"/>
