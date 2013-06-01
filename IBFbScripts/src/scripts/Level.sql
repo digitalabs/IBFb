@@ -6,7 +6,7 @@ CREATE PROCEDURE `getLevelsByLabelId`(IN p_labelid int, IN isnumeric int, IN isc
 BEGIN
 IF iscentral = 1 THEN
 
-    SELECT
+    SELECT DISTINCT
       labelid
       , factorid
       , levelno
@@ -21,7 +21,7 @@ IF iscentral = 1 THEN
 
 ELSE
 
-    SELECT
+    SELECT DISTINCT
       labelid
       , factorid
       , levelno
