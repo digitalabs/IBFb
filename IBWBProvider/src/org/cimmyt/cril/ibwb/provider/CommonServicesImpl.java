@@ -1757,7 +1757,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("effectid", effectId);
         return this.utilityDAO.callStoredProcedureForList(Obsunit.class, "getObsunitListByEffectid", params,
                 new String[]{"effectid", "iscentral"},
-                new String[]{"ounitid", "variatid", "dvalue"});
+                new String[]{"effectid", "ounitid"});
         //getObsunitListByEffectid
     }
 //-----------------------------------Oindex---------------------------
