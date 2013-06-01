@@ -20,24 +20,24 @@ import org.cimmyt.cril.ibwb.commongui.DialogUtil;
  */
 public class ObservationsTableModel extends AbstractTableModel {
 
-    private static final String TRIAL_INSTANCE = "TRIAL INSTANCE";
+    private static final String TRIAL_INSTANCE = Workbook.TRIAL_INSTANCE;
     private static final String NUMBER = "NUMBER";
-    public static final String TRIAL = "TRIALINSTANCENUMBER";
-    public static final String ENTRY = "GERMPLASMENTRYNUMBER";
-    public static final String ENTRY_CODE = "GERMPLASMENTRYCODE";
-    public static final String DESIG = "GERMPLASMIDDBCV";
-    public static final String GID = "GERMPLASMIDDBID";
-    public static final String CROSS = "CROSSHISTORYPEDIGREESTRING";
-    public static final String CROSSNAME = "CROSSNAMENAME";
-    public static final String SOURCE = "SEEDSOURCENAME";
-    public static final String PLOT = "FIELDPLOTNESTEDNUMBER";
-    public static final String PLOT_NESTED = "PLOTNESTEDNUMBER";
-    public static final String PLOTNUMBER = "FIELDPLOTNUMBER";
-    public static final String REPLICATION = "REPLICATIONNUMBER";
-    public static final String BLOCK = "BLOCKNUMBER";
-    public static final String BLOCK_NESTED = "BLOCKNESTEDNUMBER";
-    public static final String ROW = "ROWINLAYOUTNUMBER";
-    public static final String COL = "COLUMNINLAYOUTNUMBER";
+    public static final String TRIAL = Workbook.TRIAL_INSTANCE_NUMBER;
+    public static final String ENTRY = Workbook.GERMPLASM_ENTRY_NUMBER;
+    public static final String ENTRY_CODE = Workbook.GERMPLASM_ENTRY_CODE;
+    public static final String DESIG = Workbook.GERMPLASM_ID_DBCV;
+    public static final String GID = Workbook.GERMPLASM_ID_DBID;
+    public static final String CROSS = Workbook.CROSS_HISTORY;
+    public static final String CROSSNAME = Workbook.CROSS_HISTORY;
+    public static final String SOURCE = Workbook.SEED_SOURCE_NAME;
+    public static final String PLOT = Workbook.FIELD_PLOT_NESTED_NUMBER;
+    public static final String PLOT_NESTED = Workbook.FIELD_PLOT;
+    public static final String PLOTNUMBER = Workbook.FIELD_PLOT_NUMBER;
+    public static final String REPLICATION = Workbook.REPLICATION_FACTOR;
+    public static final String BLOCK = Workbook.BLOCKING_FACTOR;
+    public static final String BLOCK_NESTED = Workbook.BLOCKING_FACTOR_NESTED_NUMBER;
+    public static final String ROW = Workbook.ROW_IN_LAYOUT_NUMBER;
+    public static final String COL = Workbook.COLUMN_IN_LAYOUT_NUMBER;
     public static boolean isFromCrossInfo = false;
     /**
      * Prefix to store header index in map for factors
