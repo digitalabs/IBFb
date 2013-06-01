@@ -22,8 +22,8 @@ id = "ibfb.germplasmlist.actions.NurseryManagerAction")
 @ActionRegistration(iconBase = "ibfb/germplasmlist/images/managerIcon16.png",
 displayName = "#CTL_NurseryManagerAction")
 @ActionReferences({
-        @ActionReference(path = "Menu/BreedingManager", position = 400),
-    @ActionReference(path = "Toolbars/BreedingManager", position = 400)
+    @ActionReference(path = "Menu/nurseryManagerMenu", position = 1400),
+    @ActionReference(path = "Toolbars/nurseryManagerMenu", position = 1400)
 })
 
 
