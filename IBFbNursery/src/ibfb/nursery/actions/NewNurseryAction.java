@@ -33,8 +33,8 @@ id = "ibfb.nursery.actions.NewNurseryAction")
 @ActionRegistration(iconBase = "ibfb/nursery/images/newNursery16.png",
 displayName = "#CTL_NewNurseryAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/BreedingManager", position = 400),
-    @ActionReference(path = "Toolbars/BreedingManager", position = 400)
+//    @ActionReference(path = "Menu/BreedingManager", position = 400),
+//    @ActionReference(path = "Toolbars/BreedingManager", position = 400)
 })
 
 public final class NewNurseryAction implements ActionListener {

@@ -13,14 +13,18 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.cimmyt.cril.ibwb.commongui.DialogUtil;
 import org.openide.DialogDisplayer;
 import org.openide.WizardDescriptor;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
 import org.openide.util.HelpCtx;
+import org.openide.util.ImageUtilities;
 import org.openide.util.Mutex;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
@@ -28,39 +32,44 @@ import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@ActionID(category = "File",
+@ActionID(category = "BreedingManager",
 id = "ibfb.nursery.actions.NewWizardNurseryAction")
-@ActionRegistration(iconBase = "ibfb/nursery/images/newNursery16.png",
+@ActionRegistration(iconBase = "ibfb/nursery/images/newNursery.png",
 displayName = "#CTL_NewWizardNurseryAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/BreedingManager", position = 400),
+    @ActionReference(path = "Toolbars/BreedingManager", position = 400)
 })
+public final class NewWizardNurseryAction extends SystemAction {//implements ActionListener {
 
-public final class NewWizardNurseryAction extends SystemAction implements ActionListener {
-    
     private ResourceBundle bundle = NbBundle.getBundle(NewWizardNurseryAction.class);
-    private final Study context;
+    //private final Study context;
     private JDQuickCreation quick;
+    private ImageIcon icono = ImageUtilities.loadImageIcon("ibfb/nursery/images/newNursery.png", false);
 
-   
-     public NewWizardNurseryAction() {
+    public NewWizardNurseryAction() {
         putValue(NAME, bundle.getString("NewWizardNurseryAction.newNursery"));
-        setEnabled(Boolean.TRUE);
-        this.context = null;
+        putValue(SMALL_ICON, icono);
+//        setEnabled(Boolean.TRUE);
+//        this.context = null;
     }
-    
-    
+
     public NewWizardNurseryAction(Study context) {
-        this.context = context;
-        setEnabled(Boolean.TRUE);        
+        putValue(NAME, bundle.getString("NewWizardNurseryAction.newNursery"));
+//        this.context = context;
+//        setEnabled(Boolean.TRUE);
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-     runWizard();
-                  
+        if (SelectedStudy.selected.getStudyid() == null) {
+            DialogUtil.displayError(bundle.getString("NewNurseryAction.selectAStudy"));
+        } else {
+            runWizard();
+        }
+
     }
 
-   
     public boolean existeNursery(String nursery) {
         boolean existe = false;
         try {
@@ -88,7 +97,7 @@ public final class NewWizardNurseryAction extends SystemAction implements Action
                 for (TopComponent t : opened) {
                     if (t.getName().equals("Nursery - " + SelectedStudy.selected.getStudy())) {
                         nurseryEditor = (NurseryEditorTopComponent) t;
-                       
+
                         nurseryEditor.close();
                     }
                 }
@@ -132,7 +141,7 @@ public final class NewWizardNurseryAction extends SystemAction implements Action
 
         boolean cancelled = wizardDescriptor.getValue() != WizardDescriptor.FINISH_OPTION;
         if (!cancelled) {
-            
+
             nurseryEditor.addChecks();
             nurseryEditor.fillObservationsData();
 
@@ -151,7 +160,7 @@ public final class NewWizardNurseryAction extends SystemAction implements Action
                 nurseryEditor.jTabbedPane1.setEnabledAt(1, false);
             }
 
-           
+
             nurseryEditor.open();
             nurseryEditor.requestActive();
 
