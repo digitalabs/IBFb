@@ -80,6 +80,7 @@ public class Workbook {
     public static final String BLOCK = "BLOCK";
     public static final String BLOCKING_FACTOR = "BLOCKINGFACTOR";
     public static final String BLOCKING_FACTOR_NUMBER = "BLOCKINGFACTORNUMBER";
+    public static final String BLOCKING_FACTOR_NESTED_NUMBER = "BLOCKINGFACTORNESTEDNUMBER";
     
     public static final String ROW_IN_LAYOUT = "ROWINLAYOUT";
     public static final String ROW_IN_LAYOUT_NUMBER = "ROWINLAYOUTNUMBER";
