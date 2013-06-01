@@ -1587,4 +1587,9 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public Integer getStoredInId(int traitid, int scaleid, int methodid) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    @Override
+    public List<Factor> getFactorsByStudyId(int studyId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

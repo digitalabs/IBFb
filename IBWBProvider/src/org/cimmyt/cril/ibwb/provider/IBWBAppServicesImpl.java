@@ -3588,4 +3588,14 @@ public class IBWBAppServicesImpl implements AppServices {
         
         return id;
     }
+
+    @Override
+    public List<Factor> getFactorsByStudyId(int studyId) {
+        List<Factor> factors = serviciosCentral.getFactorsByStudyId(studyId);
+        if (factors == null || factors.size() == 0) {
+            factors = serviciosLocal.getFactorsByStudyId(studyId);
+        }
+        
+        return factors;
+    }
 }

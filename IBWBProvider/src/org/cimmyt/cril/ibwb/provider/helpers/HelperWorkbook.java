@@ -1632,18 +1632,19 @@ public class HelperWorkbook {
         for (Measurement measurement : measurements) {
             Obsunit obsunit = listObsunitMeasurement.get(measurements.indexOf(measurement));
             Represtn represtnMeasurements = mapReprestns.get(obsunit.getEffectid());
-            for (Factor factor : represtnMeasurements.getFactors()) {
+            serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
+ /*           for (Factor factor : represtnMeasurements.getFactors()) {
 
                 if (factor.getFname().equals(Workbook.STUDY)) {
                     //serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getTrialLabel()) || factor.getFname().equals("TRIAL")) {
-                    serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
+                    serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
                 } else if (factor.getFname().equals(workbook.getEntryLabel()) || factor.getFname().equals("ENTRY")) {
-                    serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
+                    serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
                 } else if (factor.getFname().equals(workbook.getPlotLabel()) || factor.getFname().equals("PLOT")) {
-                    serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
+                    serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
                 }
-            }
+            }*/
            i++;
         }
     }

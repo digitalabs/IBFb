@@ -4558,4 +4558,11 @@ public class CommonServicesImpl implements CommonServices {
         return id;
     }
     
+    @Override
+    public List<Factor> getFactorsByStudyId(int studyId) {
+        HashMap<String, Integer> input = new HashMap<String, Integer>();
+        input.put("v_studyid", studyId);
+        return utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByStudyId", input, new String[] {"v_studyid"}, 
+                new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+    }
 }

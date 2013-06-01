@@ -181,8 +181,9 @@ public class HelperWorkbookRead {
                 this.factorEntry,
                 this.factorPlot);
         this.effectid = hceaf.getEffectid();
-        this.factorsDto = HelperFactor.getFactorsByEffectid(this.effectid, this.servicioApp);
-
+        //this.factorsDto = HelperFactor.getFactorsByEffectid(this.effectid, this.servicioApp);
+        this.factorsDto = servicioApp.getFactorsByStudyId(this.study.getStudyid());
+        
         this.factorStudy = hceaf.getFactorStudy();
         this.factorTrial = hceaf.getFactorTrial();
         this.factorEntry = hceaf.getFactorEntry();
