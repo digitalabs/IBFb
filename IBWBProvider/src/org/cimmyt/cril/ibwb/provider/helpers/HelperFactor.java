@@ -203,7 +203,7 @@ public class HelperFactor {
         //Verificar factor
         factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
         factor.setFactorid(factorCabecera);//Asignando el factorid
-        serviceLocal.addFactor(factor);
+//        serviceLocal.addFactor(factor);
 
         //Verificar si es factor encabezado
         if (condition.getConditionName().equals(condition.getLabel())) {
