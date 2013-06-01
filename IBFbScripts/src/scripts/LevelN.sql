@@ -24,8 +24,8 @@ BEGIN
 	IF(v_storedinid = 1010 or v_storedinid = 1015) THEN
 		call getNextMinReturn('projectprop', @newppid);
 		
-		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
-		insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, @projectid, @termid, lvaluein, @rankint);
+		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
+		insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
     END IF;
 	/*
 	IF(@storedinid = 1011) THEN
@@ -45,9 +45,9 @@ BEGIN
 	IF(v_storedinid = 1020) THEN
 		call getNextMinReturn('nd_geolocationprop', @newgeoid);
 		
-		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
+		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 		
-		insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, @termid , lvaluein, 0);
+		insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, v_termid , lvaluein, 0);
     END IF;
 	
 	IF(v_storedinid = 1021) THEN
@@ -71,7 +71,7 @@ BEGIN
 		
 		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 		
-		insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, @termid , lvaluein, 0);
+		insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
 		
     END IF;
 	IF(v_storedinid = 1040) THEN
@@ -79,7 +79,7 @@ BEGIN
 		
 		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 		
-		insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, @termid , lvaluein, 0);
+		insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, v_termid , lvaluein, 0);
     END IF;
 	IF(v_storedinid = 1041) THEN
 			update stock set uniquename = lvaluein where stock_id = levelno_v;
