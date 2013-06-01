@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ResourceBundle;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
+import org.cimmyt.cril.ibwb.commongui.AppConstants;
 import org.cimmyt.cril.ibwb.commongui.TableBindingUtil;
 import org.cimmyt.cril.ibwb.domain.Tmethod;
 import org.cimmyt.cril.ibwb.domain.TmsMethod;
@@ -54,6 +55,8 @@ public final class MethodBrowserTopComponent extends TopComponent {
                 }
             }
         });
+        
+        enableDisableButtons();
     }
 
     /** This method is called from within the constructor to
@@ -65,10 +68,10 @@ public final class MethodBrowserTopComponent extends TopComponent {
     private void initComponents() {
 
         pMnu = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        pMnuNew = new javax.swing.JMenuItem();
+        pMenuEdit = new javax.swing.JMenuItem();
+        pMnuDelete = new javax.swing.JMenuItem();
+        pMnuBrowse = new javax.swing.JMenuItem();
         lblSearch = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         lblRecordsFound = new javax.swing.JLabel();
@@ -80,45 +83,45 @@ public final class MethodBrowserTopComponent extends TopComponent {
         btnDelete = new javax.swing.JButton();
         btnBrowse = new javax.swing.JButton();
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/new.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem1, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem1.text")); // NOI18N
-        jMenuItem1.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem1.toolTipText")); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        pMnuNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/new.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(pMnuNew, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuNew.text")); // NOI18N
+        pMnuNew.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuNew.toolTipText")); // NOI18N
+        pMnuNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                pMnuNewActionPerformed(evt);
             }
         });
-        pMnu.add(jMenuItem1);
+        pMnu.add(pMnuNew);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/edit.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem2, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem2.text")); // NOI18N
-        jMenuItem2.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem2.toolTipText")); // NOI18N
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        pMenuEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/edit.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(pMenuEdit, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMenuEdit.text")); // NOI18N
+        pMenuEdit.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMenuEdit.toolTipText")); // NOI18N
+        pMenuEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                pMenuEditActionPerformed(evt);
             }
         });
-        pMnu.add(jMenuItem2);
+        pMnu.add(pMenuEdit);
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/delete.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem3, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem3.text")); // NOI18N
-        jMenuItem3.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem3.toolTipText")); // NOI18N
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        pMnuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/delete.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(pMnuDelete, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuDelete.text")); // NOI18N
+        pMnuDelete.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuDelete.toolTipText")); // NOI18N
+        pMnuDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                pMnuDeleteActionPerformed(evt);
             }
         });
-        pMnu.add(jMenuItem3);
+        pMnu.add(pMnuDelete);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/browse16.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jMenuItem4, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem4.text")); // NOI18N
-        jMenuItem4.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.jMenuItem4.toolTipText")); // NOI18N
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        pMnuBrowse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/browse16.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(pMnuBrowse, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuBrowse.text")); // NOI18N
+        pMnuBrowse.setToolTipText(org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.pMnuBrowse.toolTipText")); // NOI18N
+        pMnuBrowse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                pMnuBrowseActionPerformed(evt);
             }
         });
-        pMnu.add(jMenuItem4);
+        pMnu.add(pMnuBrowse);
 
         org.openide.awt.Mnemonics.setLocalizedText(lblSearch, org.openide.util.NbBundle.getMessage(MethodBrowserTopComponent.class, "MethodBrowserTopComponent.lblSearch.text")); // NOI18N
 
@@ -254,34 +257,34 @@ public final class MethodBrowserTopComponent extends TopComponent {
         openOntology();
 }//GEN-LAST:event_btnBrowseActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void pMnuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pMnuNewActionPerformed
         createNew();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_pMnuNewActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void pMenuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pMenuEditActionPerformed
         editRecord();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_pMenuEditActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void pMnuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pMnuDeleteActionPerformed
         deleteRecord();
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_pMnuDeleteActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void pMnuBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pMnuBrowseActionPerformed
         openOntology();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_pMnuBrowseActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnNew;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRecordsFound;
     private javax.swing.JLabel lblSearch;
+    private javax.swing.JMenuItem pMenuEdit;
     private javax.swing.JPopupMenu pMnu;
+    private javax.swing.JMenuItem pMnuBrowse;
+    private javax.swing.JMenuItem pMnuDelete;
+    private javax.swing.JMenuItem pMnuNew;
     private javax.swing.JToolBar tblBarMenu;
     private javax.swing.JTable tblMethods;
     private javax.swing.JTextField txtSearch;
@@ -358,5 +361,15 @@ public final class MethodBrowserTopComponent extends TopComponent {
     }
 
     private void openOntology() {
+    }
+    
+    private void enableDisableButtons() {
+        pMnuNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        pMnuDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        pMenuEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        
     }
 }

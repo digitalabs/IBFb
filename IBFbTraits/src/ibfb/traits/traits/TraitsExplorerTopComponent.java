@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ResourceBundle;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
+import org.cimmyt.cril.ibwb.commongui.AppConstants;
 import org.cimmyt.cril.ibwb.commongui.OntologyTool;
 import org.cimmyt.cril.ibwb.commongui.TableBindingUtil;
 import org.cimmyt.cril.ibwb.domain.Trait;
@@ -49,6 +50,7 @@ public final class TraitsExplorerTopComponent extends TopComponent {
                 }
             }
         });
+        enableDisableButtons();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -119,7 +121,6 @@ public final class TraitsExplorerTopComponent extends TopComponent {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/traits/delete.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(TraitsExplorerTopComponent.class, "TraitsExplorerTopComponent.jLabel1.text")); // NOI18N
 
         traitsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -203,15 +204,15 @@ public final class TraitsExplorerTopComponent extends TopComponent {
                 .addGap(256, 256, 256))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTraitsFound)
-                    .addComponent(txtSearchTrait, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(378, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTraitsFound)
+                            .addComponent(txtSearchTrait, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(398, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,4 +364,15 @@ public final class TraitsExplorerTopComponent extends TopComponent {
             OntologyTool.openOntology(trait.getOntology());
         }
     }
+    
+    private void enableDisableButtons() {
+        mnuNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        mnuDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        mnuEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        
+    }
+    
 }

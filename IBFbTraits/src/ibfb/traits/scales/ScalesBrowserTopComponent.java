@@ -12,6 +12,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
+import org.cimmyt.cril.ibwb.commongui.AppConstants;
 import org.cimmyt.cril.ibwb.commongui.OntologyTool;
 import org.cimmyt.cril.ibwb.commongui.TableBindingUtil;
 import org.cimmyt.cril.ibwb.domain.Scales;
@@ -57,6 +58,7 @@ public final class ScalesBrowserTopComponent extends TopComponent {
             }
             
         });
+        enableDisableButtons();
     }
 
     /** This method is called from within the constructor to
@@ -364,4 +366,16 @@ public final class ScalesBrowserTopComponent extends TopComponent {
             OntologyTool.openOntology(scale.getOntology());
         }
     }
+    
+    
+    private void enableDisableButtons() {
+        mnuNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        mnuDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        mnuEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnNew.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnEdit.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        btnDelete.setEnabled(AppConstants.ENABLE_TMS_BUTTONS);
+        
+    }
+    
 }
