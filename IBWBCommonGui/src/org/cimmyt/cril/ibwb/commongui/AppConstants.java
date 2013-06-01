@@ -5,7 +5,10 @@ package org.cimmyt.cril.ibwb.commongui;
  * @author tmsg
  */
 public class AppConstants {
-    public static boolean SHOW_IMPORT_GERMPLASM = false;
+    public static final boolean SHOW_IMPORT_GERMPLASM = false;
+    
+    public static final boolean ENABLE_TMS_BUTTONS = false;
+    
     private static final String BREEDING_MANAGER = "BREEDING_MANAGER";
     private static final String FIELDBOOK_TOOLS  = "FIELDBOOK_TOOLS";
     private static final String BOTH_APPS = "BOTH_APPS";
