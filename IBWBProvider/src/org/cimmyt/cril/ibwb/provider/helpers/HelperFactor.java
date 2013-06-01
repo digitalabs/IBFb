@@ -507,10 +507,12 @@ public class HelperFactor {
             List<Factor> listEntryFactors,
             List<List<Object>> germplasmData,
             List<Integer> ndExperimentIds,
+            Integer levelNoNdGeolocationId,
             CommonServices serviceLocal) {
 
         Factor factorTemp = new Factor();
         int index = 0;
+        boolean createNdExperiment = ndExperimentIds==null || ndExperimentIds.isEmpty();
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
@@ -532,7 +534,14 @@ public class HelperFactor {
         	//we need to add new stock for every new germplasm entry values
             Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
             //we need to add here the nd_experiment_stock relationship
-            serviceLocal.addNdExperimentStock(ndExperimentIds.get(index++), levelNoStockId);
+            Integer ndExperimentId = null;
+            if(createNdExperiment) {
+            	ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
+            	ndExperimentIds.add(ndExperimentId);
+            } else {
+            	ndExperimentId = ndExperimentIds.get(index++);
+            }            
+            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {
                 //we set the level no to the new stockId
                 Integer levelNo = levelNoStockId;

@@ -269,7 +269,9 @@ public class HelperWorkbook {
         List<Integer> allExperimentIds = new ArrayList<Integer>();
         for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
             List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationId);
-            allExperimentIds.addAll(ndExperimentIds);
+            if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
+            	allExperimentIds.addAll(ndExperimentIds);
+            }
             
 	        log.info("Saving levels for plots DONE!");
 	
@@ -289,6 +291,7 @@ public class HelperWorkbook {
 	                getListEntryFactors(),
 	                workbook.getGermplasmData(),
 	                ndExperimentIds,
+	                levelNoNdGeolocationId,
 	                this.localServices);
 	        log.info("Saving levels for entrys DONE!");
         
@@ -1632,7 +1635,7 @@ public class HelperWorkbook {
             for (Factor factor : represtnMeasurements.getFactors()) {
 
                 if (factor.getFname().equals(Workbook.STUDY)) {
-                    serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
+                    //serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getTrialLabel()) || factor.getFname().equals("TRIAL")) {
                     serviciosLocal.addOindex(obsunit.getOunitid(), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getEntryLabel()) || factor.getFname().equals("ENTRY")) {
