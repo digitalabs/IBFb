@@ -162,7 +162,7 @@ public class HelperWorkbook {
         // Saving factors
         //=======================
         log.info("Saving Factor study....");
-        // factorCabecera = saveFactorStudy();
+        factorCabecera = saveFactorStudy();
         log.info("Saving Factor study DONE!");
 
         log.info("Saving Factors for study....");
