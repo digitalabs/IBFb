@@ -252,3 +252,29 @@ begin
 end$$ 
 
 
+drop procedure if EXISTS getFactorsByStudyId$$
+
+CREATE PROCEDURE getFactorsByStudyId(IN v_studyid int)
+BEGIN
+
+    SELECT DISTINCT
+      f.projectprop_id AS labelid
+      , f.project_id AS studyid
+      , fname.value AS fname
+      , f.factorid AS factorid
+      , f.traitid AS traitid
+      , scalerel.object_id AS scaleid
+      , methrel.object_id AS tmethid
+      , IF(f.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype
+      , f.storedinid AS tid
+    FROM
+      v_factor f
+      INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank
+        AND fname.type_id NOT IN (1070, 1060, f.varid)
+      INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220
+      INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210
+      INNER JOIN project_relationship pr ON pr.type_id = 1150 AND (f.project_id = pr.subject_project_id OR f.project_id = pr.object_project_id) 
+    WHERE
+      pr.object_project_id = v_studyid
+    ;
+end$$ 
