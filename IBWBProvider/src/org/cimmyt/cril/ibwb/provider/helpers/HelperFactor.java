@@ -240,7 +240,7 @@ public class HelperFactor {
      * @param serviceLocal
      * @return
      */
-    public static void saveLavelsFactorTrials(
+    public static List<Integer> saveLavelsFactorTrials(
             Map mapTrials,
             List<Condition> conditionsData,
             Integer numberRepeticion,
@@ -319,9 +319,11 @@ public class HelperFactor {
         }
 
         //levelNo--;
+        List<Integer> trialNdExperimentIds = new ArrayList<Integer>();
         for (Integer levelNo : levelNos) {
-            serviceLocal.addNdExperiment(levelNo, 1020);
+        	trialNdExperimentIds.add(serviceLocal.addNdExperiment(levelNo, 1020));
         }
+        return trialNdExperimentIds;
          
     }
 
