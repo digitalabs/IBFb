@@ -238,33 +238,39 @@ public class HelperWorkbook {
         log.info("Recovery next levelNo DONE!");
 
 
+        //Integer levelNoNdGeoLocationId = this.localServices.addNdGeolocation();
+
         //Guardando levels for study
         log.info("Saving levels for study....");
         //levelno should be study id
         Integer levelNo = study.getStudyid();
-        levelNo = saveLevelsStudy(levelNo);
+        levelNo = saveLevelsStudy(levelNo, 1);
         log.info("Saving levels for study DONE!");
 
         //insert geolocation - daniel
         //level no = geolocation id
         //Guardando levels for Trials
         log.info("Saving levels for trial....");
-        Integer levelNoNdGeoLocationId = this.localServices.addNdGeolocation();
         //levelNo is the nd_geolocationId
-        levelNoNdGeoLocationId = HelperFactor.saveLavelsFactorTrials(
+        List<Integer> levelNoNdGeolocationIds = new ArrayList<Integer>();
+        HelperFactor.saveLavelsFactorTrials(
                 getMapTrialFactors(),
                 workbook.getConditionsData(),
                 workbook.getInstanceNumber(),
-                levelNoNdGeoLocationId,
+                levelNoNdGeolocationIds,
                 this.localServices);
         log.info("Saving levels for trial DONE!");
         //insert stock record - daniel
 
         //Salvar levels para grupos de convinaciones de PLOT
         log.info("Saving levels for plots....");
-        Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+        //Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
         //saveLevelsPlots(levelNo);
-        saveLevelsPlots(levelNoNdExperimentId);
+        List<Integer> allExperimentIds = new ArrayList<Integer>();
+        for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
+            List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationId);
+            allExperimentIds.addAll(ndExperimentIds);
+            
         log.info("Saving levels for plots DONE!");
 
         //Guardando levels for Entrys
@@ -279,12 +285,14 @@ public class HelperWorkbook {
          this.localServices);
          */
         //we now pass in the nd_experiment_id
-        levelNo = HelperFactor.saveLavelsFactorsEntrys(
+        HelperFactor.saveLavelsFactorsEntrys(
                 getListEntryFactors(),
                 workbook.getGermplasmData(),
-                levelNoNdExperimentId,
+                ndExperimentIds,
                 this.localServices);
         log.info("Saving levels for entrys DONE!");
+        
+        }
 
         /*      move to upper part
          //Salvar levels para grupos de convinaciones de PLOT
@@ -297,16 +305,16 @@ public class HelperWorkbook {
         //=======================
         //Salvar obsunit con todas la convinaciones datos
         //=======================
-        List<Obsunit> obsunits = saveObsunit(represtns);
+        List<Obsunit> obsunits = saveObsunit(represtns, allExperimentIds);
 
 
-        saveDataConstatnts();
+        saveDataConstatnts(allExperimentIds);
 
         //=======================
         //Salvar oindex con todas la convinaciones datos
         //=======================
 
-        saveOindex3(obsunits, represtns, this.localServices, workbook.getMeasurements());
+        saveOindex3(obsunits, represtns, this.localServices, workbook.getMeasurements(), allExperimentIds, 1);
 
     }
 
@@ -1128,11 +1136,15 @@ public class HelperWorkbook {
      * @param levelNo
      * @return
      */
-    public Integer saveLevelsStudy(Integer levelNo) {
+    public Integer saveLevelsStudy(Integer levelNo, Integer levelNoNdGeoLocationId) {
         Factor factorStudy = mapStudyFactors.get(labelStudy);
         // Save all levels for study
         HelperFactor.saveLevel(factorStudy, levelNo, study.getSname(), localServices);
 
+        Integer ndExperimentId = localServices.addNdExperiment(levelNoNdGeoLocationId, 1010);
+        localServices.addOindex(ndExperimentId, study.getStudyid());
+        
+        
         // Save level for each factor in study condition
         for (ibfb.domain.core.Condition condition : workbook.getStudyConditions()) {
             Factor factorStudyTemp = mapStudyFactors.get(condition.getConditionName());
@@ -1167,12 +1179,17 @@ public class HelperWorkbook {
      *
      * @param levelNo
      */
-    public void saveLevelsPlots(Integer levelNo) {
+    public List<Integer> saveLevelsPlots(Integer levelNoNdGeoLocationId) {
         Factor factorDeHeader = new Factor();
         List<String> listHeaders = workbook.getMeasurementHeaders();
         boolean agregado = false;
+        List<Integer> ndExperimentIds = new ArrayList<Integer>();
         //for (Factor factorGroupTemp : listPlotFactors) {
         for (Measurement measurement : workbook.getMeasurementsRep()) {
+            
+            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+            ndExperimentIds.add(levelNo);
+            
             for (String header : listHeaders) {
                 factorDeHeader = mapPlotFactors.get(header);
 // TODO: ajusstar los nombres de los factores a la combinacion
@@ -1221,6 +1238,7 @@ public class HelperWorkbook {
                 agregado = false;
             }
         }
+        return ndExperimentIds;
         //}
     }
 
@@ -1288,11 +1306,11 @@ public class HelperWorkbook {
      * @return
      */
     public List<Obsunit> saveObsunit(
-            List<Represtn> represtns) {
+            List<Represtn> represtns, List<Integer> experimentIds) {
         int iterando = 0;
         Obsunit obsunit;
         List<Obsunit> obsunits = new ArrayList<Obsunit>();
-        if (mapAllFactors.get(Workbook.STUDY) != null) {
+        /*if (mapAllFactors.get(Workbook.STUDY) != null) {
             obsunit = new Obsunit();
             //GCP-4378 study level variates
             //obsunit.setEffectid(represtns.get(iterando).getEffectid());
@@ -1300,7 +1318,7 @@ public class HelperWorkbook {
             //iterando++;
             localServices.addObsunit(obsunit);
             obsunits.add(obsunit);
-        }
+        }*/
 
         //if (mapAllFactors.get(Workbook.TRIAL_LABEL) != null) {
         if (mapAllFactors.get(workbook.getTrialLabel()) != null || mapAllFactors.get("TRIAL") != null) {
@@ -1379,7 +1397,7 @@ public class HelperWorkbook {
         }
     }
 
-    public void saveDataConstatnts() {
+    public void saveDataConstatnts(List<Integer> ndExperimentIds) {
 
         int instance = 0;
         instance--;
@@ -1397,7 +1415,7 @@ public class HelperWorkbook {
             if (variateTemp.getDtype().equals(NUMERIC_TYPE)) {
                 DataN dataN = new DataN();
                 DataNPK dataNPK = new DataNPK();
-                dataNPK.setOunitid(listObsunit.get(instance).getOunitid());
+                dataNPK.setOunitid(ndExperimentIds.get(instance));
                 dataNPK.setVariatid(variateTemp.getVariatid());
                 dataN.setDataNPK(dataNPK);
                 dataN.setDvalue(HelperFactor.castingToDouble(constant.getValue()));
@@ -1405,7 +1423,7 @@ public class HelperWorkbook {
             } else {
                 DataC dataC = new DataC();
                 DataCPK dataCPK = new DataCPK();
-                dataCPK.setOunitid(listObsunit.get(instance).getOunitid());
+                dataCPK.setOunitid(ndExperimentIds.get(instance));
                 dataCPK.setVariatid(variateTemp.getVariatid());
                 dataC.setDataCPK(dataCPK);
                 String valueToAdd = HelperFactor.castingToString(constant.getValue());
@@ -1416,7 +1434,7 @@ public class HelperWorkbook {
             }
         }
     }
-
+/*
     public void saveOindex(
             List<Obsunit> obsunits,
             List<Represtn> represtns,
@@ -1512,7 +1530,7 @@ public class HelperWorkbook {
             }
         }
     }
-
+*/
     public void saveOindex2(
             List<Obsunit> obsunits,
             List<Represtn> represtns,
@@ -1576,8 +1594,10 @@ public class HelperWorkbook {
             List<Obsunit> obsunits,
             List<Represtn> represtns,
             CommonServices serviciosLocal,
-            List<Measurement> measurements) {
-        Represtn represtn = represtns.get(0);
+            List<Measurement> measurements,
+            List<Integer> ndExperimentIds,
+            Integer trialExperimentId) {
+/*        Represtn represtn = represtns.get(0);
         Factor factorTemp = represtn.getFactors().get(0);
         Obsunit obsunitTemp = obsunits.get(0);
         Oindex oindex = new Oindex();
@@ -1588,34 +1608,19 @@ public class HelperWorkbook {
                 represtn.getRepresno());
         oindex.setOindexPK(oindexPK);
         serviciosLocal.addOindex(oindex);
-
+*/
         int i = 0;
+        
         for (Obsunit obsunit : listObsunit) {
             Represtn represtnTrials = mapReprestns.get(obsunit.getEffectid());
             for (Factor factor : represtnTrials.getFactors()) {
                 if (factor.getFname().equals(Workbook.STUDY)) {
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            factor.getLevelNo(0),
-                            represtnTrials.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    //serviciosLocal.addOindex(trialExperimentId, obsunit.getEffectid());
                 } else if (factor.getFname().equals(workbook.getTrialLabel()) || factor.getFname().equals("TRIAL")) {
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            factor.getLevelNo(i),
-                            represtnTrials.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    serviciosLocal.addOindex(trialExperimentId, obsunit.getEffectid());
                 }
             }
-            i++;
-        }
-
+         }
 
 
         for (Measurement measurement : measurements) {
@@ -1624,48 +1629,16 @@ public class HelperWorkbook {
             for (Factor factor : represtnMeasurements.getFactors()) {
 
                 if (factor.getFname().equals(Workbook.STUDY)) {
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            factor.getLevelNo(0),
-                            represtnMeasurements.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    serviciosLocal.addOindex(ndExperimentIds.get(i), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getTrialLabel()) || factor.getFname().equals("TRIAL")) {
-                    LevelN leveln = factor.getLevelNByValue(measurement.getTrial());
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            leveln.getLevelNPK().getLevelno(),
-                            represtnMeasurements.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    serviciosLocal.addOindex(ndExperimentIds.get(i), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getEntryLabel()) || factor.getFname().equals("ENTRY")) {
-
-                    LevelN leveln = factor.getLevelNByValue(measurement.getEntry());
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            leveln.getLevelNPK().getLevelno(),
-                            represtnMeasurements.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    serviciosLocal.addOindex(ndExperimentIds.get(i), represtnMeasurements.getRepresno());
                 } else if (factor.getFname().equals(workbook.getPlotLabel()) || factor.getFname().equals("PLOT")) {
-
-                    LevelN leveln = factor.getLevelNByValue(measurement.getPlot());
-                    oindex = new Oindex();
-                    oindexPK = new OindexPK(
-                            obsunit.getOunitid(),
-                            factor.getFactorid(),
-                            leveln.getLevelNPK().getLevelno(),
-                            represtnMeasurements.getRepresno());
-                    oindex.setOindexPK(oindexPK);
-                    serviciosLocal.addOindex(oindex);
+                    serviciosLocal.addOindex(ndExperimentIds.get(i), represtnMeasurements.getRepresno());
                 }
             }
+           i++;
         }
     }
 
@@ -1700,6 +1673,7 @@ public class HelperWorkbook {
                     }
                 }
             }
+            i++;
         }
 
     }

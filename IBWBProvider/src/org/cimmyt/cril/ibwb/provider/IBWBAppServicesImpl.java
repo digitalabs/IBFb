@@ -3291,7 +3291,7 @@ public class IBWBAppServicesImpl implements AppServices {
                 oindex.setOindexPK(new OindexPK());
                 oindex.getOindexPK().setRepresno(represtn1.getRepresno());
                 for (Oindex oindex1 : this.serviciosCentral.getListOindex(oindex, 0, 0, false)) {
-                    this.serviciosLocal.addOindex(oindex1);
+                    this.serviciosLocal.addOindex(oindex1.getOindexPK().getOunitid(), represtn1.getRepresno());
                 }
             }
             Effect effect = new Effect(true);

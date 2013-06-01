@@ -240,11 +240,11 @@ public class HelperFactor {
      * @param serviceLocal
      * @return
      */
-    public static Integer saveLavelsFactorTrials(
+    public static void saveLavelsFactorTrials(
             Map mapTrials,
             List<Condition> conditionsData,
             Integer numberRepeticion,
-            Integer levelNo,
+            List<Integer> levelNos,
             CommonServices serviceLocal) {
 
         int instance = 0;
@@ -266,14 +266,17 @@ public class HelperFactor {
              addLevels(factorTemp.getFactorid(), levelNoTemporal, serviceLocal);
              }
              */
-            System.out.println("Instance: " + instance + " levelNo: " + levelNo);
+            //System.out.println("Instance: " + instance + " levelNo: " + levelNo);
             log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
+            Integer levelNo = null;
             if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
                 LevelN levelN = new LevelN();
                 levelN.setFactorid(factorTemp.getFactorid());
                 if (conditionData.getConditionName().equals(nameFactorInitial)) {
                     Integer tempInstance = conditionData.getInstance();
                     levelN.setLvalue(castingToDouble(tempInstance));
+                    levelNo = serviceLocal.addNdGeolocation();
+                    levelNos.add(levelNo);
                 } else {
                     if (conditionData.getValue() != null) {
                         levelN.setLvalue(castingToDouble(conditionData.getValue()));
@@ -316,7 +319,10 @@ public class HelperFactor {
         }
 
         //levelNo--;
-        return levelNo;
+        for (Integer levelNo : levelNos) {
+            serviceLocal.addNdExperiment(levelNo, 1020);
+        }
+         
     }
 
     public static Integer saveLavelsFactorTrialsOld(
@@ -495,14 +501,14 @@ public class HelperFactor {
      * @param serviceLocal
      * @return
      */
-    public static Integer saveLavelsFactorsEntrys(
+    public static void saveLavelsFactorsEntrys(
             List<Factor> listEntryFactors,
             List<List<Object>> germplasmData,
-            Integer levelNo,
+            List<Integer> ndExperimentIds,
             CommonServices serviceLocal) {
 
         Factor factorTemp = new Factor();
-        Integer ndExperimentId = levelNo;
+        int index = 0;
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
@@ -524,10 +530,10 @@ public class HelperFactor {
         	//we need to add new stock for every new germplasm entry values
             Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
             //we need to add here the nd_experiment_stock relationship
-            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
+            serviceLocal.addNdExperimentStock(ndExperimentIds.get(index++), levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {
                 //we set the level no to the new stockId
-                levelNo = levelNoStockId;
+                Integer levelNo = levelNoStockId;
 
                 if (i < listEntryFactors.size()) {
                     Object value = objectList.get(i);
@@ -569,7 +575,7 @@ public class HelperFactor {
             //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
             //levelNo--;
         }
-        return levelNo;
+        //return levelNo;
     }
 
     public static Integer saveLavelsFactorsEntrysOld(

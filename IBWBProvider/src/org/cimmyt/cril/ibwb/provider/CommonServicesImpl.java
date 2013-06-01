@@ -1771,12 +1771,12 @@ public class CommonServicesImpl implements CommonServices {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public void addOindex(Oindex oindex) {
+    public void addOindex(int experimentId, int projectId) {
         //this.oindexDAO.create(oindex);
         if (isLocal()) {
             LinkedHashMap params = new LinkedHashMap();
-            params.put("factorid", oindex.getOindexPK().getFactorid());
-            params.put("levelno", oindex.getOindexPK().getLevelno());
+            params.put("nd_experiment_id", experimentId);
+            params.put("project_id", projectId);
             this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
         }
     }
