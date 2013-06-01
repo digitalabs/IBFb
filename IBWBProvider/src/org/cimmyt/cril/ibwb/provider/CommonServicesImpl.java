@@ -1110,6 +1110,9 @@ public class CommonServicesImpl implements CommonServices {
         if (filter.getLevelCPK() != null) {
             params.put("labelid", filter.getLevelCPK().getLabelid());
             params.put("levelno", filter.getLevelCPK().getLevelno());
+        } else {
+            params.put("labelid", null);
+            params.put("levelno", null);
         }
         params.put("factorid", filter.getFactorid());
         params.put("lvalue1", null);
@@ -1190,6 +1193,10 @@ public class CommonServicesImpl implements CommonServices {
         if (filter.getLevelNPK() != null) {
             params.put("labelid", filter.getLevelNPK().getLabelid());
             params.put("levelno", filter.getLevelNPK().getLevelno());
+        } else {
+            params.put("labelid", null);
+            params.put("levelno", null);
+
         }
         params.put("factorid", filter.getFactorid());
         params.put("lvalue1", null);
