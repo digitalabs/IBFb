@@ -279,6 +279,8 @@ public class HelperWorkbookReader {
         log.info("Definiendo orden de busquedas");
         String orden = HelperWorkbookReader.getOrder(isLocal, isCentral);
         
+        //GCP NEW SCHEMA, does not seem to need this anymore
+        /*
         Integer cuantosFR = HelperWorkbookReader.getNumeroFactoresResultado(
                 session,
                 query,
@@ -290,6 +292,7 @@ public class HelperWorkbookReader {
             log.error("No se encontraron todos los factores solicitados.");
             return null;
         }
+        * */
 
 //        resultado = HelperWorkbookReader.getFactoresResultado(
 //                session,

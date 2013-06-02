@@ -740,8 +740,10 @@ public class HelperWorkbookRead {
 
     private List<String> getFactoresKeyList() {
         List<String> factorsKey = new ArrayList<String>();
-        factorsKey.add(factorStudy.getFname());
-        factorsKey.add(factorTrial.getFname());
+        //GCP- NEW SCHEMA CHANGE. we dont copy study factors to the dataset factors anymore
+        //same goes with geolocation factors
+        //factorsKey.add(factorStudy.getFname());
+        //factorsKey.add(factorTrial.getFname());
         factorsKey.add(factorEntry.getFname());
         factorsKey.add(factorPlot.getFname());
         return factorsKey;
