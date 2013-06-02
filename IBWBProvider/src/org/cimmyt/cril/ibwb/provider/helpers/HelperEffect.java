@@ -298,9 +298,10 @@ public class HelperEffect {
     }
     
     private static boolean encontrados(Boolean bStudy, Boolean bTrial, Boolean bEntry, Boolean bPlot){
-        if(bStudy.booleanValue()
+        //GCP NEW SCHEMA CHANGE, STUDY AND TRIAL FACTORS ARE NO LONGER PART OF MEASUREMENT EFFECT.
+        if(/*bStudy.booleanValue()
                 && bTrial.booleanValue()
-                && bEntry.booleanValue()
+                &&*/ bEntry.booleanValue()
                 && bPlot.booleanValue()){
             return true;
         }else{
