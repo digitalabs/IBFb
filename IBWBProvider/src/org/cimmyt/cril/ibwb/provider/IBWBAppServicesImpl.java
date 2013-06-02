@@ -2886,8 +2886,14 @@ public class IBWBAppServicesImpl implements AppServices {
 
     @Override
     public List<Variate> getListVariateConstants(Integer studyId) {
-        Integer effectId = HelperEffect.getEffectidForTrialEffect(this, studyId);
-        return getListVariateConstantOrTraits(studyId, effectId);
+        //GCP-NEW SCHEMA, study is no longer an effect, just use study id
+        //Integer effectId = HelperEffect.getEffectidForTrialEffect(this, studyId);
+        //return getListVariateConstantOrTraits(studyId, studyId);
+        if (studyId > 0) {
+            return serviciosCentral.getStudyConstants(studyId);
+        } else {
+            return serviciosLocal.getStudyConstants(studyId);
+        }
     }
 
     @Override

@@ -4560,9 +4560,19 @@ public class CommonServicesImpl implements CommonServices {
     
     @Override
     public List<Factor> getFactorsByStudyId(int studyId) {
+        //will return all factors of the study and its dataset
         HashMap<String, Integer> input = new HashMap<String, Integer>();
         input.put("v_studyid", studyId);
         return utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByStudyId", input, new String[] {"v_studyid"}, 
                 new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+    }
+    
+    @Override
+    public List<Variate> getStudyConstants(int studyId) {
+        //will return the variate or constants of the study only
+        HashMap<String, Integer> input = new HashMap<String, Integer>();
+        input.put("p_studyid", studyId);
+        return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid"}, 
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
     }
 }
