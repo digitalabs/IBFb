@@ -744,7 +744,7 @@ public class HelperWorkbookReader {
             ){
             String consultaSQL = "SELECT " 
                     + "  fname.value AS fname " //fname
-                    + "  , IF(dtyperel.object_id IN (1120, 1128), 'C', 'N') AS ltype " //ltype
+                    + "  , IF(dtyperel.object_id IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype " //ltype
                     + "  , stdvar.projectprop_id AS labelid " //labelid
                     + " FROM " 
                     + "  projectprop stdvar " 
@@ -928,7 +928,7 @@ public class HelperWorkbookReader {
                 + "  level.nd_experiment_id AS OUNITID " 
                 + "  , fname.value AS FNAME " 
                 + "  , level.lvalue AS LVALUE " 
-                + "  , IF(level.dtypeid IN (1120, 1128), 'C', 'N') AS LTYPE " 
+                + "  , IF(level.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS LTYPE " 
                 + "  , level.labelid AS LABELID " 
                 + " FROM " 
                 + "  v_level level " 
@@ -1067,7 +1067,7 @@ public class HelperWorkbookReader {
                 + "  INNER JOIN nd_experiment_phenotype eph ON eph.nd_experiment_id = ep.nd_experiment_id " 
                 + "  INNER JOIN phenotype ph ON ph.phenotype_id = eph.phenotype_id AND ph.observable_id = stdvar.value " 
                 + " WHERE " 
-                + "  dtyperel.object_id NOT IN (1120, 1128) " 
+                + "  dtyperel.object_id NOT IN (1120, 1125, 1128, 1130) " 
                 + "  AND stdvar.projectprop_id IN (" + getStringValue(variates) + ") "
                 + " ORDER BY "
                 + "  eph.nd_experiment_id " + orden + ", stdvar.projectprop_id " + orden
@@ -1156,7 +1156,7 @@ public class HelperWorkbookReader {
                 + "  INNER JOIN nd_experiment_phenotype eph ON eph.nd_experiment_id = ep.nd_experiment_id " 
                 + "  INNER JOIN phenotype ph ON ph.phenotype_id = eph.phenotype_id AND ph.observable_id = stdvar.value " 
                 + " WHERE " 
-                + "  dtyperel.object_id IN (1120, 1128) " 
+                + "  dtyperel.object_id IN (1120, 1125, 1128, 1130) " 
                 + "  AND stdvar.projectprop_id IN (" + getStringValue(variates) + ") "
                 + " ORDER BY "
                 + "  eph.nd_experiment_id " + orden + ", stdvar.projectprop_id " + orden
@@ -1214,7 +1214,7 @@ public class HelperWorkbookReader {
                 + "    , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid " 
                 + "    , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid " 
                 + "    , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid " 
-                + "    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1128), 'C', 'N'), NULL)) AS dtype " 
+                + "    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype " 
                 + "    , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype " 
                 + "    , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid " 
                 + " FROM " 

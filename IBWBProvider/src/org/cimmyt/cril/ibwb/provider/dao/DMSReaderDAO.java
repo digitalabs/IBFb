@@ -395,7 +395,7 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
 
             consultaSQL = "SELECT " 
                     + "  fname.value AS FNAME " //fname
-                    + "  , IF(dtyperel.object_id IN (1120, 1128), 'C', 'N') AS LTYPE  " //ltype
+                    + "  , IF(dtyperel.object_id IN (1120, 1125, 1128, 1130), 'C', 'N') AS LTYPE  " //ltype
                     + "  , stdvar.projectprop_id AS LABELID  " //labelid
                     + " FROM " 
                     + "  projectprop stdvar " 
@@ -467,7 +467,7 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
                 + "  level.nd_experiment_id AS OUNITID " //OUNITID 
                 + "  , fname.value AS FNAME " //FNAME
                 + "  , level.lvalue AS LVALUE " //LVALUE
-                + "  , IF(level.dtypeid IN (1120, 1128), 'C', 'N') AS LTYPE " //LTYPE
+                + "  , IF(level.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS LTYPE " //LTYPE
                 + "  , level.labelid AS LABELID " //LABELID
                 + " FROM " 
                 + "  v_level level " 
