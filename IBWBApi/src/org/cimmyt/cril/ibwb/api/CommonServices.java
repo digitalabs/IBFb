@@ -3742,4 +3742,5 @@ public interface CommonServices {
     
     public Integer getStoredInId(int traitid, int scaleid, int methodid);
     public List<Factor> getFactorsByStudyId(int studyId);
+    public List<Variate> getStudyConstants(int studyId);
 }
