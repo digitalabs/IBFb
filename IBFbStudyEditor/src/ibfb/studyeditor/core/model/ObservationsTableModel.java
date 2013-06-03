@@ -109,10 +109,11 @@ public class ObservationsTableModel extends AbstractTableModel {
         int columnIndex = 0;
         // add the trial header from conditions
         for (Condition condition : workbook.getConditions()) {
-            if (condition.getProperty().toUpperCase().equals(TRIAL_INSTANCE) && condition.getScale().toUpperCase().equals(NUMBER)) {
+            String property = condition.getProperty();
+            if (Workbook.getStringWithOutBlanks(property).equals(TRIAL_INSTANCE) && condition.getScale().toUpperCase().equals(NUMBER)) {
                 headers.add(condition);
-                headerIndex.put(Workbook.getStringWithOutBlanks(condition.getProperty() + condition.getScale()), columnIndex);
-                // assisn column index to numeric header only if has a labelid
+                headerIndex.put(Workbook.getStringWithOutBlanks(property + condition.getScale()), columnIndex);
+                // assisn column index to numeric headser only if has a labelid
                 if (condition.getLabelId() != null) {
                     numericHeaderIndex.put(FACTOR_PREFIX + condition.getLabelId(), columnIndex);
                 }
