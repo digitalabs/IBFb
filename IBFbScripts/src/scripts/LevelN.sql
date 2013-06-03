@@ -22,10 +22,13 @@ BEGIN
      WHERE projectprop_id = labelidin  limit 1; 
 	
 	IF(v_storedinid = 1010 or v_storedinid = 1015) THEN
-		call getNextMinReturn('projectprop', @newppid);
-		
 		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
-		insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
+
+                IF NOT EXISTS(SELECT 1 FROM projectprop WHERE project_id = v_projectid AND type_id = v_termid AND rank = v_rankint) THEN 
+                    call getNextMinReturn('projectprop', @newppid);		call getNextMinReturn('projectprop', @newppid);
+		
+                    insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
+                END IF;
     END IF;
 	/*
 	IF(@storedinid = 1011) THEN
