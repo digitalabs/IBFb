@@ -509,7 +509,7 @@ public class HelperFactor {
             List<Factor> listEntryFactors,
             List<List<Object>> germplasmData,
             List<Integer> ndExperimentIds,
-            int index,
+            Integer index,
             Integer levelNoNdGeolocationId,
             CommonServices serviceLocal) {
 
@@ -544,7 +544,8 @@ public class HelperFactor {
             	System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
             } else {
             	ndExperimentId = ndExperimentIds.get(index++);
-            	System.out.println("saveLavelsFactorsEntrys - using previouly created ndExperimentId: "+ ndExperimentId);
+            	System.out.println("index is " + index);
+            	System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
             }            
             serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {
