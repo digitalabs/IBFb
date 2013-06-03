@@ -216,7 +216,7 @@ public class DesignsGenerator {
                                 rowToAdd[headerIndexChild] = factorLabel.getValue();
                             }
 
-                            model.addRow(rowToAdd);
+//                            model.addRow(rowToAdd);
                             otherTreatmentPlot++;
                             //increase factor level
                             factorLevel++;
@@ -224,8 +224,6 @@ public class DesignsGenerator {
 
                     }
 
-                } else {
-                    model.addRow(rowToAdd);
                 }
                 model.addRow(rowToAdd);
             }
