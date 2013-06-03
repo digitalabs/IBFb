@@ -281,6 +281,7 @@ public class HelperWorkbook {
 	                this.localServices);
 	        if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
             	allExperimentIds.addAll(ndExperimentIds);
+	        }
 	        log.info("Saving levels for entrys DONE!");
         
         }
