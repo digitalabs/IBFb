@@ -1182,7 +1182,7 @@ public class HelperWorkbook {
         int ctr = 0;
         int index = 0;
         System.out.println("COMPARE MEASUREMENTSREP AND GERMPLAMSDATA SIZE: "+ workbook.getMeasurementsRep().size() +
-        		" --- " + workbook.getGermplasmData());
+        		" --- " + workbook.getGermplasmData().size());
         for (Measurement measurement : workbook.getMeasurementsRep()) {
         	if(ctr==div) {//get next geolocatioid
         		index++;
