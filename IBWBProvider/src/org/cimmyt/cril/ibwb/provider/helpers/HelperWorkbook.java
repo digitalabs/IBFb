@@ -270,10 +270,10 @@ public class HelperWorkbook {
         System.out.println("ndExperimentIds from saveLevelsPlots: " + ndExperimentIds);
         log.info("Saving levels for plots DONE!");
         List<Integer> allExperimentIds = new ArrayList<Integer>();
-        Integer index = 0;
+        int index = 0;
         for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
             log.info("Saving levels for entrys....");
-	        HelperFactor.saveLavelsFactorsEntrys(
+            index = HelperFactor.saveLavelsFactorsEntrys(
 	                getListEntryFactors(),
 	                workbook.getGermplasmData(),
 	                ndExperimentIds,

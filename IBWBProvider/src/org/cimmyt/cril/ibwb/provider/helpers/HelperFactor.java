@@ -505,11 +505,11 @@ public class HelperFactor {
      * @param serviceLocal
      * @return
      */
-    public static void saveLavelsFactorsEntrys(
+    public static int saveLavelsFactorsEntrys(
             List<Factor> listEntryFactors,
             List<List<Object>> germplasmData,
             List<Integer> ndExperimentIds,
-            Integer index,
+            int index,
             Integer levelNoNdGeolocationId,
             CommonServices serviceLocal) {
 
@@ -593,6 +593,7 @@ public class HelperFactor {
             //levelNo--;
         }
         //return levelNo;
+        return index;
     }
 
     public static Integer saveLavelsFactorsEntrysOld(
