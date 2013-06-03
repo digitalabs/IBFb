@@ -257,6 +257,7 @@ public class HelperFactor {
             nameFactorInitial = conditionsData.get(0).getConditionName();
         }
 //        levelNoTemporal++;
+        Integer levelNo = null;
         for (Condition conditionData : conditionsData) {
             Factor factorTemp = (Factor) mapTrials.get(conditionData.getConditionName());
             /*
@@ -268,7 +269,6 @@ public class HelperFactor {
              */
             //System.out.println("Instance: " + instance + " levelNo: " + levelNo);
             log.info("Savin level for factor: " + conditionData.getConditionName() + "  with value: " + conditionData.getValue());
-            Integer levelNo = null;
             if (conditionData.getDataType().equals(NUMERIC_TYPE)) {
                 LevelN levelN = new LevelN();
                 levelN.setFactorid(factorTemp.getFactorid());
@@ -320,8 +320,8 @@ public class HelperFactor {
 
         //levelNo--;
         List<Integer> trialNdExperimentIds = new ArrayList<Integer>();
-        for (Integer levelNo : levelNos) {
-        	trialNdExperimentIds.add(serviceLocal.addNdExperiment(levelNo, 1020));
+        for (Integer alevelNo : levelNos) {
+        	trialNdExperimentIds.add(serviceLocal.addNdExperiment(alevelNo, 1020));
         }
         return trialNdExperimentIds;
          
