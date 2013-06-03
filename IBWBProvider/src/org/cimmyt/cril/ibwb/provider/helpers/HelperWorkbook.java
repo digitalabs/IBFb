@@ -266,32 +266,21 @@ public class HelperWorkbook {
         log.info("Saving levels for plots....");
         //Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
         //saveLevelsPlots(levelNo);
+        List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationIds);
+        log.info("Saving levels for plots DONE!");
         List<Integer> allExperimentIds = new ArrayList<Integer>();
+        int index = 0;
         for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
-            List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationId);
-            log.info("Saving levels for plots DONE!");
-	
-	        //Guardando levels for Entrys
-	        //Integer levelNoStockId = this.localServices.addStock();
-	        log.info("Saving levels for entrys....");
-	        //levelNo here is not needed
-	        /*
-	         levelNo = HelperFactor.saveLavelsFactorsEntrys(
-	         getListEntryFactors(),
-	         workbook.getGermplasmData(),
-	         levelNo,
-	         this.localServices);
-	         */
-	        //we now pass in the nd_experiment_id
+            log.info("Saving levels for entrys....");
 	        HelperFactor.saveLavelsFactorsEntrys(
 	                getListEntryFactors(),
 	                workbook.getGermplasmData(),
 	                ndExperimentIds,
+	                index,
 	                levelNoNdGeolocationId,
 	                this.localServices);
 	        if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
             	allExperimentIds.addAll(ndExperimentIds);
-            }
 	        log.info("Saving levels for entrys DONE!");
         
         }
@@ -1181,17 +1170,28 @@ public class HelperWorkbook {
      *
      * @param levelNo
      */
-    public List<Integer> saveLevelsPlots(Integer levelNoNdGeoLocationId) {
+    public List<Integer> saveLevelsPlots(List<Integer> levelNoNdGeoLocationIds) {
         Factor factorDeHeader = new Factor();
         List<String> listHeaders = workbook.getMeasurementHeaders();
         boolean agregado = false;
         List<Integer> ndExperimentIds = new ArrayList<Integer>();
         //for (Factor factorGroupTemp : listPlotFactors) {
+        int noOfTrials = levelNoNdGeoLocationIds.size();
+        int noOfPlots = workbook.getMeasurementsRep().size();
+        int div = noOfPlots/noOfTrials;
+        int ctr = 0;
+        int index = 0;
+        System.out.println("COMPARE MEASUREMENTSREP AND GERMPLAMSDATA SIZE: "+ workbook.getMeasurementsRep().size() +
+        		" --- " + workbook.getGermplasmData());
         for (Measurement measurement : workbook.getMeasurementsRep()) {
-            
-            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
+        	if(ctr==div) {//get next geolocatioid
+        		index++;
+        		ctr = 0;
+        	}
+        	ctr++;
+            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
             ndExperimentIds.add(levelNo);
-            
+            System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
             for (String header : listHeaders) {
                 factorDeHeader = mapPlotFactors.get(header);
 // TODO: ajusstar los nombres de los factores a la combinacion

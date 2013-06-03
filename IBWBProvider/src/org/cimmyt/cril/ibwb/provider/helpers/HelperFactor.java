@@ -321,7 +321,9 @@ public class HelperFactor {
         //levelNo--;
         List<Integer> trialNdExperimentIds = new ArrayList<Integer>();
         for (Integer alevelNo : levelNos) {
-        	trialNdExperimentIds.add(serviceLocal.addNdExperiment(alevelNo, 1020));
+        	Integer ndExperimentId = serviceLocal.addNdExperiment(alevelNo, 1020);
+        	trialNdExperimentIds.add(ndExperimentId);
+        	System.out.println("saveLavelsFactorTrials - new ndExperimentId: "+ ndExperimentId);
         }
         return trialNdExperimentIds;
          
@@ -507,11 +509,11 @@ public class HelperFactor {
             List<Factor> listEntryFactors,
             List<List<Object>> germplasmData,
             List<Integer> ndExperimentIds,
+            int index,
             Integer levelNoNdGeolocationId,
             CommonServices serviceLocal) {
 
         Factor factorTemp = new Factor();
-        int index = 0;
         boolean createNdExperiment = ndExperimentIds==null || ndExperimentIds.isEmpty();
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
@@ -533,13 +535,16 @@ public class HelperFactor {
         	
         	//we need to add new stock for every new germplasm entry values
             Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
+            System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
             //we need to add here the nd_experiment_stock relationship
             Integer ndExperimentId = null;
             if(createNdExperiment) {
             	ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
             	ndExperimentIds.add(ndExperimentId);
+            	System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
             } else {
             	ndExperimentId = ndExperimentIds.get(index++);
+            	System.out.println("saveLavelsFactorsEntrys - using previouly created ndExperimentId: "+ ndExperimentId);
             }            
             serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
             for (int i = 0; i < objectList.size(); i++) {
