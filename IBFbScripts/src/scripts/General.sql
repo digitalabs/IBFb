@@ -201,7 +201,7 @@ v_factor AS stdvar
 INNER JOIN project p ON p.project_id = stdvar.project_id
 INNER JOIN nd_experiment_project ep ON ep.project_id = p.project_id
 INNER JOIN nd_experiment exp ON exp.nd_experiment_id = ep.nd_experiment_id
-INNER JOIN nd_geolocation geo ON geo.nd_geolocation_id = exp.nd_geolocation_id
+LEFT JOIN nd_geolocation geo ON geo.nd_geolocation_id = exp.nd_geolocation_id
 LEFT JOIN projectprop pval ON pval.type_id = stdvar.varid AND pval.project_id = p.project_id AND pval.rank = stdvar.rank
 LEFT JOIN nd_geolocationprop gprop ON gprop.nd_geolocation_id = geo.nd_geolocation_id AND gprop.type_id = stdvar.varid
 LEFT JOIN nd_experimentprop eprop ON eprop.nd_experiment_id = exp.nd_experiment_id AND eprop.type_id = stdvar.varid
