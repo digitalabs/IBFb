@@ -306,8 +306,18 @@ public class HelperWorkbookRead {
         // for each factor retrieve vales form data
         for (Condition condition : workbookStudy.getStudyConditions()) {
             if (condition.getDataType().equals(DATA_TYPE_CHAR)) {
-                LevelC levelCFilter = new LevelC(false);
-                levelCFilter.setFactorid(Integer.SIZE);
+                //LevelC levelCFilter = new LevelC(false);
+                //levelCFilter.setFactorid(Integer.SIZE);
+                //GCP NEW SCHEMA
+                List<LevelC> levelCList = this.servicioApp.getLevelsCByLabelid(condition.getLabelId());
+                if (levelCList != null && levelCList.size() > 0) { //study conditions will only have 1 level
+                    condition.setValue(levelCList.get(0).getLvalue());
+                }
+            } else {
+                List<LevelN> levelNList = this.servicioApp.getLevelnByLabelid(condition.getLabelId());
+                if (levelNList != null && levelNList.size() > 0) {
+                    condition.setValue(levelNList.get(0).getLvalue());
+                }
             }
         }
     }
