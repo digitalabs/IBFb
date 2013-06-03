@@ -356,6 +356,10 @@ public class HelperWorkbookReader {
                 }
                 ounitTemp = (Integer) celdas[0];
             }
+            
+            if (ordenFactoresSalida.get("TRIAL") != null && factorLabelList.get(ordenFactoresSalida.get("TRIAL")) != null) {
+                factorLabelList.set(ordenFactoresSalida.get("TRIAL"), celdas[5]);
+            }
             factorLabelList.set(ordenFactoresSalida.get((String) celdas[1]), celdas[2]);
         }
         measurement.setFactorLabelData(factorLabelList);
@@ -930,6 +934,7 @@ public class HelperWorkbookReader {
                 + "  , level.lvalue AS LVALUE " 
                 + "  , IF(level.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS LTYPE " 
                 + "  , level.labelid AS LABELID " 
+                + "  , loc.description AS TRIAL"
                 + " FROM " 
                 + "  v_level level " 
                 + "  INNER JOIN projectprop stdvar ON stdvar.projectprop_id = level.labelid " 
@@ -938,7 +943,10 @@ public class HelperWorkbookReader {
                 + "      AND prd.subject_project_id = fname.project_id " 
                 + "  LEFT JOIN project_relationship prs ON prs.type_id = 1145 " 
                 + "      AND prs.subject_project_id = fname.project_id " 
+                + "  INNER JOIN nd_experiment exp ON exp.nd_experiment_id = level.nd_experiment_id "
+                + "  INNER JOIN nd_geolocation loc ON loc.nd_geolocation_id = exp.nd_geolocation_id "
                 + " WHERE " + condicionWhere
+                + " AND exp.type_id <> 1020 "
                 + " ORDER BY "
                 + " level.nd_experiment_id " + orden + ", level.labelid " + orden
                 ;
@@ -950,6 +958,7 @@ public class HelperWorkbookReader {
         query.addScalar("LVALUE", Hibernate.STRING);
         query.addScalar("LTYPE", Hibernate.STRING);
         query.addScalar("LABELID", Hibernate.INTEGER);
+        query.addScalar("TRIAL", Hibernate.INTEGER);
         
         List resultado = query.list();
         if(resultado == null){
