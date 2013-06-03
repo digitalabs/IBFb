@@ -391,11 +391,12 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     //new functions
-    public Integer addNdGeolocation() {
+    public Integer addNdGeolocation(String description) {
         //daniel
         Integer id = this.utilityDAO.getNextMin("nd_geolocation");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
+        params.put("description", description);
         this.utilityDAO.callStoredProcedureForUpdate("addNdGeolocation", params);
         return id;
     }

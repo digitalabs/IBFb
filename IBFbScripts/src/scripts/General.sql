@@ -85,11 +85,11 @@ end$$
 
 drop procedure if exists `addNdGeolocation`$$
 
-CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int)
+CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int, IN description_v varchar(500))
 begin
 
 /* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */
-insert into  nd_geolocation (nd_geolocation_id, description, latitude, longitude, geodetic_datum, altitude) value (nd_geolocation_id_v, '',NULL,NULL,'',NULL);
+insert into  nd_geolocation (nd_geolocation_id, description, latitude, longitude, geodetic_datum, altitude) value (nd_geolocation_id_v, description_v,NULL,NULL,'',NULL);
 
 end$$
 

@@ -275,7 +275,7 @@ public class HelperFactor {
                 if (conditionData.getConditionName().equals(nameFactorInitial)) {
                     Integer tempInstance = conditionData.getInstance();
                     levelN.setLvalue(castingToDouble(tempInstance));
-                    levelNo = serviceLocal.addNdGeolocation();
+                    levelNo = serviceLocal.addNdGeolocation(tempInstance.toString());
                     levelNos.add(levelNo);
                 } else {
                     if (conditionData.getValue() != null) {
@@ -539,6 +539,7 @@ public class HelperFactor {
             //we need to add here the nd_experiment_stock relationship
             Integer ndExperimentId = null;
             if(createNdExperiment) {
+                //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
             	ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
             	ndExperimentIds.add(ndExperimentId);
             	System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
