@@ -269,11 +269,7 @@ public class HelperWorkbook {
         List<Integer> allExperimentIds = new ArrayList<Integer>();
         for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
             List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationId);
-            if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
-            	allExperimentIds.addAll(ndExperimentIds);
-            }
-            
-	        log.info("Saving levels for plots DONE!");
+            log.info("Saving levels for plots DONE!");
 	
 	        //Guardando levels for Entrys
 	        //Integer levelNoStockId = this.localServices.addStock();
@@ -293,6 +289,9 @@ public class HelperWorkbook {
 	                ndExperimentIds,
 	                levelNoNdGeolocationId,
 	                this.localServices);
+	        if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
+            	allExperimentIds.addAll(ndExperimentIds);
+            }
 	        log.info("Saving levels for entrys DONE!");
         
         }
