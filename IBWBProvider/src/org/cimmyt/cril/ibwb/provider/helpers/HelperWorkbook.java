@@ -267,6 +267,7 @@ public class HelperWorkbook {
         //Integer levelNoNdExperimentId = this.localServices.addNdExperiment(levelNoNdGeoLocationId, 1155);
         //saveLevelsPlots(levelNo);
         List<Integer> ndExperimentIds = saveLevelsPlots(levelNoNdGeolocationIds);
+        System.out.println("ndExperimentIds from saveLevelsPlots: " + ndExperimentIds);
         log.info("Saving levels for plots DONE!");
         List<Integer> allExperimentIds = new ArrayList<Integer>();
         int index = 0;
@@ -279,12 +280,11 @@ public class HelperWorkbook {
 	                index,
 	                levelNoNdGeolocationId,
 	                this.localServices);
-	        if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
-            	allExperimentIds.addAll(ndExperimentIds);
-	        }
-	        log.info("Saving levels for entrys DONE!");
-        
         }
+        if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
+        	allExperimentIds.addAll(ndExperimentIds);
+        }
+        log.info("Saving levels for entrys DONE!");
 
         /*      move to upper part
          //Salvar levels para grupos de convinaciones de PLOT
