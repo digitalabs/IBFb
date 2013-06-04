@@ -24,11 +24,11 @@
     </bean>
     
     <bean id="dataSourceNewCentralDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralDMSDataSource">
-        <constructor-arg value="modules/ext/databasenewconfig.properties" />
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
     </bean>
     
     <bean id="dataSourceNewLocalDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBLocalDMSDataSource">
-        <constructor-arg value="modules/ext/databasenewconfig.properties" />
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
     </bean>
     
     <bean id="dataSourceCentralDMS" class="org.cimmyt.cril.ibwb.provider.datasources.IBWBCentralDMSDataSource">

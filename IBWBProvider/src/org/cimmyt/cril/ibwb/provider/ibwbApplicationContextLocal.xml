@@ -613,7 +613,7 @@
     </bean>
     
     <bean id="UtilityDAOLocal" class="org.cimmyt.cril.ibwb.provider.dao.UtilityDAO">
-        <constructor-arg value="modules/ext/databasenewconfig.properties" />
+        <constructor-arg value="modules/ext/databaseconfig.properties" />
         <property name="sessionFactory">
             <ref bean="sessionFactoryNewLocalDMS" />
         </property>
