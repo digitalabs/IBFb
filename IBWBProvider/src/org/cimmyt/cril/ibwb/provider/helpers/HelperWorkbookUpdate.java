@@ -106,7 +106,8 @@ public class HelperWorkbookUpdate {
                 this.factorEntry,
                 this.factorPlot);
         this.effectid = hceaf.getEffectid();
-        this.factorsDto = HelperFactor.getFactorsByEffectid(this.effectid, this.appServices);
+        //this.factorsDto = HelperFactor.getFactorsByEffectid(this.effectid, this.appServices);
+        this.factorsDto = appServices.getFactorsByStudyId(study.getStudyid());
 
         factorStudy = hceaf.getFactorStudy();
         factorTrial = hceaf.getFactorTrial();

@@ -1022,6 +1022,10 @@ public class HelperWorkbook {
         represtnFactors.add(listGroupAllFactors);
         
         //save dataset factors
+        for (Factor factor : this.listTrialFactors) {
+            factor.setStudyid(steffectt.getEffectid());
+            localServices.addFactor(factor);
+        }
         for (Factor factor : this.listEntryFactors) {
             factor.setStudyid(steffectt.getEffectid());
             localServices.addFactor(factor);

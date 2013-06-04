@@ -870,7 +870,8 @@ public class CommonServicesImpl implements CommonServices {
         }
         
         HashMap params = new LinkedHashMap();
-        params.put("factorIds", "'" + sb.toString() + "'");
+        //params.put("factorIds", "'" + sb.toString() + "'");
+        params.put("factorIds", sb.toString());
            
         return this.utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByFactorIds", params, new String[]{"factorIds"}, 
                 new String[]{"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
