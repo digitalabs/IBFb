@@ -8,7 +8,6 @@ IN v_project_id int)
 begin
 
 DECLARE v_nd_experiment_project_id int;
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 

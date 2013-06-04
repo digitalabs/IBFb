@@ -130,7 +130,6 @@ DECLARE v_phenotype_name varchar(50);
 DECLARE v_cvalue_id int;
 DECLARE v_nd_experiment_phenotype_id int;
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 

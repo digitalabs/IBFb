@@ -48,7 +48,6 @@ DECLARE v_projectprop_id int;
 DECLARE v_rank int;
 DECLARE v_type_id int;
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 

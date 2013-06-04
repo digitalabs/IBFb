@@ -83,7 +83,6 @@ IN v_hastype varchar(255),
 IN v_is_a int)
 begin
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 
@@ -143,7 +142,6 @@ CREATE PROCEDURE `copyMeasuredInFromCentral`(IN p_cvTermId int, IN centralSchema
 
 BEGIN
 
-  DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
   IF p_cvTermId > 0 THEN
 
@@ -184,7 +182,6 @@ iN v_tmethid int,
 IN v_scaleid int)
 begin
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 	

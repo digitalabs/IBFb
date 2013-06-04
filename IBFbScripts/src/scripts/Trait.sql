@@ -71,6 +71,6 @@ SET @mySQL := 'SELECT DISTINCT
 
   PREPARE stmt FROM @mySQL;
   EXECUTE stmt;
-    
+
 end$$
 

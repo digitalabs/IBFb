@@ -20,7 +20,6 @@ begin
 DECLARE v_projectprop_id int;
 DECLARE v_project_relationship_id int;
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 	
@@ -255,7 +254,6 @@ begin
 DECLARE v_projectprop_id int;
 DECLARE v_project_relationship_id int;
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 	
@@ -451,7 +449,6 @@ begin
 declare v_prevname varchar(50);
 declare v_postfix varchar(10);
 
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 

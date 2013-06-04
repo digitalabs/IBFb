@@ -45,7 +45,6 @@ begin
 
 DECLARE v_project_relationship_id int;
 DECLARE v_projectprop_id int;
-DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; 
 
 START TRANSACTION;
 
