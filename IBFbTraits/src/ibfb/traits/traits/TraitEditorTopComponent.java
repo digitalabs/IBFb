@@ -89,31 +89,22 @@ public final class TraitEditorTopComponent extends TopComponent {
         txtTraitId = new javax.swing.JTextField();
         txtTraitName = new javax.swing.JTextField();
         txtTraitAbbr = new javax.swing.JTextField();
-        //txtTraitAbbr.setVisible(false);
         txtTraitDesc = new javax.swing.JTextField();
-        //txtTraitDesc.setVisible(false);
         cboTnstat = new javax.swing.JComboBox();
-        //cboTnstat.setVisible(false);
         cboTraitGroup = new javax.swing.JComboBox();
         txtOntology = new javax.swing.JTextField();
         cboType = new javax.swing.JComboBox();
-        //cboType.setVisible(false);
         lblId = new javax.swing.JLabel();
         lblTraitid = new javax.swing.JLabel();
         lblTraitname = new javax.swing.JLabel();
         lblTraitAbbr = new javax.swing.JLabel();
-        //lblTraitAbbr.setVisible(false);
         lblDescription = new javax.swing.JLabel();
-        //lblDescription.setVisible(false);
         lblTnstat = new javax.swing.JLabel();
-        //lblTnstat.setVisible(false);
         lblGroup = new javax.swing.JLabel();
         lblOntology = new javax.swing.JLabel();
         lblType = new javax.swing.JLabel();
-        //lblType.setVisible(false);
         btnBrowse = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jPanel1.setVisible(false); //removed by Dan J due to refactoring
         lblMethod = new javax.swing.JLabel();
         cboMethod = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -122,7 +113,6 @@ public final class TraitEditorTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMeasuredIn = new javax.swing.JTable();
         btnSetAssStandarScale = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(mnuSetAsStandarScale, org.openide.util.NbBundle.getMessage(TraitEditorTopComponent.class, "TraitEditorTopComponent.mnuSetAsStandarScale.text")); // NOI18N
         mnuSetAsStandarScale.addActionListener(new java.awt.event.ActionListener() {
@@ -249,16 +239,6 @@ public final class TraitEditorTopComponent extends TopComponent {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
         );
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ibfb/traits/core/images/save.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(btnSave, org.openide.util.NbBundle.getMessage(TraitEditorTopComponent.class, "TraitEditorTopComponent.btnSave.text")); // NOI18N
-        btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,9 +246,22 @@ public final class TraitEditorTopComponent extends TopComponent {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTraitname)
+                            .addComponent(lblTraitAbbr)
+                            .addComponent(lblDescription)
+                            .addComponent(lblTnstat))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTraitDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                            .addComponent(txtTraitName, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTraitAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cboTraitGroup, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cboTnstat, javax.swing.GroupLayout.Alignment.LEADING, 0, 183, Short.MAX_VALUE)
+                                .addComponent(cboType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -279,39 +272,16 @@ public final class TraitEditorTopComponent extends TopComponent {
                                 .addComponent(lblTraitid)
                                 .addGap(36, 36, 36)
                                 .addComponent(txtTraitId, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTraitname)
-
-                                    //.addComponent(lblTraitAbbr)
-                                    .addComponent(lblDescription)
-                                    //.addComponent(lblTnstat)
-
-                                )
-                                //.addGap(36, 36, 36)
-                                    .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTraitDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-                                    .addComponent(txtTraitName, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    //.addComponent(txtTraitAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cboTraitGroup, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        //.addComponent(cboTnstat, javax.swing.GroupLayout.Alignment.LEADING, 0, 183, Short.MAX_VALUE)
-                                        //.addComponent(cboType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    ))))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblGroup)
-                            //.addComponent(lblType)
+                            .addComponent(lblType)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblOntology)
                                 .addGap(55, 55, 55)
                                 .addComponent(txtOntology, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnSave))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,54 +298,36 @@ public final class TraitEditorTopComponent extends TopComponent {
                     .addComponent(txtTraitName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTraitname))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                /*.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTraitAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTraitAbbr)
-                    )
+                    .addComponent(lblTraitAbbr))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                */
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTraitDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDescription))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    /*
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboTnstat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTnstat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                */
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGroup)
                     .addComponent(cboTraitGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    /*
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblType))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                */
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtOntology, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblOntology)
                     .addComponent(btnBrowse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSave)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
-        /*
-        txtTraitAbbr.setVisible(false);
-        txtTraitDesc.setVisible(false);
-        cboTnstat.setVisible(false);
-        cboType.setVisible(false);
-        lblTraitAbbr.setVisible(false);
-        lblDescription.setVisible(false);
-        lblTnstat.setVisible(false);
-        lblType.setVisible(false);
-        */
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
@@ -387,10 +339,6 @@ public final class TraitEditorTopComponent extends TopComponent {
 
 
     }//GEN-LAST:event_btnBrowseActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        saveOrUpdateTrait();
-    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void mnuSetAsStandarScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSetAsStandarScaleActionPerformed
         setCurrentItemAsStandardScale();
@@ -407,7 +355,6 @@ public final class TraitEditorTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddScaleMethod;
     private javax.swing.JButton btnBrowse;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSetAssStandarScale;
     private javax.swing.JComboBox cboMethod;
     private javax.swing.JComboBox cboScale;
@@ -471,7 +418,7 @@ public final class TraitEditorTopComponent extends TopComponent {
 
     /**
      * Return current instance of TraitEditorTopComponent using current Traits object
-     * @param scales Scale object to check
+     * @param trait Trait object to check
      * @return TraitEditorTopComponent instance if found or null if not found
      */
     public static TraitEditorTopComponent getTraitEditorTopComponent(Traits trait) {
@@ -529,7 +476,7 @@ public final class TraitEditorTopComponent extends TopComponent {
             cboScale.setEnabled(editable);
             cboType.setEnabled(editable);
             btnAddScaleMethod.setEnabled(editable);
-            btnSave.setEnabled(editable);
+            
         }
     }
 
