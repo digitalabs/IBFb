@@ -475,7 +475,7 @@ START TRANSACTION;
 	( select project_id 
 	  from project_relationship 
 	  where type_id = 1150
-	  and subject_project_id = v_studyid
+	  and object_project_id = v_studyid
 	);	
 	
 
