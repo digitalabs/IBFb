@@ -1592,4 +1592,8 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Factor> getFactorsByStudyId(int studyId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+	@Override
+	public Obsunit getStudyObsunit(Integer studyId) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }
