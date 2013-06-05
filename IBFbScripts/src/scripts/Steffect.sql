@@ -40,7 +40,7 @@ drop procedure if exists addSteffect$$
 CREATE PROCEDURE addSteffect(
 IN v_effectid int,
 IN v_studyid int,
-IN v_effectname varchar(50))
+IN v_effectname varchar(255))
 begin
 
 DECLARE v_project_relationship_id int;

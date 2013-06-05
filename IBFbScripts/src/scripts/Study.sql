@@ -4,7 +4,7 @@ drop procedure if exists `addStudy`$$
 
 CREATE PROCEDURE `addStudy`(
 IN v_studyid int,
-IN v_sname varchar(50), 
+IN v_sname varchar(255), 
 IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
@@ -238,7 +238,7 @@ drop procedure if exists `updateStudy`$$
 
 CREATE PROCEDURE `updateStudy`(
 IN v_studyid int,
-IN v_sname varchar(50), 
+IN v_sname varchar(255), 
 IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
@@ -373,7 +373,7 @@ drop procedure if exists `getStudy`$$
 
 CREATE PROCEDURE `getStudy`(
 IN v_studyid int,
-IN v_sname varchar(50), 
+IN v_sname varchar(255), 
 IN v_pmkey int,
 IN v_title varchar(255), 
 IN v_objectiv varchar(255),
