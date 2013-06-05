@@ -154,7 +154,7 @@ BEGIN
         pp.projectprop_id "
       ;
 
-    IF(v_islocal = 1) THEN
+    IF(v_isLocal = 1) THEN
         SET @sql = CONCAT(@sql,"ORDER BY variatid DESC");
     ELSE
         SET @sql = CONCAT(@sql,"ORDER BY variatid ASC");
