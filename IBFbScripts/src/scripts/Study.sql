@@ -468,6 +468,16 @@ START TRANSACTION;
 	update project
 	set name = CONCAT(v_prevname,'#',v_postfix)
 	where project_id = v_studyid;
+	
+	update project
+	set name = CONCAT(name,'#',v_postfix)
+	where project_id in 
+	( select project_id 
+	  from project_relationship 
+	  where type_id = 1150
+	  and subject_project_id = v_studyid
+	);	
+	
 
 COMMIT;
 
