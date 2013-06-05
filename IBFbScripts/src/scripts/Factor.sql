@@ -253,10 +253,10 @@ end$$
 
 drop procedure if EXISTS getFactorsByStudyId$$
 
-CREATE PROCEDURE getFactorsByStudyId(IN v_studyid int)
+CREATE PROCEDURE getFactorsByStudyId(IN v_studyid int, IN v_islocal int)
 BEGIN
 
-    SELECT DISTINCT
+    SET @sql := "SELECT DISTINCT
       f.projectprop_id AS labelid
       , f.project_id AS studyid
       , fname.value AS fname
@@ -274,6 +274,15 @@ BEGIN
       INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210
       INNER JOIN project_relationship pr ON pr.type_id = 1150 AND (f.project_id = pr.subject_project_id OR f.project_id = pr.object_project_id) 
     WHERE
-      pr.object_project_id = v_studyid
-    ;
+      pr.object_project_id = ? ";
+    
+    IF(v_islocal = 1) THEN
+            SET @sql = CONCAT(@sql,"ORDER BY labelid DESC");
+    ELSE
+            SET @sql = CONCAT(@sql,"ORDER BY labelid ASC");
+    END IF;
+
+    PREPARE stmt FROM @sql;
+    SET @studyid = v_studyid;
+    EXECUTE stmt USING @studyid;
 end$$ 
