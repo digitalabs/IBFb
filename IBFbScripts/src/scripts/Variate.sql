@@ -96,32 +96,43 @@ end$$
 
 DROP PROCEDURE IF EXISTS `getVarieteFromVeffects`$$
 
-CREATE PROCEDURE `getVarieteFromVeffects`(IN p_represno int)
+CREATE PROCEDURE `getVarieteFromVeffects`(IN p_represno int, IN v_isLocal int)
 
 BEGIN
 
-  SELECT
-    pp.projectprop_id AS variatid
-    , pr.object_project_id AS studyid
-    , term.value AS vname
-    , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
-    , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
-    , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid
-    , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype
-    , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
-    , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
-  FROM
-    projectprop pp
-    INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
-    INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
-    LEFT JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
-    INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
-  WHERE
-    pp.type_id = 1070 
-    AND pp.project_id = p_represno
-  GROUP BY
-    pp.projectprop_id
+  SET @sql := "SELECT
+        pp.projectprop_id AS variatid
+        , pr.object_project_id AS studyid
+        , term.value AS vname
+        , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
+        , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
+        , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid
+        , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype
+        , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
+        , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
+        FROM
+        projectprop pp
+        INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
+        INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
+        LEFT JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
+        INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
+        WHERE
+        pp.type_id = 1070 
+        AND pp.project_id = ?
+        GROUP BY
+        pp.projectprop_id "
   ;
+
+    
+    IF(v_isLocal = 1) THEN
+        SET @sql = CONCAT(@sql,"ORDER BY variatid DESC");
+    ELSE
+        SET @sql = CONCAT(@sql,"ORDER BY variatid ASC");
+    END IF;
+
+    PREPARE stmt FROM @sql;
+    SET @effectid = p_represno;
+    EXECUTE stmt USING @effectid;
 
 END$$
 
@@ -135,7 +146,7 @@ BEGIN
   SET @sql := "SELECT
         pp.projectprop_id AS variatid
         , pp.project_id AS studyid
-        , term.value AS vname
+        , term.value AS vnamefr
         , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
         , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
         , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid
