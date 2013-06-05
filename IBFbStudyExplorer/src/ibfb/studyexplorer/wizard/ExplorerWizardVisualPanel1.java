@@ -121,7 +121,7 @@ public final class ExplorerWizardVisualPanel1 extends JPanel {
         study.setTitle(studyDto.getTitle());
         study.setObjective(studyDto.getObjectiv());
         study.setEndDate(ConvertUtils.getIntegerAsDate(studyDto.getEdate()));
-        study.setStarDate(ConvertUtils.getIntegerAsDate(studyDto.getEdate()));
+        study.setStarDate(ConvertUtils.getIntegerAsDate(studyDto.getSdate()));
         study.setPmkey(studyDto.getPmkey().toString());
         study.setShierarchy(studyDto.getShierarchy());
         study.setStudyType(studyDto.getStype());
