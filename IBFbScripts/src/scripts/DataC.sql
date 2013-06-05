@@ -142,6 +142,7 @@ and pp.projectprop_id = v_variatid;
     
 IF(v_phenotype_id IS NULL) THEN
 
+   IF (v_dvalue IS NOT NULL) THEN
 	CALL getNextMinReturn('phenotype',v_phenotype_id);
 	
 	select value into v_phenotype_name
@@ -168,6 +169,8 @@ IF(v_phenotype_id IS NULL) THEN
 	
 	insert into nd_experiment_phenotype(nd_experiment_phenotype_id,nd_experiment_id,phenotype_id)
 	values(v_nd_experiment_phenotype_id,v_ounitid,v_phenotype_id);
+
+    END IF;
 
 ELSE 
 
