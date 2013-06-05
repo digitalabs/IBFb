@@ -106,9 +106,10 @@ public final class StudyExplorerTopComponent extends TopComponent implements Exp
             if (selected.isEmpty()) {
                 studyList.add(castStudy(studyDto));
             } else {
-                if (i < selected.length() && selected.charAt(i) == '1') {
+                //if (i < selected.length() && selected.charAt(i) =='1') {
+             
                     studyList.add(castStudy(studyDto));
-                }
+              
 
                 i++;
 
