@@ -4576,7 +4576,8 @@ public class CommonServicesImpl implements CommonServices {
         //will return the variate or constants of the study only
         HashMap<String, Integer> input = new HashMap<String, Integer>();
         input.put("p_studyid", studyId);
-        return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid"}, 
+        input.put("v_isLocal", isLocal()? 1 : 0);
+        return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid", "v_isLocal"}, 
                 new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
     }
 }
