@@ -2031,6 +2031,13 @@ public interface AppServices {
      * @return Obsunit
      */
     public List<Obsunit> getObsunitListByStudyTrials(final Integer studyId);
+    
+    /**
+     * Return Obsunit object based on the studyid
+     * @param studyId
+     * @return Obsunit
+     */
+    public Obsunit getStudyObsunit(final Integer studyId);
 
     /**
      * Gets a list of observations unit for a effect id

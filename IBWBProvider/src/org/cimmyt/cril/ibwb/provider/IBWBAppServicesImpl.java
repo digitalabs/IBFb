@@ -3148,6 +3148,24 @@ public class IBWBAppServicesImpl implements AppServices {
         }
         return services.getObsunitListByEffectid(effectId);
     }
+    
+    /**
+     * Gets observation unit for study id
+     *
+     * @param studyId Study Id to search
+     * @param effectId Effect Id to search
+     * @return List of observations units or empty list
+     */
+    @Override
+    public Obsunit getStudyObsunit(final Integer studyId) {
+        CommonServices services = null;
+        if (studyId.intValue() < 0) {
+            services = serviciosLocal;
+        } else {
+            services = serviciosCentral;
+        }
+        return services.getStudyObsunit(studyId);
+    }
 
     /**
      * Return a list of grouping factors by study id

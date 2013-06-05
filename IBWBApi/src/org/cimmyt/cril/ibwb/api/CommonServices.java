@@ -1933,6 +1933,15 @@ public interface CommonServices {
      * @return List of observations units or empty list
      */
     public List<Obsunit> getObsunitListByEffectid(final Integer effectId);
+    
+    
+    /**
+     * Gets observation unit created for the study
+     *
+     * @param studyId Study Id to search
+     * @return Observation unit or null
+     */
+    public Obsunit getStudyObsunit(final Integer studyId);
 
     //-----------------------------------Oindex---------------------------
     /**

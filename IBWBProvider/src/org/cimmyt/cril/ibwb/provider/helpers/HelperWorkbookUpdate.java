@@ -48,6 +48,7 @@ public class HelperWorkbookUpdate {
     private List<Variate> variatesDtoConstants = new ArrayList<Variate>();
     private List<Obsunit> obsUnitList = new ArrayList<Obsunit>();
     private List<Obsunit> obsUnitListTrials = new ArrayList<Obsunit>();
+    private Obsunit studyObsunit = new Obsunit();
     private Integer effectid;
     public Factor factorStudy = new Factor();
     public Factor factorTrial = new Factor();
@@ -84,6 +85,7 @@ public class HelperWorkbookUpdate {
         saveOrUpdateLavelsFactorTrials(workbook.getConditionsData());
         readConstants();
         readObsunitsTrials();
+        readObsunitStudy();
         saveOrUpdateDataConstatnts(workbook.getConstantsData());
         readObsunitsMeasurement();
         saveOrUpdateVariates();
@@ -147,6 +149,10 @@ public class HelperWorkbookUpdate {
 
     private void readObsunitsTrials() {
         this.obsUnitListTrials = this.appServices.getObsunitListByStudyTrials(study.getStudyid());
+    }
+    
+    private void readObsunitStudy() {
+    	this.studyObsunit = this.appServices.getStudyObsunit(study.getStudyid());
     }
 
     private void readObsunitsMeasurement() {
@@ -322,7 +328,7 @@ public class HelperWorkbookUpdate {
                 } else {
                     DataN dataN = new DataN();
                     DataNPK dataNPK = new DataNPK();
-                    dataNPK.setOunitid(this.obsUnitListTrials.get(instance).getOunitid());
+                    dataNPK.setOunitid(this.studyObsunit.getOunitid());
                     dataNPK.setVariatid(variateTemp.getVariatid());
                     dataN.setDataNPK(dataNPK);
                     dataN.setDvalue(HelperFactor.castingToDouble(constant.getValue()));
@@ -339,7 +345,7 @@ public class HelperWorkbookUpdate {
                 } else {
                     DataC dataC = new DataC();
                     DataCPK dataCPK = new DataCPK();
-                    dataCPK.setOunitid(this.obsUnitListTrials.get(instance).getOunitid());
+                    dataCPK.setOunitid(this.studyObsunit.getOunitid());
                     dataCPK.setVariatid(variateTemp.getVariatid());
                     dataC.setDataCPK(dataCPK);
                     String valueToAdd = HelperFactor.castingToString(constant.getValue());

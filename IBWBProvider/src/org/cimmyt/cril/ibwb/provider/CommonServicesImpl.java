@@ -1769,6 +1769,20 @@ public class CommonServicesImpl implements CommonServices {
                 new String[]{"effectid", "ounitid"});
         //getObsunitListByEffectid
     }
+    
+    /**
+     * Gets observation unit created for the study
+     *
+     * @param studyId Study Id to search
+     * @return Observation unit or null
+     */
+    @Override
+    public Obsunit getStudyObsunit(final Integer studyId) {//new
+    	HashMap params = new HashMap();
+    	params.put("studyId", studyId);
+        return this.utilityDAO.callStoredProcedureForObject(new Obsunit(), "getStudyObsunit", params,
+                new String[]{"effectid", "ounitid"});
+    }
 //-----------------------------------Oindex---------------------------
 
     @SuppressWarnings({"rawtypes", "unchecked"})
