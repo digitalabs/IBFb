@@ -3714,8 +3714,9 @@ public class CommonServicesImpl implements CommonServices {
         //return variateDAO.getVarieteFromVeffects(represenoId);
         HashMap params = new HashMap();
         params.put("p_represno", represenoId);
+        params.put("v_isLocal", isLocal()? 1 : 0);
         return this.utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromVeffects", params,
-                new String[]{"p_represno"},
+                new String[]{"p_represno", "v_isLocal"},
                 new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
 
     }
