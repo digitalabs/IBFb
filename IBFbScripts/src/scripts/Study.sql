@@ -447,7 +447,7 @@ CREATE PROCEDURE `deleteStudy`(IN v_studyid int)
 begin
 	
 declare v_prevname varchar(50);
-declare v_postfix varchar(10);
+declare v_postfix varchar(50);
 
 START TRANSACTION;
 
