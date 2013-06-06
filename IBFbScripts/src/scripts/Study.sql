@@ -449,7 +449,6 @@ begin
 declare v_prevname varchar(50);
 declare v_postfix varchar(10);
 
-
 START TRANSACTION;
 
 	update projectprop pp
@@ -461,9 +460,7 @@ START TRANSACTION;
 	from project 
 	where project_id = v_studyid;
 	
-	select count(1)+1 into v_postfix 
-	from project p
-	where SUBSTRING_INDEX(name,'#',1) = v_prevname; 
+	select UUID() into v_postfix; 
 
 	update project
 	set name = CONCAT(v_prevname,'#',v_postfix)
