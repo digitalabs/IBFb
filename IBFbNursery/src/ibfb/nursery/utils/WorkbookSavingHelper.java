@@ -46,6 +46,9 @@ public class WorkbookSavingHelper {
         // study conditions
         savingWorkbook.setStudyConditions(getStudyConditions(nurseryEditor));
         
+        //GCP- nursery rev4 template issue, can not open nursery created bec it's missing occ at the study level
+        savingWorkbook.getStudyConditions().addAll(getConditionTrialList());
+        
         savingWorkbook.setConditions(getConditionTrialList());
 
         // assign studyConditions data
