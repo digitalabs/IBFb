@@ -830,7 +830,10 @@ public class HelperWorkbook {
              */
             if (!measuredinList.isEmpty() && measuredinList.get(0)!= null 
                     && ArrayUtils.contains(ChadoSchemaUtil.VARIATE_TYPES, measuredinList.get(0).getStoredinid())) {
-                measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
+                // copy if from central db
+                if (measuredinList.get(0).getMeasuredinid() > 0){
+                    measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
+                }
                 measuredin = measuredinList.get(0);
             } 
                         
