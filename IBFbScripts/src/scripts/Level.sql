@@ -25,7 +25,7 @@ ELSE
       labelid
       , factorid
       , levelno
-      , IF (lvalue IS NULL, IF(isnumeric, '0', '-'), lvalue) AS lvalue
+      , IF (lvalue IS NULL, '', lvalue) AS lvalue
     FROM 
        v_level
     WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
