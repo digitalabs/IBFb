@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
@@ -765,7 +766,7 @@ public class HelperWorkbook {
             TmsMethod tmsMethod;
             Scales scales;
             Traits traits = new Traits();
-            Measuredin measuredin;
+            Measuredin measuredin = null;
             Variate variate;
             Dmsattr dmsattr;
 
@@ -820,10 +821,21 @@ public class HelperWorkbook {
             measuredinFilter.setTmethid(tmsMethod.getTmethid());
             measuredinFilter.setStoredinid(traits.getTid());
             measuredinFilter.setName(constant.getConstantName());
-            List<Measuredin> measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
-            if (!measuredinList.isEmpty()) {
+            List<Measuredin> measuredinList = servicioApp.getListMeasuredinOld(measuredinFilter, 0, 0, false);
+            
+            /*
+             * GCP: do not copy standard variables from central db right away.
+             * Check first if "stored in" is variate type (1043, 1048). If variate type,
+             * copy standard variable from central. Else, create a new one standard variable.
+             */
+            if (!measuredinList.isEmpty() && measuredinList.get(0)!= null 
+                    && ArrayUtils.contains(ChadoSchemaUtil.VARIATE_TYPES, measuredinList.get(0).getStoredinid())) {
+                measuredinList = servicioApp.getListMeasuredin(measuredinFilter, 0, 0, false);
                 measuredin = measuredinList.get(0);
-            } else {
+            } 
+                        
+            // insert new standard variable, if not found from central db or if found but "stored in" is not a variate
+            if (measuredin == null){
                 measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
