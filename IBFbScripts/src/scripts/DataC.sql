@@ -81,7 +81,7 @@ begin
 IF iscentral = 1 then
 	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p
-	inner join projectprop pp on pp.value = observable_id 
+	inner join projectprop pp on pp.value = observable_id and pp.type_id = 1070
 	and exists
 	(
 	select 1
@@ -91,14 +91,16 @@ IF iscentral = 1 then
 	where p.observable_id = cvt1.cvterm_id
 	and cvt3.cvterm_id = 1120
 	)
-	INNER JOIN projectprop label ON label.rank = pp.rank and label.project_id = pp.project_id and pp.type_id = 1070 and label.type_id in(1043, 1048) and label.projectprop_id = paramvariatid
+	INNER JOIN projectprop label ON label.rank = pp.rank and label.project_id = pp.project_id and label.type_id in(1043, 1048)
 	inner join nd_experiment_phenotype nep on p.phenotype_id = nep.phenotype_id
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id and pp.project_id = nexp.project_id
+        where
+         pp.projectprop_id = paramvariatid
 	order by ounitid asc;
 else
 	select nep.nd_experiment_id as ounitid, pp.projectprop_id as variatid, p.value as dvalue
 	from phenotype p
-	inner join projectprop pp on pp.value = observable_id 
+	inner join projectprop pp on pp.value = observable_id and pp.type_id = 1070
 	and exists
 	(
 	select 1
@@ -108,9 +110,11 @@ else
 	where p.observable_id = cvt1.cvterm_id
 	and cvt3.cvterm_id = 1120
 	)
-	INNER JOIN projectprop label ON label.rank = pp.rank and label.project_id = pp.project_id and pp.type_id = 1070 and label.type_id in(1043, 1048) and label.projectprop_id = paramvariatid
+	INNER JOIN projectprop label ON label.rank = pp.rank and label.project_id = pp.project_id and label.type_id in(1043, 1048) 
 	inner join nd_experiment_phenotype nep on p.phenotype_id = nep.phenotype_id
 	inner join nd_experiment_project nexp on nexp.nd_experiment_id = nep.nd_experiment_id and pp.project_id = nexp.project_id
+        where
+            pp.projectprop_id = paramvariatid
 	order by ounitid desc;
 	
 	

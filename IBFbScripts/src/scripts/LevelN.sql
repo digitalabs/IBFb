@@ -25,7 +25,7 @@ BEGIN
 		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 
                 IF NOT EXISTS(SELECT 1 FROM projectprop WHERE project_id = v_projectid AND type_id = v_termid AND rank = v_rankint) THEN 
-                    call getNextMinReturn('projectprop', @newppid);		call getNextMinReturn('projectprop', @newppid);
+                    call getNextMinReturn('projectprop', @newppid);		
 		
                     insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
                 END IF;
