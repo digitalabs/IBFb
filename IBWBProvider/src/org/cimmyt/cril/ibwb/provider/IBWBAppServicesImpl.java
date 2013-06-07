@@ -949,9 +949,14 @@ public class IBWBAppServicesImpl implements AppServices {
 
     @Override
     public List<Measuredin> getListMeasuredinOld(Measuredin filter, int start, int pageSize, boolean paged) {
-        List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
-        measuredins.addAll(serviciosLocal.getListMeasuredin(filter, start, pageSize, paged));
-        return measuredins;
+//        List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
+//        measuredins.addAll(serviciosLocal.getListMeasuredin(filter, start, pageSize, paged));
+//        return measuredins;
+         List<Measuredin> measuredins = serviciosLocal.getListMeasuredin(filter, start, pageSize, paged);
+         if (measuredins == null){
+             measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
+         }
+         return measuredins;
     }
   
     //NEW SCHEMA
