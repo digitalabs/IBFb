@@ -778,6 +778,16 @@ public interface AppServices {
      * @param tamanioPagina page size
      * @return List
      */
+    public List<Measuredin> getListMeasuredinOld(Measuredin measuredinFilter, int start, int pageSize, boolean paged);
+
+    /**
+     * Gets a list of Objects for pagination
+     *
+     * @param measuredinFiltro	The filter object
+     * @param inicio initial record
+     * @param tamanioPagina page size
+     * @return List
+     */
     public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged);
 
     /**
