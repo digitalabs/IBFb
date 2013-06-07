@@ -43,7 +43,22 @@ public class ChadoSchemaUtil {
 //    
 //    public static final String COLUMN_IN_LAYOUT = "COLUMNINLAYOUT";
 //    public static final String COLUMN_IN_LAYOUT_NUMBER = "COLUMNINLAYOUTNUMBER";
-//    
+//  
+    public static final int STUDY_VAR_TYPE = 1010;
+    public static final int DATASET_VAR_TYPE = 1015;
+    public static final int TRIAL_ENVT_VAR_TYPE = 1020;
+    public static final int TRIAL_DESIGN_VAR_TYPE = 1030;
+    public static final int GERMPLASM_VAR_TYPE = 1040;
+    public static final int GERMPLASM_ENTRY_NUMBER_VAR_TYPE = 1041;
+    public static final int GERMPLASM_GID_VAR_TYPE = 1042;
+    public static final int GERMPLASM_DESIG_VAR_TYPE = 1046;
+    public static final int GERMPLASM_ENTRY_CODE_VAR_TYPE = 1047;
+    
+    public static final int OBSERVATION_VARIATE_TYPE = 1043;
+    public static final int CATEGORICAL_VARIATE_TYPE = 1048;
+    
+    public static final int DEFAULT_TRAIT_GROUP = 1050;
+    
     public static final String[] TRIAL_ENVT_PROPS = {
         Workbook.TRIAL_INSTANCE, Workbook.NURSERY
     };
@@ -67,19 +82,11 @@ public class ChadoSchemaUtil {
     	Workbook.GERMPLASM_ENTRY, Workbook.GERMPLASM_ID, Workbook.GERMPLASM_ENTRY_CODE, Workbook.GERMPLASM_ENTRY_NUMBER, Workbook.GERMPLASM_ENTRY_NESTED_NUMBER,
         Workbook.GERMPLASM_ID_DBCV, Workbook.GERMPLASM_ID_DBID
     };
-    public static final int STUDY_VAR_TYPE = 1010;
-    public static final int DATASET_VAR_TYPE = 1015;
-    public static final int TRIAL_ENVT_VAR_TYPE = 1020;
-    public static final int TRIAL_DESIGN_VAR_TYPE = 1030;
-    public static final int GERMPLASM_VAR_TYPE = 1040;
-    public static final int GERMPLASM_ENTRY_NUMBER_VAR_TYPE = 1041;
-    public static final int GERMPLASM_GID_VAR_TYPE = 1042;
-    public static final int GERMPLASM_DESIG_VAR_TYPE = 1046;
-    public static final int GERMPLASM_ENTRY_CODE_VAR_TYPE = 1047;
-    public static final int OBSERVATION_VARIATE_TYPE = 1043;
     
-    public static final int DEFAULT_TRAIT_GROUP = 1050;
-    
+    public static final int[] VARIATE_TYPES = {
+        CATEGORICAL_VARIATE_TYPE, OBSERVATION_VARIATE_TYPE
+    };
+
 //    private static final int INIT_VAR_TYPE = -1;
     /**
      * Get stored in variable type from combination of property and scale.
