@@ -1592,8 +1592,14 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Factor> getFactorsByStudyId(int studyId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-	@Override
-	public Obsunit getStudyObsunit(Integer studyId) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+    
+    @Override
+    public Obsunit getStudyObsunit(Integer studyId) {
+            throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Measuredin> getListMeasuredinOld(Measuredin measuredinFilter, int start, int pageSize, boolean paged) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
