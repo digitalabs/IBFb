@@ -26,6 +26,7 @@ set idnew = @c1;
 	
 end$$
 
+
 drop procedure if exists `addCvterm`$$
 
 CREATE PROCEDURE `addCvterm`(IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500))
