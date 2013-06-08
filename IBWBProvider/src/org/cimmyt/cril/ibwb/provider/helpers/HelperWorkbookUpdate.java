@@ -507,7 +507,8 @@ public class HelperWorkbookUpdate {
                 if (!measuredinList.isEmpty()) {
                     measuredin = measuredinList.get(0);
                 } else {
-                    measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(), variateDomain.getDataType());
+                    measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,
+                            variateDomain.getVariateName(), variateDomain.getDescription(), variateDomain.getDataType());
                     //GCP 4122
                     measuredin.setName(variateDomain.getVariateName());
                     measuredin.setStoredinid(1043); //???

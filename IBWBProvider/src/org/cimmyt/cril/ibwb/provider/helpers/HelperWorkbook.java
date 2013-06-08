@@ -463,7 +463,8 @@ public class HelperWorkbook {
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,
+                        condition.getConditionName(), condition.getDescription(), condition.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.STUDY_VAR_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -584,7 +585,8 @@ public class HelperWorkbook {
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,condition.getConditionName(),condition.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,
+                        condition.getConditionName(), condition.getDescription(), condition.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.TRIAL_ENVT_VAR_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -702,7 +704,8 @@ public class HelperWorkbook {
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,factorDomain.getFactorName(),factorDomain.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,
+                        factorDomain.getFactorName(), factorDomain.getDescription(), factorDomain.getDataType());
                 measuredin.setStoredinid(storedInType); 
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -839,7 +842,8 @@ public class HelperWorkbook {
                         
             // insert new standard variable, if not found from central db or if found but "stored in" is not a variate
             if (measuredin == null){
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,constant.getConstantName(), constant.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod, 
+                        constant.getConstantName(), constant.getDescription(), constant.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
@@ -942,7 +946,8 @@ public class HelperWorkbook {
             if (!measuredinList.isEmpty()) {
                 measuredin = measuredinList.get(0);
             } else {
-                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,variateDomain.getVariateName(),variateDomain.getDataType());
+                measuredin = ConverterDomainToDTO.getMeasuredin(traits, scales, scales.getScaleid(), tmsMethod,
+                        variateDomain.getVariateName(), variateDomain.getDescription(), variateDomain.getDataType());
                 measuredin.setStoredinid(ChadoSchemaUtil.OBSERVATION_VARIATE_TYPE);
                 traits.setTid(measuredin.getStoredinid());
                 localServices.addMeasuredin(measuredin);
