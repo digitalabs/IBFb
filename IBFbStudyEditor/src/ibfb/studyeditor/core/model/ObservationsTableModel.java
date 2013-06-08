@@ -33,8 +33,10 @@ public class ObservationsTableModel extends AbstractTableModel {
     public static final String PLOT = Workbook.FIELD_PLOT_NESTED_NUMBER;
     public static final String PLOT_NESTED = Workbook.FIELD_PLOT;
     public static final String PLOTNUMBER = Workbook.FIELD_PLOT_NUMBER;
-    public static final String REPLICATION = Workbook.REPLICATION_FACTOR;
-    public static final String BLOCK = Workbook.BLOCKING_FACTOR;
+    public static final String REPLICATION = Workbook.REPLICATION_NUMBER;
+    public static final String REPLICATION_FACTOR = Workbook.REPLICATION_FACTOR_NUMBER;
+    public static final String BLOCK = Workbook.BLOCK_NUMBER;
+    public static final String BLOCKING_FACTOR = Workbook.BLOCKING_FACTOR_NUMBER;
     public static final String BLOCK_NESTED = Workbook.BLOCKING_FACTOR_NESTED_NUMBER;
     public static final String ROW = Workbook.ROW_IN_LAYOUT_NUMBER;
     public static final String COL = Workbook.COLUMN_IN_LAYOUT_NUMBER;
