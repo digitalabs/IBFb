@@ -2467,6 +2467,9 @@ public class CommonServicesImpl implements CommonServices {
         		study.setShierarchy(-1);//workaround        		
         	}
             Integer id = this.utilityDAO.getNextMin("project");
+            if(id.intValue() == -1) {
+            	id = -2;//workaround
+            }
             study.setStudyid(id);
             this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy",
                     "studyid", "sname", "pmkey", "title", "objectiv",
