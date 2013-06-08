@@ -67,12 +67,12 @@ public class ChadoSchemaUtil {
     };
     
     public static final String[] TRIAL_DESIGN_PROPS = {
-        Workbook.FIELD_PLOT, Workbook.REPLICATION_FACTOR, Workbook.BLOCKING_FACTOR
+        Workbook.FIELD_PLOT, Workbook.REPLICATION_FACTOR, Workbook.BLOCKING_FACTOR, Workbook.REPLICATION,  Workbook.BLOCK
     };
     public static final String[] TRIAL_DESIGN_PROPS_SCALES = {
-        Workbook.FIELD_PLOT_NUMBER, Workbook.FIELD_PLOT_NESTED_NUMBER, Workbook.REPLICATION,  
-        Workbook.REPLICATION_FACTOR_NUMBER, Workbook.BLOCK, 
-        Workbook.BLOCKING_FACTOR_NUMBER
+        Workbook.FIELD_PLOT_NUMBER, Workbook.FIELD_PLOT_NESTED_NUMBER, 
+        Workbook.REPLICATION_NUMBER,  Workbook.REPLICATION_FACTOR_NUMBER, 
+        Workbook.BLOCK_NUMBER, Workbook.BLOCKING_FACTOR_NUMBER, Workbook.BLOCK_NESTED_NUMBER, Workbook.BLOCKING_FACTOR_NESTED_NUMBER
     };
     
     public static final String[] GERMPLASM_PROPS = {
