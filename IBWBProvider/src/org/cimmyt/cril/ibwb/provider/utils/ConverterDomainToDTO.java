@@ -172,6 +172,7 @@ public class ConverterDomainToDTO {
             Integer standardScale,
             TmsMethod tmsMethod,
             String name,
+            String description,
             String hasType
          
             ) {
@@ -185,6 +186,7 @@ public class ConverterDomainToDTO {
         measuredin.setStoredinid(traits.getTid());
         measuredin.setTmethid(tmsMethod.getTmethid());
         measuredin.setName(name);
+        measuredin.setDescription(description);
         measuredin.setHasType(hasType);
         int isA = traits.getTraitGroupId() != null ? 
                 traits.getTraitGroupId() : ChadoSchemaUtil.DEFAULT_TRAIT_GROUP;
