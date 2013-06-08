@@ -2530,6 +2530,9 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
+    	if(filter.getShierarchy()==0) {
+    		filter.setShierarchy(1);//workaround
+        }
         return utilityDAO.callStoredProcedureForListPaged(filter, paged,
                 start, pageSize, "getStudy",
                 new String[]{"studyid", "sname", "pmkey", "title", "objectiv",
