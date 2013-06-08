@@ -14,12 +14,14 @@ begin
                                             "crs.object_id AS scaleid, ",
                                             "crm.object_id AS tmethid, ",
                                             "crt.object_id AS storedinid, ",
-                                            "if(crt.object_id = 1120, 'C', 'N') AS hasType ",
+                                            "if(crt.object_id = 1120, 'C', 'N') AS hasType, ",
+                                            "cvt.definition as description "
                                             "FROM cvterm_relationship crp ",
                                             "INNER JOIN cvterm_relationship crm ON crm.subject_id = crp.subject_id ",
                                             "INNER JOIN cvterm_relationship crs ON crs.subject_id = crp.subject_id ",
                                             "INNER JOIN cvterm_relationship crt ON crt.subject_id = crp.subject_id ",
                                             "INNER JOIN cvterm_relationship crh ON crh.subject_id = crp.subject_id ",
+                                            "LEFT JOIN cvterm cvt ON cvt.cvterm_id = crp.subject_id ", 
                                             "WHERE crp.type_id = 1200 ",
                                             "AND crm.type_id = 1210 ",
                                             "AND crs.type_id = 1220 ",
@@ -60,9 +62,11 @@ BEGIN
 	, scalerel.object_id AS scaleid
 	, CAST(scalerel.object_id AS CHAR(50)) AS standardscale
 	, methrel.object_id AS tmethid
+        , cvt.definition AS description
 	FROM cvterm_relationship traitrel  
 	INNER JOIN cvterm_relationship methrel ON methrel.subject_id = traitrel.subject_id AND methrel.type_id = 1210
 	INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = traitrel.subject_id AND scalerel.type_id = 1220
+        LEFT JOIN cvterm cvt ON cvt.cvterm_id = traitrel.subject_id
 	WHERE traitrel.type_id = 1200
 	AND traitrel.object_id = traitId
 	AND methrel.object_id = tmethId
@@ -78,6 +82,7 @@ IN v_traitid int,
 iN v_tmethid int,
 IN v_scaleid int,
 IN v_name varchar(255),
+IN v_desc varchar(1000),
 IN v_storedinid int,
 IN v_hastype varchar(255),
 IN v_is_a int)
@@ -89,8 +94,12 @@ START TRANSACTION;
 	SET @name = CONCAT(v_name,"-",v_traitid,"-",v_tmethid,"-",v_scaleid);
 	
 	-- insert standard variable
-	call addCvtermReturnId(1040, @name, @name, @newcvtermid);
-
+        IF (v_desc IS NOT NULL) THEN
+            call addCvtermReturnId(1040, @name, v_desc, @newcvtermid);
+        ELSE
+            call addCvtermReturnId(1040, @name, @name, @newcvtermid);
+        END IF;
+	
 	-- insert "stored in" relationship
 	call addCvtermRelationship(1044, @newcvtermid, v_storedinid);
 
