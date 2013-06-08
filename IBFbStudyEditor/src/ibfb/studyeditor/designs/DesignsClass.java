@@ -539,12 +539,13 @@ public class DesignsClass {
             csvReader.readHeaders();
             //     String[] headers = csvReader.getHeaders();
 
-            while (csvReader.readRecord()) {
+            int entryIntValue = 0;
+            while (csvReader.readRecord() && entryIntValue<entriesTableModel.getGermplasmData().size()) {
                 String rep = csvReader.get("book.replication");
                 String block = csvReader.get("book.block");
                 String plot = csvReader.get("book.plots");
                 String entry = csvReader.get("book.t");
-                int entryIntValue = Integer.parseInt(entry) - 1;
+                //int entryIntValue = Integer.parseInt(entry) - 1;
 
                 if (!currentReplicate.equals(rep)) {
                     numericPlotCounter = 1;
@@ -559,11 +560,12 @@ public class DesignsClass {
                 Object[] rowToAdd = new Object[model.getColumnCount()];
                 rowToAdd[model.getHeaderIndex(ObservationsTableModel.TRIAL)] = trial;
 
-                if (model.getHeaderIndex(ObservationsTableModel.REPLICATION) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.REPLICATION)] = rep;
+                if (!setObservationRowAtIndex(rowToAdd, model.getHeaderIndex(ObservationsTableModel.REPLICATION), rep)){
+                    setObservationRowAtIndex(rowToAdd, model.getHeaderIndex(ObservationsTableModel.REPLICATION_FACTOR), rep);
                 }
-                if (model.getHeaderIndex(ObservationsTableModel.BLOCK) > 0) {
-                    rowToAdd[model.getHeaderIndex(ObservationsTableModel.BLOCK)] = block;
+                
+                if (!setObservationRowAtIndex(rowToAdd, model.getHeaderIndex(ObservationsTableModel.BLOCK), block)){
+                    setObservationRowAtIndex(rowToAdd, model.getHeaderIndex(ObservationsTableModel.BLOCKING_FACTOR), block);
                 }
 
 
@@ -584,7 +586,7 @@ public class DesignsClass {
                 }
 
                 numericPlotCounter++;
-
+                entryIntValue++;
                 model.addRow(rowToAdd);
             }
 
@@ -599,6 +601,14 @@ public class DesignsClass {
 
         System.out.println(
                 "Finalizando lectura de csv");
+    }
+    
+    public boolean setObservationRowAtIndex(Object[] rowToAdd, int index, String value){
+        if (index > 0){
+            rowToAdd[index] = value;
+            return true;
+        }
+        return false;
     }
 
     public void readLatticeDesign(int trial, String myDesign, ObservationsTableModel model, JTable germplasmEntries, ArrayList<String> otherFactors, String[][] factorsDesignCad, int total) {
