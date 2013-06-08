@@ -2470,6 +2470,7 @@ public class CommonServicesImpl implements CommonServices {
         		Study folder = getStudy(-1);
         		if(folder==null) {//if not existing, add a new study (folder)
         			folder = new Study();
+        			folder.setStudyid(-1);
         			folder.setSname("Folder");
         			folder.setTitle("Folder");
         			folder.setShierarchy(1);
