@@ -139,7 +139,7 @@ SELECT * FROM (SELECT 1, '0' FROM nd_geolocation) AS tmp
 WHERE NOT EXISTS (SELECT 1 FROM nd_geolocation WHERE nd_geolocation_id = 1) LIMIT 1;
 
 INSERT INTO project(project_id,name,description)
-SELECT * FROM (SELECT -1 as project_id,'Folder' as name,'Folder' as description) as tmp
+SELECT * FROM (SELECT -1 as project_id,'FB Studies' as name,'FB Studies' as description) as tmp
 WHERE NOT EXISTS (SELECT project_id from project where project_id = -1) limit 1;
 	
 INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
