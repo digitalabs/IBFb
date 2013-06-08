@@ -19,7 +19,7 @@ begin
 
 DECLARE v_projectprop_id int;
 DECLARE v_project_relationship_id int;
-
+DECLARE v_relationship_type_id int;
 
 START TRANSACTION;
 	
@@ -30,9 +30,15 @@ SET foreign_key_checks = 0;
 	
 	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
 	
-	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
-	VALUE(v_project_relationship_id,1145,v_shierarchy,v_studyid);
+	SET v_relationship_type_id := 1145;
+	IF(v_studyid = -1) THEN
+		SET v_relationship_type_id := 1140;
+	END IF;
 	
+	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
+	VALUE(v_project_relationship_id,v_relationship_type_id,v_shierarchy,v_studyid);
+	
+	IF(v_studyid <> -1) THEN
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
@@ -229,6 +235,7 @@ SET foreign_key_checks = 0;
 	WHERE name = v_sstatus
   	AND cv_id = 2005;
   	
+  	END IF;
 
 COMMIT;
 

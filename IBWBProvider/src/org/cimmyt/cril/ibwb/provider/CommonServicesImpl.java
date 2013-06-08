@@ -2463,6 +2463,22 @@ public class CommonServicesImpl implements CommonServices {
         //this.studyDAO.create(study);
 
         if (isLocal()) {
+        	if(study.getShierarchy()==0) {
+        		study.setShierarchy(-1);//workaround
+        		//this is expecting a folder with project_id = -1
+        		//check if existing
+        		Study folder = getStudy(-1);
+        		if(folder==null) {//if not existing, add a new study (folder)
+        			folder = new Study();
+        			folder.setSname("Folder");
+        			folder.setTitle("Folder");
+        			folder.setShierarchy(1);
+        			folder.setStype(Study.STYPE_EXPERIMENT);
+        			folder.setSstatus(1);
+        			addStudy(folder);
+        		}
+        		
+        	}
             Integer id = this.utilityDAO.getNextMin("project");
             study.setStudyid(id);
             this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy",
