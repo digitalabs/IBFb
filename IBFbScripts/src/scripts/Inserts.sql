@@ -134,9 +134,8 @@ select * from (select 1130 as cvterm_id,1000 as cv_id,'Categorical  variable' as
 where not exists (select cvterm_id from cvterm where cvterm_id = 1130) limit 1;
 
 
-INSERT INTO nd_geolocation (nd_geolocation_id, description) 
-SELECT * FROM (SELECT 1, '0' FROM nd_geolocation) AS tmp
-WHERE NOT EXISTS (SELECT 1 FROM nd_geolocation WHERE nd_geolocation_id = 1) LIMIT 1;
+REPLACE INTO nd_geolocation (nd_geolocation_id, description) VALUES
+(1, '0');
 
 INSERT INTO project(project_id,name,description)
 SELECT * FROM (SELECT -1 as project_id,'FB Studies' as name,'FB Studies' as description) as tmp
