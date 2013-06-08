@@ -1495,7 +1495,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addMeasuredin(Measuredin measuredin) {
         utilityDAO.callStoredProcedureForUpdate(measuredin, "addMeasuredin",
-                new String[]{"traitid", "tmethid", "scaleid", "name", "storedinid", "hasType", "isA"});
+                new String[]{"traitid", "tmethid", "scaleid", "name", "description", "storedinid", "hasType", "isA"});
     }
 
     @Override
@@ -1522,7 +1522,7 @@ public class CommonServicesImpl implements CommonServices {
 
         List<Measuredin> list = this.utilityDAO.callStoredProcedureForList(measuredin, "getMeasuredinByTraitidScaleidTmethid",
                 new String[]{"traitid", "scaleid", "tmethid"},
-                new String[]{"measuredinid", "traitid", "scaleid", "standardscale", "tmethid"});
+                new String[]{"measuredinid", "traitid", "scaleid", "standardscale", "tmethid", "description"});
 
         return list != null && list.size() > 0 ? list.get(0) : null;
     }
@@ -1545,7 +1545,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged) {
         return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredIn",
                 new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
-                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType"});
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","description"});
     }
 
     @Override
@@ -1559,7 +1559,7 @@ public class CommonServicesImpl implements CommonServices {
 
         return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn",
                 new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
-                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType"});
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","desccription"});
     }
 
     @Override
