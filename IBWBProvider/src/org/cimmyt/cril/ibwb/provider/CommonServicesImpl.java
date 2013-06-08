@@ -2463,9 +2463,9 @@ public class CommonServicesImpl implements CommonServices {
         //this.studyDAO.create(study);
 
         if (isLocal()) {
-        	if(study.getShierarchy()==0) {
-        		study.setShierarchy(-1);//workaround        		
-        	}
+        	if(study.getShierarchy()!=null && study.getShierarchy()==0) {
+            	study.setShierarchy(-1);//workaround
+            }
             Integer id = this.utilityDAO.getNextMin("project");
             study.setStudyid(id);
             this.utilityDAO.callStoredProcedureForUpdate(study, "addStudy",
@@ -2478,7 +2478,7 @@ public class CommonServicesImpl implements CommonServices {
     public void updateStudy(Study study) {
         //this.studyDAO.update(study);
         if (isLocal()) {
-        	if(study.getShierarchy()==0) {
+        	if(study.getShierarchy()!=null && study.getShierarchy()==0) {
             	study.setShierarchy(-1);//workaround
             }
             this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy",
@@ -2503,7 +2503,7 @@ public class CommonServicesImpl implements CommonServices {
     public Study getStudy(Integer idStudy) {
         Study study = new Study();
         study.setStudyid(idStudy);
-        if(study.getShierarchy()==0) {
+        if(study.getShierarchy()!=null && study.getShierarchy()==0) {
         	study.setShierarchy(-1);//workaround
         }
         //this.studyDAO.findById(idStudy);
@@ -2530,7 +2530,7 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
-    	if(filter.getShierarchy()==0) {
+    	if(filter.getShierarchy()!=null && filter.getShierarchy()==0) {
     		filter.setShierarchy(-1);//workaround
         }
         return utilityDAO.callStoredProcedureForListPaged(filter, paged,
