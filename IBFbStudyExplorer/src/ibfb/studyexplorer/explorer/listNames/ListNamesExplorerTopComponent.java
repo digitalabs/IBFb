@@ -331,9 +331,12 @@ public final class ListNamesExplorerTopComponent extends TopComponent {
          String confirmation =  bundle.getString("ListNamesExplorerTopComponent.deleteConfirmation");
          String title = bundle.getString("ListNamesExplorerTopComponent.deleteTitle");
          if (DialogUtil.displayConfirmation(confirmation,title, NotifyDescriptor.OK_CANCEL_OPTION)) {
-             Listnms listnms = germplamList.get(tblGermplasmList.getSelectedRow()); 
-             AppServicesProxy.getDefault().appServices().deleteListnms(listnms);
-             updateListNameTable();
+             int row = tblGermplasmList.getSelectedRow();
+             if (row > 0){
+                 Listnms listnms = germplamList.get(row); 
+                AppServicesProxy.getDefault().appServices().deleteListnms(listnms);
+                updateListNameTable();
+             }
          }
     }
 }
