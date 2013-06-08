@@ -2464,21 +2464,7 @@ public class CommonServicesImpl implements CommonServices {
 
         if (isLocal()) {
         	if(study.getShierarchy()==0) {
-        		study.setShierarchy(-1);//workaround
-        		//this is expecting a folder with project_id = -1
-        		//check if existing
-        		Study folder = getStudy(-1);
-        		if(folder==null) {//if not existing, add a new study (folder)
-        			folder = new Study();
-        			folder.setStudyid(-1);
-        			folder.setSname("Folder");
-        			folder.setTitle("Folder");
-        			folder.setShierarchy(1);
-        			folder.setStype(Study.STYPE_EXPERIMENT);
-        			folder.setSstatus(1);
-        			addStudy(folder);
-        		}
-        		
+        		study.setShierarchy(-1);//workaround        		
         	}
             Integer id = this.utilityDAO.getNextMin("project");
             study.setStudyid(id);
@@ -2492,6 +2478,9 @@ public class CommonServicesImpl implements CommonServices {
     public void updateStudy(Study study) {
         //this.studyDAO.update(study);
         if (isLocal()) {
+        	if(study.getShierarchy()==0) {
+            	study.setShierarchy(1);//workaround
+            }
             this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy",
                     "studyid", "sname", "pmkey", "title", "objectiv",
                     "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy");
@@ -2514,6 +2503,9 @@ public class CommonServicesImpl implements CommonServices {
     public Study getStudy(Integer idStudy) {
         Study study = new Study();
         study.setStudyid(idStudy);
+        if(study.getShierarchy()==0) {
+        	study.setShierarchy(1);//workaround
+        }
         //this.studyDAO.findById(idStudy);
         return utilityDAO.callStoredProcedureForObject(study, "getStudyById", new String[]{"studyid"},
                 new String[]{"studyid", "sname", "pmkey", "title", "objectiv", "investid", "stype", "sdate", "edate", "userid", "sstatus", "shierarchy"});

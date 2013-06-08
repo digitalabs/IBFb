@@ -18,9 +18,7 @@ IN v_shierarchy int)
 begin
 
 DECLARE v_projectprop_id int;
-DECLARE v_project_relationship_id int;
-DECLARE v_relationship_type_id int;
-
+DECLARE v_project_relationship_id int; 
 START TRANSACTION;
 	
 SET foreign_key_checks = 0;
@@ -28,17 +26,19 @@ SET foreign_key_checks = 0;
 	INSERT INTO project(project_id,name,description)
 	VALUES(v_studyid,v_sname,v_title);
 	
-	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
-	
-	SET v_relationship_type_id := 1145;
-	IF(v_studyid = -1) THEN
-		SET v_relationship_type_id := 1140;
-	END IF;
+	INSERT INTO project(project_id,name,description)
+	SELECT * FROM (SELECT -1 as project_id,'Folder' as name,'Folder' as description) as tmp
+	WHERE NOT EXISTS (SELECT project_id from project where project_id = -1) limit 1;
 	
 	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
-	VALUE(v_project_relationship_id,v_relationship_type_id,v_shierarchy,v_studyid);
+	SELECT * FROM (SELECT -1 as project_id,1140 as type_id,1 as object_project_id,-1 as subject_project_id) as tmp
+	WHERE NOT EXISTS (SELECT project_relationship_id from project_relationship where subject_project_id = -1) limit 1;
 	
-	IF(v_studyid <> -1) THEN
+	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
+	
+	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
+	VALUE(v_project_relationship_id,1145,v_shierarchy,v_studyid);
+	
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
 	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
@@ -235,7 +235,6 @@ SET foreign_key_checks = 0;
 	WHERE name = v_sstatus
   	AND cv_id = 2005;
   	
-  	END IF;
 
 COMMIT;
 
