@@ -689,7 +689,11 @@ public class Workbook {
                 plotLabel = factor.getFactorName().toUpperCase();
             } else if (REPLICATION_FACTOR_NUMBER.equals(text)) {
                 repLabel = factor.getFactorName().toUpperCase();
-            } else if (BLOCKING_FACTOR_NUMBER.equals(text)) {
+            } else if (REPLICATION_NUMBER.equals(text)) {
+                repLabel = factor.getFactorName().toUpperCase();
+            }else if (BLOCKING_FACTOR_NUMBER.equals(text)) {
+                blockLabel = factor.getFactorName().toUpperCase();
+            } else if (BLOCK_NUMBER.equals(text)) {
                 blockLabel = factor.getFactorName().toUpperCase();
             } else if (ROW_IN_LAYOUT_NUMBER.equals(text)) {
                 rowLabel = factor.getFactorName().toUpperCase();
