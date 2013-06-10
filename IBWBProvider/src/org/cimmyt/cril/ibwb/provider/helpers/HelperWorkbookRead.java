@@ -249,9 +249,11 @@ public class HelperWorkbookRead {
                     this.servicioApp,
                     802);
         }
-
+        
+        String trialName = "TRIAL_"+ this.study.getSname();
+        Represtn effect = localServices.getReprestnForStudyId(this.study.getStudyid(), trialName);
         // get all variate from database marked as Traits
-        this.variatesDtoConstants = this.servicioApp.getListVariateConstants(this.study.getStudyid());
+        this.variatesDtoConstants = this.servicioApp.getListVariateConstants(effect.getEffectid());
 
         // fill all variate as traits
         for (Variate variateDTO : this.variatesDtoConstants) {
