@@ -273,14 +273,20 @@ public class HelperWorkbook {
         List<Integer> allExperimentIds = new ArrayList<Integer>();
         int index = 0;
         for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
-            log.info("Saving levels for entrys....");
-            index = HelperFactor.saveLavelsFactorsEntrys(
-	                getListEntryFactors(),
-	                workbook.getGermplasmData(),
-	                ndExperimentIds,
-	                index,
-	                levelNoNdGeolocationId,
-	                this.localServices);
+            if (this.workbook.getGermplasmData().size() > 0){
+                int reps = (int) Math.ceil((this.workbook.getMeasurementsRep().size()/this.workbook.getGermplasmData().size())/levelNoNdGeolocationIds.size());
+                for (int i=0; i < reps; i++){
+                    log.info("Saving levels for entrys....");
+                    index = HelperFactor.saveLavelsFactorsEntrys(
+                                getListEntryFactors(),
+                                workbook.getGermplasmData(),
+                                ndExperimentIds,
+                                index,
+                                levelNoNdGeolocationId,
+                                this.localServices);
+                }
+            }
+            
         }
         if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
         	allExperimentIds.addAll(ndExperimentIds);
