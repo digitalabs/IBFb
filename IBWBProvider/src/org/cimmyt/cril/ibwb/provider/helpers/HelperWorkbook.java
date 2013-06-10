@@ -300,8 +300,10 @@ public class HelperWorkbook {
         //=======================
         List<Obsunit> obsunits = saveObsunit(represtns, trialNdExperimentIds, allExperimentIds);
 
-
-        saveDataConstatnts(studyNdExperimentId);
+      
+       saveDataConstatnts(trialNdExperimentIds);
+      
+        
 
         //=======================
         //Salvar oindex con todas la convinaciones datos
@@ -857,7 +859,7 @@ public class HelperWorkbook {
             //Verificar variate
             variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
-            localServices.addVariate(variate);
+//            localServices.addVariate(variate);
 
             //Verificar dmsattr
             dmsattr = ConverterDomainToDTO.getDmsattr(dmsatype, dmsatab, variate.getVariatid(), constant.getDescription());
@@ -1025,6 +1027,12 @@ public class HelperWorkbook {
             factor.setStudyid(steffect.getEffectid());
             localServices.addFactor(factor);
         }
+        
+        //save variates
+        for (Variate variate : this.listConstantsVariates) {
+            variate.setStudyid(steffect.getEffectid());
+            localServices.addVariate(variate);
+        }
  
     }
 
@@ -1057,8 +1065,9 @@ public class HelperWorkbook {
         for (Factor factor : this.listOtherFactors) {
             factor.setStudyid(steffectt.getEffectid());
             localServices.addFactor(factor);
-        }        
+        }    
         
+                
         //save variates
         for (Variate variate : this.listVariatesPure) {
             variate.setStudyid(steffectt.getEffectid());
@@ -1429,7 +1438,7 @@ public class HelperWorkbook {
         }
     }
 
-    public void saveDataConstatnts(Integer ndExperimentId) {
+    public void saveDataConstatnts(List<Integer> ndExperimentIds) {
 
         int instance = 0;
         instance--;
@@ -1447,7 +1456,7 @@ public class HelperWorkbook {
             if (variateTemp.getDtype().equals(NUMERIC_TYPE)) {
                 DataN dataN = new DataN();
                 DataNPK dataNPK = new DataNPK();
-                dataNPK.setOunitid(ndExperimentId);
+                dataNPK.setOunitid(ndExperimentIds.get(instance));
                 dataNPK.setVariatid(variateTemp.getVariatid());
                 dataN.setDataNPK(dataNPK);
                 dataN.setDvalue(HelperFactor.castingToDouble(constant.getValue()));
@@ -1455,7 +1464,7 @@ public class HelperWorkbook {
             } else {
                 DataC dataC = new DataC();
                 DataCPK dataCPK = new DataCPK();
-                dataCPK.setOunitid(ndExperimentId);
+                dataCPK.setOunitid(ndExperimentIds.get(instance));
                 dataCPK.setVariatid(variateTemp.getVariatid());
                 dataC.setDataCPK(dataCPK);
                 String valueToAdd = HelperFactor.castingToString(constant.getValue());
