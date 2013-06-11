@@ -539,13 +539,13 @@ public class DesignsClass {
             csvReader.readHeaders();
             //     String[] headers = csvReader.getHeaders();
 
-            int entryIntValue = 0;
-            while (csvReader.readRecord() && entryIntValue<entriesTableModel.getGermplasmData().size()) {
+            
+            while (csvReader.readRecord()) {
                 String rep = csvReader.get("book.replication");
                 String block = csvReader.get("book.block");
                 String plot = csvReader.get("book.plots");
                 String entry = csvReader.get("book.t");
-                //int entryIntValue = Integer.parseInt(entry) - 1;
+                int entryIntValue = Integer.parseInt(entry) - 1;
 
                 if (!currentReplicate.equals(rep)) {
                     numericPlotCounter = 1;
