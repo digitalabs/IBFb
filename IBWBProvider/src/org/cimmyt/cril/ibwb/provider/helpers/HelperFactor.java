@@ -5,9 +5,10 @@
 package org.cimmyt.cril.ibwb.provider.helpers;
 
 import ibfb.domain.core.Condition;
-import ibfb.domain.core.GermplasmList;
+import ibfb.domain.core.Measurement;
 import ibfb.domain.core.Workbook;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -511,11 +512,16 @@ public class HelperFactor {
             List<List<Object>> germplasmData,
             List<Integer> ndExperimentIds,
             int index,
-            Integer levelNoNdGeolocationId,
-            CommonServices serviceLocal) {
+            //Integer levelNoNdGeolocationId,
+            List<Integer> ndGeolocationIds,
+            CommonServices serviceLocal,
+            List<Measurement> measurementsRep) {
 
         Factor factorTemp = new Factor();
         boolean createNdExperiment = ndExperimentIds==null || ndExperimentIds.isEmpty();
+
+        Map<String, Integer> stockMap = new HashMap<String, Integer>();
+        
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
@@ -533,67 +539,89 @@ public class HelperFactor {
         			svalue = castingToString(objectList.get(i));
         		}    
         	}
-        	
         	//we need to add new stock for every new germplasm entry values
-            Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
-            System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
-            //we need to add here the nd_experiment_stock relationship
-            Integer ndExperimentId = null;
-            if(createNdExperiment) {
-                //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
-            	ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
-            	ndExperimentIds.add(ndExperimentId);
-            	System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
-            } else {
-            	ndExperimentId = ndExperimentIds.get(index++);
-            	System.out.println("index is " + index);
-            	System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
-            }            
-            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
-            for (int i = 0; i < objectList.size(); i++) {
-                //we set the level no to the new stockId
-                Integer levelNo = levelNoStockId;
+                Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
 
-                if (i < listEntryFactors.size()) {
-                    Object value = objectList.get(i);
-                    factorTemp = listEntryFactors.get(i);
-                    log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
-                    if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
-                        LevelN levelN = new LevelN();
-                        levelN.setFactorid(factorTemp.getFactorid());
+                //creating stock prop records
+                for (int i = 0; i < objectList.size(); i++) {
+                    //we set the level no to the new stockId
+                    Integer levelNo = levelNoStockId;
 
-                        levelN.setLvalue(castingToDouble(value));
-                        LevelNPK levelNPK = new LevelNPK();
-                        levelNPK.setLabelid(factorTemp.getLabelid());
-                        levelNPK.setLevelno(levelNo);
-                        levelN.setLevelNPK(levelNPK);
-                        serviceLocal.addLevelN(levelN);
-                        factorTemp.getLevelsN().add(levelN);
-                    } else {
-                        LevelC levelC = new LevelC();
-                        levelC.setFactorid(factorTemp.getFactorid());
-                        String valueToSave = castingToString(value);
-                        if (valueToSave != null) {
-                            if (valueToSave.trim().isEmpty()) {
-                                levelC.setLvalue(" ");
-                            } else {
-                                levelC.setLvalue(valueToSave);
-                            }
+                    if (i < listEntryFactors.size()) {
+                        Object value = objectList.get(i);
+                        factorTemp = listEntryFactors.get(i);
+                        log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
+                        if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
+                            LevelN levelN = new LevelN();
+                            levelN.setFactorid(factorTemp.getFactorid());
+
+                            levelN.setLvalue(castingToDouble(value));
+                            LevelNPK levelNPK = new LevelNPK();
+                            levelNPK.setLabelid(factorTemp.getLabelid());
+                            levelNPK.setLevelno(levelNo);
+                            levelN.setLevelNPK(levelNPK);
+                            serviceLocal.addLevelN(levelN);
+                            factorTemp.getLevelsN().add(levelN);
                         } else {
-                            levelC.setLvalue(" ");
+                            LevelC levelC = new LevelC();
+                            levelC.setFactorid(factorTemp.getFactorid());
+                            String valueToSave = castingToString(value);
+                            if (valueToSave != null) {
+                                if (valueToSave.trim().isEmpty()) {
+                                    levelC.setLvalue(" ");
+                                } else {
+                                    levelC.setLvalue(valueToSave);
+                                }
+                            } else {
+                                levelC.setLvalue(" ");
+                            }
+                            LevelCPK levelCPK = new LevelCPK();
+                            levelCPK.setLabelid(factorTemp.getLabelid());
+                            levelCPK.setLevelno(levelNo);
+                            levelC.setLevelCPK(levelCPK);
+                            serviceLocal.addLevelC(levelC);
+                            factorTemp.getLevelsC().add(levelC);
                         }
-                        LevelCPK levelCPK = new LevelCPK();
-                        levelCPK.setLabelid(factorTemp.getLabelid());
-                        levelCPK.setLevelno(levelNo);
-                        levelC.setLevelCPK(levelCPK);
-                        serviceLocal.addLevelC(levelC);
-                        factorTemp.getLevelsC().add(levelC);
                     }
                 }
-            }
-            //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
-            //levelNo--;
+
+                stockMap.put(uniquename, levelNoStockId);
         }
+        
+        //for (List<Object> objectList : germplasmData) {
+        int size = measurementsRep.size() / ndGeolocationIds.size();
+        for (int k = 0; k < ndGeolocationIds.size(); k++) {
+            int start = k * size;
+            int end = (k+1) * size;
+            int levelNoNdGeolocationId = ndGeolocationIds.get(k);
+            
+            for (int j = start; j < end && j < measurementsRep.size(); j++) {
+                Measurement measurement = measurementsRep.get(j);
+            
+                String entryNo = measurement.getEntry().toString();
+                int levelNoStockId = stockMap.get(entryNo);
+
+                System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
+                //we need to add here the nd_experiment_stock relationship
+                Integer ndExperimentId = null;
+                if(createNdExperiment) {
+                    //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
+                    ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
+                    ndExperimentIds.add(ndExperimentId);
+                    System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
+                } else {
+                    ndExperimentId = ndExperimentIds.get(index++);
+                    System.out.println("index is " + index);
+                    System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
+                }            
+                serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
+
+                //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
+                //levelNo--;
+
+            }
+        }
+            
         //return levelNo;
         return index;
     }

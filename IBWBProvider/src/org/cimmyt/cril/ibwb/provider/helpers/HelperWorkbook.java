@@ -272,22 +272,26 @@ public class HelperWorkbook {
         log.info("Saving levels for plots DONE!");
         List<Integer> allExperimentIds = new ArrayList<Integer>();
         int index = 0;
-        for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
-            if (this.workbook.getGermplasmData().size() > 0){
-                int reps = (int) Math.ceil((this.workbook.getMeasurementsRep().size()/this.workbook.getGermplasmData().size())/levelNoNdGeolocationIds.size());
-                for (int i=0; i < reps; i++){
+        //for (Integer levelNoNdGeolocationId : levelNoNdGeolocationIds) {
+        //    int levelNoNdGeolocationId = levelNoNdGeolocationIds.get(i);
+            
+            //if (this.workbook.getGermplasmData().size() > 0){
+            //    int reps = (int) Math.ceil((this.workbook.getMeasurementsRep().size()/this.workbook.getGermplasmData().size())/levelNoNdGeolocationIds.size());
+            //    for (int i=0; i < reps; i++){
+            
                     log.info("Saving levels for entrys....");
                     index = HelperFactor.saveLavelsFactorsEntrys(
                                 getListEntryFactors(),
                                 workbook.getGermplasmData(),
                                 ndExperimentIds,
                                 index,
-                                levelNoNdGeolocationId,
-                                this.localServices);
-                }
-            }
+                                levelNoNdGeolocationIds,
+                                this.localServices,
+                                workbook.getMeasurementsRep());
+            //    }
+            //}
             
-        }
+        //}
         if(ndExperimentIds!=null || !ndExperimentIds.isEmpty()) { 
         	allExperimentIds.addAll(ndExperimentIds);
         }
