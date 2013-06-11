@@ -77,6 +77,7 @@ public final class ImportGermplasmVisualPanel1 extends JPanel {
         try {
             isValidFile = validateExcelReader.isValidTemplate(this.txtFilePath.getText());
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("ERROR AL VALIDAD TEMPLATE DE EXCEL");
         }
 

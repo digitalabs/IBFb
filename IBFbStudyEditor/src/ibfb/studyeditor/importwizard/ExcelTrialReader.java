@@ -419,8 +419,10 @@ public class ExcelTrialReader {
             int type = celda.getCellType();
 
             try {
-                if (celda.getStringCellValue().equals("TRIAL INSTANCE") && celdaMethod.getStringCellValue().equals("ENUMERATED")) {
-
+                //if (celda.getStringCellValue().equals("TRIAL INSTANCE") && celdaMethod.getStringCellValue().equals("ENUMERATED")) {
+                String cellProperty = ibfb.domain.core.Workbook.getStringWithOutBlanks(celda.getStringCellValue());
+                String cellScale = ibfb.domain.core.Workbook.getStringWithOutBlanks(celdaMethod.getStringCellValue());                
+                if (cellProperty.equals("TRIALINSTANCE") && cellScale.equals("ENUMERATED")) {
                     celda = fila.getCell(6);
                     int tipo = celda.getCellType();
                     if (tipo == 0) {

@@ -18,7 +18,7 @@ public class LookupUtil {
     public static final String PERSON = "PERSON";
     public static final String LOCATION = "LOCATION";
     public static final String DBID = "DBID";
-    public static final String DBCV = "DBCV";
+    public static final String DBCV = "DBCV";   
 
     /**
      * Checks if searchValue exists in pickupListResolver  and if found then assign it corresponding ID

@@ -40,8 +40,8 @@ public final class NurseryVisualPanel9 extends JPanel {
         initComponents();
         createBallonTips();
         doubleListPanel = new DoubleListPanel<Constant>(availableConstants, selectedConstants, unselectedCommand, selectedCommand);
-        doubleListPanel.setSourceLabel(bundle.getString("NurseryVisualPanel9.selectedCons"));
-        doubleListPanel.setTargetLabel(bundle.getString("NurseryVisualPanel9.unselectedCons"));
+        doubleListPanel.setSourceLabel(bundle.getString("NurseryVisualPanel9.unselectedCons"));
+        doubleListPanel.setTargetLabel(bundle.getString("NurseryVisualPanel9.selectedCons"));
         doubleListPanel.setVisible(true);
         pnlSelectList.add(doubleListPanel);
 

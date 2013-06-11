@@ -39,8 +39,8 @@ public final class NurseryVisualPanel10 extends JPanel {
         createBallonTips();
 
         doubleListPanel = new DoubleListPanel<Variate>(availableTraits, selectedTraits, unselectedCommand, selectedCommand);
-        doubleListPanel.setSourceLabel(bundle.getString("NurseryVisualPanel10.selectedTraits"));
-        doubleListPanel.setTargetLabel(bundle.getString("NurseryVisualPanel10.unselectedTraits"));
+        doubleListPanel.setSourceLabel(bundle.getString("NurseryVisualPanel10.unselectedTraits"));
+        doubleListPanel.setTargetLabel(bundle.getString("NurseryVisualPanel10.selectedTraits"));
         doubleListPanel.setVisible(true);
         pnlSelectList.add(doubleListPanel);
 

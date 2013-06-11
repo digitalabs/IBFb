@@ -24,7 +24,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="&lt;ImportGermplasmVisualPanel2.pnlGermplasmInfo.border.title&gt;">
+            <TitledBorder title="Germplasm Information">
               <ResourceString PropertyName="titleX" bundle="ibfb/lists/core/importwizard/Bundle.properties" key="ImportGermplasmVisualPanel2.pnlGermplasmInfo.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
@@ -55,7 +55,7 @@
                       <Component id="cboNameType" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jTextFieldLocation" min="-2" pref="166" max="-2" attributes="0"/>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                          <EmptySpace pref="211" max="32767" attributes="0"/>
                           <Component id="btnFindLocation" min="-2" pref="124" max="-2" attributes="0"/>
                       </Group>
                       <Component id="cboMethods" alignment="0" max="32767" attributes="0"/>
@@ -210,7 +210,7 @@
                       <Component id="radConnectEntries" min="-2" max="-2" attributes="0"/>
                       <Component id="radOnlyMatch" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="307" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="235" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

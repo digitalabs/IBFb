@@ -348,9 +348,10 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
                 //cellData = rowData.getCell(COLUMN_UNIQUE_ID);
                 //listEntry.setUniqueId(ExcelUtils.getStringValueFromCell(cellData));
 
-                cellData = rowData.getCell(entryIdHeaderIndex);
-                listEntry.setEntryId(ExcelUtils.getIntValueFromCell(cellData));
-
+                if (entryIdHeaderIndex != null) {
+                    cellData = rowData.getCell(entryIdHeaderIndex);
+                    listEntry.setEntryId(ExcelUtils.getIntValueFromCell(cellData));
+                }
 
                 //log.info("Data for Entry: " + listEntry.toString());
                 // add readed Entry to list
@@ -372,7 +373,8 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
      */
     private int getLastEntryRowIndex(org.apache.poi.ss.usermodel.Workbook excelBook) {
         int entryRowIndex = ROW_HEADER_INDEX + 1;
-        int lastEntryRowIndex = entryRowIndex;
+        //int lastEntryRowIndex = entryRowIndex;
+        int lastEntryRowIndex = getRowHeaderIndex(excelBook)+1;
         boolean moreRowsToRead = true;
 
         Sheet sheet = excelBook.getSheetAt(sheetNumber);

@@ -83,6 +83,7 @@ persistenceType = TopComponent.PERSISTENCE_NEVER)
 @TopComponent.OpenActionRegistration(displayName = "#CTL_NurseryEditorAction",
 preferredID = "NurseryEditorTopComponent")
 public final class NurseryEditorTopComponent extends TopComponent {
+    private static ResourceBundle bundle = NbBundle.getBundle(NurseryEditorTopComponent.class);
 
     final static String badchars = "`~!@#$%^&*()_+=\\|\"':;?/>.<, ";
     private JFileChooser selectorArchivo = new JFileChooser();
@@ -1892,17 +1893,21 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
             JOptionPane.showMessageDialog(null, NbBundle.getMessage(NurseryEditorTopComponent.class, "NurseryEditorTopComponent.already"), NbBundle.getMessage(NurseryEditorTopComponent.class, "NurseryEditorTopComponent.caution"), JOptionPane.OK_OPTION);
 
         } else {
+            if (!existsPlantsSelectedTrait()) {
+                DialogUtil.displayError(bundle.getString("NurseryTemplate.missingPlantsSelected"));
+                return;
+            }
             ObservationsTableModel modelo = (ObservationsTableModel) this.jTableObservations.getModel();
             boolean selectFromEachPlot = selectFromEachPlotEnabled();
             MethodsClass metodos = new MethodsClass();
             MaizeMethods maizeMethod = null;
-            
-            AdvanceWizardIterator advanceWizardIterator  = new AdvanceWizardIterator(selectFromEachPlot);
-            
+
+            AdvanceWizardIterator advanceWizardIterator = new AdvanceWizardIterator(selectFromEachPlot);
+
             WizardDescriptor wiz = new WizardDescriptor(advanceWizardIterator);
-            
-            wiz.setOptions(new Object[] { NotifyDescriptor.CANCEL_OPTION, WizardDescriptor.FINISH_OPTION        }); 
-                                          
+
+            wiz.setOptions(new Object[]{NotifyDescriptor.CANCEL_OPTION, WizardDescriptor.FINISH_OPTION});
+
             wiz.setTitleFormat(new MessageFormat("{0} ({1})"));
             wiz.setTitle(NbBundle.getMessage(NurseryEditorTopComponent.class, "NurseryEditorTopComponent.wizard"));
             AdvanceWizardIterator.metodo = getMethodName();
@@ -1912,11 +1917,11 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                 int convention = Integer.parseInt(NbPreferences.forModule(AdvanceWizardPanel1.class).get("methodIndex", "0")); //0=wheat  1=maize  1=other crops
                 int samples = Integer.parseInt(NbPreferences.forModule(AdvanceWizardPanel1.class).get("samples", "1"));
                 int samplesMethod = Integer.parseInt(NbPreferences.forModule(AdvanceWizardPanel1.class).get("samplesMethod", "0"));
-                
-                
+
+
                 int methodId = NbPreferences.forModule(AdvanceWizardPanel1.class).getInt("MethodId", 0);
-                
-                
+
+
                 int locationId = NbPreferences.forModule(AdvanceWizardPanel1.class).getInt("LocationId", 0);
                 int harvestDate = NbPreferences.forModule(AdvanceWizardPanel1.class).getInt("HarvestDate", 0);
                 String locationAbbr = NbPreferences.forModule(AdvanceWizardPanel1.class).get("LAbbr", "");
@@ -2544,10 +2549,10 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
         for (int i = 0; i < total; i++) {
 
             Object[] rowToAdd = new Object[model.getColumnCount()];
-            
-         
-           rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i + 1;
-           
+
+
+            rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i + 1;
+
 
 //            if (posiciones.size() > 0) {
 //                System.out.println("ENTRAMOS A PONER ISCHECK");
@@ -2618,12 +2623,12 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
         int colEntry = entriesTableModel.getHeaderIndex(ObservationsTableModel.ENTRY);
         for (int i = 0; i < total; i++) {
             Object[] rowToAdd = new Object[model.getColumnCount()];
-            
-             
-            
-           
-           rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i + 1;
-          
+
+
+
+
+            rowToAdd[model.getHeaderIndex(ObservationsTableModel.PLOT)] = i + 1;
+
 
             int entriesColIndex = 0;
 
@@ -3240,16 +3245,17 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
             }
         }
     }
-    
+
     /**
      * It checks if user select at least one plant in plants selected column
+     *
      * @return true if user select at leat one plant, false if not
      */
     private boolean selectFromEachPlotEnabled() {
         boolean selectFromEachPlot = false;
-        ObservationsTableModel modelo = (ObservationsTableModel)jTableObservations.getModel();
-        int plantsSelectedColumn =  modelo.getHeaderIndex(ObservationsTableModel.PLANTS_SELECTED);
-        int totalPlants  = 0;
+        ObservationsTableModel modelo = (ObservationsTableModel) jTableObservations.getModel();
+        int plantsSelectedColumn = modelo.getHeaderIndex(ObservationsTableModel.PLANTS_SELECTED);
+        int totalPlants = 0;
         for (int row = 0; row < modelo.getRowCount(); row++) {
             Integer plantsToSelect = ConvertUtils.getValueAsInteger(modelo.getValueAt(row, plantsSelectedColumn));
             if (plantsToSelect != null) {
@@ -3260,23 +3266,37 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
         selectFromEachPlot = totalPlants > 0;
         return selectFromEachPlot;
     }
-    
+
     private void printLabelWizard() {
-         List<String> fields = new ArrayList<String>();
-         ObservationsTableModel model = (ObservationsTableModel)jTableObservations.getModel();
-         for(Object header :  model.getHeaders()) {
-             if (header instanceof Factor) {
-                 Factor factor = (Factor)header;
-                 fields.add(factor.getFactorName());
-             } else if (header instanceof Variate) {
-                 Variate variate = (Variate)header;
-                 fields.add(variate.getVariateName());
-             }
-             
-         }
-         LabelReportWizardIterator.launchLabelReportWizard(model.getValues(),fields);
+        List<String> fields = new ArrayList<String>();
+        ObservationsTableModel model = (ObservationsTableModel) jTableObservations.getModel();
+        for (Object header : model.getHeaders()) {
+            if (header instanceof Factor) {
+                Factor factor = (Factor) header;
+                fields.add(factor.getFactorName());
+            } else if (header instanceof Variate) {
+                Variate variate = (Variate) header;
+                fields.add(variate.getVariateName());
+            }
+
+        }
+        LabelReportWizardIterator.launchLabelReportWizard(model.getValues(), fields);
     }
-    
+
+    /**
+     * Validates if advance contains plants selected trait
+     * @return 
+     */
+    private boolean existsPlantsSelectedTrait() {
+        boolean existsPlantSelected = false;
+        ObservationsTableModel modelo = (ObservationsTableModel) this.jTableObservations.getModel();
+
+        int plantsSelectedColumn = modelo.getHeaderIndex(ObservationsTableModel.PLANTS_SELECTED);
+
+        existsPlantSelected = plantsSelectedColumn != -1;
+        
+        return existsPlantSelected;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel JPanelData;
     private javax.swing.JButton btnPrintLabels;

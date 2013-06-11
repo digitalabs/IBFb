@@ -219,7 +219,10 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
         int entryCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.ENTRY);
         int entryCodeCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.ENTRY_CODE);
         int sourceCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.SOURCE);
-        int crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS);
+        int crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS_NAME);
+        if (crossCol == -1) {
+            crossCol = model.getHeaderIndex(GermplasmEntriesTableModelChecks.CROSS);
+        }        
         int entryNumber =1 ;
         for (int row=0; row < model.getRowCount(); row++ ) {
             ListdataPK lpk = new ListdataPK(0, entryNumber);
@@ -235,9 +238,11 @@ public final class ImportGermplasmVisualPanel2 extends JPanel {
             if (entryCol != -1) {
                 ld.setEntryid(Integer.parseInt(model.getValueAt(row, entryCol).toString()));
             }
-            if (entryCodeCol !=1) {
+            if (entryCodeCol == -1) {
                 //ld.setEntrycd(model.getValueAt(row, entryCodeCol).toString());
                 ld.setEntrycd(Listdata.ENTRY_PREFIX + ConvertUtils.getZeroLeading(entryNumber, 4));
+            } else {
+                ld.setEntrycd(model.getValueAt(row, entryCodeCol).toString());
             }
             if (sourceCol != -1) {
                 ld.setSource(model.getValueAt(row, sourceCol).toString());

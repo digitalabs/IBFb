@@ -82,7 +82,7 @@
               </Group>
               <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel4" alignment="0" pref="318" max="32767" attributes="1"/>
+                  <Component id="jLabel4" alignment="0" pref="322" max="32767" attributes="1"/>
                   <Component id="jTextFieldDescriptionSelected" alignment="0" pref="318" max="32767" attributes="3"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="394" max="32767" attributes="0"/>
+              <EmptySpace pref="404" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>

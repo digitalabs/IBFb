@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
+
     private static final String TRIAL_INSTANCE = "TRIAL INSTANCE";
     private static final String NUMBER = "NUMBER";
     public static final String TRIAL = "TRIALINSTANCENUMBER";
@@ -16,6 +17,7 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
     public static final String DESIG = "GERMPLASMIDDBCV";
     public static final String GID = "GERMPLASMIDDBID";
     public static final String CROSS = "CROSSHISTORYPEDIGREESTRING";
+    public static final String CROSS_NAME = "CROSSNAMENAME";
     public static final String SOURCE = "SEEDSOURCENAME";
     public static final String PLOT = "FIELDPLOTNESTEDNUMBER";
     public static final String PLOT_NESTED = "PLOTNESTEDNUMBER";
@@ -25,7 +27,6 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
     public static final String BLOCK_NESTED = "BLOCKNESTEDNUMBER";
     public static final String ROW = "ROWINLAYOUTNUMBER";
     public static final String COL = "COLUMNINLAYOUTNUMBER";
-    
     private boolean hasChecks = false;
     private List<Factor> factorHeaders;
     private List<List<Object>> germplasmData;
@@ -41,7 +42,6 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
      */
     private HashMap<String, Integer> headerIndex = new HashMap<String, Integer>();
 
-    
     public GermplasmEntriesTableModelChecks() {
         clearTable();
     }
@@ -66,10 +66,9 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
             columnIndex++;
         }
 
-    
+
     }
 
-    
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         if (!hasChecks) {
@@ -136,7 +135,6 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
 
             fireTableCellUpdated(rowIndex, columnIndex);
         } else {
-            
         }
 
 
@@ -156,8 +154,8 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
         germplasmData = new ArrayList<List<Object>>();
         fireTableDataChanged();
     }
-    
-     /**
+
+    /**
      * Get the column index for header
      *
      * @param columnName Column name to search
@@ -170,5 +168,4 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
         }
         return columnIndex;
     }
-
 }
