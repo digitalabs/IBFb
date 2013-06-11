@@ -2463,8 +2463,8 @@ public class CommonServicesImpl implements CommonServices {
         //this.studyDAO.create(study);
 
         if (isLocal()) {
-        	if(study.getShierarchy()!=null && study.getShierarchy()==0) {
-            	study.setShierarchy(-1);//workaround
+            if(study.getShierarchy()!=null && study.getShierarchy()==0) {
+            	study.setShierarchy(1);//GCP 4526: make actual study "subfolder" of root folder
             }
             Integer id = this.utilityDAO.getNextMin("project");
             study.setStudyid(id);
@@ -2531,7 +2531,7 @@ public class CommonServicesImpl implements CommonServices {
     public List<Study> getListStudy(Study filter, int start, int pageSize, boolean paged) {
         //return studyDAO.getList(filter, start, pageSize, paged);
     	if(filter.getShierarchy()!=null && filter.getShierarchy()==0) {
-    		filter.setShierarchy(-1);//workaround
+    		filter.setShierarchy(1);//GCP 4526: make actual study "subfolder" of root folder
         }
         return utilityDAO.callStoredProcedureForListPaged(filter, paged,
                 start, pageSize, "getStudy",
