@@ -32,10 +32,3 @@ REPLACE INTO cvterm(cvterm_id,cv_id,name,definition,dbxref_id,is_obsolete,is_rel
 
 REPLACE INTO nd_geolocation (nd_geolocation_id, description) VALUES
 (1, '0');
-
-REPLACE INTO project(project_id,name,description) VALUES
-(-1,'FB Studies','FB Studies');
-
-REPLACE INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id) VALUES
-(-1, 1140, 1, -1);
-

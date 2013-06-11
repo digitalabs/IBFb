@@ -28,8 +28,15 @@ SET foreign_key_checks = 0;
 	
 	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
 	
+        -- if a study, make it a subfolder of root folder
+        IF v_shierarchy > 0 THEN
+            SET @relationship := 1140;
+        ELSE
+            SET @relationship := 1145;
+        END IF;
+
 	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
-	VALUE(v_project_relationship_id,1145,v_shierarchy,v_studyid);
+	VALUE(v_project_relationship_id, @relationship ,v_shierarchy,v_studyid);
 	
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
