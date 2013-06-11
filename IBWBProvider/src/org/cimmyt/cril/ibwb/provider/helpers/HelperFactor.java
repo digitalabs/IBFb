@@ -522,6 +522,7 @@ public class HelperFactor {
 
         Map<String, Integer> stockMap = new HashMap<String, Integer>();
         
+        //GCP NEW SCHEMA, create the stock and stockprop values
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
@@ -588,38 +589,30 @@ public class HelperFactor {
                 stockMap.put(uniquename, levelNoStockId);
         }
         
-        //for (List<Object> objectList : germplasmData) {
-        int size = measurementsRep.size() / ndGeolocationIds.size();
-        for (int k = 0; k < ndGeolocationIds.size(); k++) {
-            int start = k * size;
-            int end = (k+1) * size;
-            int levelNoNdGeolocationId = ndGeolocationIds.get(k);
-            
-            for (int j = start; j < end && j < measurementsRep.size(); j++) {
-                Measurement measurement = measurementsRep.get(j);
-            
-                String entryNo = measurement.getEntry().toString();
-                int levelNoStockId = stockMap.get(entryNo);
+        for (Measurement measurement : measurementsRep) {
+            int levelNoNdGeolocationId = ndGeolocationIds.get(measurement.getTrial() - 1);
 
-                System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
-                //we need to add here the nd_experiment_stock relationship
-                Integer ndExperimentId = null;
-                if(createNdExperiment) {
-                    //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
-                    ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
-                    ndExperimentIds.add(ndExperimentId);
-                    System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
-                } else {
-                    ndExperimentId = ndExperimentIds.get(index++);
-                    System.out.println("index is " + index);
-                    System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
-                }            
-                serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
+            String entryNo = measurement.getEntry().toString();
+            int levelNoStockId = stockMap.get(entryNo);
 
-                //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
-                //levelNo--;
+            System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
+            //we need to add here the nd_experiment_stock relationship
+            Integer ndExperimentId = null;
+            if(createNdExperiment) {
+                //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
+                ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
+                ndExperimentIds.add(ndExperimentId);
+                System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
+            } else {
+                ndExperimentId = ndExperimentIds.get(index++);
+                System.out.println("index is " + index);
+                System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
+            }            
+            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
 
-            }
+            //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
+            //levelNo--;
+
         }
             
         //return levelNo;

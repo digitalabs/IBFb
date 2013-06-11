@@ -287,7 +287,7 @@ public class HelperWorkbook {
                                 index,
                                 levelNoNdGeolocationIds,
                                 this.localServices,
-                                workbook.getMeasurementsRep());
+                                workbook.getMeasurements());
             //    }
             //}
             
@@ -1221,19 +1221,24 @@ public class HelperWorkbook {
         List<Integer> ndExperimentIds = new ArrayList<Integer>();
         //for (Factor factorGroupTemp : listPlotFactors) {
         int noOfTrials = levelNoNdGeoLocationIds.size();
-        int noOfPlots = workbook.getMeasurementsRep().size();
+        int noOfPlots = workbook.getMeasurements().size(); //workbook.getMeasurementsRep().size();
         int div = noOfPlots/noOfTrials;
-        int ctr = 0;
-        int index = 0;
+        //int ctr = 0;
+        //int index = 0;
         System.out.println("COMPARE MEASUREMENTSREP AND GERMPLAMSDATA SIZE: "+ workbook.getMeasurementsRep().size() +
-        		" --- " + workbook.getGermplasmData().size());
-        for (Measurement measurement : workbook.getMeasurementsRep()) {
-        	if(ctr==div) {//get next geolocatioid
+        		" --- " + workbook.getGermplasmData().size() + " --- " + workbook.getMeasurements().size());
+        //GCP NEW SCHEMA, GCP-4529, use measurements instead of measurementsRep, bec for "non-nested" plots
+        //measurementsRep does not reflect the actual measurement rows. ex if there are 2 trials with 10 stocks, 
+        //measurements will have 20 rows, while measurementsRep will have 10 rows.
+        //for (Measurement measurement : workbook.getMeasurementsRep()) {
+        for (Measurement measurement : workbook.getMeasurements()) {
+        	/*if(ctr==div) {//get next geolocatioid
         		index++;
         		ctr = 0;
         	}
-        	ctr++;
-            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
+        	ctr++;*/
+            //Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
+            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
             ndExperimentIds.add(levelNo);
             System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
             for (String header : listHeaders) {
