@@ -489,7 +489,7 @@ public class HelperWorkbook {
             traits.setTid(measuredin.getStoredinid());
             
             //Verificar factor
-            factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
+            factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDescription(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
             localServices.addFactor(factor);
 
@@ -610,7 +610,7 @@ public class HelperWorkbook {
             measuredin.setTmsMethod(tmsMethod);
             traits.setTid(measuredin.getStoredinid());
             //Verificar factor
-            factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDataType(), study, traits, tmsMethod);
+            factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDescription(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
             //localServices.addFactor(factor);
 
@@ -729,7 +729,7 @@ public class HelperWorkbook {
             measuredin.setTmsMethod(tmsMethod);
             traits.setTid(measuredin.getStoredinid());
             //Verificar factor
-            factor = ConverterDomainToDTO.getFactor(factorDomain.getFactorName(), factorDomain.getDataType(), study, traits, tmsMethod);
+            factor = ConverterDomainToDTO.getFactor(factorDomain.getFactorName(), factorDomain.getDescription(), factorDomain.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
             //localServices.addFactor(factor);
 
@@ -867,7 +867,7 @@ public class HelperWorkbook {
             measuredin.setTmsMethod(tmsMethod);
             traits.setTid(measuredin.getStoredinid());
             //Verificar variate
-            variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDataType(), study, traits, tmsMethod);
+            variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDescription(), constant.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
 //            localServices.addVariate(variate);
 
@@ -971,7 +971,7 @@ public class HelperWorkbook {
             measuredin.setTmsMethod(tmsMethod);
             traits.setTid(measuredin.getStoredinid());
             //Verificar factor
-            variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), study, traits, tmsMethod);
+            variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDescription(), variateDomain.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
             //localServices.addVariate(variate);
 

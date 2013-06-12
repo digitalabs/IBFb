@@ -194,7 +194,8 @@ IN v_traitid int,
 IN v_scaleid int,
 IN v_tmethid int,
 IN v_ltype varchar(1),
-IN v_tid int)
+IN v_tid int,
+IN v_description varchar(255))
 begin
 
 DECLARE v_project_id int;
@@ -228,7 +229,7 @@ DECLARE v_type_id int;
         -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
         IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1060 AND rank=v_rank) THEN
 		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-		VALUES(v_projectprop_id,v_project_id,1060,v_fname,v_rank);
+		VALUES(v_projectprop_id,v_project_id,1060,v_description,v_rank);
 	END IF;
 	
 	SELECT distinct cvttrait.subject_id into v_type_id 

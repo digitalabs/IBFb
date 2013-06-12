@@ -40,7 +40,8 @@ IN v_scaleid int,
 IN v_tmethid int,
 IN v_dtype varchar(1),
 IN v_vtype varchar(10),
-IN v_tid int)
+IN v_tid int,
+IN v_description varchar(255))
 begin
 
 DECLARE v_project_id int;
@@ -73,7 +74,7 @@ START TRANSACTION;
 	
 	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1060 AND rank=v_rank) THEN
 		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-		VALUES(v_projectprop_id,v_project_id,1060,v_vname,v_rank);
+		VALUES(v_projectprop_id,v_project_id,1060,v_description,v_rank);
 	END IF;
 	
 	SELECT distinct cvttrait.subject_id into v_type_id 
@@ -117,12 +118,14 @@ BEGIN
         , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype
         , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
         , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
+        , vdesc.value AS description
         FROM
         projectprop pp
         INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
         INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
         LEFT JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
         INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
+        INNER JOIN projectprop vdesc ON vdesc.project_id = pp.project_id AND vdesc.rank = pp.rank AND vdesc.type_id = 1060
         WHERE
         pp.type_id = 1070 
         AND pp.project_id = ?
@@ -160,11 +163,13 @@ BEGIN
         , GROUP_CONCAT(IF(cvr.type_id = 1105, IF(cvr.object_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS dtype
         , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
         , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
+        , vdesc.value AS description
       FROM
         projectprop pp
         INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value
         LEFT JOIN cvterm obj ON obj.cvterm_id = cvr.object_id
         INNER JOIN projectprop term ON term.project_id = pp.project_id AND term.rank = pp.rank AND term.type_id IN (1043, 1048)
+        INNER JOIN projectprop vdesc ON vdesc.project_id = pp.project_id AND vdesc.rank = pp.rank AND vdesc.type_id = 1060
       WHERE
         pp.type_id = 1070 
         AND pp.project_id = ?

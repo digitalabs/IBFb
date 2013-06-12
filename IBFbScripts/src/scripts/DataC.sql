@@ -166,11 +166,11 @@ IF(v_phenotype_id IS NULL) THEN
     	and label.type_id = 1048
 	and pp.projectprop_id = v_variatid);
 	
-        -- PHENOTYPE unique constraint | name
-        IF NOT EXISTS(SELECT 1 FROM phenotype WHERE name=v_phenotype_name) THEN
+        -- PHENOTYPE unique constraint | uniquename
+        -- IF NOT EXISTS(SELECT 1 FROM phenotype WHERE uniquename=v_phenotype_id) THEN
 		insert into phenotype(phenotype_id,uniquename,name,observable_id,attr_id,value,cvalue_id,assay_id) 
 		values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalue_id,NULL);
-	END IF;	
+	-- END IF;	
 
 	CALL getNextMinReturn('nd_experiment_phenotype',v_nd_experiment_phenotype_id);
 	

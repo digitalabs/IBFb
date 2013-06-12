@@ -526,7 +526,7 @@ public class HelperWorkbookUpdate {
                 measuredin.setTmsMethod(tmsMethod);
                 traits.setTid(measuredin.getStoredinid());
                 //Verificar factor
-                variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDataType(), dbStudy, traits, tmsMethod);
+                variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDescription(), variateDomain.getDataType(), dbStudy, traits, tmsMethod);
                 variate.setVtype(vtype);
                 localServices.addVariate(variate);
 

@@ -771,7 +771,7 @@ public class CommonServicesImpl implements CommonServices {
         //this.factorDAO.create(factor);
         if (isLocal()) {
             Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addFactor", new String[]{
-                    "labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+                    "labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid", "description"});
             factor.setLabelid(id);
             
             Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"},
@@ -3166,7 +3166,7 @@ public class CommonServicesImpl implements CommonServices {
         //this.variateDAO.create(variate);
         if (isLocal()) {
             Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(variate, "addVariate", new String[]{"studyid",
-                    "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+                    "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
             variate.setVariatid(id);
 
         }
@@ -3729,7 +3729,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("v_isLocal", isLocal()? 1 : 0);
         return this.utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromVeffects", params,
                 new String[]{"p_represno", "v_isLocal"},
-                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
 
     }
 
@@ -4605,6 +4605,6 @@ public class CommonServicesImpl implements CommonServices {
         input.put("p_studyid", studyId);
         input.put("v_isLocal", isLocal()? 1 : 0);
         return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid", "v_isLocal"}, 
-                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
     }
 }

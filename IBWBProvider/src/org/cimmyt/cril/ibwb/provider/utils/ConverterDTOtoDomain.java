@@ -182,6 +182,8 @@ public class ConverterDTOtoDomain {
             }else{
                 factor.setProperty(null);
             }
+            
+            factor.setDescription(factorDto.getDescription());
 //            if (factorDto.getDmsattr() != null) {
 //                factor.setDescription(factorDto.getDmsattr().getDmsatval());
 //            }
@@ -230,10 +232,12 @@ public class ConverterDTOtoDomain {
             }else{
                 constant.setProperty("");
             }
+            
+            constant.setDescription(variateDto.getDescription());
 //            if (variateDto.getDmsattr() != null) {
 //                constant.setDescription(variateDto.getDmsattr().getDmsatval());
 //            }else{
-                constant.setDescription("");
+//                constant.setDescription("");
 //            }
             if (variateDto.getMeasuredin().getTmsMethod() != null) {
                 constant.setMethod(variateDto.getMeasuredin().getTmsMethod().getTmname());
@@ -273,10 +277,12 @@ public class ConverterDTOtoDomain {
                 }else{
                     variate.setProperty("");
                 }
+                
+                variate.setDescription(variateDto.getDescription());
 //                if (variateDto.getDmsattr() != null) {
 //                    variate.setDescription(variateDto.getDmsattr().getDmsatval());
 //                }else{
-                    variate.setDescription("");
+//                    variate.setDescription("");
 //                }
                 if (variateDto.getMeasuredin().getTmsMethod() != null) {
                     variate.setMethod(variateDto.getMeasuredin().getTmsMethod().getTmname());

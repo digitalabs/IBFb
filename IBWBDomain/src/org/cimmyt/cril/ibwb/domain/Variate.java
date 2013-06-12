@@ -61,6 +61,8 @@ public class Variate extends BaseFilter implements Serializable {
     private LevelN levelN;
     @Transient
     private Dmsattr dmsattr;
+    @Transient
+    private String description;
 
     public Variate() {
         setDefault();
@@ -253,6 +255,14 @@ public class Variate extends BaseFilter implements Serializable {
 
     public void setDatasN(List<DataN> datasN) {
         this.datasN = datasN;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     public int getSizeDatas(){

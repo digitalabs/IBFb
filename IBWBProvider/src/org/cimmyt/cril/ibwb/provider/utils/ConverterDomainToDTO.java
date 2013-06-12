@@ -55,6 +55,7 @@ public class ConverterDomainToDTO {
      */
     public static Factor getFactor(
             String name,
+            String description,
             String dataType,
             Study study,
             Traits traits,
@@ -81,12 +82,15 @@ public class ConverterDomainToDTO {
         factorDTO.setTmethid(tmsMethod.getTmethid());
         //Directo de condition DataType
         factorDTO.setLtype(dataType);
+        
+        factorDTO.setDescription(description);
 
         return factorDTO;
     }
 
     public static Variate getVariate(
             String name,
+            String description,
             String dataType,
             Study study,
             Traits traits,
@@ -114,6 +118,8 @@ public class ConverterDomainToDTO {
         //Directo de condition DataType
         //variateDTO.setVtype(dataType);
         variateDTO.setDtype(dataType);
+        
+        variateDTO.setDescription(description);
 
         return variateDTO;
     }
