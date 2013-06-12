@@ -69,7 +69,9 @@ public final class QuickNurseryCreationAction extends SystemAction implements Ac
                 NurseryEditorTopComponent nurseryEditor = null;
                 ArrayList<TopComponent> opened = new ArrayList<TopComponent>(WindowManager.getDefault().getRegistry().getOpened());
                 for (TopComponent t : opened) {
-                    if (t.getName().equals(SelectedStudy.selected.getStudy())) {
+                    String studyname =  t.getName();
+                    String selectedStudyName = "Nursery - "+SelectedStudy.selected.getStudy();
+                    if (studyname.equals(selectedStudyName)) {
                         nurseryEditor = (NurseryEditorTopComponent) t;
                         nurseryEditor.close();
                     }
