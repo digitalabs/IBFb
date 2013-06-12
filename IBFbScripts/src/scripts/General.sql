@@ -33,8 +33,11 @@ CREATE PROCEDURE `addCvterm`(IN cvidin int, IN cvname varchar(500), IN cvdesc va
 begin
 
 	call getNextMinReturn('cvterm', @newcvtermid);
-	insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (@newcvtermid, cvidin, cvname, cvdesc, NULL, 0, 0);
 
+	-- CVTERM unique contraint | NAME, CV_ID, IS_OBSOLETE
+	IF NOT EXISTS (SELECT 1 FROM cvterm WHERE name=cvname AND cv_id=cvidin AND is_obsolete=0) THEN
+		insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (@newcvtermid, cvidin, cvname, cvdesc, NULL, 0, 0);
+	END IF;
 
 end$$
 
@@ -43,8 +46,10 @@ drop procedure if exists `addCvtermWithID`$$
 CREATE PROCEDURE `addCvtermWithID`(IN cvterm_id_v INT, IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500))
 begin
 	
-	insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (cvterm_id_v, cvidin, cvname, cvdesc, NULL, 0, 0);
-
+	-- CVTERM unique contraint | NAME, CV_ID, IS_OBSOLETE
+	IF NOT EXISTS (SELECT 1 FROM cvterm WHERE name=cvname AND cv_id=cvidin AND is_obsolete=0) THEN
+		insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (cvterm_id_v, cvidin, cvname, cvdesc, NULL, 0, 0);
+	END IF;
 
 end$$
 
@@ -54,7 +59,13 @@ CREATE PROCEDURE `addCvtermReturnId`(IN cvidin int, IN cvname varchar(500), IN c
 begin
 
 	call getNextMinReturn('cvterm', @newcvtermid);
-	insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (@newcvtermid, cvidin, cvname, cvdesc, NULL, 0, 0);
+	-- CVTERM unique contraint | NAME, CV_ID, IS_OBSOLETE
+	IF NOT EXISTS (SELECT 1 FROM cvterm WHERE name=cvname AND cv_id=cvidin AND is_obsolete=0) THEN
+		insert into cvterm (cvterm_id, cv_id, name, definition, dbxref_id, is_obsolete, is_relationshiptype) value (@newcvtermid, cvidin, cvname, cvdesc, NULL, 0, 0);
+	ELSE
+		SELECT cvterm_id INTO @newcvtermid FROM cvterm  WHERE name=cvname AND cv_id=cvidin AND is_obsolete=0;
+	END IF;
+
 	set newcvtermidret = @newcvtermid; 
 
 end$$
@@ -65,7 +76,10 @@ CREATE PROCEDURE `addCvtermRelationship`(IN typeid int, IN subjectid int, IN obj
 begin
 
 	call getNextMinReturn('cvterm_relationship', @newcvtermrelationshipid);
-	insert into cvterm_relationship (cvterm_relationship_id, type_id, subject_id, object_id) value (@newcvtermrelationshipid, typeid, subjectid, objectid);
+	-- CVTERM_RELATIONSHIP unique constraint | OBJECT_ID, SUBJECT_ID, TYPE_ID
+	IF NOT EXISTS (SELECT 1 FROM cvterm_relationship WHERE object_id=objectid AND subject_id=subjectid AND type_id=typeid) THEN
+		insert into cvterm_relationship (cvterm_relationship_id, type_id, subject_id, object_id) value (@newcvtermrelationshipid, typeid, subjectid, objectid);
+	END IF;
 
 
 end$$
@@ -108,14 +122,17 @@ drop procedure if exists `addStock`$$
 
 CREATE PROCEDURE `addStock`(
 IN stock_id_in int,
-IN uniquename varchar(50),
+IN v_uniquename varchar(50),
 IN dbxref_id varchar(50),
 IN name varchar(50),
 IN value varchar(50))
 begin
 
-insert into stock (stock_id, type_id, uniquename, dbxref_id, name, value, is_obsolete) 
-value (stock_id_in, 8230, uniquename, dbxref_id, name, value, 0);
+-- STOCK unique constraint | ORGANISM_ID, UNIQUENAME, TYPE_ID
+IF NOT EXISTS (SELECT 1 FROM stock WHERE organism_id IS NULL AND uniquename=v_uniquename AND type_id=8230) THEN
+	insert into stock (stock_id, type_id, uniquename, dbxref_id, name, value, is_obsolete) 
+	value (stock_id_in, 8230, v_uniquename, dbxref_id, name, value, 0);
+END IF;
 
 end$$
 
