@@ -129,10 +129,10 @@ IN value varchar(50))
 begin
 
 -- STOCK unique constraint | ORGANISM_ID, UNIQUENAME, TYPE_ID
-IF NOT EXISTS (SELECT 1 FROM stock WHERE organism_id IS NULL AND uniquename=v_uniquename AND type_id=8230) THEN
+-- IF NOT EXISTS (SELECT 1 FROM stock WHERE organism_id IS NULL AND uniquename=v_uniquename AND type_id=8230) THEN
 	insert into stock (stock_id, type_id, uniquename, dbxref_id, name, value, is_obsolete) 
 	value (stock_id_in, 8230, v_uniquename, dbxref_id, name, value, 0);
-END IF;
+-- END IF;
 
 end$$
 
