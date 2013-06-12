@@ -44,19 +44,27 @@ main:begin
 
   set max_rank = (select max(rank) from projectprop where project_id = pid);
   set max_rank = max_rank + 1;
+  
+  IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=pid AND type_id=stored_id AND rank=max_rank) THEN
+    insert into projectprop (project_id, type_id, value, rank)
+    values (pid, stored_id, trim(label), max_rank);
+  END IF;
 
-  insert into projectprop (project_id, type_id, value, rank)
-  values (pid, stored_id, trim(label), max_rank);
+  IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=pid AND type_id=1060 AND rank=max_rank) THEN
+    insert into projectprop (project_id, type_id, value, rank)
+    values (pid, 1060, trim(description), max_rank);
+  END IF;
 
-  insert into projectprop (project_id, type_id, value, rank)
-  values (pid, 1060, trim(description), max_rank);
+  IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=pid AND type_id=1070 AND rank=max_rank) THEN
+    insert into projectprop (project_id, type_id, value, rank)
+    values (pid, 1070, cid, max_rank);
+  END IF;
 
-  insert into projectprop (project_id, type_id, value, rank)
-  values (pid, 1070, cid, max_rank);
-
-  if (var_type = 'STUDY'  and label_value is not null) then
-         insert into projectprop (project_id, type_id, value, rank) values (pid, cid, trim(label_value), max_rank);
-  end if;
+  IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=pid AND type_id=cid AND rank=max_rank) THEN
+    if (var_type = 'STUDY'  and label_value is not null) then
+       insert into projectprop (project_id, type_id, value, rank) values (pid, cid, trim(label_value), max_rank);
+    end if;
+  END IF;
 
   set new_ppid = last_insert_id();
   set new_rank = max_rank;
