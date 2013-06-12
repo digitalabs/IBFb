@@ -26,7 +26,6 @@ BEGIN
 
                 IF NOT EXISTS(SELECT 1 FROM projectprop WHERE project_id = v_projectid AND type_id = v_termid AND rank = v_rankint) THEN 
                     call getNextMinReturn('projectprop', @newppid);		
-		
                     insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
                 END IF;
     END IF;
@@ -45,36 +44,42 @@ BEGIN
 		-- assumption is info was added when project is added already
     END IF;
 	*/
-	IF(v_storedinid = 1020) THEN
-		call getNextMinReturn('nd_geolocationprop', @newgeoid);
+    IF(v_storedinid = 1020) THEN
+	call getNextMinReturn('nd_geolocationprop', @newgeoid);
 		
-		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
+	select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 		
+	-- ND_GEOLOCATIONPROP unique constraint | ND_GEOLOCATION_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM nd_geolocationprop WHERE nd_geolocation_id=levelno_v AND type_id=v_termid AND rank=0) THEN
 		insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, v_termid , lvaluein, 0);
+	END IF;
     END IF;
 	
-	IF(v_storedinid = 1021) THEN
-		update nd_geolocation set description = lvaluein where nd_geolocation_id = levelno_v;
+    IF(v_storedinid = 1021) THEN
+	update nd_geolocation set description = lvaluein where nd_geolocation_id = levelno_v;
     END IF;
-	IF(v_storedinid = 1022) THEN
-		update nd_geolocation set latitude = lvaluein where nd_geolocation_id = levelno_v;
+    IF(v_storedinid = 1022) THEN
+	update nd_geolocation set latitude = lvaluein where nd_geolocation_id = levelno_v;
     END IF;
-	IF(v_storedinid = 1023) THEN
-		update nd_geolocation set longitude = lvaluein where nd_geolocation_id = levelno_v;
+    IF(v_storedinid = 1023) THEN
+	update nd_geolocation set longitude = lvaluein where nd_geolocation_id = levelno_v;
     END IF;
-	IF(v_storedinid = 1024) THEN
-		update nd_geolocation set geodetic_datum = lvaluein where nd_geolocation_id = levelno_v;
+    IF(v_storedinid = 1024) THEN
+	update nd_geolocation set geodetic_datum = lvaluein where nd_geolocation_id = levelno_v;
     END IF;
-	IF(v_storedinid = 1025) THEN
-		update nd_geolocation set altitude = lvaluein where nd_geolocation_id = levelno_v;
+    IF(v_storedinid = 1025) THEN
+	update nd_geolocation set altitude = lvaluein where nd_geolocation_id = levelno_v;
     END IF;
 	
 	IF(v_storedinid = 1030) THEN
 		call getNextMinReturn('nd_experimentprop', @newexpid);
 		
 		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
-		
-		insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
+
+		-- ND_EXPERIMENTPROP unique constraint | ND_EXPERIMENT_ID, TYPE_ID, RANK
+	        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE nd_experiment_id=levelno_v AND type_id=v_termid AND rank=0) THEN
+			insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
+		END IF;
 		
     END IF;
 	IF(v_storedinid = 1040) THEN
@@ -82,7 +87,10 @@ BEGIN
 		
 		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 		
-		insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, v_termid , lvaluein, 0);
+		-- STOCKPROP unique constraint | STOCK_ID, TYPE_ID, RANK
+                IF NOT EXISTS(SELECT 1 FROM stockprop WHERE stock_id=levelno_v AND type_id=v_termid AND rank=0) THEN 
+			insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, v_termid , lvaluein, 0);
+		END IF;
     END IF;
 	IF(v_storedinid = 1041) THEN
 			update stock set uniquename = lvaluein where stock_id = levelno_v;
