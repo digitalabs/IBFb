@@ -63,13 +63,18 @@ START TRANSACTION;
 	
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_project_id,v_tid,v_vname,v_rank);
-	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=v_tid AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,v_tid,v_vname,v_rank);
+	END IF;
+
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_project_id,1060,v_vname,v_rank);
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1060 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1060,v_vname,v_rank);
+	END IF;
 	
 	SELECT distinct cvttrait.subject_id into v_type_id 
     FROM cvterm_relationship cvttrait
@@ -82,9 +87,11 @@ START TRANSACTION;
     
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
-	
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1070 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
+	END IF;
+
 	SELECT v_projectprop_id;
 
 COMMIT;	
