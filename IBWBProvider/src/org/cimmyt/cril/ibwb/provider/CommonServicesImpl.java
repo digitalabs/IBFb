@@ -844,7 +844,7 @@ public class CommonServicesImpl implements CommonServices {
             factor.setIslocal(0);
         }
         return this.utilityDAO.callStoredProcedureForList(factor, "getMainFactorsByStudyid", new String[]{"studyid", "islocal"},
-                new String[]{"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+                new String[]{"labelid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid", "description"});
 
 
     }
@@ -4595,7 +4595,7 @@ public class CommonServicesImpl implements CommonServices {
         input.put("v_isLocal", isLocal()? 1 : 0);
         
         return utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByStudyId", input, new String[] {"v_studyid", "v_isLocal"}, 
-                new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid"});
+                new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid", "description"});
     }
     
     @Override

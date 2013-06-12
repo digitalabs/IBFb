@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Arrays;
 import java.util.List;
+import org.cimmyt.cril.ibwb.domain.Factor;
 import org.cimmyt.cril.ibwb.domain.LevelC;
 import org.cimmyt.cril.ibwb.domain.LevelCPK;
 import org.cimmyt.cril.ibwb.domain.LevelN;
@@ -231,6 +232,43 @@ public class TestTrialRandomization extends TestService {
         }
     }
     
+    public void testGetMainFactorsByStudyId() {
+        System.out.println("testGetMainFactorsByStudyId");
+        List<Factor> list = servicios.getLocalCommonService().getMainFactorsByStudyid(-51);
+        if (list != null && list.size() > 0) {
+            System.out.println("SIZE : " + list.size());
+            for (Factor factor : list) {
+                System.out.println(factor);
+            }
+        } else {
+            System.out.println("NO FACTOR DATA FOUND");
+        }
+    }
+    
+    public void testGetFactorsByStudyId() {
+        System.out.println("testGetFactorsByStudyId");
+        List<Factor> list = servicios.getLocalCommonService().getFactorsByStudyId(-51);
+        if (list != null && list.size() > 0) {
+            System.out.println("SIZE : " + list.size());
+            for (Factor factor : list) {
+                System.out.println(factor);
+            }
+        } else {
+            System.out.println("NO FACTOR DATA FOUND");
+        }
+    }
+    
+    public void testGetFactorByStudyidAndFname() {
+        System.out.println("testGetFactorByStudyidAndFname");
+        Factor factor = servicios.getLocalCommonService().getFactorByStudyidAndFname(-51, "PIID");
+        if (factor != null) {
+            System.out.println(factor);
+            
+        } else {
+            System.out.println("NO FACTOR DATA FOUND");
+        }
+    }
+    
     public static void main(String[] args) {
         try {
             TestTrialRandomization test = new TestTrialRandomization();
@@ -247,7 +285,10 @@ public class TestTrialRandomization extends TestService {
             //test.testGetVarieteFromVeffects();
             //test.testCopyCvTerm();
             //test.testGetListGermplasmAndPlotByStudyidAndTrial();
-            test.testGetListGermplasmAndPlotByStudyidAndTrial2();
+            //test.testGetListGermplasmAndPlotByStudyidAndTrial2();
+            //test.testGetMainFactorsByStudyId();
+            //test.testGetFactorsByStudyId();
+            test.testGetFactorByStudyidAndFname();
             
         } catch(Exception e) {
             e.printStackTrace();

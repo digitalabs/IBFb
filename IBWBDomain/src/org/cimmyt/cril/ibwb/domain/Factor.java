@@ -68,6 +68,8 @@ public class Factor extends BaseFilter implements Serializable {
     private Map<Integer, LevelN> mapLevels;
     @Transient
     private int islocal;
+    @Transient
+    private String description;
 
     public Factor() {
         setDefault();
@@ -349,6 +351,14 @@ public class Factor extends BaseFilter implements Serializable {
 	public void setIslocal(int islocal) {
 		this.islocal = islocal;
 	}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
     
 }

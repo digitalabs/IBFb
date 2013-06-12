@@ -47,6 +47,7 @@ public class ConverterDTOtoDomain {
             }else{
                 condition.setProperty(null);
             }
+            condition.setDescription(factorDto.getDescription());
 //            if (factorDto.getDmsattr() != null) {
 //                condition.setDescription(factorDto.getDmsattr().getDmsatval());
 //            }
@@ -115,6 +116,7 @@ public class ConverterDTOtoDomain {
             }else{
                 condition.setProperty(null);
             }
+            condition.setDescription(factorDto.getDescription());
 //            if (factorDto.getDmsattr() != null) {
 //                condition.setDescription(factorDto.getDmsattr().getDmsatval());
 //            }

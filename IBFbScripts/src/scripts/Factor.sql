@@ -14,6 +14,7 @@ begin
     " , MIN(tmethid) AS tmethid ",
     " , ltype ",
     " , MIN(tid) AS tid ",
+    " , fdesc AS description ", 
     " FROM ( ",
     " SELECT ",
     "  f.projectprop_id AS labelid ",
@@ -25,6 +26,7 @@ begin
     "  , methrel.object_id AS tmethid ",
     "  , IF(f.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype ",
     "  , f.storedinid AS tid ",
+    "  , fdesc.value AS fdesc ",
     " FROM ",
     "  v_factor f ",
     "  INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank ",
@@ -32,6 +34,8 @@ begin
     "  INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220 ",
     "  INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210 ",
     "  INNER JOIN project_relationship pr ON pr.type_id = 1145 AND pr.subject_project_id = f.project_id ",
+    "  INNER JOIN projectprop fdesc ON fdesc.project_id = f.project_id AND fdesc.rank = f.rank ",
+    "    AND fdesc.type_id = 1060 ",
     " WHERE ",
     "  f.project_id =  ", v_studyid, 
     "  AND f.factorid = f.projectprop_id ",
@@ -46,6 +50,7 @@ begin
     "  , methrel.object_id AS tmethid ",
     "  , IF(f.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype ",
     "  , f.storedinid AS tid ",
+    "  , fdesc.value AS fdesc ",
     " FROM ",
     "  v_factor f ",
     "  INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank ",
@@ -53,20 +58,23 @@ begin
     "  INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220 ",
     "  INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210 ",
     "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = f.project_id ",
+    "  INNER JOIN projectprop fdesc ON fdesc.project_id = f.project_id AND fdesc.rank = f.rank ",
+    "    AND fdesc.type_id = 1060 ",
     " WHERE ",
     "  pr.object_project_id = ", v_studyid, 
     "  AND f.varid NOT IN (SELECT varid FROM v_factor WHERE project_id = ", v_studyid, ") ",
     "  AND f.factorid = f.projectprop_id ",
     ") AS x ",
-    " GROUP BY traitid, scaleid, fname, ltype ");
-	IF(v_islocal = 1) THEN
-		SET @sql = CONCAT(@sql,"ORDER BY labelid DESC");
-	ELSE
-		SET @sql = CONCAT(@sql,"ORDER BY labelid ASC");
-	END IF;
-	
-	PREPARE stmt FROM @sql;
-	EXECUTE stmt;
+    " GROUP BY traitid, scaleid, fname, ltype, fdesc ");
+
+    IF(v_islocal = 1) THEN
+            SET @sql = CONCAT(@sql,"ORDER BY labelid DESC");
+    ELSE
+            SET @sql = CONCAT(@sql,"ORDER BY labelid ASC");
+    END IF;
+
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
 	
 end$$ 
 
@@ -274,6 +282,7 @@ BEGIN
       , methrel.object_id AS tmethid
       , IF(f.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype
       , f.storedinid AS tid
+      , fdesc.value AS description
     FROM
       v_factor f
       INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank
@@ -281,6 +290,7 @@ BEGIN
       INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220
       INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210
       INNER JOIN project_relationship pr ON pr.type_id = 1150 AND (f.project_id = pr.subject_project_id OR f.project_id = pr.object_project_id) 
+      INNER JOIN projectprop fdesc ON fdesc.project_id = f.project_id AND fdesc.rank = f.rank AND fdesc.type_id = 1060
     WHERE
       pr.object_project_id = ? ";
     
