@@ -120,7 +120,10 @@ public class GermplasmEntriesTableModelChecks extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         List<Object> columnValues = germplasmData.get(rowIndex);
-        return columnValues.get(columnIndex);
+        if(columnValues.get(columnIndex) == null)
+                return "";
+        else
+            return columnValues.get(columnIndex);
     }
 
     @Override
