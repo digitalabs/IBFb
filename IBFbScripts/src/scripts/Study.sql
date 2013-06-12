@@ -23,8 +23,11 @@ START TRANSACTION;
 	
 SET foreign_key_checks = 0;
 
-	INSERT INTO project(project_id,name,description)
-	VALUES(v_studyid,v_sname,v_title);
+	-- PROJECT unique constraint | NAME
+	IF NOT EXISTS (SELECT 1 FROM project WHERE name=v_sname) THEN
+  		INSERT INTO project(project_id,name,description)
+		VALUES(v_studyid,v_sname,v_title);
+	END IF;
 	
 	CALL getNextMinReturn('project_relationship',v_project_relationship_id);
 	
@@ -35,204 +38,321 @@ SET foreign_key_checks = 0;
             SET @relationship := 1145;
         END IF;
 
-	INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
-	VALUE(v_project_relationship_id, @relationship ,v_shierarchy,v_studyid);
+	-- PROJECT_RELATIONSHIP unique constraint | SUBJECT_PROJECT_ID, OBJECT_PROJECT_ID, TYPE_ID
+	IF NOT EXISTS (SELECT 1 FROM project_relationship WHERE subject_project_id=v_studyid AND object_project_id=v_shierarchy AND type_id=@relationship) THEN
+		INSERT INTO project_relationship(project_relationship_id,type_id,object_project_id,subject_project_id)
+		VALUE(v_project_relationship_id, @relationship ,v_shierarchy,v_studyid);
+	END IF;
 	
 	CALL getNextMinReturn('projectprop',v_projectprop_id);
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1011,'STUDY',1);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1011 AND rank=1) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1011,'STUDY',1);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'STUDY NAME',1);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=1) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'STUDY NAME',1);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8005,1);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=1) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8005,1);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1012,'TITLE',2);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1012 AND rank=2) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1012,'TITLE',2);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'TITLE ASSIGNED',2);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=2) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'TITLE ASSIGNED',2);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8007,2);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=2) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8007,2);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'PMKEY',3);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=3) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'PMKEY',3);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'PROJECT MANAGEMENT KEY',3);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=3) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'PROJECT MANAGEMENT KEY',3);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8040,3);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=3) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8040,3);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8040,v_pmkey,3);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8040 AND rank=3) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8040,v_pmkey,3);
+	END IF;
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=4) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'OBJECTIVE',4);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'OBJECTIVE',4);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=4) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'OBJECTIVE DESCRIBED',4);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'OBJECTIVE DESCRIBED',4);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=4) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8030,4);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8030 AND rank=4) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8030,v_objectiv,4);
+	END IF;
+	
+	SET v_projectprop_id := v_projectprop_id - 1;
+
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=5) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'START DATE',5);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8030,4);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=5) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'STUDY START DATE',5);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=5) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8050,5);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8050 AND rank=5) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8050,v_sdate,5);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=6) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'END DATE',6);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8030,v_objectiv,4);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=6) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'STUDY END DATE',6);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=6) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8060,6);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'START DATE',5);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8060 AND rank=6) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8060,v_edate,6);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=7) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'STUDY TYPE',7);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=7) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'TYPE OF STUDY',7);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'STUDY START DATE',5);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=7) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8070,7);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8050,5);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8070 AND rank=7) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8070 as type_id, cvterm_id as value, 7 as rank
+		FROM cvterm
+		WHERE name = v_stype
+	  	AND cv_id = 2010;
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8050,v_sdate,5);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=8) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'PIID',8);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'END DATE',6);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=8) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'ID OF PRINCIPAL INVESTIGATOR',8);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'STUDY END DATE',6);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=8) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8110,8);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8060,6);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8110 AND rank=8) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8110,v_investid,8);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8060,v_edate,6);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1010 AND rank=9) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1010,'STUDY UID',9);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'STUDY TYPE',7);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=9) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'STUDY USER ID',9);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'TYPE OF STUDY',7);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=9) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8020,9);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8070,7);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8020 AND rank=9) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,8020,v_userid,9);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8070 as type_id, cvterm_id as value, 7 as rank
-	FROM cvterm
-	WHERE name = v_stype
-  	AND cv_id = 2010;
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1011 AND rank=10) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1011,'STUDY_STATUS',10);
+	END IF;
+
+	SET v_projectprop_id := v_projectprop_id - 1;
+	
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1060 AND rank=10) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1060,'Study status (1=active, 2=private, 3=locked, 9=deleted)',10);	
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'PIID',8);
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=1070 AND rank=10) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_studyid,1070,8006,10);
+	END IF;
 	
 	SET v_projectprop_id := v_projectprop_id - 1;
 	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'ID OF PRINCIPAL INVESTIGATOR',8);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8110,8);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8110,v_investid,8);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1010,'STUDY UID',9);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'STUDY USER ID',9);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8020,9);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,8020,v_userid,9);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1011,'STUDY_STATUS',10);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1060,'Study status (1=active, 2=private, 3=locked, 9=deleted)',10);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	VALUES(v_projectprop_id,v_studyid,1070,8006,10);
-	
-	SET v_projectprop_id := v_projectprop_id - 1;
-	
-	INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
-	SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8006 as type_id, cvterm_id as value, 10 as rank
-	FROM cvterm
-	WHERE name = v_sstatus
-  	AND cv_id = 2005;
+	-- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+	IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_studyid AND type_id=8006 AND rank=10) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		SELECT v_projectprop_id AS projectprop_id, v_studyid AS project_id, 8006 as type_id, cvterm_id as value, 10 as rank
+		FROM cvterm
+		WHERE name = v_sstatus
+  		AND cv_id = 2005;
+	END IF;
   	
 
 COMMIT;
