@@ -159,20 +159,26 @@ IF(v_phenotype_id IS NULL) THEN
 	and object_id = ct.cvterm_id
 	and subject_id = v_phenotype_name
 	and exists (
-    select 1 
-    from projectprop pp, projectprop label
-    where pp.project_id = label.project_id
-    and pp.rank = label.rank
-    and label.type_id = 1048
-    and pp.projectprop_id = v_variatid);
+    	select 1 
+    	from projectprop pp, projectprop label
+    	where pp.project_id = label.project_id
+    	and pp.rank = label.rank
+    	and label.type_id = 1048
+	and pp.projectprop_id = v_variatid);
 	
-	insert into phenotype(phenotype_id,uniquename,name,observable_id,attr_id,value,cvalue_id,assay_id) 
-	values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalue_id,NULL);
-	
+        -- PHENOTYPE unique constraint | name
+        IF NOT EXISTS(SELECT 1 FROM phenotype WHERE name=v_phenotype_name) THEN
+		insert into phenotype(phenotype_id,uniquename,name,observable_id,attr_id,value,cvalue_id,assay_id) 
+		values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalue_id,NULL);
+	END IF;	
+
 	CALL getNextMinReturn('nd_experiment_phenotype',v_nd_experiment_phenotype_id);
 	
-	insert into nd_experiment_phenotype(nd_experiment_phenotype_id,nd_experiment_id,phenotype_id)
-	values(v_nd_experiment_phenotype_id,v_ounitid,v_phenotype_id);
+        -- ND_EXPERIMENT_PHENOTYPE unique constraint | ND_EXPERIMENT_ID, PHENOTYPE_ID
+        IF NOT EXISTS(SELECT 1 FROM nd_experiment_phenotype WHERE nd_experiment_id=v_ounitid AND phenotype_id=v_phenotype_id) THEN
+		insert into nd_experiment_phenotype(nd_experiment_phenotype_id,nd_experiment_id,phenotype_id)
+		values(v_nd_experiment_phenotype_id,v_ounitid,v_phenotype_id);
+	END IF;
 
     END IF;
 
