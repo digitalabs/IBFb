@@ -77,7 +77,7 @@ BEGIN
 		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
 
 		-- ND_EXPERIMENTPROP unique constraint | ND_EXPERIMENT_ID, TYPE_ID, RANK
-	        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE nd_experiment_id=levelno_v AND type_id=v_termid AND rank=0) THEN
+	        IF NOT EXISTS (SELECT 1 FROM nd_experimentprop WHERE nd_experiment_id=levelno_v AND type_id=v_termid AND rank=0) THEN
 			insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
 		END IF;
 		
