@@ -28,7 +28,12 @@ delimiter $$
 
 DROP PROCEDURE IF EXISTS `getTraitListByTrait` $$
 
-CREATE PROCEDURE `getTraitListByTrait`(IN tid int, IN traitId int, IN traitName varchar(255), IN traitDescription varchar(255), IN traitGroup varchar(255))
+CREATE PROCEDURE `getTraitListByTrait`(
+IN tid int, 
+IN traitId int, 
+IN traitName varchar(255) character set utf8, 
+IN traitDescription varchar(255) character set utf8, 
+IN traitGroup varchar(255) character set utf8)
 BEGIN
 
 SET @mySQL := 'SELECT DISTINCT
