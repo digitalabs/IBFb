@@ -536,7 +536,7 @@ public class HelperWorkbookUpdate {
 
                 variateDomain.setVariateId(variate.getVariatid());
                 
-                Represtn represtn = localServices.getReprestnForStudyId(dbStudy.getStudyid(),Represtn.STEFFECTNAMEMEASUREMENT);
+                Represtn represtn = localServices.getReprestnForStudyId(dbStudy.getStudyid(),Represtn.STEFFECTNAMEMEASUREMENT+"_"+dbStudy.getSname());
                 
                 Veffect veffect = new Veffect();
                 VeffectPK veffectPK = new VeffectPK();

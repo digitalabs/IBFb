@@ -2843,7 +2843,9 @@ public final class StudyEditorTopComponent extends TopComponent {
     public void defineTabs() {
         switch (this.getCROP()) {
             case CROP.WHEAT:
-                this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
+                if(jTabbedPaneEditor.getTabCount() > 8)
+                    this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
+                    // this.jTabbedPaneEditor.removeTabAt(7); //remove MASTER tab
 
 
                 break;
@@ -2853,7 +2855,9 @@ public final class StudyEditorTopComponent extends TopComponent {
                 break;
 
             case CROP.OTHERCROPS:
-                this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
+                if(jTabbedPaneEditor.getTabCount() > 8)
+                    this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
+                    //this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
 
                 break;
 
