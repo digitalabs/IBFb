@@ -240,14 +240,14 @@ public class HelperWorkbook {
 
 
         //Integer levelNoNdGeoLocationId = this.localServices.addNdGeolocation();
-
+/*
         //Guardando levels for study
         log.info("Saving levels for study....");
         //levelno should be study id
         Integer levelNo = study.getStudyid();
         Integer studyNdExperimentId = saveLevelsStudy(levelNo, 1);
         log.info("Saving levels for study DONE!");
-
+*/
         //insert geolocation - daniel
         //level no = geolocation id
         //Guardando levels for Trials
@@ -262,6 +262,14 @@ public class HelperWorkbook {
                 this.localServices);
         log.info("Saving levels for trial DONE!");
         //insert stock record - daniel
+
+        //Guardando levels for study
+        log.info("Saving levels for study....");
+        //levelno should be study id
+        Integer levelNo = study.getStudyid();
+        int studyLocation = levelNoNdGeolocationIds != null && levelNoNdGeolocationIds.size() == 1 ? levelNoNdGeolocationIds.get(0) : 1;
+        Integer studyNdExperimentId = saveLevelsStudy(levelNo, studyLocation);
+        log.info("Saving levels for study DONE!");
 
         //Salvar levels para grupos de convinaciones de PLOT
         log.info("Saving levels for plots....");
@@ -1201,7 +1209,11 @@ public class HelperWorkbook {
 //                    }
                 }
             } else {
-                HelperFactor.saveLevel(factorStudyTemp, levelNo, condition.getValue(), localServices);
+                if (factorStudyTemp.getTid() != null && factorStudyTemp.getTid() >= 1020 && factorStudyTemp.getTid() <= 1025) {
+                    HelperFactor.saveLevel(factorStudyTemp, levelNoNdGeoLocationId, condition.getValue(), localServices);
+                } else {
+                   HelperFactor.saveLevel(factorStudyTemp, levelNo, condition.getValue(), localServices);
+                }
             }
         }
         HelperFactor.addLevels(listStudyFactors.get(0).getFactorid(), levelNo, localServices);
