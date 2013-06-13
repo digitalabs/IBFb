@@ -80,7 +80,10 @@ end$$
 
 drop procedure if exists `addTraits`$$
 
-CREATE PROCEDURE `addTraits` (IN trname varchar(255), IN trdesc varchar(255), IN traitgroup varchar(255))
+CREATE PROCEDURE `addTraits` (
+IN trname varchar(255) character set utf8, 
+IN trdesc varchar(255) character set utf8, 
+IN traitgroup varchar(255) character set utf8)
 begin
         declare v_traitgroupid int default 0;
         declare v_newcvtermid int;
