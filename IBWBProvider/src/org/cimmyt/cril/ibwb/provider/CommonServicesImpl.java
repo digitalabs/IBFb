@@ -2479,7 +2479,7 @@ public class CommonServicesImpl implements CommonServices {
         //this.studyDAO.update(study);
         if (isLocal()) {
         	if(study.getShierarchy()!=null && study.getShierarchy()==0) {
-            	study.setShierarchy(-1);//workaround
+            	study.setShierarchy(1);//workaround
             }
             this.utilityDAO.callStoredProcedureForUpdate(study, "updateStudy",
                     "studyid", "sname", "pmkey", "title", "objectiv",
@@ -2504,7 +2504,7 @@ public class CommonServicesImpl implements CommonServices {
         Study study = new Study();
         study.setStudyid(idStudy);
         if(study.getShierarchy()!=null && study.getShierarchy()==0) {
-        	study.setShierarchy(-1);//workaround
+        	study.setShierarchy(1);//workaround
         }
         //this.studyDAO.findById(idStudy);
         return utilityDAO.callStoredProcedureForObject(study, "getStudyById", new String[]{"studyid"},
