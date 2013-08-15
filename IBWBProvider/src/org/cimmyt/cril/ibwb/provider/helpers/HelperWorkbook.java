@@ -1187,7 +1187,7 @@ public class HelperWorkbook {
      * @param levelNo
      * @return
      */
-    public Integer saveLevelsStudy(Integer levelNo, Integer levelNoNdGeoLocationId, int oindexId) {
+    public Integer saveLevelsStudy(Integer levelNo, Integer levelNoNdGeoLocationId, Integer oindexId) {
         Factor factorStudy = mapStudyFactors.get(labelStudy);
         // Save all levels for study
         HelperFactor.saveLevel(factorStudy, levelNo, study.getSname(), localServices);
