@@ -46,7 +46,7 @@ begin
 DECLARE v_project_relationship_id int;
 DECLARE v_projectprop_id int;
 
-START TRANSACTION;
+-- START TRANSACTION;
 
 CALL getNextMinReturn('project',v_effectid);
 
@@ -113,7 +113,7 @@ IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_effectid AND type_id
   VALUES(v_projectprop_id,v_effectid,1070,'8155',2);
 END IF;
 
-COMMIT;
+-- COMMIT;
 
 SELECT v_effectid;
 

@@ -16,7 +16,7 @@ CREATE PROCEDURE `exportProjectPropEntriesToDmsattr`()
 BEGIN
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 
     INSERT INTO dmsattr(dmsatid, dmsatype, dmsatab, dmsatrec, dmsatval)
     SELECT  DISTINCT ppStandardVar.projectprop_id AS dmsatid
@@ -43,7 +43,7 @@ START TRANSACTION;
                         AND ppValue.type_id = 1060
     ;
 
-COMMIT;
+-- COMMIT;
 
 END$$
 

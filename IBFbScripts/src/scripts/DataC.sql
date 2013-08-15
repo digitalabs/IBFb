@@ -135,7 +135,7 @@ DECLARE v_cvalue_id int;
 DECLARE v_nd_experiment_phenotype_id int;
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 
 select ph.phenotype_id into v_phenotype_id
 from nd_experiment_phenotype nep, phenotype ph, projectprop pp 
@@ -199,6 +199,6 @@ ELSE
 	
 END IF;
 
-COMMIT;
+-- COMMIT;
 
 end$$

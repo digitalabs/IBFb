@@ -89,7 +89,7 @@ IN v_is_a int)
 begin
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 
 	SET @name = CONCAT(v_name,"-",v_traitid,"-",v_tmethid,"-",v_scaleid);
 	
@@ -121,7 +121,7 @@ START TRANSACTION;
 
 	call addCvtermRelationship(1225, @newcvtermid, v_is_a);
 
-COMMIT;	
+-- COMMIT;	
 	
 end$$
 
@@ -154,7 +154,7 @@ BEGIN
 
   IF p_cvTermId > 0 THEN
 
-    START TRANSACTION;
+    -- START TRANSACTION;
 
     -- "has property"
     CALL copyCvTermRelationship(p_cvTermId, 1200, centralSchema);
@@ -177,7 +177,7 @@ BEGIN
     -- "has value"
     CALL copyCvTermRelationship(p_cvTermId, 1190, centralSchema);
 
-    COMMIT;
+    -- COMMIT;
   END IF;
 
 END$$
@@ -192,7 +192,7 @@ IN v_scaleid int)
 begin
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 	
 	
 	IF (v_traitid IS NOT NULL) THEN
@@ -216,7 +216,7 @@ START TRANSACTION;
 		   AND subject_id = v_measuredinid;
 	END IF;
 
-COMMIT;	
+-- COMMIT;	
 	
 end$$
 

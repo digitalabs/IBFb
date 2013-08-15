@@ -19,7 +19,7 @@ begin
 
 DECLARE v_projectprop_id int;
 DECLARE v_project_relationship_id int; 
-START TRANSACTION;
+-- START TRANSACTION;
 	
 SET foreign_key_checks = 0;
 
@@ -355,7 +355,7 @@ SET foreign_key_checks = 0;
 	END IF;
   	
 
-COMMIT;
+-- COMMIT;
 
 end$$
 
@@ -380,7 +380,7 @@ DECLARE v_projectprop_id int;
 DECLARE v_project_relationship_id int;
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 	
 	UPDATE project
 	SET name = v_sname
@@ -441,7 +441,7 @@ START TRANSACTION;
 	set object_project_id = v_shierarchy 
 	where pr.subject_project_id = v_studyid;
 	
-COMMIT;
+-- COMMIT;
 
 end$$
 
@@ -574,7 +574,7 @@ begin
 declare v_prevname varchar(50);
 declare v_postfix varchar(50);
 
-START TRANSACTION;
+-- START TRANSACTION;
 
 	update projectprop pp
 	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005) 
@@ -606,6 +606,6 @@ START TRANSACTION;
 	);	
 	
 
-COMMIT;
+-- COMMIT;
 
 end$$ 
