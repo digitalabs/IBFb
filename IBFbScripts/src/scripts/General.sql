@@ -29,7 +29,7 @@ end$$
 
 drop procedure if exists `addCvterm`$$
 
-CREATE PROCEDURE `addCvterm`(IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500))
+CREATE PROCEDURE `addCvterm`(IN cvidin int, IN cvname varchar(200), IN cvdesc varchar(255))
 begin
 
 	call getNextMinReturn('cvterm', @newcvtermid);
@@ -43,7 +43,7 @@ end$$
 
 drop procedure if exists `addCvtermWithID`$$
 
-CREATE PROCEDURE `addCvtermWithID`(IN cvterm_id_v INT, IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500))
+CREATE PROCEDURE `addCvtermWithID`(IN cvterm_id_v INT, IN cvidin int, IN cvname varchar(200), IN cvdesc varchar(255))
 begin
 	
 	-- CVTERM unique contraint | NAME, CV_ID, IS_OBSOLETE
@@ -55,7 +55,7 @@ end$$
 
 drop procedure if exists `addCvtermReturnId`$$
 
-CREATE PROCEDURE `addCvtermReturnId`(IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500), OUT newcvtermidret INT)
+CREATE PROCEDURE `addCvtermReturnId`(IN cvidin int, IN cvname varchar(200), IN cvdesc varchar(255), OUT newcvtermidret INT)
 begin
 
 	call getNextMinReturn('cvterm', @newcvtermid);
@@ -87,7 +87,7 @@ end$$
 
 drop procedure if exists `updateCvterm`$$
 
-CREATE PROCEDURE `updateCvterm`(IN cvtermid int, IN cvname varchar(500), IN cvdesc varchar(500))
+CREATE PROCEDURE `updateCvterm`(IN cvtermid int, IN cvname varchar(200), IN cvdesc varchar(255))
 begin
 
 	update cvterm
@@ -100,7 +100,7 @@ end$$
 
 drop procedure if exists `addNdGeolocation`$$
 
-CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int, IN description_v varchar(500))
+CREATE PROCEDURE `addNdGeolocation`(IN nd_geolocation_id_v int, IN description_v varchar(255))
 begin
 
 /* nd_geolocation_id 	description 	latitude 	longitude 	geodetic_datum 	altitude */

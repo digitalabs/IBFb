@@ -126,7 +126,7 @@ drop procedure if exists addOrUpdateDataC$$
 CREATE PROCEDURE addOrUpdateDataC(
 IN v_ounitid int,
 IN v_variatid int,
-IN v_dvalue varchar(50))
+IN v_dvalue varchar(255))
 begin
 
 DECLARE v_phenotype_id int;

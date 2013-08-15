@@ -50,7 +50,7 @@ DECLARE v_rank int;
 DECLARE v_type_id int;
 
 
-START TRANSACTION;
+-- START TRANSACTION;
 
 	SELECT MAX(rank) + 1 as rank INTO v_rank 
 	FROM projectprop pp
@@ -95,7 +95,7 @@ START TRANSACTION;
 
 	SELECT v_projectprop_id;
 
-COMMIT;	
+-- COMMIT;	
 	
 end$$
 

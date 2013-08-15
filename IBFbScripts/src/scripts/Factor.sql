@@ -189,7 +189,7 @@ CREATE PROCEDURE addFactor(
 IN v_labelid int,
 IN v_factorid int,
 IN v_studyid int,
-IN v_fname varchar(50),
+IN v_fname varchar(255),
 IN v_traitid int,
 IN v_scaleid int,
 IN v_tmethid int,
