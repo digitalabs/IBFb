@@ -81,7 +81,7 @@ end$$
 drop procedure if exists `addTraits`$$
 
 CREATE PROCEDURE `addTraits` (
-IN trname varchar(255) character set utf8, 
+IN trname varchar(200) character set utf8, 
 IN trdesc varchar(255) character set utf8, 
 IN traitgroup varchar(255) character set utf8)
 begin

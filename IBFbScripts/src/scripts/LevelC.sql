@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS `addLevelC`$$
 CREATE PROCEDURE `addLevelC`(
   IN labelidin int
   , IN factoridin int
-  , IN lvaluein varchar(500)
+  , IN lvaluein varchar(255)
   , IN levelno_v int)
 
 BEGIN
@@ -121,7 +121,7 @@ CREATE PROCEDURE `updateLevelC`(
   IN labelidin int
   , IN factoridin int
   , IN levelnoin int
-  , IN lvaluein varchar(500))
+  , IN lvaluein varchar(255))
 
 BEGIN
 

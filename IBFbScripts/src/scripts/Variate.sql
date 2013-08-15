@@ -34,7 +34,7 @@ drop procedure if EXISTS addVariate$$
 
 CREATE PROCEDURE addVariate(
 IN v_studyid int,
-IN v_vname varchar(50),
+IN v_vname varchar(255),
 IN v_traitid int,
 IN v_scaleid int,
 IN v_tmethid int,

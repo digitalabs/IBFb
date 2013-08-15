@@ -4,7 +4,7 @@ drop procedure if exists `getScales`$$
 
 CREATE PROCEDURE `getScales`(
 IN v_scaleid int,
-IN v_scname varchar(50) character set utf8, 
+IN v_scname varchar(200) character set utf8, 
 IN v_sctype varchar(10) character set utf8)
 begin
 
@@ -35,7 +35,7 @@ drop procedure if exists `searchScales`$$
 
 CREATE PROCEDURE `searchScales`(
 IN v_scaleid int,
-IN v_scname varchar(50) character set utf8, 
+IN v_scname varchar(200) character set utf8, 
 IN v_sctype varchar(10) character set utf8)
 begin
 
@@ -88,7 +88,7 @@ end$$
 drop procedure if exists `getScalesByScnameAndSctype`$$
 
 CREATE PROCEDURE `getScalesByScnameAndSctype`(
-IN v_scname varchar(50) character set utf8, 
+IN v_scname varchar(200) character set utf8, 
 IN v_sctype varchar(10) character set utf8)
 begin
 

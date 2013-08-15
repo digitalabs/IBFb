@@ -3,7 +3,7 @@ drop procedure if exists `getListTmsMethod`$$
 
 CREATE PROCEDURE `getListTmsMethod` (
 IN v_tmethid int,
-IN v_tmname varchar(50) character set utf8,
+IN v_tmname varchar(200) character set utf8,
 IN v_tmdesc varchar(255) character set utf8)
 begin
 	SET @sql := CONCAT("SELECT cvterm_id AS tmethid, ",
