@@ -1949,7 +1949,7 @@ public interface CommonServices {
      *
      * @param oindex Objeto a agregar
      */
-    public void addOindex(int experimentId, int projectId);
+    public void addOindex(int oindexId, int experimentId, int projectId);
 
     /**
      * Updates a record of type Oindex in database
@@ -3752,4 +3752,6 @@ public interface CommonServices {
     public Integer getStoredInId(int traitid, int scaleid, int methodid);
     public List<Factor> getFactorsByStudyId(int studyId);
     public List<Variate> getStudyConstants(int studyId);
+    
+    public Integer getNextMin(String tableName);
 }
