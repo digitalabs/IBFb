@@ -332,10 +332,9 @@ public class HelperWorkbook {
         //=======================
         //Salvar oindex con todas la convinaciones datos
         //=======================
-
+       oindexId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_PROJECT);
        saveOindex3(oindexId, obsunits, represtns, this.localServices, workbook.getMeasurements());
 
-       KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
 
     }
 
@@ -1194,6 +1193,7 @@ public class HelperWorkbook {
 
         Integer ndExperimentId = localServices.addNdExperiment(levelNoNdGeoLocationId, 1010);
         localServices.addOindex(--oindexId, ndExperimentId, study.getStudyid());
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
         
         
         // Save level for each factor in study condition
@@ -1716,6 +1716,7 @@ public class HelperWorkbook {
             }*/
            i++;
         }
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
     }
 
     private void incrementar(Represtn represtn) {
