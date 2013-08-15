@@ -3311,6 +3311,10 @@ public class IBWBAppServicesImpl implements AppServices {
 
         Steffect steffect = new Steffect(true);
         steffect.setStudyid(studyId);
+       Integer oindexId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_PROJECT);
+       if (oindexId == null) {
+           oindexId = serviciosLocal.getNextMin(TableEnum.EXPERIMENT_PROJECT.getName());
+       }
         for (Steffect steffectTemp : this.serviciosCentral.getListSteffect(steffect, 0, 0, false)) {
             this.serviciosLocal.addSteffect(steffectTemp);
             Represtn represtn = new Represtn(true);
@@ -3321,7 +3325,7 @@ public class IBWBAppServicesImpl implements AppServices {
                 oindex.setOindexPK(new OindexPK());
                 oindex.getOindexPK().setRepresno(represtn1.getRepresno());
                 for (Oindex oindex1 : this.serviciosCentral.getListOindex(oindex, 0, 0, false)) {
-                    this.serviciosLocal.addOindex(oindex1.getOindexPK().getOunitid(), represtn1.getRepresno());
+                    this.serviciosLocal.addOindex(--oindexId, oindex1.getOindexPK().getOunitid(), represtn1.getRepresno());
                 }
             }
             Effect effect = new Effect(true);
@@ -3337,6 +3341,7 @@ public class IBWBAppServicesImpl implements AppServices {
             }
 
         }
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
     }
 
     public boolean validarStudy(Workbook workbook) {

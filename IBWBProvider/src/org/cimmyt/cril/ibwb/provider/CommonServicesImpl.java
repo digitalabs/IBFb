@@ -1787,12 +1787,13 @@ public class CommonServicesImpl implements CommonServices {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public void addOindex(int experimentId, int projectId) {
+    public void addOindex(int oindexId, int experimentId, int projectId) {
         //this.oindexDAO.create(oindex);
         if (isLocal()) {
             LinkedHashMap params = new LinkedHashMap();
             params.put("nd_experiment_id", experimentId);
             params.put("project_id", projectId);
+            params.put("nd_experiment_project_id", oindexId);
             this.utilityDAO.callStoredProcedureForUpdate("addOindex", params);
         }
     }
@@ -4606,5 +4607,10 @@ public class CommonServicesImpl implements CommonServices {
         input.put("v_isLocal", isLocal()? 1 : 0);
         return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid", "v_isLocal"}, 
                 new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
+    }
+    
+    @Override
+    public Integer getNextMin(String tableName) {
+        return this.utilityDAO.getNextMin(tableName);
     }
 }

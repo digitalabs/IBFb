@@ -40,6 +40,8 @@ import org.cimmyt.cril.ibwb.domain.Traits;
 import org.cimmyt.cril.ibwb.domain.Variate;
 import org.cimmyt.cril.ibwb.domain.Veffect;
 import org.cimmyt.cril.ibwb.domain.VeffectPK;
+import org.cimmyt.cril.ibwb.provider.KeyCacheUtil;
+import org.cimmyt.cril.ibwb.provider.TableEnum;
 import org.cimmyt.cril.ibwb.provider.utils.ChadoSchemaUtil;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
@@ -268,7 +270,11 @@ public class HelperWorkbook {
         //levelno should be study id
         Integer levelNo = study.getStudyid();
         int studyLocation = levelNoNdGeolocationIds != null && levelNoNdGeolocationIds.size() == 1 ? levelNoNdGeolocationIds.get(0) : 1;
-        Integer studyNdExperimentId = saveLevelsStudy(levelNo, studyLocation);
+       Integer oindexId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_PROJECT);
+       if (oindexId == null) {
+           oindexId = localServices.getNextMin(TableEnum.EXPERIMENT_PROJECT.getName());
+       }
+        Integer studyNdExperimentId = saveLevelsStudy(levelNo, studyLocation, oindexId);
         log.info("Saving levels for study DONE!");
 
         //Salvar levels para grupos de convinaciones de PLOT
@@ -327,7 +333,9 @@ public class HelperWorkbook {
         //Salvar oindex con todas la convinaciones datos
         //=======================
 
-        saveOindex3(obsunits, represtns, this.localServices, workbook.getMeasurements());
+       saveOindex3(oindexId, obsunits, represtns, this.localServices, workbook.getMeasurements());
+
+       KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
 
     }
 
@@ -1179,13 +1187,13 @@ public class HelperWorkbook {
      * @param levelNo
      * @return
      */
-    public Integer saveLevelsStudy(Integer levelNo, Integer levelNoNdGeoLocationId) {
+    public Integer saveLevelsStudy(Integer levelNo, Integer levelNoNdGeoLocationId, int oindexId) {
         Factor factorStudy = mapStudyFactors.get(labelStudy);
         // Save all levels for study
         HelperFactor.saveLevel(factorStudy, levelNo, study.getSname(), localServices);
 
         Integer ndExperimentId = localServices.addNdExperiment(levelNoNdGeoLocationId, 1010);
-        localServices.addOindex(ndExperimentId, study.getStudyid());
+        localServices.addOindex(--oindexId, ndExperimentId, study.getStudyid());
         
         
         // Save level for each factor in study condition
@@ -1659,6 +1667,7 @@ public class HelperWorkbook {
     }
 
     public void saveOindex3(
+            Integer oindexId,
             List<Obsunit> obsunits,
             List<Represtn> represtns,
             CommonServices serviciosLocal,
@@ -1683,7 +1692,7 @@ public class HelperWorkbook {
                 if (factor.getFname().equals(Workbook.STUDY)) {
                     //serviciosLocal.addOindex(trialExperimentId, obsunit.getEffectid());
                 } else if (factor.getFname().equals(workbook.getTrialLabel()) || factor.getFname().equals("TRIAL")) {
-                    serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
+                    serviciosLocal.addOindex(--oindexId, obsunit.getOunitid(), obsunit.getEffectid());
                 }
             }
          }
@@ -1692,7 +1701,7 @@ public class HelperWorkbook {
         for (Measurement measurement : measurements) {
             Obsunit obsunit = listObsunitMeasurement.get(measurements.indexOf(measurement));
             Represtn represtnMeasurements = mapReprestns.get(obsunit.getEffectid());
-            serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
+            serviciosLocal.addOindex(--oindexId, obsunit.getOunitid(), obsunit.getEffectid());
  /*           for (Factor factor : represtnMeasurements.getFactors()) {
 
                 if (factor.getFname().equals(Workbook.STUDY)) {
