@@ -122,10 +122,10 @@ drop procedure if exists `addStock`$$
 
 CREATE PROCEDURE `addStock`(
 IN stock_id_in int,
-IN v_uniquename varchar(50),
-IN dbxref_id varchar(50),
-IN name varchar(50),
-IN value varchar(50))
+IN v_uniquename varchar(255),
+IN dbxref_id varchar(255),
+IN name varchar(255),
+IN value varchar(255))
 begin
 
 -- STOCK unique constraint | ORGANISM_ID, UNIQUENAME, TYPE_ID
