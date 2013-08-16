@@ -3280,11 +3280,13 @@ public class IBWBAppServicesImpl implements AppServices {
                 LevelN levelN = new LevelN(true);
                 levelN.setLevelNPK(new LevelNPK());
                 levelN.getLevelNPK().setLabelid(factor.getLabelid());
+                levelN.setStoredinid(factor.getTid());
                 level = levelN;
             } else {
                 LevelC levelC = new LevelC(true);
                 levelC.setLevelCPK(new LevelCPK());
                 levelC.getLevelCPK().setLabelid(factor.getLabelid());
+                levelC.setStoredinid(factor.getTid());
                 level = levelC;
             }
 

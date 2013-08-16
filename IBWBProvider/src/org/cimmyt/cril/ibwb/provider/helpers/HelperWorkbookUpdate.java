@@ -192,6 +192,7 @@ public class HelperWorkbookUpdate {
                     levelNPK.setLabelid(factorTemp.getLabelid());
                     levelNPK.setLevelno(levelNoTemporal);
                     levelN.setLevelNPK(levelNPK);
+                    levelN.setStoredinid(factorTemp.getTid());
                     this.localServices.addLevelN(levelN);
                 }
             } else {
@@ -218,6 +219,7 @@ public class HelperWorkbookUpdate {
                     levelCPK.setLabelid(factorTemp.getLabelid());
                     levelCPK.setLevelno(levelNoTemporal);
                     levelC.setLevelCPK(levelCPK);
+                    levelC.setStoredinid(factorTemp.getTid());
                     this.localServices.addLevelC(levelC);
                 }
             }
@@ -274,6 +276,7 @@ public class HelperWorkbookUpdate {
                     levelNPK.setLabelid(factorTemp.getLabelid());
                     levelNPK.setLevelno(levelNoTemporal);
                     levelN.setLevelNPK(levelNPK);
+                    levelN.setStoredinid(factorTemp.getTid());
                     this.localServices.addLevelN(levelN);
                 }
             } else {
@@ -298,6 +301,7 @@ public class HelperWorkbookUpdate {
                     levelCPK.setLabelid(factorTemp.getLabelid());
                     levelCPK.setLevelno(levelNoTemporal);
                     levelC.setLevelCPK(levelCPK);
+                    levelC.setStoredinid(factorTemp.getTid());
                     this.localServices.addLevelC(levelC);
                 }
             }
