@@ -3744,8 +3744,8 @@ public interface CommonServices {
 
     public Integer addNdGeolocation(String description);
     public Integer addStock(String uniquename,String dbxref_id,String name,String value);
-    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId);
-    public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId);
+    public void addNdExperiment(Integer id, Integer ndGeolocationId, Integer typeId);
+    public void addNdExperimentStock(Integer id, Integer ndExperimentId, Integer stockId);
     
     public void copyCvTermFromCentral(int cvTermId);
     

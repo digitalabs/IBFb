@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.*;
+import org.cimmyt.cril.ibwb.provider.KeyCacheUtil;
+import org.cimmyt.cril.ibwb.provider.TableEnum;
 import org.cimmyt.cril.ibwb.provider.utils.ChadoSchemaUtil;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
@@ -322,11 +324,17 @@ public class HelperFactor {
 
         //levelNo--;
         List<Integer> trialNdExperimentIds = new ArrayList<Integer>();
-        for (Integer alevelNo : levelNos) {
-        	Integer ndExperimentId = serviceLocal.addNdExperiment(alevelNo, 1020);
-        	trialNdExperimentIds.add(ndExperimentId);
-        	System.out.println("saveLavelsFactorTrials - new ndExperimentId: "+ ndExperimentId);
+        Integer experimentId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
+        if (experimentId == null){
+            experimentId = serviceLocal.getNextMin(TableEnum.EXPERIMENT.getName());
+            experimentId++; //increment to get last used ID
         }
+        for (Integer alevelNo : levelNos) {
+                serviceLocal.addNdExperiment(--experimentId, alevelNo, 1020);
+        	trialNdExperimentIds.add(experimentId);
+        	System.out.println("saveLavelsFactorTrials - new ndExperimentId: "+ experimentId);
+        }
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, experimentId);
         return trialNdExperimentIds;
          
     }
@@ -589,6 +597,12 @@ public class HelperFactor {
                 stockMap.put(uniquename, levelNoStockId);
         }
         
+        Integer lastExperimentId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
+        Integer lastStockExpId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_STOCK);
+        if (lastStockExpId == null){
+            lastStockExpId = serviceLocal.getNextMin(TableEnum.EXPERIMENT_STOCK.getName());
+            lastStockExpId++; // get last ID used
+        }
         for (Measurement measurement : measurementsRep) {
             int levelNoNdGeolocationId = ndGeolocationIds.get(measurement.getTrial() - 1);
 
@@ -600,7 +614,8 @@ public class HelperFactor {
             Integer ndExperimentId = null;
             if(createNdExperiment) {
                 //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
-                ndExperimentId = serviceLocal.addNdExperiment(levelNoNdGeolocationId, 1155); 
+                serviceLocal.addNdExperiment(--lastExperimentId, levelNoNdGeolocationId, 1155); 
+                ndExperimentId = lastExperimentId;
                 ndExperimentIds.add(ndExperimentId);
                 System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
             } else {
@@ -608,13 +623,14 @@ public class HelperFactor {
                 System.out.println("index is " + index);
                 System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
             }            
-            serviceLocal.addNdExperimentStock(ndExperimentId, levelNoStockId);
+            serviceLocal.addNdExperimentStock(--lastStockExpId, ndExperimentId, levelNoStockId);
 
             //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
             //levelNo--;
 
         }
-            
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, lastExperimentId);
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT_STOCK, lastStockExpId);
         //return levelNo;
         return index;
     }

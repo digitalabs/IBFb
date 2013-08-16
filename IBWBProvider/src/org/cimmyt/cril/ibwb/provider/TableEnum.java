@@ -10,7 +10,11 @@ package org.cimmyt.cril.ibwb.provider;
  */
 public enum TableEnum {
  
-    EXPERIMENT_PROJECT("nd_experiment_project");
+    EXPERIMENT_PROJECT("nd_experiment_project")
+    , EXPERIMENT("nd_experiment")
+    , EXPERIMENT_STOCK("nd_experiment_stock")
+    ;
+    
     
     private String tableName;
     

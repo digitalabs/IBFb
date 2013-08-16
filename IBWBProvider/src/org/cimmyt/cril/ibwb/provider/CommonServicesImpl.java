@@ -413,24 +413,22 @@ public class CommonServicesImpl implements CommonServices {
         return id;
     }
 
-    public Integer addNdExperimentStock(Integer ndExperimentId, Integer stockId) {
-        Integer id = this.utilityDAO.getNextMin("nd_experiment_stock");
+    public void addNdExperimentStock(Integer id, Integer ndExperimentId, Integer stockId) {
+        //Integer id = this.utilityDAO.getNextMin("nd_experiment_stock");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
         params.put("ndExperimentId", ndExperimentId);
         params.put("stockId", stockId);
         this.utilityDAO.callStoredProcedureForUpdate("addNdExperimentStock", params);
-        return id;
     }
 
-    public Integer addNdExperiment(Integer ndGeolocationId, Integer typeId) {
-        Integer id = this.utilityDAO.getNextMin("nd_experiment");
+    public void addNdExperiment(Integer id, Integer ndGeolocationId, Integer typeId) {
+        //Integer id = this.utilityDAO.getNextMin("nd_experiment");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
         params.put("nd_geolocation_id", ndGeolocationId);
         params.put("typeId", typeId);
         this.utilityDAO.callStoredProcedureForUpdate("addNdExperiment", params);
-        return id;
     }
 
     @Override
