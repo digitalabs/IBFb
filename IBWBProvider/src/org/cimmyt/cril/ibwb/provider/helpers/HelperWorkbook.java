@@ -273,6 +273,7 @@ public class HelperWorkbook {
        Integer oindexId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_PROJECT);
        if (oindexId == null) {
            oindexId = localServices.getNextMin(TableEnum.EXPERIMENT_PROJECT.getName());
+           oindexId++; // increment bec it will be decremented inside saveLevelsStudy
        }
         Integer studyNdExperimentId = saveLevelsStudy(levelNo, studyLocation, oindexId);
         log.info("Saving levels for study DONE!");
@@ -1190,10 +1191,13 @@ public class HelperWorkbook {
         Factor factorStudy = mapStudyFactors.get(labelStudy);
         // Save all levels for study
         HelperFactor.saveLevel(factorStudy, levelNo, study.getSname(), localServices);
+        
+        Integer ndExperimentId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
 
-        Integer ndExperimentId = localServices.addNdExperiment(levelNoNdGeoLocationId, 1010);
+        localServices.addNdExperiment(--ndExperimentId, levelNoNdGeoLocationId, 1010);
         localServices.addOindex(--oindexId, ndExperimentId, study.getStudyid());
         KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, ndExperimentId);
         
         
         // Save level for each factor in study condition
@@ -1251,6 +1255,7 @@ public class HelperWorkbook {
         //measurementsRep does not reflect the actual measurement rows. ex if there are 2 trials with 10 stocks, 
         //measurements will have 20 rows, while measurementsRep will have 10 rows.
         //for (Measurement measurement : workbook.getMeasurementsRep()) {
+        Integer levelNo = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
         for (Measurement measurement : workbook.getMeasurements()) {
         	/*if(ctr==div) {//get next geolocatioid
         		index++;
@@ -1258,7 +1263,7 @@ public class HelperWorkbook {
         	}
         	ctr++;*/
             //Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
-            Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
+            localServices.addNdExperiment(--levelNo, levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
             ndExperimentIds.add(levelNo);
             System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
             for (String header : listHeaders) {
@@ -1309,6 +1314,7 @@ public class HelperWorkbook {
                 agregado = false;
             }
         }
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, levelNo);
         return ndExperimentIds;
         //}
     }
