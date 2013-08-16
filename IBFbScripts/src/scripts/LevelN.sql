@@ -6,21 +6,22 @@ CREATE PROCEDURE `addLevelN`(
   IN labelidin int
   , IN factoridin int
   , IN lvaluein double
-  , IN levelno_v int)
+  , IN levelno_v int
+  , IN v_storedinid int)
 
 BEGIN
 
-	declare v_storedinid INT;
+	-- declare v_storedinid INT;
 	
 	declare v_projectid INT;
 	declare v_termid varchar(255);
 	declare v_rankint INT; 
         declare v_propid INT;
 	
-	SELECT storedinid 
-	  INTO v_storedinid
-      FROM v_factor
-     WHERE projectprop_id = labelidin  limit 1; 
+	-- SELECT storedinid 
+	--   INTO v_storedinid
+      -- FROM v_factor
+     -- WHERE projectprop_id = labelidin  limit 1; 
 	
 	IF(v_storedinid = 1010 or v_storedinid = 1015) THEN
 		select p.project_id, p.value, p.rank, pp.projectprop_id

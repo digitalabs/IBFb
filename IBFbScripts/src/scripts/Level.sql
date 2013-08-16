@@ -11,6 +11,7 @@ IF iscentral = 1 THEN
       , factorid
       , levelno
       , IF (lvalue IS NULL, IF (isnumeric, '1', '') , lvalue) AS lvalue
+      , storedinid 
     FROM 
        v_level
     WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
@@ -26,6 +27,7 @@ ELSE
       , factorid
       , levelno
       , IF (lvalue IS NULL, IF (isnumeric, '1', '') , lvalue) AS lvalue
+      , storedinid 
     FROM 
        v_level
     WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
@@ -52,7 +54,7 @@ CREATE PROCEDURE `searchLevels`(
 
 BEGIN
 
-  SET @sql := CONCAT("SELECT DISTINCT labelid AS labelid, factorid, levelno AS levelno, IF (lvalue IS NULL, IF (", isnumeric, ", '1', '') , lvalue) AS lvalue from v_level ");
+  SET @sql := CONCAT("SELECT DISTINCT storedinid AS storedinid, labelid AS labelid, factorid, levelno AS levelno, IF (lvalue IS NULL, IF (", isnumeric, ", '1', '') , lvalue) AS lvalue from v_level ");
 
   IF isnumeric = 1 THEN
     SET @sql = CONCAT(@sql, " WHERE dtypeid NOT IN (1120, 1125, 1128, 1130) ");
