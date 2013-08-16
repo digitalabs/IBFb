@@ -15,6 +15,7 @@ BEGIN
 	declare v_projectid INT;
 	declare v_termid varchar(255);
 	declare v_rankint INT; 
+        declare v_propid INT;
 	
 	SELECT storedinid 
 	  INTO v_storedinid
@@ -22,91 +23,120 @@ BEGIN
      WHERE projectprop_id = labelidin  limit 1; 
 	
 	IF(v_storedinid = 1010 or v_storedinid = 1015) THEN
-		select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
+		select p.project_id, p.value, p.rank, pp.projectprop_id
+                  into v_projectid, v_termid, v_rankint, v_propid 
+                  from projectprop p
+                  left join projectprop pp on pp.project_id = p.project_id AND pp.type_id = p.type_id AND pp.rank = p.rank
+                 where p.projectprop_id = labelidin;
 
-                IF NOT EXISTS(SELECT 1 FROM projectprop WHERE project_id = v_projectid AND type_id = v_termid AND rank = v_rankint) THEN 
-                    call getNextMinReturn('projectprop', @newppid);		
+                IF (v_propid IS NULL) THEN 
+                    -- call getNextMinReturn('projectprop', @newppid);
+                    select IF(min(projectprop_id) is NULL or min(projectprop_id) >= 0, -1, min(projectprop_id) -1)  
+                      INTO @newppid 
+                      from projectprop;
+
                     insert into projectprop (projectprop_id,project_id,type_id,value,rank) value ( @newppid, v_projectid, v_termid, lvaluein, v_rankint);
                 END IF;
-    END IF;
-	/*
-	IF(@storedinid = 1011) THEN
+    	/*
+	IF(v_storedinid = 1011) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
-	IF(@storedinid = 1012) THEN
+	IF(v_storedinid = 1012) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
 	
-	IF(@storedinid = 1016) THEN
+	IF(v_storedinid = 1016) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
-	IF(@storedinid = 1017) THEN
+	IF(v_storedinid = 1017) THEN
 		-- assumption is info was added when project is added already
+		;
     END IF;
 	*/
-    IF(v_storedinid = 1020) THEN
-	call getNextMinReturn('nd_geolocationprop', @newgeoid);
-		
-	select project_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
-		
-	-- ND_GEOLOCATIONPROP unique constraint | ND_GEOLOCATION_ID, TYPE_ID, RANK
-	IF NOT EXISTS (SELECT 1 FROM nd_geolocationprop WHERE nd_geolocation_id=levelno_v AND type_id=v_termid AND rank=0) THEN
-		insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, v_termid , lvaluein, 0);
-	END IF;
-    END IF;
-	
-    IF(v_storedinid = 1021) THEN
-	update nd_geolocation set description = lvaluein where nd_geolocation_id = levelno_v;
-    END IF;
-    IF(v_storedinid = 1022) THEN
-	update nd_geolocation set latitude = lvaluein where nd_geolocation_id = levelno_v;
-    END IF;
-    IF(v_storedinid = 1023) THEN
-	update nd_geolocation set longitude = lvaluein where nd_geolocation_id = levelno_v;
-    END IF;
-    IF(v_storedinid = 1024) THEN
-	update nd_geolocation set geodetic_datum = lvaluein where nd_geolocation_id = levelno_v;
-    END IF;
-    IF(v_storedinid = 1025) THEN
-	update nd_geolocation set altitude = lvaluein where nd_geolocation_id = levelno_v;
-    END IF;
-	
-	IF(v_storedinid = 1030) THEN
-		call getNextMinReturn('nd_experimentprop', @newexpid);
-		
-		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
+    ELSEIF(v_storedinid = 1020) THEN	 
+	select p.project_id, p.value, p.rank, gp.nd_geolocationprop_id
+          into v_projectid, v_termid, v_rankint, v_propid 
+          from projectprop p
+          left join nd_geolocationprop gp on gp.nd_geolocation_id=levelno_v AND gp.type_id=v_termid AND gp.rank=0
+         where p.projectprop_id = labelidin;
 
-		-- ND_EXPERIMENTPROP unique constraint | ND_EXPERIMENT_ID, TYPE_ID, RANK
-	        IF NOT EXISTS (SELECT 1 FROM nd_experimentprop WHERE nd_experiment_id=levelno_v AND type_id=v_termid AND rank=0) THEN
-			insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
+	-- ND_GEOLOCATIONPROP unique constraint | ND_GEOLOCATION_ID, TYPE_ID, RANK
+        IF (v_propid IS NULL) THEN
+                -- call getNextMinReturn('nd_geolocationprop', @newgeoid);
+                select IF(min(nd_geolocationprop_id) is NULL or min(nd_geolocationprop_id) >= 0, -1, min(nd_geolocationprop_id) -1)  
+                  INTO @newgeoid 
+                  from nd_geolocationprop;
+                insert into nd_geolocationprop (nd_geolocationprop_id, nd_geolocation_id, type_id, value, rank) value (@newgeoid, levelno_v, v_termid , lvaluein, 0);
+	END IF;
+
+   	
+    ELSEIF(v_storedinid = 1021) THEN
+		update nd_geolocation set description = lvaluein where nd_geolocation_id = levelno_v;
+    
+    ELSEIF(v_storedinid = 1022) THEN
+		update nd_geolocation set latitude = lvaluein where nd_geolocation_id = levelno_v;
+    
+    ELSEIF(v_storedinid = 1023) THEN
+		update nd_geolocation set longitude = lvaluein where nd_geolocation_id = levelno_v;
+    
+    ELSEIF(v_storedinid = 1024) THEN
+		update nd_geolocation set geodetic_datum = lvaluein where nd_geolocation_id = levelno_v;
+    
+    ELSEIF(v_storedinid = 1025) THEN
+		update nd_geolocation set altitude = lvaluein where nd_geolocation_id = levelno_v;
+    
+    ELSEIF(v_storedinid = 1030) THEN
+		select p.project_id, p.value, p.rank, ep.nd_experimentprop_id
+                  into v_projectid, v_termid, v_rankint, v_propid 
+                  from projectprop p
+                  left join nd_experimentprop ep on ep.nd_experiment_id=levelno_v AND ep.type_id=v_termid AND ep.rank=0
+                 where p.projectprop_id = labelidin;
+		
+-- ND_EXPERIMENTPROP unique constraint | ND_EXPERIMENT_ID, TYPE_ID, RANK
+		IF (v_propid IS NULL) THEN
+                        -- call getNextMinReturn('nd_experimentprop', @newexpid);
+                        select IF(min(nd_experimentprop_id) is NULL or min(nd_experimentprop_id) >= 0, -1, min(nd_experimentprop_id) -1)  
+                          INTO @newexpid 
+                          from nd_experimentprop;
+
+                        insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) value (@newexpid, levelno_v, v_termid , lvaluein, 0);
 		END IF;
 		
-    END IF;
-	IF(v_storedinid = 1040) THEN
-		call getNextMinReturn('stockprop', @newstockpropid);
-		
-		select projectprop_id, value, rank into v_projectid, v_termid, v_rankint  from projectprop where projectprop_id = labelidin;
-		
+    ELSEIF(v_storedinid = 1040) THEN
+		select p.project_id, p.value, p.rank, sp.stockprop_id
+                  into v_projectid, v_termid, v_rankint, v_propid 
+                  from projectprop p
+                  left join stockprop sp on sp.stock_id=levelno_v AND sp.type_id=v_termid AND sp.rank=0
+                 where p.projectprop_id = labelidin;
+
 		-- STOCKPROP unique constraint | STOCK_ID, TYPE_ID, RANK
-                IF NOT EXISTS(SELECT 1 FROM stockprop WHERE stock_id=levelno_v AND type_id=v_termid AND rank=0) THEN 
-			insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, v_termid , lvaluein, 0);
+                IF (v_propid IS NULL) THEN
+                    	-- call getNextMinReturn('stockprop', @newstockpropid);
+                        select IF(min(stockprop_id) is NULL or min(stockprop_id) >= 0, -1, min(stockprop_id) -1)  
+                          INTO @newstockpropid from stockprop;
+
+                        insert into stockprop (stockprop_id,stock_id,type_id,value,rank) value (@newstockpropid, levelno_v, v_termid , lvaluein, 0);
 		END IF;
-    END IF;
-	IF(v_storedinid = 1041) THEN
+    
+    ELSEIF(v_storedinid = 1041) THEN
 			update stock set uniquename = lvaluein where stock_id = levelno_v;
-    END IF;
-	IF(v_storedinid = 1042) THEN
+    
+    ELSEIF(v_storedinid = 1042) THEN
 			update stock set dbxref_id = lvaluein where stock_id = levelno_v;
-    END IF;
-	IF(v_storedinid = 1046) THEN
+    
+    ELSEIF(v_storedinid = 1046) THEN
 			update stock set name = lvaluein where stock_id = levelno_v;
-    END IF;
-	IF(v_storedinid = 1047) THEN
+    
+    ELSEIF(v_storedinid = 1047) THEN
 			update stock set value = lvaluein where stock_id = levelno_v;
     END IF;
 	
 
 END$$
+
 
 
 
