@@ -8,10 +8,14 @@ package org.cimmyt.cril.ibwb.domain;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
@@ -32,6 +36,10 @@ public class LevelC extends BaseFilter implements Serializable {
     @Basic(optional = false)
     @Column(name = "lvalue")
     private String lvalue;
+
+    @Basic(optional = false)
+    @Column(name = "storedinid")
+    private Integer storedinid;
 
     public LevelC() {
     	setDefault();
@@ -86,6 +94,14 @@ public class LevelC extends BaseFilter implements Serializable {
 
     public void setLvalue(String lvalue) {
         this.lvalue = lvalue;
+    }
+
+    public Integer getStoredinid() {
+        return storedinid;
+    }
+
+    public void setStoredinid(Integer storedInId) {
+        this.storedinid = storedInId;
     }
     
     //NEW SCHEMA BEGIN

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 
 /**
@@ -31,6 +32,10 @@ public class LevelN extends BaseFilter implements Serializable {
     @Basic(optional = false)
     @Column(name = "lvalue")
     private Double lvalue;
+    
+    @Basic(optional = false)
+    @Column(name="storedinid")
+    private Integer storedinid;
 
     public LevelN() {
     	setDefault();
@@ -103,6 +108,14 @@ public class LevelN extends BaseFilter implements Serializable {
     }
     public Integer getLabelid() {
         return this.levelNPK != null ? this.levelNPK.getLabelid() : null;
+    }
+
+    public Integer getStoredinid() {
+        return storedinid;
+    }
+
+    public void setStoredinid(Integer storedInId) {
+        this.storedinid = storedInId;
     }
  
     public Integer getLevelno() {
