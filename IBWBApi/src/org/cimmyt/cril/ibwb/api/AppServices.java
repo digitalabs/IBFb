@@ -1665,6 +1665,8 @@ public interface AppServices {
     public List<Traits> getListTraits(Traits traitsFilter, int start, int pageSize, boolean paged);
 
     public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged);
+    
+    public List<Traits> getListTraitsSynonym(Traits traitsFilter, int start, int pageSize, boolean paged);
 
     /**
      * Gets a list of Traits for pagination without dependency objects

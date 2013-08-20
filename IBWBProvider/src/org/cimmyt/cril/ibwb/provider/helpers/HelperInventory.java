@@ -92,14 +92,14 @@ public class HelperInventory {
         Traits seedStockTrait = new Traits(true);
         
         seedStockTrait.setTrname(InventoryData.TRAIT_SEED_STOCK_TRNAME);
-        seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR);
-        seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC);
-        seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
-        seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP);
-        seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY);
-        seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE);
+//        seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR);
+//        seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC);
+//        seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
+//        seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP);
+//        seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY);
+//        seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE);
         
-        List<Traits> traitList = appServices.getListTraits(seedStockTrait, 0, 0, false);
+        List<Traits> traitList = appServices.getListTraitsSynonym(seedStockTrait, 0, 0, false);
         
         // if seed stock trait does not exist, then add it to traits
 //        if (traitList.isEmpty()) {
@@ -110,7 +110,7 @@ public class HelperInventory {
         if (! traitList.isEmpty() ) {
             Traits seedStock = traitList.get(0);
             // then retrieve their measured in
-            List<Measuredin> measuredinList = appServices.getMeasuredInListByTrait(seedStock.getTid());
+            List<Measuredin> measuredinList = appServices.getMeasuredInListByTrait(seedStock.getTraitid());
             for (Measuredin measuredIn: measuredinList) {
                 inventoryScales.add(measuredIn.getScales());
             }

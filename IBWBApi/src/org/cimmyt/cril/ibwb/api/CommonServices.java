@@ -3250,6 +3250,16 @@ public interface CommonServices {
     public List<Traits> getListTraitsNew(Traits filter, int start, int pageSize, boolean paged);
 
     public Traits getTraitsByTrname(Traits traits);
+    
+        /**
+     * Gets a list of Objects for pagination
+     *
+     * @param traitsFiltro	The filter object
+     * @param inicio initial record
+     * @param tamanioPagina page size
+     * @return List
+     */
+    public List<Traits> getListTraitsSynonym(Traits traitsFilter, int start, int pageSize, boolean paged);
 
     //-----------------------------------Udflds---------------------------
     /**

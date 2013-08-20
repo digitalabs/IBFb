@@ -2008,6 +2008,14 @@ public class IBWBAppServicesImpl implements AppServices {
 
         return traitss;
     }
+    
+    @Override
+    public List<Traits> getListTraitsSynonym(Traits filter, int start, int pageSize, boolean paged) {
+        List<Traits> traitss = serviciosCentral.getListTraitsSynonym(filter, start, pageSize, paged);
+        traitss.addAll(serviciosLocal.getListTraitsSynonym(filter, start, pageSize, paged));
+        HelperTraits.getTraitsFull(traitss, this);
+        return traitss;
+    }
 
     @Override
     public List<Traits> getListTraitsOnly(Traits filter, int start, int pageSize, boolean paged) {

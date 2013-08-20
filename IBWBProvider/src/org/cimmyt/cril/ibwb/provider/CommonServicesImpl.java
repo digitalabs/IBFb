@@ -1559,7 +1559,7 @@ public class CommonServicesImpl implements CommonServices {
 
         return this.utilityDAO.callStoredProcedureForList(measuredIn, "getListMeasuredIn",
                 new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
-                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","desccription"});
+                new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","description"});
     }
 
     @Override
@@ -3063,6 +3063,26 @@ public class CommonServicesImpl implements CommonServices {
             Traits traits = new Traits(termDTO.getCvtermid(), termDTO.getCvtermid(), termDTO.getCvname(), null, null, 0, null, null);
 
             returnVal.add(traits);
+        }
+
+        return returnVal;
+    }
+    
+    @Override
+    public List<Traits> getListTraitsSynonym(Traits filter, int start, int pageSize, boolean paged) {
+        TraitDto dto = new TraitDto(filter.getTid(), filter.getTraitid(), filter.getTrname(),
+                filter.getTrdesc(), filter.getTnstat(), filter.getTraitGroup());
+
+        List temp = utilityDAO.callStoredProcedureForListPaged(dto, paged,
+                start, pageSize, "getTraitListWithSynonymByTrait",
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "traitGroup"},
+                new String[]{"tid", "traitId", "traitName", "traitDescription", "tnstat", "traitGroup", "traitGroupId"});
+        List<Traits> returnVal = new ArrayList<Traits>(temp.size());
+        for (Object o : temp) {
+            dto = (TraitDto) o;
+
+            Traits trait = new Traits(dto.getTid(), dto.getTraitId(), dto.getTraitName(), null, dto.getTraitDescription(), null, dto.getTraitGroup(), null);
+            returnVal.add(trait);
         }
 
         return returnVal;

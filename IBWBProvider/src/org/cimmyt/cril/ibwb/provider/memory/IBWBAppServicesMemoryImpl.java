@@ -1602,4 +1602,9 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Measuredin> getListMeasuredinOld(Measuredin measuredinFilter, int start, int pageSize, boolean paged) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Traits> getListTraitsSynonym(Traits traitsFilter, int start, int pageSize, boolean paged) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -823,26 +823,26 @@ public final class InventoryTopComponent extends TopComponent {
         Traits seedStockTrait = new Traits(true);
 
         seedStockTrait.setTrname(InventoryData.TRAIT_SEED_STOCK_TRNAME);
-        seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR);
-        seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC);
-        seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
-        seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP);
-        seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY);
-        seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE);
+//        seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR);
+//        seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC);
+//        seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
+//        seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP);
+//        seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY);
+//        seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE);
 
         // first search in lower case
-        List<Traits> traitList = AppServicesProxy.getDefault().appServices().getListTraits(seedStockTrait, 0, 0, false);
+        List<Traits> traitList = AppServicesProxy.getDefault().appServices().getListTraitsSynonym(seedStockTrait, 0, 0, false);
 
         // if not found in lowercase then search for uppercase
         if (traitList.isEmpty()) {
             seedStockTrait.setTrname(InventoryData.TRAIT_SEED_STOCK_TRNAME.toUpperCase());
-            seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR.toUpperCase());
-            seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC.toUpperCase());
-            seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
-            seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP.toUpperCase());
-            seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY.toUpperCase());
-            seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE.toUpperCase());
-            traitList = AppServicesProxy.getDefault().appServices().getListTraits(seedStockTrait, 0, 0, false);
+//            seedStockTrait.setTrabbr(InventoryData.TRAIT_SEED_STOCK_TRABBR.toUpperCase());
+//            seedStockTrait.setTrdesc(InventoryData.TRAIT_SEED_STOCK_TRDESC.toUpperCase());
+//            seedStockTrait.setTnstat(InventoryData.TRAIT_SEED_STOCK_TNSTAT);
+//            seedStockTrait.setTraitGroup(InventoryData.TRAIT_SEED_STOCK_TRAITGROUP.toUpperCase());
+//            seedStockTrait.setOntology(InventoryData.TRAIT_SEED_STOCK_ONTOLOGY.toUpperCase());
+//            seedStockTrait.setTraittype(InventoryData.TRAIT_SEED_STOCK_TRAITTYPE.toUpperCase());
+            traitList = AppServicesProxy.getDefault().appServices().getListTraitsSynonym(seedStockTrait, 0, 0, false);
         }
 
         seedStockExists = !traitList.isEmpty();
