@@ -4,12 +4,12 @@ drop procedure if exists `addStudy`$$
 
 CREATE PROCEDURE `addStudy`(
 IN v_studyid int,
-IN v_sname varchar(255), 
+IN v_sname varchar(255) CHARACTER SET utf8, 
 IN v_pmkey int,
-IN v_title varchar(255), 
-IN v_objectiv varchar(255),
+IN v_title varchar(255) CHARACTER SET utf8, 
+IN v_objectiv varchar(255) CHARACTER SET utf8,
 IN v_investid int,
-IN v_stype varchar(3),
+IN v_stype varchar(3) CHARACTER SET utf8,
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
@@ -363,12 +363,12 @@ drop procedure if exists `updateStudy`$$
 
 CREATE PROCEDURE `updateStudy`(
 IN v_studyid int,
-IN v_sname varchar(255), 
+IN v_sname varchar(255) CHARACTER SET utf8, 
 IN v_pmkey int,
-IN v_title varchar(255), 
-IN v_objectiv varchar(255),
+IN v_title varchar(255) CHARACTER SET utf8, 
+IN v_objectiv varchar(255) CHARACTER SET utf8,
 IN v_investid int,
-IN v_stype varchar(3),
+IN v_stype varchar(3) CHARACTER SET utf8,
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
@@ -498,12 +498,12 @@ drop procedure if exists `getStudy`$$
 
 CREATE PROCEDURE `getStudy`(
 IN v_studyid int,
-IN v_sname varchar(255), 
+IN v_sname varchar(255) CHARACTER SET utf8, 
 IN v_pmkey int,
-IN v_title varchar(255), 
-IN v_objectiv varchar(255),
+IN v_title varchar(255) CHARACTER SET utf8, 
+IN v_objectiv varchar(255) CHARACTER SET utf8,
 IN v_investid int,
-IN v_stype varchar(3),
+IN v_stype varchar(3) CHARACTER SET utf8,
 IN v_sdate int,
 IN v_edate int,
 IN v_userid int,
@@ -511,20 +511,20 @@ IN v_shierarchy int)
 begin
        
 	SET @sql := CONCAT("SELECT distinct p.project_id as studyid, p.name as sname, p.description as title, pr.object_project_id AS shierarchy", 
-	",GROUP_CONCAT(if(value.type_id = 8040, value.value, NULL)) AS 'pmkey'", 
-	",GROUP_CONCAT(if(value.type_id = 8030, value.value, NULL)) AS 'objectiv'",  
-	",GROUP_CONCAT(if(value.type_id = 8110, value.value, NULL)) AS 'investid'",  
-	",GROUP_CONCAT(if(value.type_id = 8070, ct2.name, NULL)) AS 'stype'",  
-	",GROUP_CONCAT(if(value.type_id = 8050, value.value, NULL)) AS 'sdate'",  
-	",GROUP_CONCAT(if(value.type_id = 8060, value.value, NULL)) AS 'edate'",  
-	",GROUP_CONCAT(if(value.type_id = 8020, value.value, NULL)) AS 'userid'",  
-	",GROUP_CONCAT(if(value.type_id = 8006, ct2.name, NULL)) AS 'sstatus'",  
+	",GROUP_CONCAT(if(pp.type_id = 8040, pp.`value`, NULL)) AS 'pmkey'", 
+	",GROUP_CONCAT(if(pp.type_id = 8030, pp.`value`, NULL)) AS 'objectiv'",  
+	",GROUP_CONCAT(if(pp.type_id = 8110, pp.`value`, NULL)) AS 'investid'",  
+	",GROUP_CONCAT(if(pp.type_id = 8070, ct2.name, NULL)) AS 'stype'",  
+	",GROUP_CONCAT(if(pp.type_id = 8050, pp.`value`, NULL)) AS 'sdate'",  
+	",GROUP_CONCAT(if(pp.type_id = 8060, pp.`value`, NULL)) AS 'edate'",  
+	",GROUP_CONCAT(if(pp.type_id = 8020, pp.`value`, NULL)) AS 'userid'",  
+	",GROUP_CONCAT(if(pp.type_id = 8006, ct2.name, NULL)) AS 'sstatus'",  
 	"FROM project p ", 
 	"INNER JOIN project_relationship pr ON pr.subject_project_id = p.project_id ",  
-	",projectprop value ", 
-	"LEFT JOIN cvterm ct2 ON ct2.cvterm_id = value.value ",  
-	"WHERE value.project_id = p.project_id ", 
-  	"AND value.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020) ",  
+	",projectprop pp ", 
+	"LEFT JOIN cvterm ct2 ON ct2.cvterm_id = pp.`value` ",  
+	"WHERE pp.project_id = p.project_id ", 
+  	"AND pp.type_id IN (8006,8040,8030,8110,8070,8050,8060,8020) ",  
 	"GROUP BY p.project_id HAVING (sstatus IS NULL OR sstatus != 9) ");
 	IF(v_studyid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND studyid = ",v_studyid);
@@ -560,7 +560,6 @@ begin
 	SET @sql = CONCAT(@sql," AND userid = ",v_userid);
 	END IF;
 	
-	
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 	
@@ -571,8 +570,8 @@ drop procedure if exists `deleteStudy`$$
 CREATE PROCEDURE `deleteStudy`(IN v_studyid int)
 begin
 	
-declare v_prevname varchar(50);
-declare v_postfix varchar(50);
+declare v_prevname varchar(50) CHARACTER SET utf8;
+declare v_postfix varchar(50) CHARACTER SET utf8;
 
 -- START TRANSACTION;
 
