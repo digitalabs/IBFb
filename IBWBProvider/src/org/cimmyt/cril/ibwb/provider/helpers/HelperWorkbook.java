@@ -1256,20 +1256,27 @@ public class HelperWorkbook {
         //measurements will have 20 rows, while measurementsRep will have 10 rows.
         //for (Measurement measurement : workbook.getMeasurementsRep()) {
         Integer levelNo = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
-        int firstLevelNo = levelNo.intValue();
+        int firstLevelNo = levelNo.intValue() - 1;
 
-        long startTime = System.nanoTime();
-        for (Measurement measurement : workbook.getMeasurements()) {
+       long startTime = System.nanoTime();
+       StringBuffer geolocationIdsStr = new StringBuffer();
+       for (Measurement measurement : workbook.getMeasurements()) {
             /*if(ctr==div) {//get next geolocatioid
                     index++;
                     ctr = 0;
             }
             ctr++;*/
             //Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
-            localServices.addNdExperiment(--levelNo, levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
-            ndExperimentIds.add(levelNo);
+            //localServices.addNdExperiment(--levelNo, levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
+            //ndExperimentIds.add(levelNo);
+	    if (geolocationIdsStr.length() > 0) {
+		geolocationIdsStr.append(",");
+	    }
+	    geolocationIdsStr.append(levelNoNdGeoLocationIds.get(measurement.getTrial() - 1));
+	    ndExperimentIds.add(--levelNo);
         }
-        System.out.println("Elapsed time for adding experiments " + (System.nanoTime() - startTime));
+	localServices.addExperiments(firstLevelNo, geolocationIdsStr.toString());
+        System.out.println("Elapsed time for adding experiments " +  ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
 
         System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
         for (String header : listHeaders) {

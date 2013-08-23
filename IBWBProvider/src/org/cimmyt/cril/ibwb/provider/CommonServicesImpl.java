@@ -4643,4 +4643,12 @@ public class CommonServicesImpl implements CommonServices {
         params.put("p_experiment_id", experimentId);
         utilityDAO.callStoredProcedureForUpdate("addLevelsForFactor", params);
     }
+    
+    @Override
+    public void addExperiments(int levelNo, String geolocationIdsStr) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_first_id", levelNo);
+        params.put("p_geolocation_ids", geolocationIdsStr);
+        utilityDAO.callStoredProcedureForUpdate("addExperiments", params);
+    }
 }
