@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jgcamarena
@@ -4632,5 +4633,14 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public Integer getNextMin(String tableName) {
         return this.utilityDAO.getNextMin(tableName);
+    }
+    
+    @Override
+    public void addLevelsForFactor(int labelId, String values, int experimentId) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_labelid", labelId);
+        params.put("p_values", values);
+        params.put("p_experiment_id", experimentId);
+        utilityDAO.callStoredProcedureForUpdate("addLevelsForFactor", params);
     }
 }

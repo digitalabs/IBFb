@@ -1244,9 +1244,9 @@ public class HelperWorkbook {
         boolean agregado = false;
         List<Integer> ndExperimentIds = new ArrayList<Integer>();
         //for (Factor factorGroupTemp : listPlotFactors) {
-        int noOfTrials = levelNoNdGeoLocationIds.size();
-        int noOfPlots = workbook.getMeasurements().size(); //workbook.getMeasurementsRep().size();
-        int div = noOfPlots/noOfTrials;
+        //int noOfTrials = levelNoNdGeoLocationIds.size();
+        //int noOfPlots = workbook.getMeasurements().size(); //workbook.getMeasurementsRep().size();
+        //int div = noOfPlots/noOfTrials;
         //int ctr = 0;
         //int index = 0;
         System.out.println("COMPARE MEASUREMENTSREP AND GERMPLAMSDATA SIZE: "+ workbook.getMeasurementsRep().size() +
@@ -1256,63 +1256,101 @@ public class HelperWorkbook {
         //measurements will have 20 rows, while measurementsRep will have 10 rows.
         //for (Measurement measurement : workbook.getMeasurementsRep()) {
         Integer levelNo = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
+        int firstLevelNo = levelNo.intValue();
+
+        long startTime = System.nanoTime();
         for (Measurement measurement : workbook.getMeasurements()) {
-        	/*if(ctr==div) {//get next geolocatioid
-        		index++;
-        		ctr = 0;
-        	}
-        	ctr++;*/
+            /*if(ctr==div) {//get next geolocatioid
+                    index++;
+                    ctr = 0;
+            }
+            ctr++;*/
             //Integer levelNo = localServices.addNdExperiment(levelNoNdGeoLocationIds.get(index), 1155);
             localServices.addNdExperiment(--levelNo, levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
             ndExperimentIds.add(levelNo);
-            System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
-            for (String header : listHeaders) {
-                factorDeHeader = mapPlotFactors.get(header);
-// TODO: ajusstar los nombres de los factores a la combinacion
-                if (factorDeHeader != null) {
+        }
+        System.out.println("Elapsed time for adding experiments " + (System.nanoTime() - startTime));
+
+        System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
+        for (String header : listHeaders) {
+            StringBuffer values = new StringBuffer();
+            
+            factorDeHeader = mapPlotFactors.get(header);
+            if (factorDeHeader != null) {
+    
+                for (Measurement measurement : workbook.getMeasurements()) {
+                // TODO: ajusstar los nombres de los factores a la combinacion
+                
                     if (factorDeHeader.getFname().equals(workbook.getPlotLabel())) {
-                        HelperFactor.saveLevel(factorDeHeader,
+                        if (values.length() > 0) {
+                            values.append("$%^");
+                        }
+                        values.append(measurement.getPlot());
+                        /* HelperFactor.saveLevel(factorDeHeader,
                                 levelNo,
                                 measurement.getPlot(),
                                 localServices);
-                        agregado = true;
+                        agregado = true;*/
+                        
                     } else if (factorDeHeader.getFname().equals(workbook.getRepLabel())) {//"REP"
-                        HelperFactor.saveLevel(factorDeHeader,
+                        /*HelperFactor.saveLevel(factorDeHeader,
                                 levelNo,
                                 measurement.getReplication(),
                                 localServices);
-                        agregado = true;
+                        agregado = true;*/
+                        if (values.length() > 0) {
+                            values.append("$%^");
+                        }
+                        values.append(measurement.getReplication());
+
                     } else if (factorDeHeader.getFname().equals(workbook.getBlockLabel())) {//"BLOCK"
-                        HelperFactor.saveLevel(factorDeHeader,
+                        /*HelperFactor.saveLevel(factorDeHeader,
                                 levelNo,
                                 measurement.getBlock(),
                                 localServices);
-                        agregado = true;
+                        agregado = true;*/
+                        if (values.length() > 0) {
+                            values.append("$%^");
+                        }
+                        values.append(measurement.getBlock());
+
                     } else if (factorDeHeader.getFname().equals(workbook.getRowLabel())) {//"ROW"
-                        HelperFactor.saveLevel(factorDeHeader,
+                        /*HelperFactor.saveLevel(factorDeHeader,
                                 levelNo,
                                 measurement.getRow(),
                                 localServices);
-                        agregado = true;
+                        agregado = true;*/
+                        if (values.length() > 0) {
+                            values.append("$%^");
+                        }
+                        values.append(measurement.getRow());
+                        
                     } else if (factorDeHeader.getFname().equals(workbook.getColLabel())) {//"COL"
-                        HelperFactor.saveLevel(factorDeHeader,
+                        /*HelperFactor.saveLevel(factorDeHeader,
                                 levelNo,
                                 measurement.getColumn(),
                                 localServices);
-                        agregado = true;
+                        agregado = true;*/
+                        if (values.length() > 0) {
+                            values.append("$%^");
+                        }
+                        values.append(measurement.getColumn());
+                     
                     } else {
                         System.out.println("Unrecognized");
                     }
                 }
 
+                //call addLevelsForFactor()
+                localServices.addLevelsForFactor(factorDeHeader.getLabelid(), values.toString(), firstLevelNo);
 
             }
-            if (agregado) {
+            //if (agregado) {
                 //HelperFactor.addLevels(factorGroupTemp.getFactorid(), levelNo, localServices);
                 //HelperFactor.addLevels(factorDeHeader.getFactorid(), levelNo, localServices);
                 //levelNo--;
-                agregado = false;
-            }
+            //    agregado = false;
+            //}
         }
         KeyCacheUtil.setKey(TableEnum.EXPERIMENT, levelNo);
         return ndExperimentIds;

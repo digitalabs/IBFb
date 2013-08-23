@@ -116,8 +116,12 @@ public class HelperWorkbookRead {
             return null;
         } else {
             log.info("Read list all factors.");
+            long startTime = System.nanoTime();
             readFactors();
+            System.out.println("Read Factors: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
+            startTime = System.nanoTime();
             readVariates();
+            System.out.println("Read Variates: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
             transformandoObjectsToView();
             transformVariatesToView();
             workbookStudy.getValuesForGroupingLabels();
@@ -127,19 +131,28 @@ public class HelperWorkbookRead {
             arrangeFactors();
 
             log.info("Filling Study Conditions Data....");
+            startTime = System.nanoTime();
             fillStudyConditionsData();
+            System.out.println("Fill Study Conditions Data: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
+            startTime = System.nanoTime();
             log.info("Filling Study Conditions DONE!!!!");
 
             log.info("Filling Trial Conditions Data....");
+            startTime = System.nanoTime();
             fillTrialConditionsData();
+            System.out.println("Fill Trial Conditions Data: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
             log.info("Filling Trial Conditions DONE!!!!....");
 //            fillTrialConditionsData2();
             log.info("Filling Trial Germplasm Data....");
+            startTime = System.nanoTime();
             fillGermplasmData();
+            System.out.println("Fill Germplasm Data: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
             log.info("Filling Trial Germplasm DONE!!!");
             log.info("Filling Observations Data....");
 //            fillObservationsData();
+            startTime = System.nanoTime();
             fillObservationsDataFast();
+            System.out.println("Fill Observation Data Fast: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
             log.info("Filling Observations Data DONE!!!");
         }
         workbookStudy.getValuesForGroupingLabels();
