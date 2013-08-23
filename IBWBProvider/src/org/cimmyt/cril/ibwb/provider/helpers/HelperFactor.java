@@ -549,6 +549,10 @@ public class HelperFactor {
         Map<Integer, StringBuffer> stockprops = new HashMap<Integer, StringBuffer>();
         
         //GCP NEW SCHEMA, create the stock and stockprop values
+        StringBuffer uniquenames = new StringBuffer();
+        StringBuffer dbxrefs = new StringBuffer();
+        StringBuffer names = new StringBuffer();
+        StringBuffer values = new StringBuffer();
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
@@ -559,12 +563,28 @@ public class HelperFactor {
         		factorTemp = listEntryFactors.get(i);
         		if(factorTemp.getTid().equals(new Integer(1041))) {
         			uniquename = castingToString(objectList.get(i));
+                                if (uniquenames.length() > 0) {
+                                    uniquenames.append(HelperWorkbook.DELIMITER);
+                                }
+                                uniquenames.append(uniquename);
         		} else if(factorTemp.getTid().equals(new Integer(1042))) {
         			dbxref_id = castingToString(objectList.get(i));
+                                if (dbxrefs.length() > 0) {
+                                    dbxrefs.append(HelperWorkbook.DELIMITER);
+                                }
+                                dbxrefs.append(dbxref_id);
         		} else if(factorTemp.getTid().equals(new Integer(1046))) {
         			name = castingToString(objectList.get(i));
+                                if (names.length() > 0) {
+                                    names.append(HelperWorkbook.DELIMITER);
+                                }
+                                names.append(name);
         		} else if(factorTemp.getTid().equals(new Integer(1047))) {
         			svalue = castingToString(objectList.get(i));
+                                if (values.length() > 0) {
+                                    values.append(HelperWorkbook.DELIMITER);
+                                }
+                                values.append(svalue);
         		} else if(factorTemp.getTid().equals(new Integer(1040))){
                                 stockpropValue = castingToString(objectList.get(i));
                                 Integer labelId = factorTemp.getLabelid();
@@ -580,7 +600,7 @@ public class HelperFactor {
                         }    
         	}
         	//we need to add new stock for every new germplasm entry values
-                serviceLocal.addStock(--stockId, uniquename,dbxref_id,name,svalue);
+                //serviceLocal.addStock(--stockId, uniquename,dbxref_id,name,svalue);
 //                int[] stockStoredIns = {1041, 1042, 1046, 1047};    
 //                //creating stock prop records
 //                for (int i = 0; i < objectList.size(); i++) {
@@ -633,8 +653,9 @@ public class HelperFactor {
 //                    }
 //                }
 
-                stockMap.put(uniquename, stockId);
+                stockMap.put(uniquename, --stockId);
         }
+        serviceLocal.addStocks(firstStockId, uniquenames.toString(), dbxrefs.toString(), names.toString(), values.toString());
         System.out.println("Elapsed time for saving stock: " + ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
         
         startTime = System.nanoTime();

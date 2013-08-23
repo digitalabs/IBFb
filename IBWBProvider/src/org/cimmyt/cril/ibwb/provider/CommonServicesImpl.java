@@ -4671,4 +4671,14 @@ public class CommonServicesImpl implements CommonServices {
         utilityDAO.callStoredProcedureForUpdate("addExperimentProjects", params);
     }
 
+    @Override
+    public void addStocks(int stockId, String uniquenames, String dbxrefs, String names, String values) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_stockId", stockId);
+        params.put("p_uniquenames", uniquenames);
+        params.put("p_dbxrefs", dbxrefs);
+        params.put("p_names", names);
+        params.put("p_values", values);
+        utilityDAO.callStoredProcedureForUpdate("addStocks", params);
+    }
 }
