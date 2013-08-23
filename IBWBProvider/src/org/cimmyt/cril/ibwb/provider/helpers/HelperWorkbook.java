@@ -66,6 +66,8 @@ public class HelperWorkbook {
 //    private static final String FIELD_PLOT = "FIELD PLOT";
 //    private static final String BLOCK = "BLOCK";
     public static final String NUMERIC_TYPE = "N";
+    
+    public static final String DELIMITER = "$%^";
     /**
      * Workbook with all data (factors, constants, condition, etc)
      */
@@ -1270,14 +1272,15 @@ public class HelperWorkbook {
             //localServices.addNdExperiment(--levelNo, levelNoNdGeoLocationIds.get(measurement.getTrial() - 1), 1155);
             //ndExperimentIds.add(levelNo);
 	    if (geolocationIdsStr.length() > 0) {
-		geolocationIdsStr.append(",");
+		geolocationIdsStr.append(DELIMITER);
 	    }
 	    geolocationIdsStr.append(levelNoNdGeoLocationIds.get(measurement.getTrial() - 1));
 	    ndExperimentIds.add(--levelNo);
+
         }
 	localServices.addExperiments(firstLevelNo, geolocationIdsStr.toString());
         System.out.println("Elapsed time for adding experiments " +  ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
-
+        startTime = System.nanoTime();
         System.out.println("saveLevelsPlots - new ndExperimentId: "+ levelNo);
         for (String header : listHeaders) {
             StringBuffer values = new StringBuffer();
@@ -1290,7 +1293,7 @@ public class HelperWorkbook {
                 
                     if (factorDeHeader.getFname().equals(workbook.getPlotLabel())) {
                         if (values.length() > 0) {
-                            values.append("$%^");
+                            values.append(DELIMITER);
                         }
                         values.append(measurement.getPlot());
                         /* HelperFactor.saveLevel(factorDeHeader,
@@ -1306,7 +1309,7 @@ public class HelperWorkbook {
                                 localServices);
                         agregado = true;*/
                         if (values.length() > 0) {
-                            values.append("$%^");
+                            values.append(DELIMITER);
                         }
                         values.append(measurement.getReplication());
 
@@ -1317,7 +1320,7 @@ public class HelperWorkbook {
                                 localServices);
                         agregado = true;*/
                         if (values.length() > 0) {
-                            values.append("$%^");
+                            values.append(DELIMITER);
                         }
                         values.append(measurement.getBlock());
 
@@ -1328,7 +1331,7 @@ public class HelperWorkbook {
                                 localServices);
                         agregado = true;*/
                         if (values.length() > 0) {
-                            values.append("$%^");
+                            values.append(DELIMITER);
                         }
                         values.append(measurement.getRow());
                         
@@ -1339,7 +1342,7 @@ public class HelperWorkbook {
                                 localServices);
                         agregado = true;*/
                         if (values.length() > 0) {
-                            values.append("$%^");
+                            values.append(DELIMITER);
                         }
                         values.append(measurement.getColumn());
                      
@@ -1349,7 +1352,7 @@ public class HelperWorkbook {
                 }
 
                 //call addLevelsForFactor()
-                localServices.addLevelsForFactor(factorDeHeader.getLabelid(), values.toString(), firstLevelNo);
+                localServices.addLevelsForFactor(factorDeHeader.getLabelid(), factorDeHeader.getTid(), values.toString(), firstLevelNo);
 
             }
             //if (agregado) {
@@ -1359,6 +1362,7 @@ public class HelperWorkbook {
             //    agregado = false;
             //}
         }
+        System.out.println("Elapsed time for adding plot levels " + (System.nanoTime() - startTime));
         KeyCacheUtil.setKey(TableEnum.EXPERIMENT, levelNo);
         return ndExperimentIds;
         //}
@@ -1747,12 +1751,19 @@ public class HelperWorkbook {
                 }
             }
          }
-
-
+        Integer firstExpProjId = oindexId - 1;
+        Integer projectId = listObsunitMeasurement.get(0).getEffectid();
+        long startTime = System.nanoTime();
+        StringBuffer oindexStr = new StringBuffer();
         for (Measurement measurement : measurements) {
             Obsunit obsunit = listObsunitMeasurement.get(measurements.indexOf(measurement));
-            Represtn represtnMeasurements = mapReprestns.get(obsunit.getEffectid());
-            serviciosLocal.addOindex(--oindexId, obsunit.getOunitid(), obsunit.getEffectid());
+//            Represtn represtnMeasurements = mapReprestns.get(obsunit.getEffectid());
+            //serviciosLocal.addOindex(--oindexId, obsunit.getOunitid(), obsunit.getEffectid());
+            if (oindexStr.length() > 0){
+                oindexStr.append(DELIMITER);
+            }
+            oindexStr.append(obsunit.getOunitid());
+            
  /*           for (Factor factor : represtnMeasurements.getFactors()) {
 
                 if (factor.getFname().equals(Workbook.STUDY)) {
@@ -1765,8 +1776,11 @@ public class HelperWorkbook {
                     serviciosLocal.addOindex(obsunit.getOunitid(), obsunit.getEffectid());
                 }
             }*/
+           --oindexId; 
            i++;
         }
+        serviciosLocal.addExperimentProjects(firstExpProjId, projectId, oindexStr.toString());
+        System.out.println("Elapsed time for oindex: " + ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
         KeyCacheUtil.setKey(TableEnum.EXPERIMENT_PROJECT, oindexId);
     }
 
