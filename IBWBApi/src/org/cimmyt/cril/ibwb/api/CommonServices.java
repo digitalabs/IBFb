@@ -3764,4 +3764,5 @@ public interface CommonServices {
     public List<Variate> getStudyConstants(int studyId);
     
     public Integer getNextMin(String tableName);
+    public void addLevelsForFactor(int labelId, String values, int experimentId);
 }
