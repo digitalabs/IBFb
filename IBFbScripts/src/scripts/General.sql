@@ -148,14 +148,16 @@ BEGIN
   declare auniquename, adbxref, aname, avalue varchar(2000);
   declare done boolean default false;
 
+  -- drop temporary table if exists temptbl;
+  -- create temporary table temptbl (stock_id int, dbxref_id varchar(255), name varchar(255), uniquename varchar(255), `value` varchar(255), type_id int, is_obsolete int);
+
+
   myloop: LOOP
 
     set next_pos1 = locate('$%^', p_uniquenames, current_pos1);
     set next_pos2 = locate('$%^', p_dbxrefs, current_pos2);
     set next_pos3 = locate('$%^', p_names, current_pos3);
     set next_pos4 = locate('$%^', p_values, current_pos4);
-
-
 
     if (next_pos1 = 0 or next_pos2 = 0 or next_pos3 = 0 or next_pos4 = 0) then
         set next_pos1 = length(p_uniquenames)+1;
@@ -170,10 +172,7 @@ BEGIN
     set aname = (select substring(p_names,current_pos3, next_pos3-current_pos3));
     set avalue = (select substring(p_values,current_pos4, next_pos4-current_pos4));
 
-  drop temporary table if exists temptbl;
-  create temporary table temptbl (stock_id int, dbxref_id varchar(255), name varchar(255), uniquename varchar(255), `value` varchar(255), type_id int, is_obsolete int);
-
-    insert into temptbl(stock_id, dbxref_id, name, uniquename, value, type_id, is_obsolete) 
+    insert into stock(stock_id, dbxref_id, name, uniquename, value, type_id, is_obsolete) 
     values(p_stockId, adbxref, aname, auniquename, avalue, 8230, 0);
     set p_stockId = p_stockId - 1;
 
@@ -187,8 +186,6 @@ BEGIN
     set current_pos4 = next_pos4+length('$%^');
 
   end LOOP;
-
-  -- select * from temptbl;
 
 END$$
 
