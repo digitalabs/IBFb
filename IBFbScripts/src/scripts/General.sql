@@ -136,6 +136,62 @@ begin
 
 end$$
 
+DROP PROCEDURE if exists addStocks$$
+CREATE PROCEDURE `addStocks`(
+  IN p_stockId int,
+  IN p_uniquenames TEXT,
+  IN p_dbxrefs TEXT,
+  IN p_names TEXT,
+  IN p_values TEXT)
+BEGIN
+  declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, current_pos4, next_pos4 int default 1;
+  declare auniquename, adbxref, aname, avalue varchar(2000);
+  declare done boolean default false;
+
+  myloop: LOOP
+
+    set next_pos1 = locate('$%^', p_uniquenames, current_pos1);
+    set next_pos2 = locate('$%^', p_dbxrefs, current_pos2);
+    set next_pos3 = locate('$%^', p_names, current_pos3);
+    set next_pos4 = locate('$%^', p_values, current_pos4);
+
+
+
+    if (next_pos1 = 0 or next_pos2 = 0 or next_pos3 = 0 or next_pos4 = 0) then
+        set next_pos1 = length(p_uniquenames)+1;
+        set next_pos2 = length(p_dbxrefs)+1;
+        set next_pos3 = length(p_names)+1;
+        set next_pos4 = length(p_values)+1;
+        set done = true;
+    end if;
+
+    set auniquename = (select substring(p_uniquenames,current_pos1, next_pos1-current_pos1));
+    set adbxref = (select substring(p_dbxrefs,current_pos2, next_pos2-current_pos2));
+    set aname = (select substring(p_names,current_pos3, next_pos3-current_pos3));
+    set avalue = (select substring(p_values,current_pos4, next_pos4-current_pos4));
+
+  drop temporary table if exists temptbl;
+  create temporary table temptbl (stock_id int, dbxref_id varchar(255), name varchar(255), uniquename varchar(255), `value` varchar(255), type_id int, is_obsolete int);
+
+    insert into temptbl(stock_id, dbxref_id, name, uniquename, value, type_id, is_obsolete) 
+    values(p_stockId, adbxref, aname, auniquename, avalue, 8230, 0);
+    set p_stockId = p_stockId - 1;
+
+    if (done) then
+	   LEAVE myloop;
+    end if;
+
+    set current_pos1 = next_pos1+length('$%^');
+    set current_pos2 = next_pos2+length('$%^');
+    set current_pos3 = next_pos3+length('$%^');
+    set current_pos4 = next_pos4+length('$%^');
+
+  end LOOP;
+
+  -- select * from temptbl;
+
+END$$
+
 drop procedure if exists `addNdExperiment`$$
 
 CREATE PROCEDURE `addNdExperiment`(IN nd_experimentid_id_v int, IN nd_geolocation_id_v int, IN type_id_v INT)
