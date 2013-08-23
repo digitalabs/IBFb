@@ -3765,4 +3765,5 @@ public interface CommonServices {
     
     public Integer getNextMin(String tableName);
     public void addLevelsForFactor(int labelId, String values, int experimentId);
+    public void addExperiments(int levelNo, String geolocationIdsStr);
 }
