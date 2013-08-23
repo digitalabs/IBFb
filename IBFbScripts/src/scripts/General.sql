@@ -151,10 +151,36 @@ drop procedure if exists `addExperiments`$$
 CREATE PROCEDURE `addExperiments`(IN p_first_id int, IN p_geolocation_ids TEXT)
 begin
 
-  CALL split(p_first_id, p_first_id, p_geolocation_ids, ',');
+  CALL split(p_first_id, p_first_id, p_geolocation_ids, '$%^');
   
   insert into nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) 
   select id, `value`, 1155 from temptbl;
+
+
+end$$
+
+drop procedure if exists `addExperimentStocks`$$
+
+CREATE PROCEDURE `addExperimentStocks`(IN p_first_id int, IN p_experiment_id int, IN p_stock_ids TEXT)
+begin
+
+  CALL split(p_first_id, p_experiment_id, p_stock_ids, '$%^');
+  
+  insert into nd_experiment_stock (nd_experiment_stock_id, nd_experiment_id, type_id, stock_id) 
+  select id, levelno, 1000, `value` from temptbl;
+
+
+end$$
+
+drop procedure if exists `addExperimentProjects`$$
+
+CREATE PROCEDURE `addExperimentProjects`(IN p_first_id int, IN p_project_id int, IN p_experiment_ids TEXT)
+begin
+
+  CALL split(p_first_id, p_first_id, p_experiment_ids, '$%^');
+  
+  insert into nd_experiment_project (nd_experiment_project_id, project_id, nd_experiment_id) 
+  select id, p_project_id, `value` from temptbl;
 
 
 end$$

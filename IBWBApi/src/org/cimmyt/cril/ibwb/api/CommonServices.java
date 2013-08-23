@@ -3753,7 +3753,7 @@ public interface CommonServices {
     public List <Udflds> getUdfldsList(final String tableName, final String fieldName);
 
     public Integer addNdGeolocation(String description);
-    public Integer addStock(String uniquename,String dbxref_id,String name,String value);
+    public void addStock(Integer id, String uniquename,String dbxref_id,String name,String value);
     public void addNdExperiment(Integer id, Integer ndGeolocationId, Integer typeId);
     public void addNdExperimentStock(Integer id, Integer ndExperimentId, Integer stockId);
     
@@ -3764,6 +3764,8 @@ public interface CommonServices {
     public List<Variate> getStudyConstants(int studyId);
     
     public Integer getNextMin(String tableName);
-    public void addLevelsForFactor(int labelId, String values, int experimentId);
+    public void addLevelsForFactor(int labelId, int storedin, String values, int experimentId);
     public void addExperiments(int levelNo, String geolocationIdsStr);
+    public void addExperimentStocks(int experimentStockid, int experimentId, String stockIds);
+    public void addExperimentProjects(int expProjectId, int projectId, String experimentIds);
 }

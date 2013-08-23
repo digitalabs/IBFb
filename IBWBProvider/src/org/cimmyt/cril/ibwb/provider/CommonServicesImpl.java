@@ -402,8 +402,8 @@ public class CommonServicesImpl implements CommonServices {
         return id;
     }
 
-    public Integer addStock(String uniquename, String dbxref_id, String name, String value) {
-        Integer id = this.utilityDAO.getNextMin("stock");
+    public void addStock(Integer id, String uniquename, String dbxref_id, String name, String value) {
+//        Integer id = this.utilityDAO.getNextMin("stock");
         LinkedHashMap params = new LinkedHashMap();
         params.put("id", id);
         params.put("uniquename", uniquename);
@@ -411,7 +411,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("name", name);
         params.put("value", value);
         this.utilityDAO.callStoredProcedureForUpdate("addStock", params);
-        return id;
+//        return id;
     }
 
     public void addNdExperimentStock(Integer id, Integer ndExperimentId, Integer stockId) {
@@ -4636,11 +4636,12 @@ public class CommonServicesImpl implements CommonServices {
     }
     
     @Override
-    public void addLevelsForFactor(int labelId, String values, int experimentId) {
+    public void addLevelsForFactor(int labelId, int storedin, String values, int experimentId) {
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("p_labelid", labelId);
+        params.put("p_storedin", storedin);
         params.put("p_values", values);
-        params.put("p_experiment_id", experimentId);
+        params.put("p_levelno", experimentId);
         utilityDAO.callStoredProcedureForUpdate("addLevelsForFactor", params);
     }
     
@@ -4651,4 +4652,23 @@ public class CommonServicesImpl implements CommonServices {
         params.put("p_geolocation_ids", geolocationIdsStr);
         utilityDAO.callStoredProcedureForUpdate("addExperiments", params);
     }
+    
+    @Override
+    public void addExperimentStocks(int experimentStockid, int experimentId, String stockIds) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_first_id", experimentStockid);
+        params.put("p_experiment_id", experimentId);
+        params.put("p_stock_ids", stockIds);
+        utilityDAO.callStoredProcedureForUpdate("addExperimentStocks", params);
+    }
+    
+    @Override
+    public void addExperimentProjects(int expProjectId, int projectId, String experimentIds) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_first_id", expProjectId);
+        params.put("p_project_id", projectId);
+        params.put("p_experiment_ids", experimentIds);
+        utilityDAO.callStoredProcedureForUpdate("addExperimentProjects", params);
+    }
+
 }

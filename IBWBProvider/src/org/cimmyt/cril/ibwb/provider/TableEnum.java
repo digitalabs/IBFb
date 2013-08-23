@@ -13,6 +13,7 @@ public enum TableEnum {
     EXPERIMENT_PROJECT("nd_experiment_project")
     , EXPERIMENT("nd_experiment")
     , EXPERIMENT_STOCK("nd_experiment_stock")
+    , STOCK("stock")
     ;
     
     

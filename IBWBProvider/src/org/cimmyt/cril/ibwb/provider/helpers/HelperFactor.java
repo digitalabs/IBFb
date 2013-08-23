@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
@@ -538,12 +539,22 @@ public class HelperFactor {
 
         Map<String, Integer> stockMap = new HashMap<String, Integer>();
         
+        long startTime = System.nanoTime();
+        Integer stockId = KeyCacheUtil.getKey(TableEnum.STOCK);
+        if (stockId == null){
+            stockId = serviceLocal.getNextMin(TableEnum.STOCK.getName());
+            stockId++; //increment to get last used ID
+        }
+        int firstStockId = stockId - 1;
+        Map<Integer, StringBuffer> stockprops = new HashMap<Integer, StringBuffer>();
+        
         //GCP NEW SCHEMA, create the stock and stockprop values
         for (List<Object> objectList : germplasmData) {
         	String uniquename = null;
         	String dbxref_id = null;
         	String name = null;
         	String svalue = null;
+                String stockpropValue = null;
         	for (int i = 0; i < listEntryFactors.size(); i++) {
         		factorTemp = listEntryFactors.get(i);
         		if(factorTemp.getTid().equals(new Integer(1041))) {
@@ -554,92 +565,123 @@ public class HelperFactor {
         			name = castingToString(objectList.get(i));
         		} else if(factorTemp.getTid().equals(new Integer(1047))) {
         			svalue = castingToString(objectList.get(i));
-        		}    
+        		} else if(factorTemp.getTid().equals(new Integer(1040))){
+                                stockpropValue = castingToString(objectList.get(i));
+                                Integer labelId = factorTemp.getLabelid();
+                                StringBuffer sb = stockprops.get(labelId);
+                                if (sb == null){
+                                    sb = new StringBuffer();
+                                    sb.append(stockpropValue);
+                                    stockprops.put(labelId, sb);
+                                } else {
+                                    sb.append(HelperWorkbook.DELIMITER);
+                                    sb.append(stockpropValue);
+                                }
+                        }    
         	}
         	//we need to add new stock for every new germplasm entry values
-                Integer levelNoStockId = serviceLocal.addStock(uniquename,dbxref_id,name,svalue);
+                serviceLocal.addStock(--stockId, uniquename,dbxref_id,name,svalue);
+//                int[] stockStoredIns = {1041, 1042, 1046, 1047};    
+//                //creating stock prop records
+//                for (int i = 0; i < objectList.size(); i++) {
+//                    //we set the level no to the new stockId
+//                    Integer levelNo = stockId;
+//
+//                    if (i < listEntryFactors.size()) {
+//                        Object value = objectList.get(i);
+//                        factorTemp = listEntryFactors.get(i);
+////                        log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
+//                        
+//                        int storedIn = factorTemp.getTid().intValue();
+//                        
+//                        if (!ArrayUtils.contains(stockStoredIns, storedIn)){
+//                            if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
+//                                LevelN levelN = new LevelN();
+//                                levelN.setFactorid(factorTemp.getFactorid());
+//
+//                                levelN.setLvalue(castingToDouble(value));
+//                                LevelNPK levelNPK = new LevelNPK();
+//                                levelNPK.setLabelid(factorTemp.getLabelid());
+//                                levelNPK.setLevelno(levelNo);
+//                                levelN.setLevelNPK(levelNPK);
+//                                levelN.setStoredinid(factorTemp.getTid());
+//                                serviceLocal.addLevelN(levelN);
+//                                factorTemp.getLevelsN().add(levelN);
+//                            } else {
+//                                LevelC levelC = new LevelC();
+//                                levelC.setFactorid(factorTemp.getFactorid());
+//                                String valueToSave = castingToString(value);
+//                                if (valueToSave != null) {
+//                                    if (valueToSave.trim().isEmpty()) {
+//                                        levelC.setLvalue(" ");
+//                                    } else {
+//                                        levelC.setLvalue(valueToSave);
+//                                    }
+//                                } else {
+//                                    levelC.setLvalue(" ");
+//                                }
+//                                LevelCPK levelCPK = new LevelCPK();
+//                                levelCPK.setLabelid(factorTemp.getLabelid());
+//                                levelCPK.setLevelno(levelNo);
+//                                levelC.setLevelCPK(levelCPK);
+//                                levelC.setStoredinid(factorTemp.getTid());
+//                                serviceLocal.addLevelC(levelC);
+//                                factorTemp.getLevelsC().add(levelC);
+//                            }
+//                        }
+//                        
+//                    }
+//                }
 
-                //creating stock prop records
-                for (int i = 0; i < objectList.size(); i++) {
-                    //we set the level no to the new stockId
-                    Integer levelNo = levelNoStockId;
-
-                    if (i < listEntryFactors.size()) {
-                        Object value = objectList.get(i);
-                        factorTemp = listEntryFactors.get(i);
-                        log.info("Saving level for ENTRY factor: " + factorTemp.getFname() + "  with value: " + value);
-                        if (factorTemp.getLtype().equals(NUMERIC_TYPE)) {
-                            LevelN levelN = new LevelN();
-                            levelN.setFactorid(factorTemp.getFactorid());
-
-                            levelN.setLvalue(castingToDouble(value));
-                            LevelNPK levelNPK = new LevelNPK();
-                            levelNPK.setLabelid(factorTemp.getLabelid());
-                            levelNPK.setLevelno(levelNo);
-                            levelN.setLevelNPK(levelNPK);
-                            levelN.setStoredinid(factorTemp.getTid());
-                            serviceLocal.addLevelN(levelN);
-                            factorTemp.getLevelsN().add(levelN);
-                        } else {
-                            LevelC levelC = new LevelC();
-                            levelC.setFactorid(factorTemp.getFactorid());
-                            String valueToSave = castingToString(value);
-                            if (valueToSave != null) {
-                                if (valueToSave.trim().isEmpty()) {
-                                    levelC.setLvalue(" ");
-                                } else {
-                                    levelC.setLvalue(valueToSave);
-                                }
-                            } else {
-                                levelC.setLvalue(" ");
-                            }
-                            LevelCPK levelCPK = new LevelCPK();
-                            levelCPK.setLabelid(factorTemp.getLabelid());
-                            levelCPK.setLevelno(levelNo);
-                            levelC.setLevelCPK(levelCPK);
-                            levelC.setStoredinid(factorTemp.getTid());
-                            serviceLocal.addLevelC(levelC);
-                            factorTemp.getLevelsC().add(levelC);
-                        }
-                    }
-                }
-
-                stockMap.put(uniquename, levelNoStockId);
+                stockMap.put(uniquename, stockId);
         }
+        System.out.println("Elapsed time for saving stock: " + ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
         
-        Integer lastExperimentId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
+        startTime = System.nanoTime();
+        // add stockprop by batch
+        for (Integer labelId : stockprops.keySet()){
+            serviceLocal.addLevelsForFactor(labelId, 1040, stockprops.get(labelId).toString(), firstStockId);
+        }
+        KeyCacheUtil.setKey(TableEnum.STOCK, stockId);
+        System.out.println("Elapsed time for saving stockprop: " + ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
+        
+        startTime = System.nanoTime();
+        Integer experimentId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT);
         Integer lastStockExpId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_STOCK);
         if (lastStockExpId == null){
             lastStockExpId = serviceLocal.getNextMin(TableEnum.EXPERIMENT_STOCK.getName());
             lastStockExpId++; // get last ID used
         }
+        Integer firstStockExpId = lastStockExpId - 1;
+        StringBuffer geolocationIdsStr = new StringBuffer();
+        StringBuffer expStockStr = new StringBuffer();
         for (Measurement measurement : measurementsRep) {
-            int levelNoNdGeolocationId = ndGeolocationIds.get(measurement.getTrial() - 1);
-
+            if (createNdExperiment){
+                if (geolocationIdsStr.length() > 0) {
+                    geolocationIdsStr.append(HelperWorkbook.DELIMITER);
+                }
+                geolocationIdsStr.append(ndGeolocationIds.get(measurement.getTrial() - 1));
+                if (ndExperimentIds == null){
+                    ndExperimentIds = new ArrayList<Integer>();
+                }
+                ndExperimentIds.add(--experimentId);
+            } 
+            
             String entryNo = measurement.getEntry().toString();
             int levelNoStockId = stockMap.get(entryNo);
 
-            System.out.println("saveLavelsFactorsEntrys - new stockId: "+ levelNoStockId);
-            //we need to add here the nd_experiment_stock relationship
-            Integer ndExperimentId = null;
-            if(createNdExperiment) {
-                //there is already a reference from the nd_experiment to the trial instance number via the nd_geolocation_id
-                serviceLocal.addNdExperiment(--lastExperimentId, levelNoNdGeolocationId, 1155); 
-                ndExperimentId = lastExperimentId;
-                ndExperimentIds.add(ndExperimentId);
-                System.out.println("saveLavelsFactorsEntrys - new ndExperimentId: "+ ndExperimentId);
-            } else {
-                ndExperimentId = ndExperimentIds.get(index++);
-                System.out.println("index is " + index);
-                System.out.println("saveLavelsFactorsEntrys - using previously created ndExperimentId: "+ ndExperimentId);
-            }            
-            serviceLocal.addNdExperimentStock(--lastStockExpId, ndExperimentId, levelNoStockId);
-
-            //addLevels(factorTemp.getFactorid(), levelNo, serviceLocal);
-            //levelNo--;
-
+           if (expStockStr.length() > 0){
+               expStockStr.append(HelperWorkbook.DELIMITER);
+           }
+           expStockStr.append(levelNoStockId);
+           --lastStockExpId;
         }
-        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, lastExperimentId);
+        if (createNdExperiment){
+            serviceLocal.addExperiments(experimentId-1, geolocationIdsStr.toString());
+        }
+        serviceLocal.addExperimentStocks(firstStockExpId, ndExperimentIds.get(0), expStockStr.toString());
+        System.out.println("Elapsed time for experiment_stocks:" + ((double)((System.nanoTime() - startTime)/1000000000)) + " sec");
+        KeyCacheUtil.setKey(TableEnum.EXPERIMENT, experimentId);
         KeyCacheUtil.setKey(TableEnum.EXPERIMENT_STOCK, lastStockExpId);
         //return levelNo;
         return index;
