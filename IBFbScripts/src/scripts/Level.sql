@@ -94,5 +94,29 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE IF EXISTS `addLevelsForFactor`$$
 
+CREATE PROCEDURE `addLevelsForFactor`(
+  IN p_labelid int
+  , IN p_values text
+  , IN p_experiment_id int)
+
+BEGIN
+
+  DECLARE stdvarid INT;
+  SELECT value INTO stdvarid FROM projectprop WHERE projectprop_id = p_labelid;
+
+  select IF(nd_experimentprop_id is NULL or min(nd_experimentprop_id) >= 0, -1, min(nd_experimentprop_id) -1)  
+                          INTO @newexpid 
+                          from nd_experimentprop;
+  
+    CALL split(@newexpid, p_experiment_id, p_values, '$%^');
+ 
+    insert into nd_experimentprop (nd_experimentprop_id, nd_experiment_id,type_id,value,rank) 
+    select id, levelno, stdvarid, `value`, 0
+    FROM temptbl;	
+
+
+
+END$$
 
