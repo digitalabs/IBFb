@@ -3768,4 +3768,5 @@ public interface CommonServices {
     public void addExperiments(int levelNo, String geolocationIdsStr);
     public void addExperimentStocks(int experimentStockid, int experimentId, String stockIds);
     public void addExperimentProjects(int expProjectId, int projectId, String experimentIds);
+    public void addStocks(int stockId, String uniquenames, String dbxrefs, String names, String values);
 }
