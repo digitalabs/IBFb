@@ -146,6 +146,19 @@ insert into   nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) value (
 
 end$$
 
+drop procedure if exists `addExperiments`$$
+
+CREATE PROCEDURE `addExperiments`(IN p_first_id int, IN p_geolocation_ids TEXT)
+begin
+
+  CALL split(p_first_id, p_first_id, p_geolocation_ids, ',');
+  
+  insert into nd_experiment (nd_experiment_id,nd_geolocation_id,type_id) 
+  select id, `value`, 1155 from temptbl;
+
+
+end$$
+
 DROP VIEW IF EXISTS `v_factor`$$
 CREATE VIEW v_factor (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
 AS
