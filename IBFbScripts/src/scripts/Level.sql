@@ -99,7 +99,7 @@ DROP PROCEDURE IF EXISTS `addLevelsForFactor`$$
 CREATE PROCEDURE `addLevelsForFactor`(
   IN p_labelid int
   , IN p_storedin int
-  , IN p_values text
+  , IN p_values MEDIUMTEXT
   , IN p_levelno int)
 
 BEGIN

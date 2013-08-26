@@ -139,10 +139,10 @@ end$$
 DROP PROCEDURE if exists addStocks$$
 CREATE PROCEDURE `addStocks`(
   IN p_stockId int,
-  IN p_uniquenames TEXT,
-  IN p_dbxrefs TEXT,
-  IN p_names TEXT,
-  IN p_values TEXT)
+  IN p_uniquenames MEDIUMTEXT,
+  IN p_dbxrefs MEDIUMTEXT,
+  IN p_names MEDIUMTEXT,
+  IN p_values MEDIUMTEXT)
 BEGIN
   declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, current_pos4, next_pos4 int default 1;
   declare auniquename, adbxref, aname, avalue varchar(2000);
@@ -205,7 +205,7 @@ end$$
 
 drop procedure if exists `addExperiments`$$
 
-CREATE PROCEDURE `addExperiments`(IN p_first_id int, IN p_geolocation_ids TEXT)
+CREATE PROCEDURE `addExperiments`(IN p_first_id int, IN p_geolocation_ids MEDIUMTEXT)
 begin
 
   CALL split(p_first_id, p_first_id, p_geolocation_ids, '$%^');
@@ -218,7 +218,7 @@ end$$
 
 drop procedure if exists `addExperimentStocks`$$
 
-CREATE PROCEDURE `addExperimentStocks`(IN p_first_id int, IN p_experiment_id int, IN p_stock_ids TEXT)
+CREATE PROCEDURE `addExperimentStocks`(IN p_first_id int, IN p_experiment_id int, IN p_stock_ids MEDIUMTEXT)
 begin
 
   CALL split(p_first_id, p_experiment_id, p_stock_ids, '$%^');
@@ -231,7 +231,7 @@ end$$
 
 drop procedure if exists `addExperimentProjects`$$
 
-CREATE PROCEDURE `addExperimentProjects`(IN p_first_id int, IN p_project_id int, IN p_experiment_ids TEXT)
+CREATE PROCEDURE `addExperimentProjects`(IN p_first_id int, IN p_project_id int, IN p_experiment_ids MEDIUMTEXT)
 begin
 
   CALL split(p_first_id, p_first_id, p_experiment_ids, '$%^');

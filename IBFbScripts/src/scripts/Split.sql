@@ -1,7 +1,7 @@
 DELIMITER $$
 
 DROP PROCEDURE if exists split$$
-CREATE PROCEDURE `split`(genid int, p_levelno int, id_list text, delimiter_str varchar(10))
+CREATE PROCEDURE `split`(genid int, p_levelno int, id_list MEDIUMTEXT, delimiter_str varchar(10))
 BEGIN
 
   # routine that takes in a list of values delimited by delimeter_str, performs a split and returns the results
