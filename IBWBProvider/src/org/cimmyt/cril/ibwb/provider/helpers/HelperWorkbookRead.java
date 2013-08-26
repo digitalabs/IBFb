@@ -185,7 +185,7 @@ public class HelperWorkbookRead {
 //        this.factorsDto = this.servicioApp.getListFactor(factorFilter, 0, 0, false);
 
 
-
+        long startTime = System.nanoTime();
         HelperContentEffectidAndFactors hceaf = HelperEffect.getEffectidForMeasurementEffectAndFactors(
                 this.servicioApp,
                 this.study.getStudyid(),
@@ -193,10 +193,14 @@ public class HelperWorkbookRead {
                 this.factorTrial,
                 this.factorEntry,
                 this.factorPlot);
+        System.out.println("Elapsed Time for effectAndFactors: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
+        startTime = System.nanoTime();
         this.effectid = hceaf.getEffectid();
         //this.factorsDto = HelperFactor.getFactorsByEffectid(this.effectid, this.servicioApp);
         this.factorsDto = servicioApp.getFactorsByStudyId(this.study.getStudyid());
+        System.out.println("Elapsed Time for readfactors: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
         
+        startTime = System.nanoTime();
         this.factorStudy = hceaf.getFactorStudy();
         this.factorTrial = hceaf.getFactorTrial();
         this.factorEntry = hceaf.getFactorEntry();
@@ -220,7 +224,7 @@ public class HelperWorkbookRead {
                     factorDto,
                     this.servicioApp,
                     801);
-
+            
             if (factorDto.getFactorid().equals(this.factorIdStudy)) {
                 this.mapFactorsDtoStudy.put(factorDto.getFname(), factorDto);
                 this.factorsDtoStudy.add(factorDto);
@@ -244,6 +248,7 @@ public class HelperWorkbookRead {
                 this.factorsDtoAllFactorsView.add(factorDto);
             }
         }
+        System.out.println("Elapsed Time for factor filling: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
     }
 
     /**
@@ -324,12 +329,12 @@ public class HelperWorkbookRead {
                 //LevelC levelCFilter = new LevelC(false);
                 //levelCFilter.setFactorid(Integer.SIZE);
                 //GCP NEW SCHEMA
-                List<LevelC> levelCList = this.servicioApp.getLevelsCByLabelid(condition.getLabelId());
+                List<LevelC> levelCList = condition.getFactor().getLevelsC();
                 if (levelCList != null && levelCList.size() > 0) { //study conditions will only have 1 level
                     condition.setValue(levelCList.get(0).getLvalue());
                 }
             } else {
-                List<LevelN> levelNList = this.servicioApp.getLevelnByLabelid(condition.getLabelId());
+                List<LevelN> levelNList = condition.getFactor().getLevelsN();
                 if (levelNList != null && levelNList.size() > 0) {
                     condition.setValue(levelNList.get(0).getLvalue());
                 }
@@ -344,12 +349,13 @@ public class HelperWorkbookRead {
         int instanceCounter = 1;
         for (Condition condition : this.workbookStudy.getConditions()) {
             if (condition.getDataType().equals(DATA_TYPE_CHAR)) {
-                LevelC levelCFilter = new LevelC(true);
-                LevelCPK levelCPK = new LevelCPK();
-                levelCPK.setLabelid(condition.getLabelId());
-                levelCFilter.setFactorid(condition.getFactorId());
-                levelCFilter.setLevelCPK(levelCPK);
-                List<LevelC> levelCList = this.servicioApp.getListLevelC(levelCFilter, 0, 0, false);
+//                LevelC levelCFilter = new LevelC(true);
+//                LevelCPK levelCPK = new LevelCPK();
+//                levelCPK.setLabelid(condition.getLabelId());
+//                levelCFilter.setFactorid(condition.getFactorId());
+//                levelCFilter.setLevelCPK(levelCPK);
+//                List<LevelC> levelCList = this.servicioApp.getListLevelC(levelCFilter, 0, 0, false);
+                List<LevelC> levelCList = condition.getFactor().getLevelsC();
                 instanceCounter = 1;
                 for (LevelC levelC : levelCList) {
                     try {
@@ -367,12 +373,13 @@ public class HelperWorkbookRead {
                     }
                 }
             } else if (condition.getDataType().equals(DATA_TYPE_NUMERIC)) {
-                LevelN levelNFilter = new LevelN(true);
-                LevelNPK levelnPK = new LevelNPK();
-                levelnPK.setLabelid(condition.getLabelId());
-                levelNFilter.setFactorid(condition.getFactorId());
-                levelNFilter.setLevelNPK(levelnPK);
-                List<LevelN> levelNList = this.servicioApp.getListLevelN(levelNFilter, 0, 0, false);
+//                LevelN levelNFilter = new LevelN(true);
+//                LevelNPK levelnPK = new LevelNPK();
+//                levelnPK.setLabelid(condition.getLabelId());
+//                levelNFilter.setFactorid(condition.getFactorId());
+//                levelNFilter.setLevelNPK(levelnPK);
+//                List<LevelN> levelNList = this.servicioApp.getListLevelN(levelNFilter, 0, 0, false);
+                List<LevelN> levelNList = condition.getFactor().getLevelsN();
                 instanceCounter = 1;
                 for (LevelN levelN : levelNList) {
                     try {
@@ -590,7 +597,7 @@ public class HelperWorkbookRead {
      */
     private ibfb.domain.core.Factor getFactor(Condition condition, String textLabel) {
         ibfb.domain.core.Factor factor = new ibfb.domain.core.Factor();
-        factor.setFactorId(condition.getFactorId());
+        factor.setFactorId(condition.getFactor().getFactorid());
         factor.setLabelId(condition.getLabelId());
         factor.setFactorName(condition.getConditionName());
         factor.setProperty(condition.getProperty());

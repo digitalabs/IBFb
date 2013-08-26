@@ -882,16 +882,16 @@ public class IBWBAppServicesImpl implements AppServices {
             log.error("Catnt read scaleId: " + scaleId);
         }
 
-        Measuredin measuredin = new Measuredin(traitsTemp.getTid(), scaleId, tmethid);
+        Measuredin measuredin = new Measuredin(tid, scaleId, tmethid);
 
-        measuredin = this.serviciosCentral.getMeasuredinByTraitidScaleidTmethid(measuredin);
+        measuredin = this.serviciosLocal.getMeasuredinByTraitidScaleidTmethid(measuredin);
         if (measuredin != null) {
             measuredin.setTraits(traitsTemp);
             measuredin.setScales(scalesTemp);
             measuredin.setTmsMethod(tmsMethodTemp);
         } else {
             measuredin = new Measuredin(tid, scaleId, tmethid);
-            measuredin = this.serviciosLocal.getMeasuredinByTraitidScaleidTmethid(measuredin);
+            measuredin = this.serviciosCentral.getMeasuredinByTraitidScaleidTmethid(measuredin);
             if (measuredin != null) {
                 measuredin.setTraits(traitsTemp);
                 measuredin.setScales(scalesTemp);

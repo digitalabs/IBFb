@@ -18,7 +18,7 @@ public class Condition {
     private Integer instance;
     
     private Integer labelId;
-    private Integer factorId;
+    private org.cimmyt.cril.ibwb.domain.Factor factor;
     private Integer levelNo;
     
     public Condition() {
@@ -115,12 +115,12 @@ public class Condition {
         this.instance = instance;
     }
 
-    public Integer getFactorId() {
-        return factorId;
+    public org.cimmyt.cril.ibwb.domain.Factor getFactor() {
+        return factor;
     }
 
-    public void setFactorId(Integer factorId) {
-        this.factorId = factorId;
+    public void setFactor(org.cimmyt.cril.ibwb.domain.Factor factor) {
+        this.factor = factor;
     }
 
     public Integer getLabelId() {

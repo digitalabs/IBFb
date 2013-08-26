@@ -37,7 +37,7 @@ public class ConverterDTOtoDomain {
 
         // assign ids from database
         condition.setLabelId(factorDto.getLabelid());
-        condition.setFactorId(factorDto.getFactorid());
+        condition.setFactor(factorDto);
 
         condition.setConditionName(factorDto.getFname());
 
@@ -106,7 +106,7 @@ public class ConverterDTOtoDomain {
 
         // assign ids from database
         condition.setLabelId(factorDto.getLabelid());
-        condition.setFactorId(factorDto.getFactorid());
+        condition.setFactor(factorDto);
 
         condition.setConditionName(factorDto.getFname());
         
