@@ -574,8 +574,14 @@ public class IBWBAppServicesImpl implements AppServices {
 
     @Override
     public List<LevelC> getListLevelC(LevelC filter, int start, int pageSize, boolean paged) {
-        List<LevelC> levelCs = serviciosCentral.getListLevelC(filter, start, pageSize, paged);
-        levelCs.addAll(serviciosLocal.getListLevelC(filter, start, pageSize, paged));
+        Integer factorId = filter.getFactorid();
+        LevelCPK cpk = filter.getLevelCPK();
+        List<LevelC> levelCs;
+        if ((factorId != null && factorId < 0) || (cpk != null && cpk.getLabelid() != null && cpk.getLabelid() < 0)){
+            levelCs = serviciosLocal.getListLevelC(filter, start, pageSize, paged);
+        } else {
+            levelCs = serviciosCentral.getListLevelC(filter, start, pageSize, paged);
+        }
         return levelCs;
     }
 
@@ -604,8 +610,14 @@ public class IBWBAppServicesImpl implements AppServices {
 
     @Override
     public List<LevelN> getListLevelN(LevelN filter, int start, int pageSize, boolean paged) {
-        List<LevelN> levelNs = serviciosCentral.getListLevelN(filter, start, pageSize, paged);
-        levelNs.addAll(serviciosLocal.getListLevelN(filter, start, pageSize, paged));
+        Integer factorId = filter.getFactorid();
+        LevelNPK npk = filter.getLevelNPK();
+        List<LevelN> levelNs;
+        if ((factorId != null && factorId < 0) || (npk != null && npk.getLabelid() != null && npk.getLabelid() < 0)){
+             levelNs = serviciosLocal.getListLevelN(filter, start, pageSize, paged);
+        } else {
+             levelNs = serviciosCentral.getListLevelN(filter, start, pageSize, paged);
+        }  
         return levelNs;
     }
 
