@@ -844,60 +844,81 @@ public class IBWBAppServicesImpl implements AppServices {
     @Override
     public Measuredin getMeasuredinByTraitidScaleidTmethid(Integer tid, Integer scaleId, Integer tmethid) {
 
-        Traits traitsTemp = null;
-        if (tid > 0) {
-            traitsTemp = this.serviciosCentral.getTraits(tid);
-        } else {
-            traitsTemp = this.serviciosLocal.getTraits(tid);
-        }
-        if (traitsTemp == null) {
-            log.error("Catnt read tid: " + tid);
-        }
-        TmsMethod tmsMethodTemp = null;
-        if (tmethid > 0) {
-            tmsMethodTemp = this.serviciosCentral.getTmsMethod(tmethid);
-        } else {
-            tmsMethodTemp = this.serviciosLocal.getTmsMethod(tmethid);
-        }
-        if (tmsMethodTemp == null) {
-            log.error("Catnt read tmethid: " + tmethid);
-        }
-        Scales scalesTemp = null;
-        if (scaleId > 0) {
-            scalesTemp = this.serviciosCentral.getScales(scaleId);
-            if (scalesTemp == null) {
-                Scale scale = this.serviciosCentral.getScale(scaleId);
-                scalesTemp = new Scales(null, scale.getScname(), scale.getSctype(), null, null);
-                scalesTemp = this.serviciosCentral.getScalesByScnameAndSctype(scalesTemp);
+        MeasuredInKey key = new MeasuredInKey(tid, scaleId, tmethid);
+        Measuredin measuredin = StandardVariableCache.getMeasuredIn(key);
+        if (measuredin == null) {
+            
+            //get Traits
+            Traits traitsTemp = StandardVariableCache.getTrait(tid);
+            if (traitsTemp == null) {
+                if (tid > 0) {
+                    traitsTemp = this.serviciosCentral.getTraits(tid);
+                } else {
+                    traitsTemp = this.serviciosLocal.getTraits(tid);
+                }
+                if (traitsTemp == null) {
+                    log.error("Catnt read tid: " + tid);
+                }
+                StandardVariableCache.putTrait(tid, traitsTemp);
             }
-        } else {
-            scalesTemp = this.serviciosLocal.getScales(scaleId);
-            if (scalesTemp == null) {
-                Scale scale = this.serviciosLocal.getScale(scaleId);
-                scalesTemp = new Scales(null, scale.getScname(), scale.getSctype(), null, null);
-                scalesTemp = this.serviciosLocal.getScalesByScnameAndSctype(scalesTemp);
+            
+            //get Methods
+            TmsMethod tmsMethodTemp = StandardVariableCache.getMethod(tmethid);
+            if (tmsMethodTemp == null) {
+                if (tmethid > 0) {
+                    tmsMethodTemp = this.serviciosCentral.getTmsMethod(tmethid);
+                } else {
+                    tmsMethodTemp = this.serviciosLocal.getTmsMethod(tmethid);
+                }
+                if (tmsMethodTemp == null) {
+                    log.error("Catnt read tmethid: " + tmethid);
+                }
+                StandardVariableCache.putMethod(tmethid, tmsMethodTemp);
             }
-        }
-        if (scalesTemp == null) {
-            log.error("Catnt read scaleId: " + scaleId);
-        }
+            
+            //get Scales
+            Scales scalesTemp = StandardVariableCache.getScale(scaleId);
+            if (scalesTemp == null) {
+                if (scaleId > 0) {
+                    scalesTemp = this.serviciosCentral.getScales(scaleId);
+                    if (scalesTemp == null) {
+                        Scale scale = this.serviciosCentral.getScale(scaleId);
+                        scalesTemp = new Scales(null, scale.getScname(), scale.getSctype(), null, null);
+                        scalesTemp = this.serviciosCentral.getScalesByScnameAndSctype(scalesTemp);
+                    }
+                } else {
+                    scalesTemp = this.serviciosLocal.getScales(scaleId);
+                    if (scalesTemp == null) {
+                        Scale scale = this.serviciosLocal.getScale(scaleId);
+                        scalesTemp = new Scales(null, scale.getScname(), scale.getSctype(), null, null);
+                        scalesTemp = this.serviciosLocal.getScalesByScnameAndSctype(scalesTemp);
+                    }
+                }
+                if (scalesTemp == null) {
+                    log.error("Catnt read scaleId: " + scaleId);
+                }
+                StandardVariableCache.putScale(scaleId, scalesTemp);
+            }
 
-        Measuredin measuredin = new Measuredin(tid, scaleId, tmethid);
+            Measuredin filter = new Measuredin(tid, scaleId, tmethid);
 
-        measuredin = this.serviciosLocal.getMeasuredinByTraitidScaleidTmethid(measuredin);
-        if (measuredin != null) {
-            measuredin.setTraits(traitsTemp);
-            measuredin.setScales(scalesTemp);
-            measuredin.setTmsMethod(tmsMethodTemp);
-        } else {
-            measuredin = new Measuredin(tid, scaleId, tmethid);
-            measuredin = this.serviciosCentral.getMeasuredinByTraitidScaleidTmethid(measuredin);
+            measuredin = this.serviciosLocal.getMeasuredinByTraitidScaleidTmethid(filter);
             if (measuredin != null) {
                 measuredin.setTraits(traitsTemp);
                 measuredin.setScales(scalesTemp);
                 measuredin.setTmsMethod(tmsMethodTemp);
+            } else {
+                //filter = new Measuredin(tid, scaleId, tmethid);
+                measuredin = this.serviciosCentral.getMeasuredinByTraitidScaleidTmethid(filter);
+                if (measuredin != null) {
+                    measuredin.setTraits(traitsTemp);
+                    measuredin.setScales(scalesTemp);
+                    measuredin.setTmsMethod(tmsMethodTemp);
+                }
             }
+            StandardVariableCache.putMeasuredIn(key, measuredin);
         }
+        
         if (measuredin == null) {
             log.error("Catnt read measuredin tid: " + tid + " scaleid: " + scaleId + " tmethid: " + tmethid);
         }
