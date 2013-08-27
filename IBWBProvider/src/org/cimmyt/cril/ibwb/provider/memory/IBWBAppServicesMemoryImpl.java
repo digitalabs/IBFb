@@ -1115,12 +1115,12 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
-    public List<LevelC> getLevelsCByLabelid(Integer labelid) {
+    public List<LevelC> getLevelsCByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<LevelN> getLevelnByLabelid(Integer labelid) {
+    public List<LevelN> getLevelnByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

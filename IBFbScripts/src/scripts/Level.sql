@@ -2,39 +2,148 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `getLevelsByLabelId`$$
 
-CREATE PROCEDURE `getLevelsByLabelId`(IN p_labelid int, IN isnumeric int, IN iscentral int)
+CREATE PROCEDURE `getLevelsByLabelId`(IN p_labelid int, IN isnumeric int, IN iscentral int, IN p_factorid INT, IN p_storedin INT)
 BEGIN
 IF iscentral = 1 THEN
 
-    SELECT DISTINCT
-      labelid
-      , factorid
-      , levelno
-      , IF (lvalue IS NULL, IF (isnumeric, '1', '') , lvalue) AS lvalue
-      , storedinid 
-    FROM 
-       v_level
-    WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
-      OR NOT isnumeric AND dtypeid IN (1120, 1125, 1128, 1130))
-      AND labelid = p_labelid
-    ORDER BY levelno ASC
-    ;
+    IF (p_storedin = 1010 or p_storedin = 1015) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
+               IF (p.value IS NULL, IF (isnumeric, '0', '') , pp.value) AS lvalue, p_storedin AS storedinid
+          FROM projectprop pp
+         INNER JOIN projectprop p ON p.project_id = pp.project_id AND p.rank = pp.rank AND p.type_id = pp.value
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno ASC;
+       
+    ELSEIF (p_storedin IN (1011, 1012, 1016, 1017)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1011 THEN (p.name)
+                    WHEN 1012 THEN (p.description)
+                    WHEN 1016 THEN (p.name)
+                    WHEN 1017 THEN (p.description)
+               END as lvalue, p_storedin AS storedinid
+          FROM project p
+         INNER JOIN projectprop pp ON pp.project_id = p.project_id
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno ASC;
+
+    
+    ELSEIF (p_storedin IN (1020, 1021, 1022, 1023, 1024, 1025)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, g.nd_geolocation_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1020 THEN (gp.value)
+                    WHEN 1021 THEN (g.description)
+                    WHEN 1022 THEN (g.latitude)
+                    WHEN 1023 THEN (g.longitude)
+                    WHEN 1024 THEN (g.geodetic_datum)
+                    WHEN 1025 THEN (g.altitude)
+               END as lvalue, p_storedin AS storedinid
+          FROM projectprop pp
+         INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
+         INNER JOIN nd_experiment e ON e.nd_experiment_id = ep.nd_experiment_id
+         INNER JOIN nd_geolocation g ON g.nd_geolocation_id = e.nd_geolocation_id
+          LEFT JOIN nd_geolocationprop gp ON gp.nd_geolocation_id = g.nd_geolocation_id AND gp.type_id = pp.value        
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno ASC;
+
+    ELSEIF (p_storedin = 1030) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, ep.nd_experiment_id AS levelno, 
+               e.value AS lvalue, p_storedin AS storedinid
+          FROM nd_experimentprop e
+         INNER JOIN nd_experiment_project ep ON ep.nd_experiment_id = e.nd_experiment_id
+         INNER JOIN projectprop pp ON pp.project_id = ep.project_id
+         WHERE pp.projectprop_id = p_labelid AND e.type_id = pp.value
+         ORDER BY levelno ASC;
+
+    ELSEIF (p_storedin IN (1040, 1041, 1042, 1046, 1047)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, s.stock_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1040 THEN (sP.value)
+                    WHEN 1041 THEN (s.uniquename)
+                    WHEN 1042 THEN (s.dbxref_id)
+                    WHEN 1046 THEN (s.name)
+                    WHEN 1047 THEN (s.value)
+               END as lvalue, p_storedin AS storedinid
+          FROM projectprop pp 
+         INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
+         INNER JOIN nd_experiment_stock es ON es.nd_experiment_id = ep.nd_experiment_id
+         INNER JOIN stock s ON s.stock_id = es.stock_id
+          LEFT JOIN stockprop sp ON sp.stock_id = s.stock_id AND sp.type_id = pp.value
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno ASC;
+    END IF;
+
+    
+    
 
 ELSE
 
-    SELECT DISTINCT
-      labelid
-      , factorid
-      , levelno
-      , IF (lvalue IS NULL, IF (isnumeric, '1', '') , lvalue) AS lvalue
-      , storedinid 
-    FROM 
-       v_level
-    WHERE (isnumeric AND dtypeid NOT IN (1120, 1125, 1128, 1130)
-      OR NOT isnumeric AND dtypeid IN (1120, 1125, 1128, 1130))
-      AND labelid = p_labelid
-    ORDER BY levelno DESC
-    ;
+    IF (p_storedin = 1010 or p_storedin = 1015) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
+               IF (p.value IS NULL, IF (isnumeric, '0', '') , pp.value) AS lvalue, p_storedin AS storedinid
+          FROM projectprop pp
+         INNER JOIN projectprop p ON p.project_id = pp.project_id AND p.rank = pp.rank AND p.type_id = pp.value
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno DESC;
+       
+    ELSEIF (p_storedin IN (1011, 1012, 1016, 1017)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1011 THEN (p.name)
+                    WHEN 1012 THEN (p.description)
+                    WHEN 1016 THEN (p.name)
+                    WHEN 1017 THEN (p.description)
+               END as lvalue, p_storedin AS storedinid
+          FROM project p
+         INNER JOIN projectprop pp ON pp.project_id = p.project_id
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno DESC;
+
+    
+    ELSEIF (p_storedin IN (1020, 1021, 1022, 1023, 1024, 1025)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, g.nd_geolocation_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1020 THEN (gp.value)
+                    WHEN 1021 THEN (g.description)
+                    WHEN 1022 THEN (g.latitude)
+                    WHEN 1023 THEN (g.longitude)
+                    WHEN 1024 THEN (g.geodetic_datum)
+                    WHEN 1025 THEN (g.altitude)
+               END as lvalue, p_storedin AS storedinid
+          FROM projectprop pp
+         INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
+         INNER JOIN nd_experiment e ON e.nd_experiment_id = ep.nd_experiment_id
+         INNER JOIN nd_geolocation g ON g.nd_geolocation_id = e.nd_geolocation_id
+          LEFT JOIN nd_geolocationprop gp ON gp.nd_geolocation_id = g.nd_geolocation_id AND gp.type_id = pp.value        
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno DESC;
+
+    ELSEIF (p_storedin = 1030) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, ep.nd_experiment_id AS levelno, 
+               e.value AS lvalue, p_storedin AS storedinid
+          FROM nd_experimentprop e
+         INNER JOIN nd_experiment_project ep ON ep.nd_experiment_id = e.nd_experiment_id
+         INNER JOIN projectprop pp ON pp.project_id = ep.project_id
+         WHERE pp.projectprop_id = p_labelid AND e.type_id = pp.value
+         ORDER BY levelno DESC;
+
+    ELSEIF (p_storedin IN (1040, 1041, 1042, 1046, 1047)) THEN
+        SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, s.stock_id AS levelno, 
+               CASE p_storedin
+                    WHEN 1040 THEN (sP.value)
+                    WHEN 1041 THEN (s.uniquename)
+                    WHEN 1042 THEN (s.dbxref_id)
+                    WHEN 1046 THEN (s.name)
+                    WHEN 1047 THEN (s.value)
+               END as lvalue, p_storedin AS storedinid
+          FROM projectprop pp 
+         INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
+         INNER JOIN nd_experiment_stock es ON es.nd_experiment_id = ep.nd_experiment_id
+         INNER JOIN stock s ON s.stock_id = es.stock_id
+          LEFT JOIN stockprop sp ON sp.stock_id = s.stock_id AND sp.type_id = pp.value
+         WHERE pp.projectprop_id = p_labelid
+         ORDER by levelno DESC;
+    END IF;
 
 
 END IF;

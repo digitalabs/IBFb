@@ -585,11 +585,11 @@ public class IBWBAppServicesImpl implements AppServices {
         return levelCs;
     }
 
-    public List<LevelC> getLevelsCByLabelid(Integer labelid) {
+    public List<LevelC> getLevelsCByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         if (labelid > 0) {
-            return this.serviciosCentral.getLevelsCByLabelid(labelid);
+            return this.serviciosCentral.getLevelsCByLabelid(labelid, factorid, storedin);
         } else {
-            return this.serviciosLocal.getLevelsCByLabelid(labelid);
+            return this.serviciosLocal.getLevelsCByLabelid(labelid, factorid, storedin);
         }
     }
 
@@ -621,11 +621,11 @@ public class IBWBAppServicesImpl implements AppServices {
         return levelNs;
     }
 
-    public List<LevelN> getLevelnByLabelid(Integer labelid) {
+    public List<LevelN> getLevelnByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         if (labelid > 0) {
-            return this.serviciosCentral.getLevelnByLabelid(labelid);
+            return this.serviciosCentral.getLevelnByLabelid(labelid, factorid, storedin);
         } else {
-            return this.serviciosLocal.getLevelnByLabelid(labelid);
+            return this.serviciosLocal.getLevelnByLabelid(labelid, factorid, storedin);
         }
     }
 

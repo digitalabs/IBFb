@@ -47,7 +47,7 @@ public class HelperFactor {
         switch (factorDto.getLtype().charAt(0)) {
             case 'C':
                 log.info("Level tipo C.");
-                List<LevelC> levelsC = appServices.getLevelsCByLabelid(factorDto.getLabelid());
+                List<LevelC> levelsC = appServices.getLevelsCByLabelid(factorDto.getLabelid(), factorDto.getFactorid(), factorDto.getTid());
                 if (levelsC == null) {
                     factorDto.setLevelC(null);
                 } else if (levelsC.isEmpty()) {
@@ -59,7 +59,7 @@ public class HelperFactor {
                 break;
             case 'N':
                 log.info("Level tipo N.");
-                List<LevelN> levelsN = appServices.getLevelnByLabelid(factorDto.getLabelid());
+                List<LevelN> levelsN = appServices.getLevelnByLabelid(factorDto.getLabelid(), factorDto.getFactorid(), factorDto.getTid());
                 if (levelsN == null) {
                     factorDto.setLevelN(null);
                 } else if (levelsN.isEmpty()) {

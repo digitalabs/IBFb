@@ -132,29 +132,29 @@ public class TestTrialRandomization extends TestService {
     }
 
     public void testGetLevelsCByLabelid() {
-        System.out.println("testGetLevelsCByLabelid");
-        List<LevelC> list = servicios.getCentralCommonService().getLevelsCByLabelid(10012);
-        if (list != null && list.size() > 0) {
-            System.out.println("SIZE : " + list.size());
-            for (LevelC level : list) {
-                System.out.println(level);
-            }
-        } else {
-            System.out.println("NO LEVEL C DATA FOUND");
-        }
+//        System.out.println("testGetLevelsCByLabelid");
+//        List<LevelC> list = servicios.getCentralCommonService().getLevelsCByLabelid(10012);
+//        if (list != null && list.size() > 0) {
+//            System.out.println("SIZE : " + list.size());
+//            for (LevelC level : list) {
+//                System.out.println(level);
+//            }
+//        } else {
+//            System.out.println("NO LEVEL C DATA FOUND");
+//        }
     }
 
     public void testGetLevelsNByLabelid() {
-        System.out.println("testGetLevelsNByLabelid");
-        List<LevelN> list = servicios.getCentralCommonService().getLevelnByLabelid(10016);
-        if (list != null && list.size() > 0) {
-            System.out.println("SIZE : " + list.size());
-            for (LevelN level : list) {
-                System.out.println(level);
-            }
-        } else {
-            System.out.println("NO LEVEL N DATA FOUND");
-        }
+//        System.out.println("testGetLevelsNByLabelid");
+//        List<LevelN> list = servicios.getCentralCommonService().getLevelnByLabelid(10016);
+//        if (list != null && list.size() > 0) {
+//            System.out.println("SIZE : " + list.size());
+//            for (LevelN level : list) {
+//                System.out.println(level);
+//            }
+//        } else {
+//            System.out.println("NO LEVEL N DATA FOUND");
+//        }
     }
     
     public void testGetVarieteFromVeffects() {

@@ -529,7 +529,7 @@ public interface AppServices {
      * @param labelid
      * @return List of LevelC
      */
-    public List<LevelC> getLevelsCByLabelid(Integer labelid);
+    public List<LevelC> getLevelsCByLabelid(Integer labelid, Integer factorid, Integer storedin);
 
     //-----------------------------------LevelN---------------------------
     /**
@@ -586,7 +586,7 @@ public interface AppServices {
      * @param labelid
      * @return List of LevelN
      */
-    public List<LevelN> getLevelnByLabelid(Integer labelid);
+    public List<LevelN> getLevelnByLabelid(Integer labelid, Integer factorid, Integer storedin);
 
     //-----------------------------------Levels---------------------------
     /**

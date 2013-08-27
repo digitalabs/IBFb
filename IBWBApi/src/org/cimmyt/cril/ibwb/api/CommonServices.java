@@ -1099,7 +1099,7 @@ public interface CommonServices {
      */
     public List<Instln> getListInstln(Instln instlnFilter, int start, int pageSize, boolean paged);
 
-    public List<LevelN> getLevelnByLabelid(Integer labelid);
+    public List<LevelN> getLevelnByLabelid(Integer labelid, Integer factorid, Integer storedin);
 
     //-----------------------------------LevelC---------------------------
     /**
@@ -1164,7 +1164,7 @@ public interface CommonServices {
      */
     public List<LevelC> getListLevelC(LevelC levelCFilter, int start, int pageSize, boolean paged);
 
-    public List<LevelC> getLevelsCByLabelid(Integer labelid);
+    public List<LevelC> getLevelsCByLabelid(Integer labelid, Integer factorid, Integer storedin);
 
     //-----------------------------------LevelN---------------------------
     /**

@@ -1127,14 +1127,16 @@ public class CommonServicesImpl implements CommonServices {
 
     }
 
-    public List<LevelC> getLevelsCByLabelid(Integer labelid) {
+    public List<LevelC> getLevelsCByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         //return levelCDAO.getLevelsCByLabelid(labelid);
         HashMap params = new HashMap();
         params.put("p_labelid", labelid);
         params.put("isnumeric", new Integer(0));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        params.put("p_factorid", factorid);
+        params.put("p_storedin", storedin);
         return this.utilityDAO.callStoredProcedureForList(LevelC.class, "getLevelsByLabelId", params,
-                new String[]{"p_labelid", "isnumeric", "iscentral"},
+                new String[]{"p_labelid", "isnumeric", "iscentral", "p_factorid", "p_storedin"},
                 new String[]{"labelid", "factorid", "levelno", "lvalue", "storedinid"});
 
     }
@@ -1212,14 +1214,16 @@ public class CommonServicesImpl implements CommonServices {
 
     }
 
-    public List<LevelN> getLevelnByLabelid(Integer labelid) {
+    public List<LevelN> getLevelnByLabelid(Integer labelid, Integer factorid, Integer storedin) {
         //return levelNDAO.getLevelsnByLabelid(labelid);
         HashMap params = new HashMap();
         params.put("p_labelid", labelid);
         params.put("isnumeric", new Integer(1));
         params.put("iscentral", isCentral() ? new Integer(1) : new Integer(0));
+        params.put("p_factorid", factorid);
+        params.put("p_storedin", storedin);
         return this.utilityDAO.callStoredProcedureForList(LevelN.class, "getLevelsByLabelId", params,
-                new String[]{"p_labelid", "isnumeric", "iscentral"},
+                new String[]{"p_labelid", "isnumeric", "iscentral", "p_factorid", "p_storedin"},
                 new String[]{"labelid", "factorid", "levelno", "lvalue", "storedinid"});
 
     }
