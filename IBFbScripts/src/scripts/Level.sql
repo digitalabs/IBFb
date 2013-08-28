@@ -31,12 +31,12 @@ IF iscentral = 1 THEN
     ELSEIF (p_storedin IN (1020, 1021, 1022, 1023, 1024, 1025)) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, g.nd_geolocation_id AS levelno, 
                CASE p_storedin
-                    WHEN 1020 THEN (gp.value)
+                    WHEN 1020 THEN (IF(gp.value IS NULL, IF (isnumeric, '0', ''), gp.value))
                     WHEN 1021 THEN (g.description)
-                    WHEN 1022 THEN (g.latitude)
-                    WHEN 1023 THEN (g.longitude)
+                    WHEN 1022 THEN (IF(g.latitude IS NULL, IF (isnumeric, '0', ''), g.latitude))
+                    WHEN 1023 THEN (IF(g.longitude IS NULL, IF (isnumeric, '0', ''), g.longitude))
                     WHEN 1024 THEN (g.geodetic_datum)
-                    WHEN 1025 THEN (g.altitude)
+                    WHEN 1025 THEN (IF(g.altitude IS NULL, IF (isnumeric, '0', ''), g.altitude))
                END as lvalue, p_storedin AS storedinid
           FROM projectprop pp
          INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
@@ -48,7 +48,7 @@ IF iscentral = 1 THEN
 
     ELSEIF (p_storedin = 1030) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, ep.nd_experiment_id AS levelno, 
-               e.value AS lvalue, p_storedin AS storedinid
+               IF(e.value IS NULL, IF (isnumeric, '0', ''), e.value) AS lvalue, p_storedin AS storedinid
           FROM nd_experimentprop e
          INNER JOIN nd_experiment_project ep ON ep.nd_experiment_id = e.nd_experiment_id
          INNER JOIN projectprop pp ON pp.project_id = ep.project_id
@@ -58,11 +58,11 @@ IF iscentral = 1 THEN
     ELSEIF (p_storedin IN (1040, 1041, 1042, 1046, 1047)) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, s.stock_id AS levelno, 
                CASE p_storedin
-                    WHEN 1040 THEN (sP.value)
+                    WHEN 1040 THEN (IF(sP.value IS NULL, IF (isnumeric, '0', ''), sp.value))
                     WHEN 1041 THEN (s.uniquename)
-                    WHEN 1042 THEN (s.dbxref_id)
+                    WHEN 1042 THEN (IF(s.dbxref_id IS NULL, IF (isnumeric, '0', ''), s.dbxref_id))
                     WHEN 1046 THEN (s.name)
-                    WHEN 1047 THEN (s.value)
+                    WHEN 1047 THEN (IF(s.value IS NULL, IF (isnumeric, '0', ''), s.value))
                END as lvalue, p_storedin AS storedinid
           FROM projectprop pp 
          INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
@@ -103,12 +103,12 @@ ELSE
     ELSEIF (p_storedin IN (1020, 1021, 1022, 1023, 1024, 1025)) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, g.nd_geolocation_id AS levelno, 
                CASE p_storedin
-                    WHEN 1020 THEN (gp.value)
+                    WHEN 1020 THEN (IF(gp.value IS NULL, IF (isnumeric, '0', ''), gp.value))
                     WHEN 1021 THEN (g.description)
-                    WHEN 1022 THEN (g.latitude)
-                    WHEN 1023 THEN (g.longitude)
+                    WHEN 1022 THEN (IF(g.latitude IS NULL, IF (isnumeric, '0', ''), g.latitude))
+                    WHEN 1023 THEN (IF(g.longitude IS NULL, IF (isnumeric, '0', ''), g.longitude))
                     WHEN 1024 THEN (g.geodetic_datum)
-                    WHEN 1025 THEN (g.altitude)
+                    WHEN 1025 THEN (IF(g.altitude IS NULL, IF (isnumeric, '0', ''), g.altitude))
                END as lvalue, p_storedin AS storedinid
           FROM projectprop pp
          INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
@@ -120,7 +120,7 @@ ELSE
 
     ELSEIF (p_storedin = 1030) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, ep.nd_experiment_id AS levelno, 
-               e.value AS lvalue, p_storedin AS storedinid
+               IF(e.value IS NULL, IF (isnumeric, '0', ''), e.value) AS lvalue, p_storedin AS storedinid
           FROM nd_experimentprop e
          INNER JOIN nd_experiment_project ep ON ep.nd_experiment_id = e.nd_experiment_id
          INNER JOIN projectprop pp ON pp.project_id = ep.project_id
@@ -130,11 +130,11 @@ ELSE
     ELSEIF (p_storedin IN (1040, 1041, 1042, 1046, 1047)) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, s.stock_id AS levelno, 
                CASE p_storedin
-                    WHEN 1040 THEN (sP.value)
+                    WHEN 1040 THEN (IF(sP.value IS NULL, IF (isnumeric, '0', ''), sp.value))
                     WHEN 1041 THEN (s.uniquename)
-                    WHEN 1042 THEN (s.dbxref_id)
+                    WHEN 1042 THEN (IF(s.dbxref_id IS NULL, IF (isnumeric, '0', ''), s.dbxref_id))
                     WHEN 1046 THEN (s.name)
-                    WHEN 1047 THEN (s.value)
+                    WHEN 1047 THEN (IF(s.value IS NULL, IF (isnumeric, '0', ''), s.value))
                END as lvalue, p_storedin AS storedinid
           FROM projectprop pp 
          INNER JOIN nd_experiment_project ep ON ep.project_id = pp.project_id
@@ -163,7 +163,7 @@ CREATE PROCEDURE `searchLevels`(
 
 BEGIN
 
-  SET @sql := CONCAT("SELECT DISTINCT storedinid AS storedinid, labelid AS labelid, factorid, levelno AS levelno, IF (lvalue IS NULL, IF (", isnumeric, ", '1', '') , lvalue) AS lvalue from v_level ");
+  SET @sql := CONCAT("SELECT DISTINCT storedinid AS storedinid, labelid AS labelid, factorid, levelno AS levelno, IF (lvalue IS NULL, IF (", isnumeric, ", '0', '') , lvalue) AS lvalue from v_level ");
 
   IF isnumeric = 1 THEN
     SET @sql = CONCAT(@sql, " WHERE dtypeid NOT IN (1120, 1125, 1128, 1130) ");
