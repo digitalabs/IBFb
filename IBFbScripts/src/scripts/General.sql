@@ -139,7 +139,7 @@ end$$
 DROP PROCEDURE if exists addStocks$$
 CREATE PROCEDURE `addStocks`(
   IN p_stockId int,
-  IN p_uniquenames MEDIUMTEXT,
+  IN p_uniquenames MEDIUMTEXT, 
   IN p_dbxrefs MEDIUMTEXT,
   IN p_names MEDIUMTEXT,
   IN p_values MEDIUMTEXT)
@@ -147,7 +147,7 @@ BEGIN
   declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, current_pos4, next_pos4 int default 1;
   declare auniquename, adbxref, aname, avalue varchar(2000);
   declare done boolean default false;
-
+  
   drop temporary table if exists temptbl;
   create temporary table temptbl (stock_id int, dbxref_id varchar(255), name varchar(255), uniquename varchar(255), 
                                   `value` varchar(255), type_id int, is_obsolete int);
@@ -160,12 +160,14 @@ BEGIN
     set next_pos3 = locate('$%^', p_names, current_pos3);
     set next_pos4 = locate('$%^', p_values, current_pos4);
 
-    if (next_pos1 = 0 or next_pos2 = 0 or next_pos3 = 0 or next_pos4 = 0) then
-        set next_pos1 = length(p_uniquenames)+1;
-        set next_pos2 = length(p_dbxrefs)+1;
-        set next_pos3 = length(p_names)+1;
-        set next_pos4 = length(p_values)+1;
-        set done = true;
+    -- uniquename is the only required field in stock. 
+    -- So assumes there's always a delimited string of uniquenames.
+    if (next_pos1 = 0) then
+        SET next_pos1 = length(p_uniquenames) + 1;
+        SET next_pos2 = length(p_dbxrefs) + 1;
+        SET next_pos3 = length(p_names) + 1;
+        SET next_pos4 = length(p_values) + 1;
+        SET done = true;
     end if;
 
     set auniquename = (select substring(p_uniquenames,current_pos1, next_pos1-current_pos1));
@@ -174,12 +176,18 @@ BEGIN
     set avalue = (select substring(p_values,current_pos4, next_pos4-current_pos4));
 
     insert into temptbl(stock_id, dbxref_id, name, uniquename, value, type_id, is_obsolete) 
-    values(p_stockId, adbxref, aname, auniquename, avalue, 8230, 0);
+    values(
+        p_stockId, 
+        IF (adbxref ='', NULL, adbxref), 
+        IF (aname ='', NULL, aname),
+        auniquename, 
+        IF (avalue ='', NULL, avalue),
+        8230, 0);
     set p_stockId = p_stockId - 1;
-
-    if (done) then
-	   LEAVE myloop;
-    end if;
+    
+    IF (done) THEN
+        LEAVE myloop;
+    END IF;
 
     set current_pos1 = next_pos1+length('$%^');
     set current_pos2 = next_pos2+length('$%^');
@@ -250,7 +258,7 @@ SELECT
     , prop.project_id AS project_id
     , prop.rank AS rank
     , prop.value AS varid
-    , GROUP_CONCAT(
+     , GROUP_CONCAT(
          CASE
            WHEN stinrel.object_id = 1047 AND mfactors.value = '8230' THEN mfactors.projectprop_id
            WHEN stinrel.object_id IN (1010, 1011, 1012) AND mfactors.value = '8005' THEN mfactors.projectprop_id
