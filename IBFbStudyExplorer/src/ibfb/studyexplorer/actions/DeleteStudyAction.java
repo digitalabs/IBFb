@@ -35,7 +35,9 @@ public class DeleteStudyAction extends SystemAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (DialogUtil.displayConfirmation(bundle.getString("DeleteStudy.confirmation"), bundle.getString("DeleteStudy.title"), NotifyDescriptor.OK_CANCEL_OPTION)) {
+        //GCP-5487
+        if (DialogUtil.displayConfirmation(getDeleteConfirmationMessage(), getName(), NotifyDescriptor.OK_CANCEL_OPTION)) {
+        //if (DialogUtil.displayConfirmation(bundle.getString("DeleteStudy.confirmation"), bundle.getString("DeleteStudy.title"), NotifyDescriptor.OK_CANCEL_OPTION)) {
 
             StudyExplorerTopComponent studyExplorer = (StudyExplorerTopComponent) WindowManager.getDefault().findTopComponent("StudyExplorerTopComponent");
             ExplorerManager explorerManager = studyExplorer.getExplorerManager();
@@ -82,5 +84,17 @@ public class DeleteStudyAction extends SystemAction {
      */
     public void setDeleteTitle(String title) {
         this.deleteTitle = title;
+    }
+    
+    private String getDeleteConfirmationMessage() {
+        if (getName().equals(bundle.getString("DeleteStudy.title"))) {
+            return bundle.getString("DeleteStudy.confirmation");
+        } else if (getName().equals(bundle.getString("DeleteStudyTrial.title"))) {
+            return bundle.getString("DeleteStudyTrial.confirmation");
+        } else if (getName().equals(bundle.getString("DeleteStudyNursery.title"))) {
+            return bundle.getString("DeleteStudyNursery.confirmation");
+        } else {
+            return bundle.getString("DeleteStudyAction.confirmation");
+        }
     }
 }

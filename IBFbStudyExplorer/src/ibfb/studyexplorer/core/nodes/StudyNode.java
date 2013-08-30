@@ -6,6 +6,7 @@ import ibfb.studyexplorer.actions.ShowOptionsAction;
 import ibfb.studyexplorer.actions.ShowPropAction;
 import javax.swing.Action;
 import org.openide.nodes.AbstractNode;
+import org.openide.util.NbBundle;
 import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.Lookups;
 
@@ -34,6 +35,9 @@ public class StudyNode extends AbstractNode {
         actions[0] = SystemAction.get(ShowOptionsAction.class);
         actions[1] = SystemAction.get(ShowPropAction.class);
         actions[2] = SystemAction.get(DeleteStudyAction.class);
+        
+        //GCP-5487
+        ((DeleteStudyAction) actions[2]).setDeleteTitle(NbBundle.getMessage(DeleteStudyAction.class, "DeleteStudy.title"));
         //  actions[2] = SystemAction.get(CloseAction.class ) ;
 
         actions[0].setEnabled(this.study.getStudyid().intValue() < 0);
