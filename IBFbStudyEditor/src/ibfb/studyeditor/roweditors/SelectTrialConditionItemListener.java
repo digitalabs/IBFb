@@ -79,7 +79,7 @@ public class SelectTrialConditionItemListener implements ActionListener {
                 
                 table.setValueAt(value, row, column);
             } else if (condition.getScale().equals("DBCV")) {
-                value = selectLocationPanel.getLocationName();
+                value = selectLocationPanel.getLocationName().toUpperCase();
                 if (component instanceof JComboBox) {
                     JComboBox comboId = (JComboBox)component;
                     DefaultComboBoxModel dcbm = (DefaultComboBoxModel)comboId.getModel();
