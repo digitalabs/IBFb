@@ -1889,7 +1889,8 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
         int entrada = 0;
 
-        if (existeTopComponent(this.getName() + " F1")) {
+        //if (existeTopComponent(this.getName() + " F1")) {
+        if (existeTopComponent(this.getName() + " " + bundle.getString("NurseryTemplate.untitled")) ) {
             JOptionPane.showMessageDialog(null, NbBundle.getMessage(NurseryEditorTopComponent.class, "NurseryEditorTopComponent.already"), NbBundle.getMessage(NurseryEditorTopComponent.class, "NurseryEditorTopComponent.caution"), JOptionPane.OK_OPTION);
 
         } else {
@@ -2283,7 +2284,8 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
                 advanceEditor.assignGermplasmEntries(factores, germplasmDataAdvance);
                 advanceEditor.open();
-                advanceEditor.setName(this.getName() + " F1");
+                //advanceEditor.setName(this.getName() + " F1");
+                advanceEditor.setName(this.getName() + " " + bundle.getString("NurseryTemplate.untitled"));
                 advanceEditor.requestActive();
             }
         }

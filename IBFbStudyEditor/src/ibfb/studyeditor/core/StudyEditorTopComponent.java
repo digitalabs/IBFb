@@ -19,6 +19,7 @@ import ibfb.studyeditor.gywizard.GYwizardWizardIterator;
 import ibfb.studyeditor.importwizard.ImportData;
 import ibfb.studyeditor.importwizard.importingVisualPanel2;
 import ibfb.studyeditor.importwizard.importingWizardIterator;
+import ibfb.studyeditor.layout.FieldmapWizardIterator;
 import ibfb.studyeditor.reports.TraitsReportHelper;
 import ibfb.studyeditor.roweditors.*;
 import ibfb.studyeditor.util.Clipboard;
@@ -468,6 +469,7 @@ public final class StudyEditorTopComponent extends TopComponent {
         jButtonSaveData = new javax.swing.JButton();
         jButtonExportData = new javax.swing.JButton();
         jButtonImportData = new javax.swing.JButton();
+        btnFieldPlan = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTableMaster = new javax.swing.JTable();
@@ -619,10 +621,10 @@ public final class StudyEditorTopComponent extends TopComponent {
 
         jDateChooserStart.setDateFormatString(org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jDateChooserStart.dateFormatString")); // NOI18N
         jDateChooserStart.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jDateChooserStartInputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jDateChooserStart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -633,10 +635,10 @@ public final class StudyEditorTopComponent extends TopComponent {
 
         jDateChooserEnd.setDateFormatString(org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.jDateChooserEnd.dateFormatString")); // NOI18N
         jDateChooserEnd.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jDateChooserEndInputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jDateChooserEnd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -1553,6 +1555,13 @@ public final class StudyEditorTopComponent extends TopComponent {
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(btnFieldPlan, org.openide.util.NbBundle.getMessage(StudyEditorTopComponent.class, "StudyEditorTopComponent.btnFieldPlan.text")); // NOI18N
+        btnFieldPlan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFieldPlanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1563,7 +1572,10 @@ public final class StudyEditorTopComponent extends TopComponent {
                     .addComponent(jButtonSaveData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPrintLabels, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jButtonExportData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonImportData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonImportData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnFieldPlan)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1577,6 +1589,8 @@ public final class StudyEditorTopComponent extends TopComponent {
                 .addComponent(jButtonExportData)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonImportData)
+                .addGap(26, 26, 26)
+                .addComponent(btnFieldPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -2629,12 +2643,15 @@ public final class StudyEditorTopComponent extends TopComponent {
         }
 
 
-        if (conAlpha && hasBLOCKfactor) {
+        if (conAlpha && hasBLOCKfactor ) {
             conAlpha = true;
         } else {
             conAlpha = false;
         }
 
+        if (this.myWorkbook.hasOtherTreatmentFactors()) {
+            conAlpha = false;
+        }
 
         if (hasREPLICATIONfactor) {
             conRCBD = true;
@@ -2836,6 +2853,10 @@ public final class StudyEditorTopComponent extends TopComponent {
         importLayoutFromFile();
     }//GEN-LAST:event_btnBrowseActionPerformed
 
+    private void btnFieldPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFieldPlanActionPerformed
+        launchFieldPlan();
+    }//GEN-LAST:event_btnFieldPlanActionPerformed
+
     @Override
     public void componentOpened() {
     }
@@ -2843,9 +2864,7 @@ public final class StudyEditorTopComponent extends TopComponent {
     public void defineTabs() {
         switch (this.getCROP()) {
             case CROP.WHEAT:
-                if(jTabbedPaneEditor.getTabCount() > 8)
-                    this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
-                    // this.jTabbedPaneEditor.removeTabAt(7); //remove MASTER tab
+                this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
 
 
                 break;
@@ -2855,9 +2874,7 @@ public final class StudyEditorTopComponent extends TopComponent {
                 break;
 
             case CROP.OTHERCROPS:
-                if(jTabbedPaneEditor.getTabCount() > 8)
-                    this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
-                    //this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
+                this.jTabbedPaneEditor.removeTabAt(8); //remove MASTER tab
 
                 break;
 
@@ -2995,12 +3012,16 @@ public final class StudyEditorTopComponent extends TopComponent {
         }
 
 
-        if (conAlpha && hasBLOCKfactor) {
+        if (conAlpha && hasBLOCKfactor ) {
             conAlpha = true;
         } else {
             conAlpha = false;
         }
 
+        if (this.myWorkbook.hasOtherTreatmentFactors()) {
+            conAlpha = false;
+        }
+        
         if (hasREPLICATIONfactor) {
             conRCBD = true;
         }
@@ -3081,6 +3102,7 @@ public final class StudyEditorTopComponent extends TopComponent {
         String blockSize = "";
         String blocksPerRep = "";
         Integer entries = 0;
+        Integer sizeOfBlock = 1;
         try {
             //trials = this.jTableDesign.getRowCount();
             trials = designTableModel.getRowCount();
@@ -3109,7 +3131,7 @@ public final class StudyEditorTopComponent extends TopComponent {
             rep = bean.getReplications().toString();
             blockSize = bean.getBlockSize().toString();
             blocksPerRep = bean.getBlocksPerReplicate().toString();
-
+            sizeOfBlock = Integer.parseInt(blockSize);
             entries = Integer.parseInt(blockSize) * (Integer.parseInt(blocksPerRep));
             if (disenio.startsWith(DesignsClass.USER_DEFINED_DESIGN)) {
 
@@ -3166,7 +3188,7 @@ public final class StudyEditorTopComponent extends TopComponent {
             } else {
                 //rep = this.jTableDesign.getValueAt(i, 2).toString();
                 rep = bean.getReplications().toString();
-                designsGenerator.generateRandomizeCompleteBlock(Integer.parseInt(rep), i + 1, tableModel, otherFactors, factorsDesignCad, combinations);
+                designsGenerator.generateRandomizeCompleteBlock(Integer.parseInt(rep), i + 1, tableModel, otherFactors, factorsDesignCad, combinations, sizeOfBlock);
             }
         }
         int entriesTot = this.jTableEntries.getRowCount();
@@ -4073,9 +4095,21 @@ public final class StudyEditorTopComponent extends TopComponent {
             }
         }
     }
+
+    private void launchFieldPlan() {
+        List<DesignBean> designList = new ArrayList<DesignBean>();
+        int instances = Integer.parseInt(jLabelInstances.getText());
+        for (int i = 1; i <= instances; i++) {
+            DesignBean db = new DesignBean();
+            db.setTrialNumber(i);
+            designList.add(db);
+        }
+        FieldmapWizardIterator.launchFieldMap(designList);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel JPanelData;
     private javax.swing.JButton btnBrowse;
+    private javax.swing.JButton btnFieldPlan;
     private javax.swing.JButton btnPrintLabels;
     private javax.swing.ButtonGroup buttonGroupDesign;
     private javax.swing.ButtonGroup buttonGroupExpConditions;

@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.awt.Frame;
 import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.db.options.DatabaseType;
@@ -16,6 +17,8 @@ import org.cimmyt.cril.ibwb.domain.Instln;
 import org.ini4j.Ini;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.awt.MenuBar;
+import org.openide.awt.ToolbarPool;
 import org.openide.modules.ModuleInstall;
 import org.openide.util.Exceptions;
 import org.openide.util.Mutex;
@@ -67,6 +70,9 @@ public class Installer extends ModuleInstall {
                 }
 
                 // Checks if traits tables exists, if not then creates
+                if (!AppServicesProxy.getDefault().appServices().existsTratisTable()) {
+                    AppServicesProxy.getDefault().appServices().createTraitsTables();
+                }
 
                 // Change bar title
                 changeTitleBar();

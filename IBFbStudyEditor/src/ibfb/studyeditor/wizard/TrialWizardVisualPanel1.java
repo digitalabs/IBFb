@@ -305,6 +305,7 @@ public final class TrialWizardVisualPanel1 extends JPanel {
             
         
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("ERROR AL VALIDAD TEMPLATE DE EXCEL");
         }
 

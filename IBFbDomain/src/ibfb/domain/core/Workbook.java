@@ -1023,6 +1023,10 @@ public class Workbook {
     public void setGermplasmTemplate(boolean germplasmTemplate) {
         this.germplasmTemplate = germplasmTemplate;
     }
-    
+
+    public boolean hasOtherTreatmentFactors() {
+        boolean hasOtherFactors = getOtherFactors() != null && !getOtherFactors().isEmpty();
+        return hasOtherFactors;
+    }
     
 }

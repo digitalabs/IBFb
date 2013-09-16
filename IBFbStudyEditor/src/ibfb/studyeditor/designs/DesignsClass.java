@@ -539,7 +539,6 @@ public class DesignsClass {
             csvReader.readHeaders();
             //     String[] headers = csvReader.getHeaders();
 
-            
             while (csvReader.readRecord()) {
                 String rep = csvReader.get("book.replication");
                 String block = csvReader.get("book.block");

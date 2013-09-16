@@ -574,12 +574,15 @@ public final class TrialWizardVisualPanel9 extends JPanel {
 
         conAlpha = designsUtils.alphaIsValid(numEntries);
 
-        if (conAlpha && hasBLOCKfactor) {
+        if (conAlpha && hasBLOCKfactor ) {
             conAlpha = true;
         } else {
             conAlpha = false;
         }
 
+        if (myWorkbook.hasOtherTreatmentFactors()) {
+           conAlpha = false;
+        }
 
         if (hasREPLICATIONfactor) {
             conRCBD = true;

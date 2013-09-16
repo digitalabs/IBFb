@@ -2,11 +2,14 @@ package ibfb.studyeditor.designs;
 
 import com.csvreader.CsvReader;
 import ibfb.domain.core.DesignBean;
+import ibfb.domain.core.Factor;
+import ibfb.domain.core.FactorLabel;
 import ibfb.domain.core.Workbook;
 import ibfb.studyeditor.core.StudyEditorTopComponent;
 import ibfb.studyeditor.core.model.DesignTableModel;
 import ibfb.studyeditor.core.model.GermplasmEntriesTableModel;
 import ibfb.studyeditor.core.model.ObservationsTableModel;
+import ibfb.studyeditor.core.model.TreatmentLabelsTableModel;
 import ibfb.studyeditor.roweditors.AlphaDesignsRowEditor;
 import ibfb.studyeditor.wizard.TrialWizardWizardIterator;
 import java.awt.Color;
@@ -49,6 +52,7 @@ public class DesignsUtils {
     int germplasmEntries = 0;
     private Workbook myWorkbook;
     private List<FactorsForDesign> facDesign;
+    private TreatmentLabelsTableModel treatmentLabelsTableModel;    
 
     public DesignsUtils(JTable jTableDesign, JTextField jTextFieldEntries) {
         this.jTableDesign = jTableDesign;
@@ -64,6 +68,11 @@ public class DesignsUtils {
         this.germplasmEntries = germplasmEntries;
     }
 
+    public void setTreatmentLabelsTableModel(TreatmentLabelsTableModel treatmentLabelsTableModel) {
+        this.treatmentLabelsTableModel = treatmentLabelsTableModel;
+    }
+
+    
     /**
      * Assigns main editor for design
      *
@@ -461,7 +470,13 @@ public class DesignsUtils {
         if (designBean.getDesign().equals(DesignsClass.RANDOMIZE_COMPLETE_BLOCK)) {
             quitaCellEditors();
             assignCellEditorReplicated();
-            this.jTableDesign.setValueAt(Integer.parseInt(this.jTextFieldEntries.getText()), fila, 3);
+            if (multifactorialTreamentPresent()) {
+                int entriesNum = Integer.parseInt(this.jTextFieldEntries.getText());
+                int totalCombinations = Multifactorial.getTotalRows(myWorkbook.getOtherFactors());
+                this.jTableDesign.setValueAt(entriesNum * totalCombinations, fila, 3);                
+            } else {
+                this.jTableDesign.setValueAt(Integer.parseInt(this.jTextFieldEntries.getText()), fila, 3);
+            }
             this.jTableDesign.setValueAt(1, fila, 4);
             //  jTableDesign.setValueAt(null, fila, 5);
             if (colEditing == 1) {
@@ -1325,4 +1340,14 @@ public class DesignsUtils {
         }
         return allEntriesAreAvailable;
     }
+
+    
+    private boolean multifactorialTreamentPresent()  {
+        boolean present = false;
+        present = myWorkbook.getOtherFactors() != null && !myWorkbook.getOtherFactors().isEmpty();
+        return present;
+        
+    }
+    
+   
 }
