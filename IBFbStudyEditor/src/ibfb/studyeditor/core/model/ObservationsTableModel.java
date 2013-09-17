@@ -40,6 +40,10 @@ public class ObservationsTableModel extends AbstractTableModel {
     public static final String BLOCK_NESTED = Workbook.BLOCKING_FACTOR_NESTED_NUMBER;
     public static final String ROW = Workbook.ROW_IN_LAYOUT_NUMBER;
     public static final String COL = Workbook.COLUMN_IN_LAYOUT_NUMBER;
+    
+    public static final String[] MAIN_FACTORS = {TRIAL, ENTRY, ENTRY_CODE, DESIG, GID, PLOT, 
+                                                    PLOTNUMBER, REPLICATION, BLOCK, ROW, COL};
+    
     public static boolean isFromCrossInfo = false;
     /**
      * Prefix to store header index in map for factors

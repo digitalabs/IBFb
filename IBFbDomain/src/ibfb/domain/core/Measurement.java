@@ -6,6 +6,7 @@ package ibfb.domain.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Measurement {
      * Each value for factor labels
      */
     private List<Object> factorLabelData;
+    private Map<String, String> treatmentsData;
     /**
      * Each value for data_n and data_c
      */
@@ -147,4 +149,17 @@ public class Measurement {
     public void setFactorLabelData(List<Object> factorLabelData) {
         this.factorLabelData = factorLabelData;
     }
+    
+    public void setTreatmentData(Map<String, String> treatmentsData){
+        this.treatmentsData = treatmentsData;
+    }
+    
+    public Map<String, String> getTreatmentsData(){
+        return this.treatmentsData;
+    }
+    
+    public String getTreatmentData(String factor){
+        return this.treatmentsData.get(factor);
+    }
+    
 }

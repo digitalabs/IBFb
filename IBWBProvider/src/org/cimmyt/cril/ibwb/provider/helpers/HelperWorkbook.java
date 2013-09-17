@@ -1286,6 +1286,10 @@ public class HelperWorkbook {
             StringBuffer values = new StringBuffer();
             
             factorDeHeader = mapPlotFactors.get(header);
+            if (factorDeHeader == null){
+                factorDeHeader = mapOtherFactors.get(header);
+            }
+            
             if (factorDeHeader != null) {
     
                 for (Measurement measurement : workbook.getMeasurements()) {
@@ -1347,7 +1351,10 @@ public class HelperWorkbook {
                         values.append(measurement.getColumn());
                      
                     } else {
-                        System.out.println("Unrecognized");
+                        if (values.length() > 0) {
+                            values.append(DELIMITER);
+                        }
+                        values.append(measurement.getTreatmentData(header));
                     }
                 }
 

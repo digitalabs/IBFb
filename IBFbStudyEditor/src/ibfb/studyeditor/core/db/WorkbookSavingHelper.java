@@ -2,6 +2,7 @@ package ibfb.studyeditor.core.db;
 
 import ibfb.domain.core.Condition;
 import ibfb.domain.core.Constant;
+import ibfb.domain.core.Factor;
 import ibfb.domain.core.Measurement;
 import ibfb.domain.core.MeasurementData;
 import ibfb.domain.core.Study;
@@ -15,8 +16,11 @@ import ibfb.studyeditor.core.model.StudyConditionsTableModel;
 import ibfb.studyeditor.core.model.TrialConditionsTableModel;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
 import org.openide.util.Exceptions;
@@ -313,6 +317,7 @@ public class WorkbookSavingHelper {
         for (int row = 0; row < model.getRowCount(); row++) {
             Measurement m = new Measurement();
             List<MeasurementData> mdList = new ArrayList<MeasurementData>();
+            Map<String, String> treatmentData = new LinkedHashMap<String, String>();
             for (int col = 0; col < model.getColumnCount(); col++) {
 
                 colNumber = model.getHeaderIndex(ObservationsTableModel.TRIAL);
@@ -406,6 +411,7 @@ public class WorkbookSavingHelper {
                     }
                 }
 
+                
                 if (model.getHeaders().get(col) instanceof Variate) {
                     Variate headerVariate = (Variate) model.getHeaders().get(col);
                     // create the measurement
@@ -416,8 +422,16 @@ public class WorkbookSavingHelper {
                     //md.setData("N", model.getValueAt(row, col));
                     md.setData(headerVariate.getDataType(), model.getValueAt(row, col));
                     mdList.add(md);
+                    
+                } else if (model.getHeaders().get(col) instanceof Factor){
+                    Factor factor = (Factor) model.getHeaders().get(col);
+                    String key = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
+                    if (!ArrayUtils.contains(ObservationsTableModel.MAIN_FACTORS, key)){
+                        treatmentData.put(factor.getFactorName(), String.valueOf(model.getValueAt(row, col)));
+                    }
                 }
             }
+            m.setTreatmentData(treatmentData);
             m.setMeasurementsData(mdList);
             measurements.add(m);
         }
