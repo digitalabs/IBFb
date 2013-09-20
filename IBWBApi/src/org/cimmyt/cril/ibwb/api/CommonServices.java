@@ -3769,4 +3769,5 @@ public interface CommonServices {
     public void addExperimentStocks(int experimentStockid, int experimentId, String stockIds);
     public void addExperimentProjects(int expProjectId, int projectId, String experimentIds);
     public void addStocks(int stockId, String uniquenames, String dbxrefs, String names, String values);
+    public void addPhenotypicData(String experiments, String variates, String values);
 }

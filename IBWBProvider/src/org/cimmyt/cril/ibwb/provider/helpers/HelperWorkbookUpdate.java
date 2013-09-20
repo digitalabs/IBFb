@@ -16,6 +16,8 @@ import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.Factor;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.Variate;
+import org.cimmyt.cril.ibwb.provider.MeasuredInKey;
+import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
 /**
@@ -388,22 +390,61 @@ public class HelperWorkbookUpdate {
         int currentObsUnit = 0;
 
         // finally iterate over all measurements and update it
+        StringBuffer experiments = new StringBuffer();
+        StringBuffer variates = new StringBuffer();
+        StringBuffer values = new StringBuffer();
         for (Measurement measurement : workbook.getMeasurements()) {
             Obsunit obsunit = obsUnitList.get(currentObsUnit);
 
             // save dataN and DataC
-            for (MeasurementData data : measurement.getMeasurementsData()) {
+            for (MeasurementData measurementData :measurement.getMeasurementsData()) {
                 // if data has a value then save it
-                if (data.getValue() != null) {
-                    // look for saved variate
-                    Variate savedVariate = savedVariateMap.get(data.getVariate().getVariateName());
-                    addDataNorDataC(obsunit, data, savedVariate);
+                Object data = measurementData.getValue();
+                
+                if (data != null) {
+                    Variate savedVariate = savedVariateMap.get(measurementData.getVariate().getVariateName());
+                    Integer phenotypeId = null;
+                    String value = null
+                            ;
+                    if (data instanceof DataN){
+                        DataN dataN = ((DataN)data);
+                        phenotypeId = dataN.getPhenotypeId();
+                        Double dValue = dataN.getDvalue();
+                        value = dValue != null ? dValue.toString() : null;
+                    } else if (data instanceof DataC) {
+                        DataC dataC = ((DataC)data);
+                        phenotypeId = dataC.getPhenotypeId();
+                        value = dataC.getDvalue();
+                    }
+                    
+                    if (phenotypeId == null && value != null){                 
+                        
+                        if (experiments.length() > 0){
+                            experiments.append(HelperWorkbook.DELIMITER);
+                        }
+                        experiments.append(obsunit.getOunitid());
+                        
+                        
+                        if (variates.length() > 0){
+                            variates.append(HelperWorkbook.DELIMITER);
+                        }
+                        variates.append(savedVariate.getMeasuredinid());
+                        
+                        if (values.length() > 0){
+                            values.append(HelperWorkbook.DELIMITER);
+                        }
+                        values.append(value);
+                        
+                    } else if (phenotypeId != null) {
+                        addDataNorDataC(obsunit, measurementData, savedVariate);
+                    }
+                    
                 }
 
             }
-
             currentObsUnit++;
         }
+        localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
     }
 
     /**

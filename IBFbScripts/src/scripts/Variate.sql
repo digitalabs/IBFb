@@ -112,6 +112,7 @@ BEGIN
         pp.projectprop_id AS variatid
         , pr.object_project_id AS studyid
         , term.value AS vname
+        , cvr.subject_id AS measuredinid
         , GROUP_CONCAT(IF(cvr.type_id = 1200, cvr.object_id, NULL)) AS traitid
         , GROUP_CONCAT(IF(cvr.type_id = 1220, cvr.object_id, NULL)) AS scaleid
         , GROUP_CONCAT(IF(cvr.type_id = 1210, cvr.object_id, NULL)) AS tmethid

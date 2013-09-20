@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 
 /**
@@ -28,6 +29,8 @@ public class DataC extends BaseFilter implements Serializable {
     @Basic(optional = false)
     @Column(name = "dvalue")
     private String dvalue;
+    @Transient    
+    private Integer phenotypeId;
 
     public DataC() {
     	setDefault();
@@ -59,9 +62,10 @@ public class DataC extends BaseFilter implements Serializable {
     }
 
     //for new schema
-    public DataC(Integer ounitid, Integer variatid, String dvalue) {
+    public DataC(Integer ounitid, Integer variatid, String dvalue, Integer phenotypeId) {
         this(ounitid, variatid);
         this.dvalue = dvalue;
+        this.phenotypeId = phenotypeId;
     }
     
     public DataCPK getDataCPK() {
@@ -131,6 +135,14 @@ public class DataC extends BaseFilter implements Serializable {
     		dataCPK = new DataCPK();
     	}
     	dataCPK.setVariatid(variatid);
+    }
+    
+    public void setPhenotypeId(Integer phenotypeId){
+        this.phenotypeId = phenotypeId;
+    }
+    
+    public Integer getPhenotypeId(){
+        return this.phenotypeId;
     }
     
 

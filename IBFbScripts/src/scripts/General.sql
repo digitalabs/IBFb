@@ -201,6 +201,91 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE if exists addPhenotypicData$$
+CREATE PROCEDURE `addPhenotypicData`(
+  IN p_experiments LONGTEXT, 
+  IN p_variates LONGTEXT,
+  IN p_values LONGTEXT)
+BEGIN
+  declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, phenotypeId, expPhenotypeId int default 1;
+  declare aexperiment, avariate, avalue, v_cvalue_id varchar(2000);
+  declare done boolean default false;
+  
+  drop temporary table if exists temptbl;
+  create temporary table temptbl ( 
+    `phenotype_id` int(11),
+    `uniquename` varchar(255),
+    `name` varchar(255),
+    `observable_id` int(11),
+    `attr_id` int(11),
+    `value` varchar(255),
+    `cvalue_id` int(11),
+    `assay_id` int(11),
+    `nd_experiment_phenotype_id` int(11),
+    `nd_experiment_id` int(11));
+
+  call getNextMinReturn('phenotype', phenotypeId);
+  call getNextMinReturn('nd_experiment_phenotype', expPhenotypeId);
+
+  myloop: LOOP
+
+    set next_pos1 = locate('$%^', p_experiments, current_pos1);
+    set next_pos2 = locate('$%^', p_variates, current_pos2);
+    set next_pos3 = locate('$%^', p_values, current_pos3);
+
+    -- uniquename is the only required field in stock. 
+    -- So assumes there's always a delimited string of uniquenames.
+    if (next_pos1 = 0) then
+        SET next_pos1 = length(p_experiments) + 1;
+        SET next_pos2 = length(p_variates) + 1;
+        SET next_pos3 = length(p_values) + 1;
+        SET done = true;
+    end if;
+
+    set aexperiment = (select substring(p_experiments,current_pos1, next_pos1-current_pos1));
+    set avariate = (select substring(p_variates,current_pos2, next_pos2-current_pos2));
+    set avalue = (select substring(p_values,current_pos3, next_pos3-current_pos3));
+
+    select cvterm_id into v_cvalue_id 
+    from cvterm ct
+    inner join cvterm_relationship cr ON cr.object_id = ct.cvterm_id AND cr.type_id = 1190 AND cr.subject_id = avariate
+    inner join cvterm_relationship cs ON cs.subject_id = cr.subject_id AND cs.type_id = 1044 and cs.object_id = 1048
+    where ct.name =  avalue;
+
+    insert into temptbl(phenotype_id, uniquename, `name`, observable_id, attr_id, `value`, cvalue_id, assay_id, nd_experiment_phenotype_id, nd_experiment_id) 
+    values(
+        phenotypeId
+        , phenotypeId
+        , avariate
+        , avariate
+        , NULL
+        , avalue
+        , v_cvalue_id
+        , NULL
+        , expPhenotypeId
+        , aexperiment
+    );
+    set phenotypeId = phenotypeId - 1;
+    set expPhenotypeId = expPhenotypeId - 1;
+    
+    IF (done) THEN
+        LEAVE myloop;
+    END IF;
+
+    set current_pos1 = next_pos1+length('$%^');
+    set current_pos2 = next_pos2+length('$%^');
+    set current_pos3 = next_pos3+length('$%^');
+
+  end LOOP;
+
+  insert into phenotype(phenotype_id, uniquename, `name`, observable_id, attr_id, `value`, cvalue_id, assay_id) 
+  select phenotype_id, uniquename, `name`, observable_id, attr_id, `value`, cvalue_id, assay_id from temptbl;
+
+  insert into nd_experiment_phenotype(nd_experiment_phenotype_id, nd_experiment_id, phenotype_id)
+  select nd_experiment_phenotype_id, nd_experiment_id, phenotype_id from temptbl;
+
+END$$
+
 drop procedure if exists `addNdExperiment`$$
 
 CREATE PROCEDURE `addNdExperiment`(IN nd_experimentid_id_v int, IN nd_geolocation_id_v int, IN type_id_v INT)

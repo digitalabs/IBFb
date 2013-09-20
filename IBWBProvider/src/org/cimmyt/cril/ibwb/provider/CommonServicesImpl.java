@@ -3755,7 +3755,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("v_isLocal", isLocal()? 1 : 0);
         return this.utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromVeffects", params,
                 new String[]{"p_represno", "v_isLocal"},
-                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
+                new String[]{"variatid", "studyid", "vname", "measuredinid", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
 
     }
 
@@ -4684,5 +4684,14 @@ public class CommonServicesImpl implements CommonServices {
         params.put("p_names", names);
         params.put("p_values", values);
         utilityDAO.callStoredProcedureForUpdate("addStocks", params);
+    }
+
+    @Override
+    public void addPhenotypicData(String experiments, String variates, String values) {
+        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("p_experiments", experiments);
+        params.put("p_variates", variates);
+        params.put("p_values", values);
+        utilityDAO.callStoredProcedureForUpdate("addPhenotypicData", params);
     }
 }
