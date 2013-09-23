@@ -15,13 +15,15 @@ begin
 	"left join cvterm_relationship cvrsb on cvrsb.object_id = cvsc.cvterm_id and cvrsb.type_id = 1220 ",
 	"left join cvterm_relationship cvr on cvr.subject_id = cvrsb.subject_id ",
 	"left join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
-	"WHERE cvsc.cv_id = 1030 HAVING 1=1 ");
+        "left join cvtermsynonym syn on syn.cvterm_id = cvsc.cvterm_id ",
+	"WHERE cvsc.cv_id = 1030 ");
+	IF(v_scname IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND (cvsc.name = '",v_scname,"' OR syn.synonym = '", v_scname, "') ");
+        END IF;
+        SET @sql = CONCAT(@sql, " HAVING 1=1 ");
 	IF(v_scaleid IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND scaleid = ",v_scaleid);
 	END IF;
-	IF(v_scname IS NOT NULL) THEN
-    SET @sql = CONCAT(@sql," AND scname = '",v_scname,"'");
-    END IF;
 	IF(v_sctype IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," AND sctype = '",v_sctype,"'");
 	END IF;	
@@ -51,8 +53,9 @@ begin
 	SET @sql = CONCAT(@sql," OR scaleid = ",v_scaleid);
 	END IF;
 	IF(v_scname IS NOT NULL) THEN
-    SET @sql = CONCAT(@sql," OR scname like '%",v_scname,"%'");
-    END IF;
+            SET @sql = CONCAT(@sql," OR scname like '%",v_scname,"%'");
+            SET @sql = CONCAT(@sql, " OR EXISTS (SELECT 1 FROM cvtermsynonym AS syn WHERE syn.cvterm_id = cvsc.cvterm_id AND syn.synonym LIKE '%", v_scname, "%') ");
+        END IF;
 	IF(v_sctype IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," OR sctype like '%",v_sctype,"%'");
 	END IF;	

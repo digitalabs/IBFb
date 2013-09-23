@@ -2949,8 +2949,24 @@ public class CommonServicesImpl implements CommonServices {
     @Override
     public void addTraits(Traits traits) {
         //this.traitsDAO.create(traits);
+        Integer traitGroupId = null;
+        if (traits.getTraittype() != null && !"".equals(traits.getTraittype())) {
+            if (traits.getTraittype().equals(Traits.TRAIT_TYPE_CONSTANT) || 
+                traits.getTraittype().equals(Traits.TRAIT_TYPE_VARIATE)) {
+                traits.setTraitGroupId(1330);
+            } else {
+                traits.setTraitGroupId(1045);
+            }
+        } else if (traits.getTid() != null) { //use stored in
+            if (traits.getTid().equals(1043) || traits.getTid().equals(1048)) {
+                traits.setTraitGroupId(1330);
+            } else {
+                traits.setTraitGroupId(1045);
+            }
+        }
+        
         Integer id = this.utilityDAO.callStoredProcedureForUpdateAndReturnPK(traits, "addTraits",
-                new String[]{"trname", "trdesc", "traitGroup"});
+                new String[]{"trname", "trdesc", "traitGroupId"});
         traits.setTraitid(id);
     }
 

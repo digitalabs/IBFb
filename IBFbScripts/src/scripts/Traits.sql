@@ -83,28 +83,30 @@ drop procedure if exists `addTraits`$$
 CREATE PROCEDURE `addTraits` (
 IN trname varchar(200) character set utf8, 
 IN trdesc varchar(255) character set utf8, 
-IN traitgroup varchar(255) character set utf8)
+IN traitgroupid int(11))
+-- IN traitgroup varchar(255) character set utf8)
 begin
-        declare v_traitgroupid int default 0;
+        -- declare v_traitgroupid int default 0;
         declare v_newcvtermid int;
 
 	-- add cvterm - IN cvidin int, IN cvname varchar(500), IN cvdesc varchar(500), OUT newcvtermidret INT
 	call addCvtermReturnId(1010, trname, trdesc, v_newcvtermid);
 
-        select cvterm_id  
-          into v_traitgroupid
-          from cvterm 
-         where cv_id = 1000 
-           and name = traitgroup;
+        -- select cvterm_id  
+        --   into v_traitgroupid
+        --   from cvterm 
+        --  where cv_id = 1000 
+        --    and name = traitgroup;
         
-        if (v_traitgroupid = 0) then
-            	call addCvtermReturnId(1000, traitgroup, traitgroup, v_traitgroupid); -- group
-        end if;
+        -- if (v_traitgroupid = 0) then
+        --    	call addCvtermReturnId(1000, traitgroup, traitgroup, v_traitgroupid); -- group
+        -- end if;
 	
 	-- add cvterm relationship --IN typeid int, IN subjectid int, IN objectid int
 	-- call addCvtermRelationship(1200,?subjectId?,@newcvtermid);
 	-- add cvterm relationship	
-	call addCvtermRelationship(1225, @newcvtermid, v_traitgroupid);
+	-- call addCvtermRelationship(1225, @newcvtermid, v_traitgroupid);
+        call addCvtermRelationship(1225, @newcvtermid, traitgroupid);
 
 	select v_newcvtermid;
 end$$

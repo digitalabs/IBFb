@@ -50,6 +50,7 @@ SET @mySQL := 'SELECT DISTINCT
            LEFT JOIN cvterm_relationship traitcvr ON traitcvr.object_id = cvt.cvterm_id and traitcvr.type_id = 1200
            LEFT JOIN cvterm label ON label.cvterm_id = traitcvr.subject_id
            LEFT JOIN cvterm_relationship tcvr ON tcvr.subject_id = label.cvterm_id and tcvr.type_id = 1044
+           LEFT JOIN cvtermsynonym syn ON syn.cvterm_id = cvt.cvterm_id 
            WHERE cvt.cv_id = 1010 ';
 
   IF (tid IS NOT NULL) THEN
@@ -61,7 +62,7 @@ SET @mySQL := 'SELECT DISTINCT
   END IF;
 
   IF (traitName IS NOT NULL) THEN
-    set @mySQL := CONCAT(@mySQL, " AND cvt.name LIKE '%", traitName, "%'");
+    set @mySQL := CONCAT(@mySQL, " AND (cvt.name LIKE '%", traitName, "%' OR syn.synonym LIKE '%", traitName, "%') ");
   END IF;
 
   IF (traitDescription IS NOT NULL) THEN
