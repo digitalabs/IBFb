@@ -16,6 +16,9 @@ import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.Factor;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.Variate;
+import org.cimmyt.cril.ibwb.provider.MeasuredInKey;
+import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
+import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
 /**
@@ -387,23 +390,68 @@ public class HelperWorkbookUpdate {
 
         int currentObsUnit = 0;
 
+        long startTime = System.nanoTime();
         // finally iterate over all measurements and update it
+        StringBuffer experiments = new StringBuffer();
+        StringBuffer variates = new StringBuffer();
+        StringBuffer values = new StringBuffer();
         for (Measurement measurement : workbook.getMeasurements()) {
             Obsunit obsunit = obsUnitList.get(currentObsUnit);
 
             // save dataN and DataC
-            for (MeasurementData data : measurement.getMeasurementsData()) {
+            for (MeasurementData measurementData :measurement.getMeasurementsData()) {
                 // if data has a value then save it
-                if (data.getValue() != null) {
-                    // look for saved variate
-                    Variate savedVariate = savedVariateMap.get(data.getVariate().getVariateName());
-                    addDataNorDataC(obsunit, data, savedVariate);
+                Object data = measurementData.getValue();
+                Variate savedVariate = savedVariateMap.get(measurementData.getVariate().getVariateName());
+                
+                if (data != null && savedVariate != null) {
+                    
+                    PhenotypeKey key = new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid());
+                    boolean isCreated = StandardVariableCache.phenotypeKeyExists(key);
+//                    boolean created = 
+                    String value = null;             
+                    if (data instanceof DataN){
+                        DataN dataN = ((DataN)data);
+                        Double dValue = dataN.getDvalue();
+                        value = dValue != null ? dValue.toString() : null;
+                    } else if (data instanceof DataC){
+                        DataC dataC = ((DataC)data);
+                        value = dataC.getDvalue();
+                    }
+                    
+                    if (!isCreated && value != null){                 
+                        
+                        if (experiments.length() > 0){
+                            experiments.append(HelperWorkbook.DELIMITER);
+                        }
+                        experiments.append(obsunit.getOunitid());
+                        
+                        
+                        if (variates.length() > 0){
+                            variates.append(HelperWorkbook.DELIMITER);
+                        }
+                        variates.append(savedVariate.getMeasuredinid());
+                        
+                        if (values.length() > 0){
+                            values.append(HelperWorkbook.DELIMITER);
+                        }
+                        values.append(value);
+                        
+                        //store as created in phenotype cache
+                        StandardVariableCache.putPhenotypeKey(key);
+                    } else if (isCreated) {
+                        updateDataNorDataC(obsunit, measurementData, savedVariate);
+                    }
+                    
                 }
 
             }
-
             currentObsUnit++;
         }
+        if (experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
+            localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
+        }
+        System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
     }
 
     /**
@@ -413,7 +461,7 @@ public class HelperWorkbookUpdate {
      * @param data
      * @param savedVariate
      */
-    private void addDataNorDataC(Obsunit obsunit, MeasurementData data, Variate savedVariate) {
+    private void updateDataNorDataC(Obsunit obsunit, MeasurementData data, Variate savedVariate) {
         if (savedVariate != null && data.getValue() != null) {
             if (savedVariate.getDtype().equals("N")) {
                 DataNPK dataNPK = new DataNPK();

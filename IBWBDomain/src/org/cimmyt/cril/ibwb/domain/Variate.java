@@ -63,6 +63,8 @@ public class Variate extends BaseFilter implements Serializable {
     private Dmsattr dmsattr;
     @Transient
     private String description;
+    @Transient
+    private Integer measuredinid;
 
     public Variate() {
         setDefault();
@@ -317,5 +319,13 @@ public class Variate extends BaseFilter implements Serializable {
         }else{
             return null;
         }
+    }
+    
+    public void setMeasuredinid(Integer measuredinid) {
+        this.measuredinid = measuredinid;
+    }
+
+    public Integer getMeasuredinid() {
+        return measuredinid;
     }
 }

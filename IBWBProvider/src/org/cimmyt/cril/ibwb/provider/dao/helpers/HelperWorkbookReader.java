@@ -16,6 +16,8 @@ import javax.management.Query;
 import javax.sql.rowset.RowSetMetaDataImpl;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.domain.*;
+import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
+import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.dao.DMSReaderDAO;
 import org.cimmyt.cril.ibwb.provider.utils.DecimalUtils;
 import org.hibernate.Hibernate;
@@ -404,6 +406,7 @@ public class HelperWorkbookReader {
                     Measurement measurementTemp = measurementList.get(indiceY);
                     MeasurementData measurementData = measurementTemp.getMeasurementsData().get(indiceX);
                     measurementData.setData(dataN);
+                    StandardVariableCache.putPhenotypeKey(new PhenotypeKey(dataN.getDataNPK().getVariatid(), dataN.getDataNPK().getOunitid()));
                 }
             }
 
@@ -414,6 +417,7 @@ public class HelperWorkbookReader {
                     Measurement measurementTemp = measurementList.get(indiceY);
                     MeasurementData measurementData = measurementTemp.getMeasurementsData().get(indiceX);
                     measurementData.setData(dataC);
+                    StandardVariableCache.putPhenotypeKey(new PhenotypeKey(dataC.getDataCPK().getVariatid(), dataC.getDataCPK().getOunitid()));
                 }
             }
         }
@@ -1069,6 +1073,7 @@ public class HelperWorkbookReader {
                 + "  eph.nd_experiment_id AS ounitid " 
                 + "  , stdvar.projectprop_id AS variatid " 
                 + "  , IF (ph.value IS NULL, '0', ph.value) AS dvalue " 
+                + "  , ph.phenotype_id AS phenotype_id "
                 + " FROM " 
                 + "  projectprop stdvar " 
                 + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 AND dtyperel.subject_id = stdvar.value " 
@@ -1085,13 +1090,16 @@ public class HelperWorkbookReader {
         query.addScalar("ounitid", Hibernate.INTEGER);
         query.addScalar("variatid", Hibernate.INTEGER);
         query.addScalar("dvalue", Hibernate.DOUBLE);
+        query.addScalar("phenotype_id", Hibernate.INTEGER);
         List<Object[]> resultado2 = query.list();
         if(resultado2 != null){
             resultado = new ArrayList<DataN>();
             for (Object[] fila : resultado2) {
                 resultado.add(new DataN(Integer.valueOf(fila[0].toString())
                                         , Integer.valueOf(fila[1].toString())
-                                        , Double.valueOf(fila[2].toString())));
+                                        , Double.valueOf(fila[2].toString())
+                                        , Integer.valueOf(fila[3].toString()))
+                            );
             }
             return resultado;
         }else{
@@ -1158,6 +1166,7 @@ public class HelperWorkbookReader {
                 + "  eph.nd_experiment_id AS ounitid " 
                 + "  , stdvar.projectprop_id AS variatid " 
                 + "  , IF(ph.value IS NULL, '-', ph.value) AS dvalue " 
+                + "  , ph.phenotype_id AS phenotype_id "
                 + " FROM " 
                 + "  projectprop stdvar " 
                 + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 AND dtyperel.subject_id = stdvar.value " 
@@ -1174,13 +1183,16 @@ public class HelperWorkbookReader {
         query.addScalar("ounitid", Hibernate.INTEGER);
         query.addScalar("variatid", Hibernate.INTEGER);
         query.addScalar("dvalue", Hibernate.STRING);
+        query.addScalar("phenotype_id", Hibernate.INTEGER);
         List<Object[]> resultado2 = query.list();
         if(resultado2 != null){
             resultado = new ArrayList<DataC>();
             for (Object[] fila : resultado2) {
-                resultado.add(new DataC(Integer.valueOf(fila[0].toString())
+                resultado.add(new DataC( Integer.valueOf(fila[0].toString())
                                         , Integer.valueOf(fila[1].toString())
-                                        , fila[2].toString()));
+                                        , fila[2].toString()
+                                        , Integer.valueOf(fila[3].toString()))
+                             );
             }
             return resultado;
         }else{
