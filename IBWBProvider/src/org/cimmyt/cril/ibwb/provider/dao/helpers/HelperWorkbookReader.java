@@ -16,6 +16,8 @@ import javax.management.Query;
 import javax.sql.rowset.RowSetMetaDataImpl;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.domain.*;
+import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
+import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.dao.DMSReaderDAO;
 import org.cimmyt.cril.ibwb.provider.utils.DecimalUtils;
 import org.hibernate.Hibernate;
@@ -404,6 +406,7 @@ public class HelperWorkbookReader {
                     Measurement measurementTemp = measurementList.get(indiceY);
                     MeasurementData measurementData = measurementTemp.getMeasurementsData().get(indiceX);
                     measurementData.setData(dataN);
+                    StandardVariableCache.putPhenotypeKey(new PhenotypeKey(dataN.getDataNPK().getVariatid(), dataN.getDataNPK().getOunitid()));
                 }
             }
 
@@ -414,6 +417,7 @@ public class HelperWorkbookReader {
                     Measurement measurementTemp = measurementList.get(indiceY);
                     MeasurementData measurementData = measurementTemp.getMeasurementsData().get(indiceX);
                     measurementData.setData(dataC);
+                    StandardVariableCache.putPhenotypeKey(new PhenotypeKey(dataC.getDataCPK().getVariatid(), dataC.getDataCPK().getOunitid()));
                 }
             }
         }

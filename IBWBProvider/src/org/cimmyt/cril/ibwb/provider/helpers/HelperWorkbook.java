@@ -41,6 +41,8 @@ import org.cimmyt.cril.ibwb.domain.Variate;
 import org.cimmyt.cril.ibwb.domain.Veffect;
 import org.cimmyt.cril.ibwb.domain.VeffectPK;
 import org.cimmyt.cril.ibwb.provider.KeyCacheUtil;
+import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
+import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.TableEnum;
 import org.cimmyt.cril.ibwb.provider.utils.ChadoSchemaUtil;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
@@ -991,6 +993,7 @@ public class HelperWorkbook {
             //Verificar factor
             variate = ConverterDomainToDTO.getVariate(variateDomain.getVariateName(), variateDomain.getDescription(), variateDomain.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
+            variate.setMeasuredinid(measuredin.getMeasuredinid());
             //localServices.addVariate(variate);
 
             //Verificar dmsattr
@@ -1470,6 +1473,11 @@ public class HelperWorkbook {
             
         }
         int i = 0;
+        long startTime = System.nanoTime();
+        StringBuilder experiments = new StringBuilder();
+        StringBuilder variates = new StringBuilder();
+        StringBuilder values = new StringBuilder();
+        
         for (Measurement measurement : workbook.getMeasurements()) {
         	obsunit = new Obsunit();
             obsunit.setEffectid(represtns.get(iterando).getEffectid());
@@ -1479,13 +1487,49 @@ public class HelperWorkbook {
             listObsunitMeasurement.add(obsunit);
 
             // save dataN and DataC
-            for (MeasurementData data : measurement.getMeasurementsData()) {
+            for (MeasurementData measurementData : measurement.getMeasurementsData()) {
                 // look for saved variate
-                Variate savedVariate = mapVariatesPure.get(data.getVariate().getVariateName());
-                addDataNorDataC(obsunit, data, savedVariate);
+                Variate savedVariate = mapVariatesPure.get(measurementData.getVariate().getVariateName());
 
-            }
+                Object data = measurementData.getValue();
+                if (data != null && savedVariate != null) {
+                    
+                    String value = null;             
+                    if (data instanceof DataN){
+                        DataN dataN = ((DataN)data);
+                        Double dValue = dataN.getDvalue();
+                        value = dValue != null ? dValue.toString() : null;
+                    } else if (data instanceof DataC){
+                        DataC dataC = ((DataC)data);
+                        value = dataC.getDvalue();
+                    }
+                                            
+                    if (experiments.length() > 0){
+                        experiments.append(HelperWorkbook.DELIMITER);
+                    }
+                    experiments.append(obsunit.getOunitid());
+
+                    if (variates.length() > 0){
+                        variates.append(HelperWorkbook.DELIMITER);
+                    }
+                    variates.append(savedVariate.getMeasuredinid());
+
+                    if (values.length() > 0){
+                        values.append(HelperWorkbook.DELIMITER);
+                    }
+                    values.append(value);
+                        
+                    //store as created in phenotype cache
+                    StandardVariableCache.putPhenotypeKey(
+                            new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid()));
+                }
+                
+            }            
         }
+        if (experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
+            localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
+        }
+        System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
         return obsunits;
     }
 

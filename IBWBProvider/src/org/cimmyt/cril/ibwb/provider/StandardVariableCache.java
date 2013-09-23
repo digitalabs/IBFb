@@ -5,7 +5,9 @@
 package org.cimmyt.cril.ibwb.provider;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.cimmyt.cril.ibwb.domain.Measuredin;
 import org.cimmyt.cril.ibwb.domain.Scales;
 import org.cimmyt.cril.ibwb.domain.TmsMethod;
@@ -16,6 +18,7 @@ public class StandardVariableCache {
     private static Map<Integer, Traits> traitCache = new HashMap<Integer, Traits>();
     private static Map<Integer, Scales> scaleCache = new HashMap<Integer, Scales>();
     private static Map<Integer, TmsMethod> methodCache = new HashMap<Integer, TmsMethod>();
+    private static Set<PhenotypeKey> phenotypeCache = new HashSet<PhenotypeKey>();
     
     public static Measuredin getMeasuredIn(MeasuredInKey key) {
         return cache.get(key);
@@ -47,5 +50,13 @@ public class StandardVariableCache {
     
     public static void putMethod(Integer key, TmsMethod method) {
         methodCache.put(key, method);
+    }
+    
+    public static void putPhenotypeKey(PhenotypeKey key){
+        phenotypeCache.add(key);
+    }
+    
+    public static boolean phenotypeKeyExists(PhenotypeKey key){
+        return phenotypeCache.contains(key);
     }
 }

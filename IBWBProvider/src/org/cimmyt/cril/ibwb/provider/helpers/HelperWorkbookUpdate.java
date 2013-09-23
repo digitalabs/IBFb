@@ -17,6 +17,7 @@ import org.cimmyt.cril.ibwb.domain.Factor;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.Variate;
 import org.cimmyt.cril.ibwb.provider.MeasuredInKey;
+import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
 import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
 import org.cimmyt.cril.ibwb.provider.utils.ConverterDomainToDTO;
 
@@ -389,6 +390,7 @@ public class HelperWorkbookUpdate {
 
         int currentObsUnit = 0;
 
+        long startTime = System.nanoTime();
         // finally iterate over all measurements and update it
         StringBuffer experiments = new StringBuffer();
         StringBuffer variates = new StringBuffer();
@@ -400,24 +402,24 @@ public class HelperWorkbookUpdate {
             for (MeasurementData measurementData :measurement.getMeasurementsData()) {
                 // if data has a value then save it
                 Object data = measurementData.getValue();
+                Variate savedVariate = savedVariateMap.get(measurementData.getVariate().getVariateName());
                 
-                if (data != null) {
-                    Variate savedVariate = savedVariateMap.get(measurementData.getVariate().getVariateName());
-                    Integer phenotypeId = null;
-                    String value = null
-                            ;
+                if (data != null && savedVariate != null) {
+                    
+                    PhenotypeKey key = new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid());
+                    boolean isCreated = StandardVariableCache.phenotypeKeyExists(key);
+//                    boolean created = 
+                    String value = null;             
                     if (data instanceof DataN){
                         DataN dataN = ((DataN)data);
-                        phenotypeId = dataN.getPhenotypeId();
                         Double dValue = dataN.getDvalue();
                         value = dValue != null ? dValue.toString() : null;
-                    } else if (data instanceof DataC) {
+                    } else if (data instanceof DataC){
                         DataC dataC = ((DataC)data);
-                        phenotypeId = dataC.getPhenotypeId();
                         value = dataC.getDvalue();
                     }
                     
-                    if (phenotypeId == null && value != null){                 
+                    if (!isCreated && value != null){                 
                         
                         if (experiments.length() > 0){
                             experiments.append(HelperWorkbook.DELIMITER);
@@ -435,8 +437,10 @@ public class HelperWorkbookUpdate {
                         }
                         values.append(value);
                         
-                    } else if (phenotypeId != null) {
-                        addDataNorDataC(obsunit, measurementData, savedVariate);
+                        //store as created in phenotype cache
+                        StandardVariableCache.putPhenotypeKey(key);
+                    } else if (isCreated) {
+                        updateDataNorDataC(obsunit, measurementData, savedVariate);
                     }
                     
                 }
@@ -444,7 +448,10 @@ public class HelperWorkbookUpdate {
             }
             currentObsUnit++;
         }
-        localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
+        if (experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
+            localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
+        }
+        System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
     }
 
     /**
@@ -454,7 +461,7 @@ public class HelperWorkbookUpdate {
      * @param data
      * @param savedVariate
      */
-    private void addDataNorDataC(Obsunit obsunit, MeasurementData data, Variate savedVariate) {
+    private void updateDataNorDataC(Obsunit obsunit, MeasurementData data, Variate savedVariate) {
         if (savedVariate != null && data.getValue() != null) {
             if (savedVariate.getDtype().equals("N")) {
                 DataNPK dataNPK = new DataNPK();
