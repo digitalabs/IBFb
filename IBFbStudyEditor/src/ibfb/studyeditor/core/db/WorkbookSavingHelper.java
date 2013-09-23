@@ -427,7 +427,11 @@ public class WorkbookSavingHelper {
                     Factor factor = (Factor) model.getHeaders().get(col);
                     String key = Workbook.getStringWithOutBlanks(factor.getProperty() + factor.getScale());
                     if (!ArrayUtils.contains(ObservationsTableModel.MAIN_FACTORS, key)){
-                        treatmentData.put(factor.getFactorName(), String.valueOf(model.getValueAt(row, col)));
+                        if (model.getValueAt(row, col) != null) {
+                            treatmentData.put(factor.getFactorName(), String.valueOf(model.getValueAt(row, col)));
+                        } else {
+                            treatmentData.put(factor.getFactorName(), null);
+                        }
                     }
                 }
             }

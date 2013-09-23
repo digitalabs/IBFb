@@ -121,6 +121,7 @@ begin
 
 	call addCvtermRelationship(1225, @newcvtermid, v_is_a);
 
+        SELECT @newcvtermid;
 -- COMMIT;	
 	
 end$$
