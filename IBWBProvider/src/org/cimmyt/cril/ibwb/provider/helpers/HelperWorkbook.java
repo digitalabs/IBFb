@@ -751,6 +751,7 @@ public class HelperWorkbook {
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(factorDomain.getFactorName(), factorDomain.getDescription(), factorDomain.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
+            factor.setLabel(factorDomain.getLabel());
             //localServices.addFactor(factor);
 
             //Verificar si es factor encabezado
@@ -1095,7 +1096,7 @@ public class HelperWorkbook {
         }
         for (Factor factor : this.listOtherFactors) {
             factor.setStudyid(steffectt.getEffectid());
-            localServices.addFactor(factor);
+            localServices.addTreatmentFactor(factor);
         }    
         
                 

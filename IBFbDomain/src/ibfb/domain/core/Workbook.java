@@ -205,6 +205,8 @@ public class Workbook {
      * Is it a Germplamsm template?
      */
     private boolean germplasmTemplate;
+    
+    private List<String> otherLabels = new ArrayList<String>();
 
     public Workbook() {
         initConstraitWords();
@@ -699,6 +701,8 @@ public class Workbook {
                 rowLabel = factor.getFactorName().toUpperCase();
             } else if (COLUMN_IN_LAYOUT_NUMBER.equals(text)) {
                 colLabel = factor.getFactorName().toUpperCase();
+            } else if (factor.getFactorName().equals(factor.getLabel())) {
+                otherLabels.add(factor.getLabel());
             }
         }
 
@@ -1027,6 +1031,14 @@ public class Workbook {
     public boolean hasOtherTreatmentFactors() {
         boolean hasOtherFactors = getOtherFactors() != null && !getOtherFactors().isEmpty();
         return hasOtherFactors;
+    }
+
+    public List<String> getOtherLabels() {
+        return otherLabels;
+    }
+
+    public void setOtherLabels(List<String> otherLabels) {
+        this.otherLabels = otherLabels;
     }
     
 }

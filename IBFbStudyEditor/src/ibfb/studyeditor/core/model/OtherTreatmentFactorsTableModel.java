@@ -69,6 +69,10 @@ public class OtherTreatmentFactorsTableModel extends AbstractTableModel {
     public List<Factor> getOtherFactors() {
         return otherFactors;
     }
+    
+    public void setOtherFactors(List<Factor> otherFactors) {
+        this.otherFactors = otherFactors;
+    }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {

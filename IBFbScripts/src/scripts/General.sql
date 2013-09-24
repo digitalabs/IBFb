@@ -335,6 +335,7 @@ begin
 
 end$$
 
+
 DROP VIEW IF EXISTS `v_factor`$$
 CREATE VIEW v_factor (projectprop_id, project_id, rank, varid, factorid, storedinid, traitid, dtypeid)
 AS
@@ -343,16 +344,16 @@ SELECT
     , prop.project_id AS project_id
     , prop.rank AS rank
     , prop.value AS varid
-     , GROUP_CONCAT(
-         CASE
-           WHEN stinrel.object_id = 1047 AND mfactors.value = '8230' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1010, 1011, 1012) AND mfactors.value = '8005' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1015, 1016, 1017) AND mfactors.value = '8150' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1040, 1041, 1042, 1046, 1047) AND mfactors.value = '8230' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id IN (1020, 1021, 1022, 1023, 1024, 1025) AND mfactors.value = '8170' THEN mfactors.projectprop_id
-           WHEN stinrel.object_id = 1030 AND mfactors.value IN ('8200', '8380') THEN mfactors.projectprop_id
+    ,    CASE
+           WHEN mtfactor.value IS NOT NULL THEN mtfactor.projectprop_id
+           WHEN stinrel.object_id = 1047 THEN gmfactor.projectprop_id
+           WHEN stinrel.object_id IN (1010, 1011, 1012) THEN smfactor.projectprop_id
+           WHEN stinrel.object_id IN (1015, 1016, 1017)  THEN dmfactor.projectprop_id
+           WHEN stinrel.object_id IN (1040, 1041, 1042, 1046, 1047) THEN gmfactor.projectprop_id
+           WHEN stinrel.object_id IN (1020, 1021, 1022, 1023, 1024, 1025) THEN lmfactor.projectprop_id
+           WHEN stinrel.object_id = 1030 THEN pmfactor.projectprop_id
          END
-      ) AS factorid
+      AS factorid
     , stinrel.object_id AS storedinid
     , traitrel.object_id AS traitid
     , dtyperel.object_id AS dtypeid
@@ -360,13 +361,25 @@ SELECT
   INNER JOIN cvterm_relationship stinrel ON stinrel.subject_id = prop.value and stinrel.type_id = 1044
   INNER JOIN cvterm_relationship traitrel on traitrel.subject_id = prop.value and traitrel.type_id = 1200
   INNER JOIN cvterm_relationship dtyperel ON dtyperel.subject_id = prop.value AND dtyperel.type_id = 1105
-  LEFT JOIN projectprop mfactors ON mfactors.project_id = prop.project_id AND mfactors.type_id = 1070 
-    AND mfactors.value in ('8005', '8150', '8230', '8170', '8200', '8380')
+  LEFT JOIN projectprop tfactor ON tfactor.project_id = prop.project_id AND tfactor.rank = prop.rank
+    AND tfactor.type_id = 1100
+  LEFT JOIN projectprop ltfactor ON ltfactor.project_id = tfactor.project_id AND ltfactor.type_id = 1030
+    AND ltfactor.value = tfactor.value
+  LEFT JOIN projectprop mtfactor ON mtfactor.project_id = ltfactor.project_id AND mtfactor.rank = ltfactor.rank
+    AND mtfactor.type_id = 1070
+  LEFT JOIN projectprop smfactor ON smfactor.project_id = prop.project_id AND smfactor.type_id = 1070 
+    AND smfactor.value = '8005'
+  LEFT JOIN projectprop dmfactor ON dmfactor.project_id = prop.project_id AND dmfactor.type_id = 1070
+    AND dmfactor.value = '8150'
+  LEFT JOIN projectprop gmfactor ON gmfactor.project_id = prop.project_id AND gmfactor.type_id = 1070
+    AND gmfactor.value = '8230'
+  LEFT JOIN projectprop lmfactor ON lmfactor.project_id = prop.project_id AND lmfactor.type_id = 1070
+    AND lmfactor.value = '8170'
+  LEFT JOIN projectprop pmfactor ON pmfactor.project_id = prop.project_id AND pmfactor.type_id = 1070
+    AND pmfactor.value IN ('8200', '8380')
   WHERE prop.type_id = 1070 
     AND stinrel.object_id NOT IN (1043, 1048)
-  GROUP BY prop.projectprop_id
 $$
-
 
 DROP VIEW IF EXISTS `v_level`$$
 CREATE VIEW v_level (labelid, factorid, levelno, lvalue, dtypeid, storedinid, nd_experiment_id)

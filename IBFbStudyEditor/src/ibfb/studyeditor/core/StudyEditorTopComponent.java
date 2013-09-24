@@ -249,6 +249,7 @@ public final class StudyEditorTopComponent extends TopComponent {
         this.jTableTrialConditions.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableConstants.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableOtherFactorLabels.getTableHeader().addMouseListener(new ColumnFitAdapter());
+        this.jTableOtherFactors.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableEntries.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableDesign.getTableHeader().addMouseListener(new ColumnFitAdapter());
         this.jTableObservations.getTableHeader().addMouseListener(new ColumnFitAdapter());
@@ -3614,8 +3615,23 @@ public final class StudyEditorTopComponent extends TopComponent {
 
         OtherTreatmentFactorsTableModel model = new OtherTreatmentFactorsTableModel(otherTreatmentFactors, false);
         jTableOtherFactors.setModel(model);
+ 
+        TableColumn columnValue = jTableOtherFactors.getColumnModel().getColumn(3);
+        DefaultTableCellRenderer valueCellRenderer = new DefaultTableCellRenderer();
+        valueCellRenderer.setToolTipText(NbBundle.getMessage(StudyEditorTopComponent.class, 
+                "StudyEditorTopComponent.fillValue"));
+        valueCellRenderer.setBackground(Color.YELLOW);
+        columnValue.setCellRenderer(valueCellRenderer);
     }
-
+    
+    public OtherTreatmentFactorsTableModel getOtherTreatmentFactorsTableModel() {
+        return (OtherTreatmentFactorsTableModel) jTableOtherFactors.getModel();
+    }
+    
+    public JTable getJTableOtherFactors() {
+        return jTableOtherFactors;
+    }
+    
     public void assignOtherTreatmentFactorLabels(List<FactorLabel> factorLabels) {
 
         TreatmentLabelsTableModel treatmentLabelsTableModel = new TreatmentLabelsTableModel();

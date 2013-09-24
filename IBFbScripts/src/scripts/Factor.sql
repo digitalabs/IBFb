@@ -30,7 +30,7 @@ begin
     " FROM ",
     "  v_factor f ",
     "  INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank ",
-    "    AND fname.type_id NOT IN (1070, 1060, f.varid) ",
+    "    AND fname.type_id NOT IN (1070, 1060, f.varid, 1100) ",
     "  INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220 ",
     "  INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210 ",
     "  INNER JOIN project_relationship pr ON pr.type_id = 1145 AND pr.subject_project_id = f.project_id ",
@@ -54,7 +54,7 @@ begin
     " FROM ",
     "  v_factor f ",
     "  INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank ",
-    "    AND fname.type_id NOT IN (1070, 1060, f.varid) ",
+    "    AND fname.type_id NOT IN (1070, 1060, f.varid, 1100) ",
     "  INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220 ",
     "  INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210 ",
     "  INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = f.project_id ",
@@ -254,6 +254,89 @@ DECLARE v_type_id int;
 	
 end$$
 
+drop procedure if EXISTS addTreatmentFactor$$
+
+CREATE PROCEDURE addTreatmentFactor(
+IN v_labelid int,
+IN v_factorid int,
+IN v_studyid int,
+IN v_fname varchar(255),
+IN v_traitid int,
+IN v_scaleid int,
+IN v_tmethid int,
+IN v_ltype varchar(1),
+IN v_tid int,
+IN v_description varchar(255),
+IN v_label varchar(255))
+begin
+
+DECLARE v_project_id int;
+DECLARE v_projectprop_id int;
+DECLARE v_rank int;
+DECLARE v_type_id int;
+
+
+/*START TRANSACTION;*/
+
+	SELECT MAX(rank) + 1 as rank INTO v_rank 
+	FROM projectprop pp
+	WHERE pp.project_id = v_studyid;
+	
+	IF(v_rank IS NULL) THEN
+	SET v_rank := 1;
+	END IF;
+	
+	SET v_project_id := v_studyid; 
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=v_tid AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,v_tid,v_fname,v_rank);
+	END IF;
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1060 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1060,v_description,v_rank);
+	END IF;
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1100 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1100,v_label,v_rank);
+	END IF;
+        
+
+
+	SELECT distinct cvttrait.subject_id into v_type_id 
+    FROM cvterm_relationship cvttrait
+    INNER JOIN cvterm_relationship cvtscale ON cvtscale.subject_id = cvttrait.subject_id 
+    INNER JOIN cvterm_relationship cvtmethod ON cvtmethod.subject_id = cvttrait.subject_id  
+	WHERE cvttrait.object_id = v_traitid AND cvttrait.type_id = 1200
+	AND cvtscale.object_id = v_scaleid AND cvtscale.type_id = 1220 
+	AND cvtmethod.object_id = v_tmethid AND cvtmethod.type_id = 1210
+	LIMIT 1;    
+    
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1070 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
+	END IF;
+
+	SELECT v_projectprop_id;
+
+/* COMMIT;	*/
+	
+end$$
+
 delimiter $$
 
 drop procedure if exists `getFactoridByLabelid`$$
@@ -284,14 +367,16 @@ BEGIN
       , IF(f.dtypeid IN (1120, 1125, 1128, 1130), 'C', 'N') AS ltype
       , f.storedinid AS tid
       , fdesc.value AS description
+      , tf.value AS label
     FROM
       v_factor f
       INNER JOIN projectprop fname ON fname.project_id = f.project_id AND fname.rank = f.rank
-        AND fname.type_id NOT IN (1070, 1060, f.varid)
+        AND fname.type_id NOT IN (1070, 1060, f.varid, 1100)
       INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = f.varid AND scalerel.type_id = 1220
       INNER JOIN cvterm_relationship methrel ON methrel.subject_id = f.varid AND methrel.type_id = 1210
       INNER JOIN project_relationship pr ON pr.type_id = 1150 AND (f.project_id = pr.subject_project_id OR f.project_id = pr.object_project_id) 
       INNER JOIN projectprop fdesc ON fdesc.project_id = f.project_id AND fdesc.rank = f.rank AND fdesc.type_id = 1060
+      LEFT JOIN projectprop tf ON tf.project_id = f.project_id and tf.rank = f.rank and tf.type_id = 1100
     WHERE
       pr.object_project_id = ? ";
     

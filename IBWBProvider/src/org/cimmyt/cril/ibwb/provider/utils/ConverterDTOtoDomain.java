@@ -1,9 +1,13 @@
 package org.cimmyt.cril.ibwb.provider.utils;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.cimmyt.cril.ibwb.domain.Study;
 import org.cimmyt.cril.ibwb.domain.Factor;
+import org.cimmyt.cril.ibwb.domain.LevelC;
+import org.cimmyt.cril.ibwb.domain.LevelN;
 import org.cimmyt.cril.ibwb.domain.Scales;
 import org.cimmyt.cril.ibwb.domain.Variate;
 
@@ -210,10 +214,40 @@ public class ConverterDTOtoDomain {
 //        }else if(factorDto.getLtype().equals("N") ){
 //            factor.setValue(factorDto.getLevelN().getLvalue());
 //        }
+        
+        if (factorDto.isIsTreatmentFactor()) {
+            if (factorDto.getLabelid().equals(factorDto.getFactorid())) {
+                factor.setValue(factorDto.getMaximumLevelValue());
+            } else {
+                Set<String> values = new LinkedHashSet<String>();
+                if ("C".equals(factor.getDataType())) {
+                    for (LevelC level : factorDto.getLevelsC()) {
+                        if (level.getLvalue() != null) {
+                            values.add(level.getLvalue());
+                        } else {
+                            values.add("");
+                        }
+                    }
+                } else {
+                    for (LevelN level : factorDto.getLevelsN()) {
+                        if (level.getLvalue() != null) {
+                            values.add(level.getLvalue().toString());
+                        } else {
+                            values.add("");
+                        }
+                    }
+                }
+                factor.setTreatmentValues(values);
+            }
+        }
 
 //      Asignando los label
         Factor tempLabel = (Factor) mapLabels.get(factorDto.getFactorid());
-        factor.setLabel(tempLabel.getFname());
+        if (factorDto.getLabel() != null) {
+            factor.setLabel(factorDto.getLabel());
+        } else {
+            factor.setLabel(tempLabel.getFname());
+        }
         return factor;
     }
 

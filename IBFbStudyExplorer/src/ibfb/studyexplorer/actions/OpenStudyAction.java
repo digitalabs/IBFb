@@ -1,10 +1,13 @@
 package ibfb.studyexplorer.actions;
 
 import ibfb.domain.core.Factor;
+import ibfb.domain.core.FactorLabel;
 import ibfb.domain.core.SelectedStudy;
 import ibfb.domain.core.Variate;
 import ibfb.domain.core.Workbook;
 import ibfb.studyeditor.core.StudyEditorTopComponent;
+import ibfb.studyeditor.core.model.OtherTreatmentFactorsTableModel;
+import ibfb.studyeditor.core.model.TreatmentLabelsTableModel;
 import ibfb.studyeditor.roweditors.ConditionsRowEditor;
 import ibfb.studyexplorer.jdialogs.JDNewOptions;
 import ibfb.ui.core.JDExpert;
@@ -17,7 +20,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
@@ -103,7 +108,7 @@ public class OpenStudyAction extends SystemAction {
 
 
                         closeBackground();
-                        inhabilitaTabs(studyWindow);
+                        inhabilitaTabs(studyWindow, workbook);
                         //studyWindow.loadDataFromCsv();
                         studyWindow.open();
                         studyWindow.requestActive();
@@ -180,27 +185,32 @@ public class OpenStudyAction extends SystemAction {
 
     @SuppressWarnings("unchecked")
     private void fillFactores(StudyEditorTopComponent studyWindow, Workbook workbook) {
+        
+        java.util.ArrayList<Factor> factores = new ArrayList();
+        factores = (java.util.ArrayList<Factor>) workbook.getOtherFactors();
 
-//        DefaultTableModel modeloTabla = new DefaultTableModel();
-//        modeloTabla = (DefaultTableModel) studyWindow.jTableOtherFactorLabels.getModel();
-//        java.util.ArrayList<Factor> factores = new ArrayList();
-//        factores = (java.util.ArrayList<Factor>) workbook.getOtherFactors();
-//
+        //OtherTreatmentFactorsTableModel otherTabla = studyWindow.getOtherTreatmentFactorsTableModel();
+        //otherTabla.setOtherFactors(factores);
+        studyWindow.assignOtherTreatmentFactors(factores);
+        
+        TreatmentLabelsTableModel modeloTabla = (TreatmentLabelsTableModel) studyWindow.jTableOtherFactorLabels.getModel();
+        modeloTabla.setWorkbookAndFactorLabels(new ArrayList<FactorLabel>(), workbook);
+
 //        if (this.existenFactores(workbook)) {
 //            modeloTabla.setNumRows(workbook.getOtherFactors().size());
 //        } else {
 //            modeloTabla.setNumRows(0);
 //            return;
 //        }
-//
+
 //        int renglon = 0;
 //        for (int i = 0; i < factores.size(); i++) {
 //
 //            studyWindow.jTableOtherFactorLabels.setValueAt(factores.get(i).getFactorName(), renglon, 0);
 //            studyWindow.jTableOtherFactorLabels.setValueAt(factores.get(i).getDescription(), renglon, 1);
 //            studyWindow.jTableOtherFactorLabels.setValueAt(factores.get(i).getScale(), renglon, 2);
-//            studyWindow.jTableOtherFactorLabels.setValueAt(1, renglon, 3);
-//            renglon++;
+//            //studyWindow.jTableOtherFactorLabels.setValueAt(1, renglon, 3);
+//            renglon++;  
 //        }
     }
 //
@@ -293,12 +303,16 @@ public class OpenStudyAction extends SystemAction {
         });
     }
 
-    private void inhabilitaTabs(StudyEditorTopComponent studyWindow) {
+    private void inhabilitaTabs(StudyEditorTopComponent studyWindow, Workbook workbook) {
         //studyWindow.jTabbedPane1.setEnabledAt(7, false);
         //studyWindow.jTabbedPane1.setEnabledAt(6, false);
         studyWindow.disableTraitsSelection();
         studyWindow.jTabbedPaneEditor.setEnabledAt(5, false);
-        studyWindow.jTabbedPaneEditor.setEnabledAt(4, false);
+        if (existenFactores(workbook)) {
+            studyWindow.jTabbedPaneEditor.setEnabledAt(4, true);
+        } else {
+            studyWindow.jTabbedPaneEditor.setEnabledAt(4, false);
+        }
         //studyWindow.jTabbedPane1.setEnabledAt(3, false);
     }
 

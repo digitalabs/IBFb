@@ -242,6 +242,7 @@ public class HelperWorkbookRead {
                 this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
                 this.factorsDtoAllFactorsView.add(factorDto);
             } else {
+                factorDto.setIsTreatmentFactor(true);
                 this.mapFactorsDtoOthers.put(factorDto.getFname(), factorDto);
                 this.factorsDtoOthers.add(factorDto);
                 this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
@@ -562,9 +563,22 @@ public class HelperWorkbookRead {
             //if (hasLabel(factor.getLabel(), Workbook.PLOT_LABEL)) {
             if (hasLabel(factor.getLabel(), workbookStudy.getPlotLabel())) {
                 tempFactors.add(factor);
+            /*} else if (factor.getLabel() != null && workbookStudy.getOtherLabels().contains(factor.getLabel())) {
+                tempFactors.add(factor);
+            */
             }
         }
 
+        for (ibfb.domain.core.Factor factor : workbookStudy.getFactors()) {
+            //if (hasLabel(factor.getLabel(), Workbook.PLOT_LABEL)) {
+            if (factor.getLabel() != null 
+                && !hasLabel(factor.getLabel(), Workbook.STUDY)
+                && !hasLabel(factor.getLabel(), workbookStudy.getEntryLabel())
+                && !hasLabel(factor.getLabel(), workbookStudy.getPlotLabel())
+                && !hasLabel(factor.getLabel(), workbookStudy.getTrialLabel())) {
+                tempFactors.add(factor);
+            }
+        }
 
         workbookStudy.setStudyConditions(tempStudyConditions);
         workbookStudy.setConditions(tempTrialConditions);

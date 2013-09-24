@@ -400,7 +400,7 @@ public class DMSReaderDAO extends AbstractDAO<Study, Integer> {
                     + " FROM " 
                     + "  projectprop stdvar " 
                     + "  INNER JOIN projectprop fname ON fname.project_id = stdvar.project_id " 
-                    + "    AND fname.rank = stdvar.rank AND fname.type_id NOT IN (1060, 1070, stdvar.value) " 
+                    + "    AND fname.rank = stdvar.rank AND fname.type_id NOT IN (1060, 1070, stdvar.value, 1100) " 
                     + "  INNER JOIN cvterm_relationship dtyperel ON dtyperel.type_id = 1105 " 
                     + "    AND dtyperel.subject_id = stdvar.value " 
                     + " WHERE " 

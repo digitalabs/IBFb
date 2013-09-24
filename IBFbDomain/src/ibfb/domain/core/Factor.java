@@ -2,6 +2,8 @@
 
 package ibfb.domain.core;
 
+import java.util.Set;
+
 /**
  *
  * @author TMSANCHEZ
@@ -20,6 +22,7 @@ public class Factor {
     private Integer labelId;
     private Integer factorId;
     
+    private Set<String> treatmentValues;
 
     public Factor() {
 
@@ -99,6 +102,15 @@ public class Factor {
         this.scale = scale;
     }
 
+    public Set<String> getTreatmentValues() {
+        return treatmentValues;
+    }
+
+    public void setTreatmentValues(Set<String> treatmentValues) {
+        this.treatmentValues = treatmentValues;
+    }
+
+    
     @Override
     public String toString() {
         return "Factor{" + "factorName = " + factorName + "\tdescription = " + description + "\t property=" + property + "\tscale=" + scale + "\tmethod=" + method + "\tdataType=" + dataType + "\tlabel=" + label + '}';

@@ -70,6 +70,10 @@ public class Factor extends BaseFilter implements Serializable {
     private int islocal;
     @Transient
     private String description;
+    @Transient
+    private String label;
+    @Transient
+    private boolean isTreatmentFactor;
 
     public Factor() {
         setDefault();
@@ -269,6 +273,14 @@ public class Factor extends BaseFilter implements Serializable {
         }
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     @Transient
     public Integer getSizeLevels() {
         if (getLtype().equals("N")) {
@@ -304,6 +316,26 @@ public class Factor extends BaseFilter implements Serializable {
         }
     }
 
+    public boolean isIsTreatmentFactor() {
+        return isTreatmentFactor;
+    }
+
+    public void setIsTreatmentFactor(boolean isTreatmentFactor) {
+        this.isTreatmentFactor = isTreatmentFactor;
+    }
+
+    public int getMaximumLevelValue() {
+        int max = 0;
+        if (levelsN != null) {
+            for (LevelN levelN : levelsN) {
+                if (levelN.getLvalue() > max) {
+                    max = levelN.getLvalue().intValue();
+                }
+            }
+        }
+        return max;
+    }
+    
     @Transient
     public Integer getLevelNo(int indexLevel) {
         if (getLtype().equals("N")) {

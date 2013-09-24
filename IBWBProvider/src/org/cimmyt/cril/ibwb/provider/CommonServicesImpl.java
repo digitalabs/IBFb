@@ -4639,7 +4639,7 @@ public class CommonServicesImpl implements CommonServices {
         input.put("v_isLocal", isLocal()? 1 : 0);
         
         return utilityDAO.callStoredProcedureForList(Factor.class, "getFactorsByStudyId", input, new String[] {"v_studyid", "v_isLocal"}, 
-                new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid", "description"});
+                new String[] {"labelid", "studyid", "fname", "factorid", "traitid", "scaleid", "tmethid", "ltype", "tid", "description", "label"});
     }
     
     @Override
@@ -4711,5 +4711,21 @@ public class CommonServicesImpl implements CommonServices {
         params.put("p_variates", variates);
         params.put("p_values", values);
         utilityDAO.callStoredProcedureForUpdate("addPhenotypicData", params);
+    }
+
+    @Override
+    public void addTreatmentFactor(Factor factor) {
+        if (isLocal()) {
+            Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK(factor, "addTreatmentFactor", new String[]{
+                    "labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid", "description", "label"});
+            factor.setLabelid(id);
+            
+            Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"},
+                    new String[]{"factorid"});
+
+            System.out.println("addFactor id = " + id);
+            factor.setFactorid(newFactor.getFactorid());
+
+        }
     }
 }

@@ -84,6 +84,7 @@ public class ConverterDomainToDTO {
         factorDTO.setLtype(dataType);
         
         factorDTO.setDescription(description);
+        
 
         return factorDTO;
     }

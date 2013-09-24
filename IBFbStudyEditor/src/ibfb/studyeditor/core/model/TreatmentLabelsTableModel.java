@@ -10,6 +10,7 @@ import ibfb.domain.core.Workbook;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import org.openide.util.NbBundle;
 
 /**
@@ -112,5 +113,27 @@ public class TreatmentLabelsTableModel extends AbstractTableModel {
         }
     }
     
+    public void setWorkbookAndFactorLabels(List<FactorLabel> factorLabels, Workbook workbook) {
+        this.factorLabels = factorLabels;
+        this.otherFactors = workbook.getOtherFactors();
+        this.workbook = workbook;
+        for (Factor factor : otherFactors) {
+            int totalLevel = (Integer) factor.getValue();
+
+            for (Factor childFactor : workbook.getChildFactors(factor.getLabel())) {
+                //for (int level = 1; level < (totalLevel + 1); level++) {
+                int level = 1;
+                for (String value : childFactor.getTreatmentValues()) {
+                    FactorLabel factorLabel = new FactorLabel();
+                    factorLabel.setFactorName(factor.getFactorName());
+                    factorLabel.setLabel(childFactor.getFactorName() + " " + level);
+                    factorLabel.setLevel(level);
+                    factorLabel.setValue(value);
+                    factorLabels.add(factorLabel);
+                    level++;
+                }
+            }
+        }
+    }
     
 }
