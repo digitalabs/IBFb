@@ -73,7 +73,7 @@ SET @mySQL := 'SELECT DISTINCT
     set @mySQL := CONCAT(@mySQL, " AND grp.name LIKE '%", traitGroup, "%'");
   END IF;
 
-  set @mySQL := CONCAT(@mySQL, " ORDER BY traitid, tid; ");
+  set @mySQL := CONCAT(@mySQL, " ORDER BY syn.cvtermsynonym_id, traitid, tid; ");
 
   PREPARE stmt FROM @mySQL;
   EXECUTE stmt;
@@ -127,7 +127,7 @@ SET @mySQL := 'SELECT DISTINCT
     set @mySQL := CONCAT(@mySQL, " AND grp.name LIKE '%", traitGroup, "%'");
   END IF;
 
-  set @mySQL := CONCAT(@mySQL, " ORDER BY traitid, tid; ");
+  set @mySQL := CONCAT(@mySQL, " ORDER BY syn.cvtermsynonym_id, traitid, tid; ");
 
   PREPARE stmt FROM @mySQL;
   EXECUTE stmt;

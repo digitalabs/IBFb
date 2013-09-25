@@ -29,7 +29,11 @@ begin
 		SET @sql = CONCAT(@sql," AND cvt.definition = '", v_tmdesc, "' ");
     END IF;
 
-	SET @sql = CONCAT(@sql, " ORDER BY tmethid; ");
+        IF (v_tmname IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql, " ORDER BY cs.cvtermsynonym_id, tmethid; ");
+        ELSE
+            SET @sql = CONCAT(@sql, " ORDER BY tmethid; ");
+        END IF;
 	
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;

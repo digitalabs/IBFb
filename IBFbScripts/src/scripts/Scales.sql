@@ -28,6 +28,8 @@ begin
 	SET @sql = CONCAT(@sql," AND sctype = '",v_sctype,"'");
 	END IF;	
 	
+        SET @sql = CONCAT(@sql, " ORDER BY syn.cvtermsynonym_id ");
+
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 	
@@ -54,12 +56,21 @@ begin
 	END IF;
 	IF(v_scname IS NOT NULL) THEN
             SET @sql = CONCAT(@sql," OR scname like '%",v_scname,"%'");
-            SET @sql = CONCAT(@sql, " OR EXISTS (SELECT 1 FROM cvtermsynonym AS syn WHERE syn.cvterm_id = cvsc.cvterm_id AND syn.synonym LIKE '%", v_scname, "%') ");
+            -- SET @sql = CONCAT(@sql, " OR EXISTS (SELECT 1 FROM cvtermsynonym AS syn WHERE syn.cvterm_id = cvsc.cvterm_id AND syn.synonym LIKE '%", v_scname, "%') ");
         END IF;
 	IF(v_sctype IS NOT NULL) THEN
 	SET @sql = CONCAT(@sql," OR sctype like '%",v_sctype,"%'");
 	END IF;	
-	
+
+        SET @sql = CONCAT(@sql, " UNION ");
+        SET @sql = CONCAT(@sql, 
+            " SELECT DISTINCT cvt.cvterm_id as scaleid, cvt.name AS scname, ",
+            " case when cvrsb3.object_id in (1110, 1120, 1125, 1128, 1130) then 'D' else 'C' END as sctype ",
+            " FROM cvterm cvt ",
+            " INNER JOIN cvterm_relationship cvr ON cvr.object_id = cvt.cvterm_id AND cvr.type_id = 1030 ",
+            " inner join cvterm_relationship cvrsb3 on cvrsb3.subject_id = cvr.subject_id and cvrsb3.type_id = 1105 ",
+            " INNER JOIN cvtermsynonym syn ON syn.cvterm_id = cvt.cvterm_id AND syn.synonym LIKE '%", v_scname, "%'");
+
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 	
