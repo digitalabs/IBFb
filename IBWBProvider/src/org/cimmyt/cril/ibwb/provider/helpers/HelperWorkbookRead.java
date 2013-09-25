@@ -824,6 +824,15 @@ public class HelperWorkbookRead {
             factorsReturn.add(factor.getFactorName());
         }
 
+        HashMap<String, List<ibfb.domain.core.Factor>> childFactorMap = workbookStudy.getChildFactors();
+        for (ibfb.domain.core.Factor factor : workbookStudy.getOtherFactors()) {
+            factorsReturn.add(factor.getFactorName());
+            List<ibfb.domain.core.Factor> childFactors = childFactorMap.get(factor.getFactorName());
+            for (ibfb.domain.core.Factor cFactor : childFactors) {
+                factorsReturn.add(cFactor.getFactorName());
+            }
+        }
+
         for (ibfb.domain.core.Factor factor : workbookStudy.getPlotFactors()) {
             factorsReturn.add(factor.getFactorName());
         }

@@ -189,9 +189,10 @@ public class OpenStudyAction extends SystemAction {
         java.util.ArrayList<Factor> factores = new ArrayList();
         factores = (java.util.ArrayList<Factor>) workbook.getOtherFactors();
 
-        //OtherTreatmentFactorsTableModel otherTabla = studyWindow.getOtherTreatmentFactorsTableModel();
-        //otherTabla.setOtherFactors(factores);
-        studyWindow.assignOtherTreatmentFactors(factores);
+        OtherTreatmentFactorsTableModel otherTabla = studyWindow.getOtherTreatmentFactorsTableModel();
+        otherTabla.setOtherFactors(factores);
+        //studyWindow.assignOtherTreatmentFactors(factores);
+        studyWindow.ajustaColumnsTable(studyWindow.getJTableOtherFactors(), 2);
         
         TreatmentLabelsTableModel modeloTabla = (TreatmentLabelsTableModel) studyWindow.jTableOtherFactorLabels.getModel();
         modeloTabla.setWorkbookAndFactorLabels(new ArrayList<FactorLabel>(), workbook);
