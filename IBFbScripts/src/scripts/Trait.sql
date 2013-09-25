@@ -62,7 +62,7 @@ SET @mySQL := 'SELECT DISTINCT
   END IF;
 
   IF (traitName IS NOT NULL) THEN
-    set @mySQL := CONCAT(@mySQL, " AND (cvt.name LIKE '%", traitName, "%' OR syn.synonym LIKE '%", traitName, "%') ");
+    set @mySQL := CONCAT(@mySQL, " AND (cvt.name = '", traitName, "' OR syn.synonym = '", traitName, "') ");
   END IF;
 
   IF (traitDescription IS NOT NULL) THEN
