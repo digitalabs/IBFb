@@ -224,8 +224,14 @@ public class HelperWorkbookRead {
                     factorDto,
                     this.servicioApp,
                     801);
-            
-            if (factorDto.getFactorid().equals(this.factorIdStudy)) {
+
+            if (factorDto.getFactorid() == null && factorDto.getLabel() != null) {
+                factorDto.setIsTreatmentFactor(true);
+                this.mapFactorsDtoOthers.put(factorDto.getFname(), factorDto);
+                this.factorsDtoOthers.add(factorDto);
+                this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
+                this.factorsDtoAllFactorsView.add(factorDto);
+            } else if (factorDto.getFactorid().equals(this.factorIdStudy)) {
                 this.mapFactorsDtoStudy.put(factorDto.getFname(), factorDto);
                 this.factorsDtoStudy.add(factorDto);
             } else if (factorDto.getFactorid().equals(this.factorIdTrial)) {
@@ -237,11 +243,19 @@ public class HelperWorkbookRead {
                 this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
                 this.factorsDtoAllFactorsView.add(factorDto);
             } else if (factorDto.getFactorid().equals(this.factorIdPlot)) {
-                this.mapFactorsDtoPlot.put(factorDto.getFname(), factorDto);
-                this.factorsDtoPlot.add(factorDto);
-                this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
-                this.factorsDtoAllFactorsView.add(factorDto);
-            } else {
+                if (factorDto.getLabel() != null) {
+                    factorDto.setIsTreatmentFactor(true);
+                    this.mapFactorsDtoOthers.put(factorDto.getFname(), factorDto);
+                    this.factorsDtoOthers.add(factorDto);
+                    this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
+                    this.factorsDtoAllFactorsView.add(factorDto);
+                } else {
+                    this.mapFactorsDtoPlot.put(factorDto.getFname(), factorDto);
+                    this.factorsDtoPlot.add(factorDto);
+                    this.mapFactorsDtoAllFactorsView.put(factorDto.getFname(), factorDto);
+                    this.factorsDtoAllFactorsView.add(factorDto);
+                }
+            } else if (factorDto.getLabel() != null) {
                 factorDto.setIsTreatmentFactor(true);
                 this.mapFactorsDtoOthers.put(factorDto.getFname(), factorDto);
                 this.factorsDtoOthers.add(factorDto);

@@ -118,7 +118,7 @@ public class TreatmentLabelsTableModel extends AbstractTableModel {
         this.otherFactors = workbook.getOtherFactors();
         this.workbook = workbook;
         for (Factor factor : otherFactors) {
-            int totalLevel = (Integer) factor.getValue();
+            //int totalLevel = (Integer) factor.getValue();
 
             for (Factor childFactor : workbook.getChildFactors(factor.getLabel())) {
                 //for (int level = 1; level < (totalLevel + 1); level++) {
