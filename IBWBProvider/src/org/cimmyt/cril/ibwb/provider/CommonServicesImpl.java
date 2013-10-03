@@ -4728,4 +4728,19 @@ public class CommonServicesImpl implements CommonServices {
 
         }
     }
+    
+    @Override
+    public boolean checkStudyName(String studyName) {
+        
+        Study study = new Study();
+        study.setSname(studyName);
+        Study newstudy = utilityDAO.callStoredProcedureForObject(study, "checkStudyName", 
+                new String[] {"sname"},
+                new String[] {"sname"});
+        
+        if (newstudy != null && newstudy.getSname() != null && !"".equals(newstudy.getSname())) {
+            return true;
+        }
+        return false;
+    }
 }

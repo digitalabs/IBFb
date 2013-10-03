@@ -1607,4 +1607,9 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Traits> getListTraitsSynonym(Traits traitsFilter, int start, int pageSize, boolean paged) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public boolean checkStudyName(String studyName) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

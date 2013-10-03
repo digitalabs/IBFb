@@ -15,7 +15,6 @@ import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
 import org.cimmyt.cril.ibwb.domain.util.WheatData;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
-import org.cimmyt.cril.ibwb.provider.dao.UtilityDAO;
 import org.cimmyt.cril.ibwb.provider.datasources.IBPMiddlewareClient;
 import org.cimmyt.cril.ibwb.provider.helpers.*;
 import org.generationcp.middleware.manager.api.GermplasmDataManager;
@@ -3676,4 +3675,14 @@ public class IBWBAppServicesImpl implements AppServices {
         
         return factors;
     }
+
+    @Override
+    public boolean checkStudyName(String studyName) {
+        boolean isStudyFound = serviciosCentral.checkStudyName(studyName);
+        if (!isStudyFound) {
+            isStudyFound = serviciosLocal.checkStudyName(studyName);
+        }
+        return isStudyFound;
+    }
+
 }

@@ -591,7 +591,7 @@ public class JDNewSTD extends javax.swing.JDialog {
             boolean result = true;
 
             if (!jTextFieldStudy.getText().isEmpty()) {
-                if (AppServicesProxy.getDefault().appServices().getStudyByName(jTextFieldStudy.getText().trim()) != null) {
+                if (AppServicesProxy.getDefault().appServices().checkStudyName(jTextFieldStudy.getText().trim())) {
                     //DialogUtil.displayError(JDNewSTD.class, "JDNewStudy.studyAlreadyExists");
                     String message = NbBundle.getMessage(JDNewSTD.class, "JDNewStudy.studyAlreadyExists");
                     problems.add(message);

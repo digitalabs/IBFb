@@ -2325,4 +2325,5 @@ public interface AppServices {
     
     public Integer getStoredInId(int traitid, int scaleid, int methodid);
     public List<Factor> getFactorsByStudyId(int studyId);
+    public boolean checkStudyName(String studyName);
 }

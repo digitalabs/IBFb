@@ -3771,4 +3771,5 @@ public interface CommonServices {
     public void addStocks(int stockId, String uniquenames, String dbxrefs, String names, String values);
     public void addPhenotypicData(String experiments, String variates, String values);
     public void addTreatmentFactor(Factor factor);
+    public boolean checkStudyName(String studyName);
 }

@@ -608,3 +608,14 @@ declare v_postfix varchar(50) CHARACTER SET utf8;
 -- COMMIT;
 
 end$$ 
+
+DROP PROCEDURE IF EXISTS `checkStudyName`$$
+
+-- unique constraint on project-name, therefore don't need to check whethere
+-- it's a study or a dataset, having the same name is not allowed.
+CREATE PROCEDURE `checkStudyName`(IN v_sname varchar(255) CHARACTER SET utf8)
+BEGIN
+    SELECT p.name AS sname
+    FROM project p
+    WHERE p.name = v_sname;
+END$$
