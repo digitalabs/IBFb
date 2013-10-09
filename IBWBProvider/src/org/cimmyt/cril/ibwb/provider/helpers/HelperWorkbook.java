@@ -1504,31 +1504,34 @@ public class HelperWorkbook {
                         DataC dataC = ((DataC)data);
                         value = dataC.getDvalue();
                     }
+                    
+                    if (value != null && !"".equals(value)) {
                                             
-                    if (experiments != null){
-                        experiments.append(HelperWorkbook.DELIMITER);
-                    } else {
-                        experiments = new StringBuilder();
-                    }
-                    experiments.append(obsunit.getOunitid());
+                        if (experiments != null){
+                            experiments.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            experiments = new StringBuilder();
+                        }
+                        experiments.append(obsunit.getOunitid());
 
-                    if (variates != null){
-                        variates.append(HelperWorkbook.DELIMITER);
-                    } else {
-                        variates = new StringBuilder();
-                    }
-                    variates.append(savedVariate.getMeasuredinid());
+                        if (variates != null){
+                            variates.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            variates = new StringBuilder();
+                        }
+                        variates.append(savedVariate.getMeasuredinid());
 
-                    if (values != null){
-                        values.append(HelperWorkbook.DELIMITER);
-                    } else {
-                        values = new StringBuilder();
+                        if (values != null){
+                            values.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            values = new StringBuilder();
+                        }
+                        values.append(value);
+
+                        //store as created in phenotype cache
+                        StandardVariableCache.putPhenotypeKey(
+                                new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid()));
                     }
-                    values.append(value);
-                        
-                    //store as created in phenotype cache
-                    StandardVariableCache.putPhenotypeKey(
-                            new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid()));
                 }
                 
             }            

@@ -419,7 +419,7 @@ public class HelperWorkbookUpdate {
                         value = dataC.getDvalue();
                     }
                     
-                    if (!isCreated && value != null){                 
+                    if (!isCreated && value != null && !"".equals(value)){                 
                         
                         if (experiments != null){
                             experiments.append(HelperWorkbook.DELIMITER);
