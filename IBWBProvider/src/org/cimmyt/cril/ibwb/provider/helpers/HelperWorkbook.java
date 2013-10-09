@@ -511,7 +511,7 @@ public class HelperWorkbook {
             //Verificar factor
             factor = ConverterDomainToDTO.getFactor(condition.getConditionName(), condition.getDescription(), condition.getDataType(), study, traits, tmsMethod);
             factor.setFactorid(factorCabecera);//Asignando el factorid
-            localServices.addFactor(factor);
+            localServices.addStudyCondition(factor, condition.getValue());
 
             //Verificar si es factor encabezado
             if (condition.getConditionName().equals(condition.getLabel())) {

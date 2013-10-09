@@ -531,6 +531,54 @@ public class UtilityDAO extends HibernateDaoSupport {
             });
             return result;
         }
+        
+        @SuppressWarnings("rawtypes")
+    	public Integer callStoredProcedureForUpdateAndReturnPK(
+                final String procedureName,
+                final LinkedHashMap parameters
+                ) {
+
+            String params[] = new String[parameters.keySet().size()];
+            Iterator iter = parameters.keySet().iterator();
+            int i = 0 ;
+            while(iter.hasNext()){
+                params[i++] = (String)iter.next();
+            }
+            final String sql = buildSQLQuery(procedureName, params);
+            System.out.println("sql = "+sql);
+            Object result = (Integer) getHibernateTemplate().execute(new HibernateCallback() {
+
+                @Override
+                public Object doInHibernate(Session session)
+                        throws HibernateException, SQLException {
+                    SQLQuery query = session.
+                            createSQLQuery(sql);
+                    if(parameters != null){
+                        Iterator iterParam = parameters.keySet().iterator();
+                        while(iterParam.hasNext()){
+                            String paramName = (String)iterParam.next();
+                            Object obj = parameters.get(paramName);
+    						System.out.println(paramName + " = "+obj);
+                            query.setParameter(paramName, obj);
+                        }
+                    }
+
+                    // GCP - 4347 Adding central database name as a parameter to all SQL queries
+                    // TODO : remove temporary comment
+                    //query.setParameter(DATABASE_PARAMETER_NAME, centralDatabaseName);
+                    //query.setParameter(IS_LOCAL, isLocal());
+
+                    return query.uniqueResult();
+                }
+            });
+            if (result instanceof BigInteger){
+                BigInteger id = (BigInteger) result;
+                return new Integer(id.intValue());
+
+            } else return (Integer)result;   
+            
+        }
+        
 	
 	@SuppressWarnings("rawtypes")
 	public Integer callStoredProcedureForUpdateAndReturnPK(

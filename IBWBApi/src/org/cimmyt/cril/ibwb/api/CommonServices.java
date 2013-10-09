@@ -747,6 +747,13 @@ public interface CommonServices {
      * @param factor Objeto a agregar
      */
     public void addFactor(Factor factor);
+    
+    /**
+     * Adds an Object Factor to database
+     *
+     * @param factor Objeto a agregar
+     */
+    public void addStudyCondition(Factor factor, Object value);
 
     /**
      * Updates a record of type Factor in database
