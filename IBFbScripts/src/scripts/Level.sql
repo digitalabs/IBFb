@@ -8,7 +8,7 @@ IF iscentral = 1 THEN
 
     IF (p_storedin = 1010 or p_storedin = 1015) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
-               IF (p.value IS NULL, IF (isnumeric, '0', '') , pp.value) AS lvalue, p_storedin AS storedinid
+               IF (p.value IS NULL, IF (isnumeric, '0', '') , p.value) AS lvalue, p_storedin AS storedinid
           FROM projectprop pp
          INNER JOIN projectprop p ON p.project_id = pp.project_id AND p.rank = pp.rank AND p.type_id = pp.value
          WHERE pp.projectprop_id = p_labelid
@@ -80,7 +80,7 @@ ELSE
 
     IF (p_storedin = 1010 or p_storedin = 1015) THEN
         SELECT DISTINCT p_labelid AS labelid, p_factorid AS factorid, pp.project_id AS levelno, 
-               IF (p.value IS NULL, IF (isnumeric, '0', '') , pp.value) AS lvalue, p_storedin AS storedinid
+               IF (p.value IS NULL, IF (isnumeric, '0', '') , p.value) AS lvalue, p_storedin AS storedinid
           FROM projectprop pp
          INNER JOIN projectprop p ON p.project_id = pp.project_id AND p.rank = pp.rank AND p.type_id = pp.value
          WHERE pp.projectprop_id = p_labelid

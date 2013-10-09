@@ -781,6 +781,36 @@ public class CommonServicesImpl implements CommonServices {
 
         }
     }
+    
+     @Override
+    public void addStudyCondition(Factor factor, Object value) {
+        //this.factorDAO.create(factor);
+        if (isLocal()) {
+            //"labelid", "factorid", "studyid", "fname", "traitid", "scaleid", "tmethid", "ltype", "tid", "description"
+            LinkedHashMap params = new LinkedHashMap();
+            params.put("labelid", factor.getLabelid());
+            params.put("factorid", factor.getFactorid());
+            params.put("studyid", factor.getStudyid());
+            params.put("fname", factor.getFname());
+            params.put("traitid", factor.getTraitid());
+            params.put("scaleid", factor.getScaleid());
+            params.put("tmethid", factor.getTmethid());
+            params.put("ltype", factor.getLtype());
+            params.put("tid", factor.getTid());
+            params.put("description", factor.getDescription());
+            params.put("value", value);
+            
+            Integer id = utilityDAO.callStoredProcedureForUpdateAndReturnPK("addStudyCondition", params);
+            factor.setLabelid(id);
+            
+            Factor newFactor = utilityDAO.callStoredProcedureForObject(factor, "getFactoridByLabelid", new String[]{"labelid"},
+                    new String[]{"factorid"});
+
+            System.out.println("addFactor id = " + id);
+            factor.setFactorid(newFactor.getFactorid());
+
+        }
+    }
 
     @Override
     public void updateFactor(Factor factor) {

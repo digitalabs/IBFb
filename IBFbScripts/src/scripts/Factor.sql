@@ -254,6 +254,89 @@ DECLARE v_type_id int;
 	
 end$$
 
+drop procedure if EXISTS addStudyCondition$$
+
+CREATE PROCEDURE addStudyCondition(
+IN v_labelid int,
+IN v_factorid int,
+IN v_studyid int,
+IN v_fname varchar(255),
+IN v_traitid int,
+IN v_scaleid int,
+IN v_tmethid int,
+IN v_ltype varchar(1),
+IN v_tid int,
+IN v_description varchar(255),
+IN v_value varchar(255))
+begin
+
+DECLARE v_project_id int;
+DECLARE v_projectprop_id, v_return_id int;
+DECLARE v_rank int;
+DECLARE v_type_id int;
+
+
+/*START TRANSACTION;*/
+
+	SELECT MAX(rank) + 1 as rank INTO v_rank 
+	FROM projectprop pp
+	WHERE pp.project_id = v_studyid;
+	
+	IF(v_rank IS NULL) THEN
+	SET v_rank := 1;
+	END IF;
+	
+	SET v_project_id := v_studyid; 
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=v_tid AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,v_tid,v_fname,v_rank);
+	END IF;
+	
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1060 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1060,v_description,v_rank);
+	END IF;
+	
+	SELECT distinct cvttrait.subject_id into v_type_id 
+    FROM cvterm_relationship cvttrait
+    INNER JOIN cvterm_relationship cvtscale ON cvtscale.subject_id = cvttrait.subject_id 
+    INNER JOIN cvterm_relationship cvtmethod ON cvtmethod.subject_id = cvttrait.subject_id  
+	WHERE cvttrait.object_id = v_traitid AND cvttrait.type_id = 1200
+	AND cvtscale.object_id = v_scaleid AND cvtscale.type_id = 1220 
+	AND cvtmethod.object_id = v_tmethid AND cvtmethod.type_id = 1210
+	LIMIT 1;    
+    
+	CALL getNextMinReturn('projectprop',v_projectprop_id);
+	
+        -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=1070 AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,1070,v_type_id,v_rank);
+	END IF;
+
+        SET v_return_id := v_projectprop_id;
+
+        -- add fourth record for storing condition value
+        CALL getNextMinReturn('projectprop',v_projectprop_id);
+         -- PROJECTPROP unique constraint | PROJECT_ID, TYPE_ID, RANK
+        IF NOT EXISTS (SELECT 1 FROM projectprop WHERE project_id=v_project_id AND type_id=v_type_id AND rank=v_rank) THEN
+		INSERT INTO projectprop(projectprop_id,project_id,type_id,value,rank)
+		VALUES(v_projectprop_id,v_project_id,v_type_id,v_value,v_rank);
+	END IF;
+
+	SELECT v_return_id;
+
+/* COMMIT;	*/
+	
+end$$
+
 drop procedure if EXISTS addTreatmentFactor$$
 
 CREATE PROCEDURE addTreatmentFactor(
