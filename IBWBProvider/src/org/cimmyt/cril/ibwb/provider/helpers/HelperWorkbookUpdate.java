@@ -392,9 +392,9 @@ public class HelperWorkbookUpdate {
 
         long startTime = System.nanoTime();
         // finally iterate over all measurements and update it
-        StringBuffer experiments = new StringBuffer();
-        StringBuffer variates = new StringBuffer();
-        StringBuffer values = new StringBuffer();
+        StringBuffer experiments = null; //new StringBuffer();
+        StringBuffer variates = null; //new StringBuffer();
+        StringBuffer values = null; //new StringBuffer();
         for (Measurement measurement : workbook.getMeasurements()) {
             Obsunit obsunit = obsUnitList.get(currentObsUnit);
 
@@ -421,19 +421,24 @@ public class HelperWorkbookUpdate {
                     
                     if (!isCreated && value != null){                 
                         
-                        if (experiments.length() > 0){
+                        if (experiments != null){
                             experiments.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            experiments = new StringBuffer();
                         }
                         experiments.append(obsunit.getOunitid());
                         
-                        
-                        if (variates.length() > 0){
+                        if (variates != null){
                             variates.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            variates = new StringBuffer();
                         }
                         variates.append(savedVariate.getMeasuredinid());
                         
-                        if (values.length() > 0){
+                        if (values != null){
                             values.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            values = new StringBuffer();
                         }
                         values.append(value);
                         
@@ -448,7 +453,8 @@ public class HelperWorkbookUpdate {
             }
             currentObsUnit++;
         }
-        if (experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
+        if (experiments != null && variates != null && values != null 
+            && experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
             localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
         }
         System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");

@@ -1475,9 +1475,9 @@ public class HelperWorkbook {
         }
         int i = 0;
         long startTime = System.nanoTime();
-        StringBuilder experiments = new StringBuilder();
-        StringBuilder variates = new StringBuilder();
-        StringBuilder values = new StringBuilder();
+        StringBuilder experiments = null;
+        StringBuilder variates = null;
+        StringBuilder values = null;
         
         for (Measurement measurement : workbook.getMeasurements()) {
         	obsunit = new Obsunit();
@@ -1505,18 +1505,24 @@ public class HelperWorkbook {
                         value = dataC.getDvalue();
                     }
                                             
-                    if (experiments.length() > 0){
+                    if (experiments != null){
                         experiments.append(HelperWorkbook.DELIMITER);
+                    } else {
+                        experiments = new StringBuilder();
                     }
                     experiments.append(obsunit.getOunitid());
 
-                    if (variates.length() > 0){
+                    if (variates != null){
                         variates.append(HelperWorkbook.DELIMITER);
+                    } else {
+                        variates = new StringBuilder();
                     }
                     variates.append(savedVariate.getMeasuredinid());
 
-                    if (values.length() > 0){
+                    if (values != null){
                         values.append(HelperWorkbook.DELIMITER);
+                    } else {
+                        values = new StringBuilder();
                     }
                     values.append(value);
                         
@@ -1527,7 +1533,8 @@ public class HelperWorkbook {
                 
             }            
         }
-        if (experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
+        if (experiments != null && variates != null && values != null && 
+                experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
             localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
         }
         System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
