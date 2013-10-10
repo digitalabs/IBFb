@@ -537,16 +537,31 @@ drop procedure if exists `deleteStudy`$$
 
 CREATE PROCEDURE `deleteStudy`(IN v_studyid int)
 begin
-	
+
 declare v_prevname varchar(50) CHARACTER SET utf8;
 declare v_postfix varchar(50) CHARACTER SET utf8;
 
 -- START TRANSACTION;
 
 	update projectprop pp
-	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005) 
+	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005)
 	where pp.project_id = v_studyid
 	and pp.type_id = 8006;
+
+	update projectprop
+	set value = (select cvterm_id from cvterm where name = 9 and cv_id = 2005)
+	where type_id = 8006
+	and project_id in
+	( 
+	  select subject_project_id
+	  from project_relationship 
+	  where object_project_id = v_studyid
+	  union all
+	  select child.subject_project_id
+	  from project_relationship parent, project_relationship child 
+	  where parent.object_project_id = v_studyid
+	  and child.object_project_id = parent.subject_project_id
+	);
 	
   	select name into v_prevname 
 	from project 
@@ -560,7 +575,7 @@ declare v_postfix varchar(50) CHARACTER SET utf8;
 	
 	update project
 	set name = CONCAT(name,'#',v_postfix)
-	where project_id in 
+	where project_id in
 	( 
 	  select subject_project_id
 	  from project_relationship 
