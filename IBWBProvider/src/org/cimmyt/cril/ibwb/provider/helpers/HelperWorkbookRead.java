@@ -307,10 +307,13 @@ public class HelperWorkbookRead {
         this.studyView = ConverterDTOtoDomain.getStudy(this.study);
 
         for (Factor factorStudy : this.factorsDtoStudy) {
-            this.studyConditions.add(
+            // exluded hardcoded study conditions
+            if (!"STUDY".equals(factorStudy.getFname())){
+                this.studyConditions.add(
                     ConverterDTOtoDomain.getCondition(
                     factorStudy,
                     this.mapaLabes));
+            }
         }
         for (Factor factorTrial : this.factorsDtoTrial) {
             this.conditions.add(

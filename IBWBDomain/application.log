@@ -243,3 +243,499 @@ INFO SwingWorker-pool-1-thread-1 org.cimmyt.cril.ibwb.provider.dao.helpers.Helpe
 INFO SwingWorker-pool-1-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - filling FactorLabelData DONE... 
 INFO SwingWorker-pool-1-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Observations Data DONE!!!
 ERROR AWT-EventQueue-1 org.cimmyt.cril.ibwb.provider.helpers.HelperTransformations - La formula encontrada dentro del TmsMeasuredin es incompatible.
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Validating Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 6
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 13
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: SEEDING_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: TRNSPL_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: PLANT_DENSITY (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROWS_PLOT (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROW_SPACING (cm)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 6
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 13
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: SEEDING_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: TRNSPL_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: PLANT_DENSITY (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROWS_PLOT (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROW_SPACING (cm)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 6
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 13
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: SEEDING_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: TRNSPL_DATE (Date (yyyymmdd))
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: PLANT_DENSITY (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROWS_PLOT (Number)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: ROW_SPACING (cm)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@1239cec
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@1239cec
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@1239cec
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Validating Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@87c06d
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@87c06d
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Validating Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 2
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@b12043
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@bd1b5f
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 2
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@b12043
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@bd1b5f
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 2
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@b12043
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@bd1b5f
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 2
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@b12043
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@bd1b5f
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 2
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@b12043
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@bd1b5f
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.IBWBAppServicesImpl - Savin workbook....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Savin study....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Savin study DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factor study....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factor study DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for study....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for study DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for trial....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for trial DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for each factor....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for each factor DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each trial....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each trial DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each Measurement....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each Measurement DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving represtn....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving represtn DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving effect....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving effect DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Recovery next levelNo....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Recovery next levelNo DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for trial....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: TRIAL  with value: 1
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE ID  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: PlantingDate  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Season  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: BreedingProg  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Harvest Date  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: TRIAL  with value: 2
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE ID  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: PlantingDate  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Season  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: BreedingProg  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Harvest Date  with value: null
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for trial DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for study....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for study DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for plots....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for plots DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for entrys....
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for entrys DONE!
+INFO SwingWorker-pool-2-thread-1 org.cimmyt.cril.ibwb.provider.IBWBAppServicesImpl - Savin workbook DONE!
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Read study full: -23
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Read list all factors.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -24 factorid: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: STUDY   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2010 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TRIAL   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2100 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: ENTRY   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2200 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PLOT   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2120 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: STUDY   FactorId: -1108
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2010 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: STUDY labelid: -1108
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PIID   FactorId: -1108
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2080 scaleid: 6010 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PIID labelid: -1134
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PI Name   FactorId: -1108
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2080 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PI Name labelid: -1146
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PI ID   FactorId: -1108
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2080 scaleid: 6010 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PI ID labelid: -1149
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TRIAL   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2100 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TRIAL labelid: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: SITE   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2110 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: SITE labelid: -1161
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: SITE ID   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2110 scaleid: 6010 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: SITE ID labelid: -1164
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PlantingDate   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -35 scaleid: 20208 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PlantingDate labelid: -1167
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: Season   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2452 scaleid: 6020 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: Season labelid: -1170
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: BreedingProg   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -38 scaleid: 6020 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: BreedingProg labelid: -1173
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: Harvest Date   FactorId: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -40 scaleid: 20208 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: Harvest Date labelid: -1176
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TRIAL   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2100 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TRIAL labelid: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: SITE   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2110 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: SITE labelid: -1197
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: SITE ID   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2110 scaleid: 6010 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: SITE ID labelid: -1200
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PlantingDate   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -35 scaleid: 20208 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PlantingDate labelid: -1203
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: Season   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2452 scaleid: 6020 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: Season labelid: -1206
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: BreedingProg   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -38 scaleid: 6020 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: BreedingProg labelid: -1209
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: Harvest Date   FactorId: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -40 scaleid: 20208 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: Harvest Date labelid: -1212
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: ENTRY   FactorId: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2200 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: ENTRY labelid: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: GID   FactorId: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2205 scaleid: 6010 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: GID labelid: -1218
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: DESIG   FactorId: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2205 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: DESIG labelid: -1221
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: StockID   FactorId: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2208 scaleid: 6030 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: StockID labelid: -1224
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: BreedersPedigree1   FactorId: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2207 scaleid: 6115 tmethid: -34
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: BreedersPedigree1 labelid: -1227
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo C.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PLOT   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2120 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: PLOT labelid: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: REP   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2150 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: REP labelid: -1233
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: BLOCK   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2160 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: BLOCK labelid: -1236
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: FERTLE   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2405 scaleid: 6040 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: FERTLE labelid: -1240
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: FERTAM   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2405 scaleid: 6090 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: FERTAM labelid: -1244
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TREATMENTA   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -46 scaleid: 6040 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TREATMENTA labelid: -1248
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TREATMENTA_AMNT   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -46 scaleid: 6090 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TREATMENTA_AMNT labelid: -1252
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TREATMENTB   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -49 scaleid: 6040 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TREATMENTB labelid: -1256
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TREATMENTB_AMNT   FactorId: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: -49 scaleid: 6090 tmethid: 4020
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando levels del factor: TREATMENTB_AMNT labelid: -1260
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Level tipo N.
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1194
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1215
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -25 factorid: -1230
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperEffect - Effect vale : -24 factorid: -1158
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: STUDY   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2010 scaleid: 6000 tmethid: 4030
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: TRIAL   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2100 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: ENTRY   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2200 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Factor Name: PLOT   FactorId: 0
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Cargando Measuredin con tid: 2120 scaleid: 6040 tmethid: 4040
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - fill all variate as traits
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: GY  VariateId: -1263
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: AnthesisDate  VariateId: -1266
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: DaysToSilk  VariateId: -1269
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: PlantHeightCm  VariateId: -1272
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EarHeightCm  VariateId: -1275
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EndospermHardness1_5  VariateId: -1278
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: GrainTexture1_5  VariateId: -1281
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EarAspect1_5  VariateId: -1284
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: GrainMoisturePer  VariateId: -1287
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: PlantAspect1_5  VariateId: -1290
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: PolysoraRust1_5  VariateId: -1293
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: ChuponNum  VariateId: -1296
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Aphid1_5  VariateId: -1299
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: BrownSpot1_5  VariateId: -1302
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: CornStuntSpiroplasma1_5  VariateId: -1305
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: MaizeBushyStunt1_5  VariateId: -1308
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EarRotAsp1_5  VariateId: -1311
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EarRotStenoc1_5  VariateId: -1314
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Aspergillus_lavus1_5  VariateId: -1317
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Aspergillus_lavusPPB  VariateId: -1320
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: PhaesLeaSpot1_5(1)  VariateId: -1323
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: CommonRust1_5(1)  VariateId: -1326
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: TarspotComplex1_5  VariateId: -1329
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: GrayLeaSpot1_5(1)  VariateId: -1332
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: VirusMaizeStreak1_5(1)  VariateId: -1335
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: CurvulariaLeaSpot1_5  VariateId: -1338
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: BandLeaSheathBlight1_5  VariateId: -1341
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: StalkRotusGramNum(1)  VariateId: -1344
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: StalkRotPythiumNum  VariateId: -1347
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Striga1_5  VariateId: -1350
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: TropicalRust1_5  VariateId: -1353
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: TryptophanPer_WholeGrain  VariateId: -1356
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: LysinePer_WholeGrain  VariateId: -1359
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: ProteinPer_WholeGrain  VariateId: -1362
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: ArmyWorm1_5  VariateId: -1365
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: EarWormCm  VariateId: -1368
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: StemBorer1_5(1)  VariateId: -1371
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: LargeGrainBorer1_5  VariateId: -1374
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: MaizeWeevil1_5  VariateId: -1377
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: WeevilTotNum  VariateId: -1380
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: WeevilWtLossPer  VariateId: -1383
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: LeaRolling1_5(1)  VariateId: -1386
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: LeaRolling1_5(2)  VariateId: -1389
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: LeaRolling1_5(3)  VariateId: -1392
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Senescence0_100(1)  VariateId: -1395
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Senescence0_100(2)  VariateId: -1398
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Senescence0_100(3)  VariateId: -1401
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Spad(1)  VariateId: -1404
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Spad(2)  VariateId: -1407
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Spad(3)  VariateId: -1410
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Environment  VariateId: -1179
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Plot size  VariateId: -1182
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperVariate - Filling variate: Field Management  VariateId: -1185
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Study Conditions Data....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Study Conditions DONE!!!!
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Trial Conditions Data....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Trial Conditions DONE!!!!....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Trial Germplasm Data....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Trial Germplasm DONE!!!
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Observations Data....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - filling FactorLabelData... 
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.dao.helpers.HelperWorkbookReader - Getting trial randomization fast
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.dao.helpers.HelperWorkbookReader - Definiendo orden de busquedas
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.dao.helpers.HelperWorkbookReader - Getting trial randomization fast.... DONE
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.dao.helpers.HelperWorkbookReader - Getting variates fast....
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.dao.helpers.HelperWorkbookReader - Getting variates fast.... DONE
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - filling FactorLabelData DONE... 
+INFO SwingWorker-pool-2-thread-2 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbookRead - Filling Observations Data DONE!!!
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Validating Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read BEGIN
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Opening file...
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Number of sheets in book2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total study conditions found: 2
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total conditions found: 7
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Total factors found: 14
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Environment (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Plot size (Real)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Data for Constant: Field Management (Text)
+INFO AWT-EventQueue-0 ibfb.workbook.core.WorkbookExcelReaderImpl - Excel file read END
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@c54a39
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@c54a39
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - Requested for rowIndex 0
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - designList.size() 1
+INFO AWT-EventQueue-0 ibfb.studyeditor.core.model.DesignTableModel - bean ibfb.domain.core.DesignBean@c54a39
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.IBWBAppServicesImpl - Savin workbook....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Savin study....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Savin study DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factor study....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factor study DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for study....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for study DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for trial....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for trial DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for each factor....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Factors for each factor DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Variates for each constant DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each trial....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each trial DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each Measurement....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving Steffects for each Measurement DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving represtn....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving represtn DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving effect....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving effect DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Recovery next levelNo....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Recovery next levelNo DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for trial....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: TRIAL  with value: 1
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: SITE ID  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: PlantingDate  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Season  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: BreedingProg  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperFactor - Savin level for factor: Harvest Date  with value: null
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for trial DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for study....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for study DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for plots....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for plots DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for entrys....
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.helpers.HelperWorkbook - Saving levels for entrys DONE!
+INFO SwingWorker-pool-2-thread-3 org.cimmyt.cril.ibwb.provider.IBWBAppServicesImpl - Savin workbook DONE!
