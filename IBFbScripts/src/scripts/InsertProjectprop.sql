@@ -74,57 +74,5 @@ end;
 
 end$$
 
-/*
-delimiter $$
-
-drop procedure if exists `test_InsertProjectprop`$$
-create procedure test_InsertProjectprop(pid int, var1 varchar(255), var2 varchar(255), var3 varchar(255), cid int)
-begin
-
-# testing stub
-# test_InsertPropertyProp(10060, 'my lable name', 'my description', 'my label value', 19020)
-# -must supply a valid study or dataset project_id
-# -my label value is optional and only applies to studies; otherwise error is raised if label_value is passed in
-# -cvterm must exist
-
-
-
-  declare ppid int default 0;
-  declare retcode int default 0;
-
-  drop table if exists `log`;
-  create temporary table log (msg varchar(1000));
-
-
-  select * from projectprop where project_id = pid order by rank desc;
-
-  insert into log select concat("before insert maximum rank is ",max(rank)) from projectprop where project_id=pid;
-
-  #1 valid insertion
-  call InsertProjectprop(pid, var1, var2, var3, cid, @ppid, @rank, @retcode, @error_msg);
-
-  set ppid = last_insert_id();
-
-  if (@retcode = 0) then
-     insert into log select concat("Inserted ",var1,". Maximum rank is now ",@rank," (retcode = ",@retcode,")");
-  else 
-    insert into log select concat("Error: ",@error_msg," (retcode = ",@retcode,")");
-  end if;
-
-  select * from projectprop where project_id = pid order by rank desc;
-  select * from log;
-
-end$$
-*/
 delimiter ;
-
-#call test_InsertProjectprop(10060, '', 'my description', null, 8373); #fail
-#call test_InsertProjectprop(10060, null, 'my description', null, 8373); #fail
-#call test_InsertProjectprop(10060, 'my label1', 'my description1', null, 8373); #work
-#call test_InsertProjectprop(10060, 'my_label2', 'my description2', 'cant have value', 8373); #fail
-#call test_InsertProjectprop(10060, 'my_label3', 'my description3', 'label3', 8030); #work
-#call test_InsertProjectprop(10060, 'my_label4', 'my description4', null, 8030); #work
-#call test_InsertProjectprop(10060, 'my_label5', 'my description5', '', 8384); #work
-#call test_InsertProjectprop(10060, 'my_label6', 'my description6', 'label6', -999); #fail
-
 

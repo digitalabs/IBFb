@@ -1384,10 +1384,10 @@ public class CommonServicesImpl implements CommonServices {
     public List<Listdata> getListdataByIdlistnms(Integer idListnms, TypeDB typeDB) {
         List<Integer> lrecIdList = new ArrayList<Integer>();
         List<Dmsattr> dmsattrList = new ArrayList<Dmsattr>();
-        if (typeDB.equals(TypeDB.IWIS)) {
+        /*if (typeDB.equals(TypeDB.IWIS)) {
             lrecIdList = listdataDAO.getLRecidListByListId(idListnms);
             dmsattrList = dmsattrDAO.getDmsAttributesByListId(idListnms, lrecIdList);
-        }
+        }*/
         return listdataDAO.getListdataByIdlistnms(idListnms, dmsattrList);
     }
 
