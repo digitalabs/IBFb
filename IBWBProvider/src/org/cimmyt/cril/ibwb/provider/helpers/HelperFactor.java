@@ -773,28 +773,30 @@ public class HelperFactor {
             Object value,
             CommonServices serviceLocal) {
 
-        if (factor.getLtype().equals(NUMERIC_TYPE)) {
-            LevelN levelN = new LevelN();
-            levelN.setFactorid(factor.getFactorid());
-            levelN.setLvalue(castingToDouble(value));
-            LevelNPK levelNPK = new LevelNPK();
-            levelNPK.setLabelid(factor.getLabelid());
-            levelNPK.setLevelno(levelNo);
-            levelN.setLevelNPK(levelNPK);
-            levelN.setStoredinid(factor.getTid());
-            serviceLocal.addLevelN(levelN);
-            factor.getLevelsN().add(levelN);
-        } else {
-            LevelC levelC = new LevelC();
-            levelC.setFactorid(factor.getFactorid());
-            levelC.setLvalue(castingToString(value));
-            LevelCPK levelCPK = new LevelCPK();
-            levelCPK.setLabelid(factor.getLabelid());
-            levelCPK.setLevelno(levelNo);
-            levelC.setLevelCPK(levelCPK);
-            levelC.setStoredinid(factor.getTid());
-            serviceLocal.addLevelC(levelC);
-            factor.getLevelsC().add(levelC);
+        if (factor != null && factor.getLtype() != null) {
+            if (factor.getLtype().equals(NUMERIC_TYPE)) {
+                LevelN levelN = new LevelN();
+                levelN.setFactorid(factor.getFactorid());
+                levelN.setLvalue(castingToDouble(value));
+                LevelNPK levelNPK = new LevelNPK();
+                levelNPK.setLabelid(factor.getLabelid());
+                levelNPK.setLevelno(levelNo);
+                levelN.setLevelNPK(levelNPK);
+                levelN.setStoredinid(factor.getTid());
+                serviceLocal.addLevelN(levelN);
+                factor.getLevelsN().add(levelN);
+            } else {
+                LevelC levelC = new LevelC();
+                levelC.setFactorid(factor.getFactorid());
+                levelC.setLvalue(castingToString(value));
+                LevelCPK levelCPK = new LevelCPK();
+                levelCPK.setLabelid(factor.getLabelid());
+                levelCPK.setLevelno(levelNo);
+                levelC.setLevelCPK(levelCPK);
+                levelC.setStoredinid(factor.getTid());
+                serviceLocal.addLevelC(levelC);
+                factor.getLevelsC().add(levelC);
+            }
         }
     }
 

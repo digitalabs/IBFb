@@ -1234,7 +1234,9 @@ public class HelperWorkbook {
                 }
             }
         }
-        HelperFactor.addLevels(listStudyFactors.get(0).getFactorid(), levelNo, localServices);
+        if (listStudyFactors != null && listStudyFactors.size() > 0) {
+            HelperFactor.addLevels(listStudyFactors.get(0).getFactorid(), levelNo, localServices);
+        }
         levelNo--;
         return ndExperimentId;
     }
