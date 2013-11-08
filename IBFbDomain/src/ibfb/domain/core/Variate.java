@@ -18,7 +18,8 @@ public class Variate implements Serializable {
     private String dataType;
 
     private Integer variateId;
-    private Integer studyId;    
+    private Integer studyId;
+    private Integer dataTypeId;
     
     public Variate() {}
 
@@ -35,6 +36,11 @@ public class Variate implements Serializable {
         this.scale = scale;
         this.method = method;
         this.dataType = dataType;
+    }
+
+    public Variate(String variateName, String description, String property, String scale, String method, String dataType, Integer dataTypeId) {
+        this(variateName, description, property, scale, method, dataType);
+        this.dataTypeId = dataTypeId;
     }
 
     public String getDataType() {
@@ -111,7 +117,12 @@ public class Variate implements Serializable {
         this.variateId = variateId;
     }
 
+    public Integer getDataTypeId() {
+        return dataTypeId;
+    }
 
-
+    public void setDataTypeId(Integer dataTypeId) {
+        this.dataTypeId = dataTypeId;
+    }
 
 }

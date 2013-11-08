@@ -126,12 +126,13 @@ drop procedure if exists addOrUpdateDataC$$
 CREATE PROCEDURE addOrUpdateDataC(
 IN v_ounitid int,
 IN v_variatid int,
-IN v_dvalue varchar(255))
+IN v_dvalue varchar(255),
+IN v_cvalueId int)
 begin
 
 DECLARE v_phenotype_id int;
 DECLARE v_phenotype_name varchar(50);
-DECLARE v_cvalue_id int;
+-- DECLARE v_cvalue_id int;
 DECLARE v_nd_experiment_phenotype_id int;
 
 
@@ -153,23 +154,23 @@ IF(v_phenotype_id IS NULL) THEN
 	from projectprop pp
 	where pp.projectprop_id = v_variatid;
 	
-	select cvterm_id into v_cvalue_id 
-	from cvterm ct, cvterm_relationship cr  
-	where name =  v_dvalue
-	and object_id = ct.cvterm_id
-	and subject_id = v_phenotype_name
-	and exists (
-    	select 1 
-    	from projectprop pp, projectprop label
-    	where pp.project_id = label.project_id
-    	and pp.rank = label.rank
-    	and label.type_id = 1048
-	and pp.projectprop_id = v_variatid);
+	-- select cvterm_id into v_cvalue_id 
+	-- from cvterm ct, cvterm_relationship cr  
+	-- where name =  v_dvalue
+	-- and object_id = ct.cvterm_id
+	-- and subject_id = v_phenotype_name
+	-- and exists (
+    	-- select 1 
+    	-- from projectprop pp, projectprop label
+    	-- where pp.project_id = label.project_id
+    	-- and pp.rank = label.rank
+    	-- and label.type_id = 1048
+	-- and pp.projectprop_id = v_variatid);
 	
         -- PHENOTYPE unique constraint | uniquename
         -- IF NOT EXISTS(SELECT 1 FROM phenotype WHERE uniquename=v_phenotype_id) THEN
 		insert into phenotype(phenotype_id,uniquename,name,observable_id,attr_id,value,cvalue_id,assay_id) 
-		values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalue_id,NULL);
+		values(v_phenotype_id,v_phenotype_id,v_phenotype_name,v_phenotype_name,NULL,v_dvalue,v_cvalueId,NULL);
 	-- END IF;	
 
 	CALL getNextMinReturn('nd_experiment_phenotype',v_nd_experiment_phenotype_id);
@@ -184,16 +185,16 @@ IF(v_phenotype_id IS NULL) THEN
 
 ELSE 
 
-	select cvterm_id into v_cvalue_id 
-	from cvterm ct, cvterm_relationship cr, phenotype ph  
-	where ct.name =  v_dvalue
-	and cr.object_id = ct.cvterm_id
-	and cr.subject_id = ph.observable_id
-	and ph.phenotype_id = v_phenotype_id;
+--	select cvterm_id into v_cvalue_id 
+--	from cvterm ct, cvterm_relationship cr, phenotype ph  
+--	where ct.name =  v_dvalue
+--	and cr.object_id = ct.cvterm_id
+--	and cr.subject_id = ph.observable_id
+--	and ph.phenotype_id = v_phenotype_id;
 	
     update phenotype
 	set value = v_dvalue
-	,cvalue_id = v_cvalue_id 
+	,cvalue_id = v_cvalueId 
 	where phenotype_id = v_phenotype_id;
 	
 	

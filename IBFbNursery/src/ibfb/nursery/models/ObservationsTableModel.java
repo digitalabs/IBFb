@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 import org.cimmyt.cril.ibwb.commongui.DecimalUtils;
 import org.cimmyt.cril.ibwb.commongui.DialogUtil;
+import org.cimmyt.cril.ibwb.commongui.util.ValidValuesCacheUtil;
 
 public class ObservationsTableModel extends AbstractTableModel {
 
@@ -162,6 +163,7 @@ public class ObservationsTableModel extends AbstractTableModel {
         Object columnObject = headers.get(columnIndex);
         Variate variate = ((Variate) columnObject);
         String columnDataType = variate.getDataType();
+/*
         if (isValidValue(aValue, columnDataType, variate)) {
             if (variate.getMethod().endsWith(Variate.ENUMERATED) && columnDataType.equals("N") && !aValue.toString().isEmpty()) {
                 Double doubleValue = Double.parseDouble((String) aValue);
@@ -172,6 +174,28 @@ public class ObservationsTableModel extends AbstractTableModel {
         } else {
             // DialogUtil.display(ObservationsTableModel.class, "observationstable.numericvaluerequired");
         }
+*/
+            if (aValue == null || ((String) aValue).isEmpty()) {
+                //do nothing
+            } else if (((String) aValue).trim().isEmpty()) { //spaces
+                columnList.set(columnIndex, "");
+            } else {
+                if (!isValidValue(aValue, columnDataType, variate)) {
+                    DialogUtil.display(ObservationsTableModel.class, "observationstable.numericvaluerequired");
+                } 
+                else if (!isCorrectValue(variate, aValue)) {
+                    DialogUtil.display(ObservationsTableModel.class, "observationstable.validvalue");
+                } 
+                else {
+                    if (variate.getMethod().endsWith(Variate.ENUMERATED) && columnDataType.equals("N") && !aValue.toString().isEmpty()) {
+                        Double doubleValue = Double.parseDouble((String) aValue);
+                        columnList.set(columnIndex, doubleValue.intValue());
+                    } else {
+                        columnList.set(columnIndex, aValue);
+                    }
+                }
+            }            
+        
         fireTableCellUpdated(rowIndex, columnIndex);        
     }
 
@@ -198,6 +222,21 @@ public class ObservationsTableModel extends AbstractTableModel {
         }
 
         return isValid;
+    }
+
+    private boolean isCorrectValue(Variate variate, Object aValue) {
+        if (variate.getDataTypeId() == null) {
+            return (ValidValuesCacheUtil.isValidValue(variate.getProperty(), variate.getScale(), variate.getMethod(), aValue.toString()));
+        }
+        else {
+            if (variate.getDataTypeId() == 1130) {
+                return (ValidValuesCacheUtil.checkCategoricalValue(variate.getProperty(), variate.getScale(), variate.getMethod(), aValue.toString()));
+            }
+            else if (variate.getDataTypeId() == 1110) {
+                return (ValidValuesCacheUtil.checkNumericRange(variate.getProperty(), variate.getScale(), variate.getMethod(), aValue.toString()));
+            }
+        }
+        return true;
     }
 
     private boolean isNumeric(Object aValue) {

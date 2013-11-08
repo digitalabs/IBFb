@@ -16,10 +16,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import org.cimmyt.cril.ibwb.domain.util.ValidValuesCache;
 
 /**
  * @author jgcamarena
@@ -301,6 +305,7 @@ public class CommonServicesImpl implements CommonServices {
             map.put("ounitid", dataC.getDataCPK().getOunitid());
             map.put("variatid", dataC.getDataCPK().getVariatid());
             map.put("dvalue", dataC.getDvalue());
+            map.put("cvalueId", dataC.getCvalueId());
             this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC", map);
         }
     }
@@ -387,6 +392,7 @@ public class CommonServicesImpl implements CommonServices {
             map.put("ounitid", dataN.getDataNPK().getOunitid());
             map.put("variatid", dataN.getDataNPK().getVariatid());
             map.put("dvalue", dataN.getDvalue());
+            map.put("cvalueId", dataN.getCvalueId());
             this.utilityDAO.callStoredProcedureForUpdate("addOrUpdateDataC", map);
         }
     }
@@ -2147,7 +2153,7 @@ public class CommonServicesImpl implements CommonServices {
 
         List<Scales> list = this.utilityDAO.callStoredProcedureForList(scales, "getScales",
                 new String[]{"scaleid", "scname", "sctype"},
-                new String[]{"scaleid", "scname", "sctype"});
+                new String[]{"scaleid", "scname", "sctype", "dtypeId"});
 
         if (list != null)
             return list.get(0);
@@ -2161,7 +2167,7 @@ public class CommonServicesImpl implements CommonServices {
         //System.out.println("DB Name"+getCentralDbName());
         return this.utilityDAO.callStoredProcedureForList(new Scales(), "getScalesList",
                 new String[]{},
-                new String[]{"scaleid", "scname", "sctype"});
+                new String[]{"scaleid", "scname", "sctype", "dtypeId"});
     }
 
     @Override
@@ -2223,7 +2229,7 @@ public class CommonServicesImpl implements CommonServices {
         if (filter.getGlobalsearch() == null) {
             return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getScales",
                     new String[]{"scaleid", "scname", "sctype"},
-                    new String[]{"scaleid", "scname", "sctype"});
+                    new String[]{"scaleid", "scname", "sctype", "dtypeId"});
         } else {
             Scales copy = new Scales();
             if (ValidatingDataType.isNumeric(filter.getGlobalsearch())) {
@@ -2235,7 +2241,7 @@ public class CommonServicesImpl implements CommonServices {
             copy.setSctype(filter.getGlobalsearch());
             return this.utilityDAO.callStoredProcedureForListPaged(copy, paged, start, pageSize, "searchScales",
                     new String[]{"scaleid", "scname", "sctype"},
-                    new String[]{"scaleid", "scname", "sctype"});
+                    new String[]{"scaleid", "scname", "sctype", "dtypeId"});
         }
     }
 
@@ -2244,7 +2250,7 @@ public class CommonServicesImpl implements CommonServices {
         //no need for ordering since it reutrns only 1 object
         return this.utilityDAO.callStoredProcedureForObject(scales, "getScalesByScnameAndSctype",
                 new String[]{"scname", "sctype"},
-                new String[]{"scaleid", "scname", "sctype"});
+                new String[]{"scaleid", "scname", "sctype", "dtypeId"});
     }
 
     public Scales getScalesByScname(Scales scales) {
@@ -3269,7 +3275,7 @@ public class CommonServicesImpl implements CommonServices {
         Variate variate = new Variate();
         variate.setVariatid(idVariate);
         return this.utilityDAO.callStoredProcedureForObject(variate, "getVariateById", new String[]{"variatid"},
-                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid"});
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "dtypeId"});
     }
 
     @Override
@@ -3803,7 +3809,7 @@ public class CommonServicesImpl implements CommonServices {
         params.put("v_isLocal", isLocal()? 1 : 0);
         return this.utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromVeffects", params,
                 new String[]{"p_represno", "v_isLocal"},
-                new String[]{"variatid", "studyid", "vname", "measuredinid", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
+                new String[]{"variatid", "studyid", "vname", "measuredinid", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description", "dtypeId"});
 
     }
 
@@ -4679,7 +4685,7 @@ public class CommonServicesImpl implements CommonServices {
         input.put("p_studyid", studyId);
         input.put("v_isLocal", isLocal()? 1 : 0);
         return utilityDAO.callStoredProcedureForList(Variate.class, "getVarieteFromStudyId", input, new String[] {"p_studyid", "v_isLocal"}, 
-                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description"});
+                new String[]{"variatid", "studyid", "vname", "traitid", "scaleid", "tmethid", "dtype", "vtype", "tid", "description", "dtypeId"});
     }
     
     @Override
@@ -4735,11 +4741,12 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     @Override
-    public void addPhenotypicData(String experiments, String variates, String values) {
+    public void addPhenotypicData(String experiments, String variates, String values, String cvalues) {
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("p_experiments", experiments);
         params.put("p_variates", variates);
         params.put("p_values", values);
+        params.put("p_cvalueIds", cvalues);
         utilityDAO.callStoredProcedureForUpdate("addPhenotypicData", params);
     }
 
@@ -4772,5 +4779,86 @@ public class CommonServicesImpl implements CommonServices {
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public Set<Integer> getValidValueIds(Integer varId) {
+        
+        HashMap<String, Integer> input = new LinkedHashMap<String, Integer>();
+        input.put("varId", varId);
+        List<Integer> result = utilityDAO.callStoredProcedureForListOfJavaTypes("getValidValueIds", input, new String[] {"varId"});
+        Set<Integer> ids = new HashSet<Integer>();
+        for (Integer row : result) {
+            ids.add((Integer) row);
+        }
+        return ids;
+    }
+    
+    @Override
+    public Map<String, Integer> getNamesFromCvTerm(Integer variateId, Collection<Integer> ids) {
+        
+        //Set<String> names = new HashSet<String>();
+        Map<String, Integer> names = new HashMap<String, Integer>();
+        if (ids != null && ids.size() > 0) {
+            StringBuilder varIds = new StringBuilder();
+            for (Integer id : ids) {
+                if (varIds.length() > 0) {
+                    varIds.append(",");
+                }
+                varIds.append(id);
+            }
+
+            HashMap<String, String> input = new LinkedHashMap<String, String>();
+            input.put("varIds", varIds.toString());
+            List<Object[]> result = utilityDAO.callStoredProcedureForListOfJavaTypes("getNameOfCvTerms", input, new String[] {"varIds"});
+            for (Object[] row : result) {
+                //names.add((String) row);
+                names.put((String) row[1], (Integer) row[0]);
+                ValidValuesCache.putValueId(variateId, (String) row[1], (Integer) row[0]);
+            }
+        }
+        return names;
+    }
+    
+    @Override
+    public Double getNumericRange(Integer varId, Integer typeId) {
+        
+        HashMap<String, Integer> input = new LinkedHashMap<String, Integer>();
+        input.put("varId", varId);
+        input.put("typeId", typeId);
+        List result = utilityDAO.callStoredProcedureForListOfJavaTypes("getNumericRange", input, new String[] {"varId", "typeId"});
+        Double range = null;
+        if (result != null && result.size() > 0) {
+            range = Double.valueOf(result.get(0).toString());
+        }
+        return range;
+    }
+    
+    @Override
+    public Integer getObjectInRelationship(Integer varId, Integer typeId) {
+        
+        HashMap<String, Integer> input = new LinkedHashMap<String, Integer>();
+        input.put("varId", varId);
+        input.put("typeId", typeId);
+        List result = utilityDAO.callStoredProcedureForListOfJavaTypes("getObjectInRelationship", input, new String[] {"varId", "typeId"});
+        Integer object = null;
+        if (result != null && result.size() > 0) {
+            object = (Integer) result.get(0);
+        }
+        return object;
+    }
+    
+    @Override
+    public Integer getCvTermIdByName(String name, Integer cvId) {
+        
+        HashMap<String, Object> input = new LinkedHashMap<String, Object>();
+        input.put("name", name);
+        input.put("cvId", cvId);
+        List result = utilityDAO.callStoredProcedureForListOfJavaTypes("getCvTermIdByName", input, new String[] {"name", "cvId"});
+        Integer object = null;
+        if (result != null && result.size() > 0) {
+            object = (Integer) result.get(0);
+        }
+        return object;
     }
 }

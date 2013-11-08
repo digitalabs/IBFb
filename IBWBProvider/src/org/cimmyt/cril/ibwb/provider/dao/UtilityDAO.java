@@ -697,4 +697,45 @@ public class UtilityDAO extends HibernateDaoSupport {
                 return null;
             }
     }
+
+    public List callStoredProcedureForListOfJavaTypes(
+            final String procedureName,
+            final HashMap parameters,
+            final String[] inParams) {
+
+
+        final String sql = buildSQLQuery(procedureName, inParams);
+        System.out.println("sql = " + sql);
+        List result = getHibernateTemplate().executeFind(new HibernateCallback() {
+
+            @Override
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                SQLQuery query = session.
+                        createSQLQuery(sql);
+                if (parameters != null) {
+                    Iterator iterParam = parameters.keySet().iterator();
+                    while (iterParam.hasNext()) {
+                        String paramName = (String) iterParam.next();
+                        Object obj = parameters.get(paramName);
+                        System.out.println(paramName + " = " + obj);
+                        query.setParameter(paramName, obj);
+                    }
+                }
+
+                /*try {
+                    if (outParams != null && outParams.length > 0) {
+                        for (String paramName : outParams) {
+                            query.addScalar(paramName);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+                return query.list();
+            }
+        });
+        return result;
+    }
+
 }

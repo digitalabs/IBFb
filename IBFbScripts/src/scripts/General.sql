@@ -205,9 +205,10 @@ DROP PROCEDURE if exists addPhenotypicData$$
 CREATE PROCEDURE `addPhenotypicData`(
   IN p_experiments LONGTEXT, 
   IN p_variates LONGTEXT,
-  IN p_values LONGTEXT)
+  IN p_values LONGTEXT,
+  IN p_cvalueIds LONGTEXT)
 BEGIN
-  declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, phenotypeId, expPhenotypeId int default 1;
+  declare i, current_pos1, next_pos1, current_pos2, next_pos2, current_pos3, next_pos3, current_pos4, next_pos4, phenotypeId, expPhenotypeId int default 1;
   declare aexperiment, avariate, avalue, v_cvalue_id varchar(2000);
   declare done boolean default false;
   
@@ -232,6 +233,7 @@ BEGIN
     set next_pos1 = locate('$%^', p_experiments, current_pos1);
     set next_pos2 = locate('$%^', p_variates, current_pos2);
     set next_pos3 = locate('$%^', p_values, current_pos3);
+    set next_pos4 = locate('$%^', p_cvalueIds, current_pos3);
 
     -- uniquename is the only required field in stock. 
     -- So assumes there's always a delimited string of uniquenames.
@@ -239,18 +241,20 @@ BEGIN
         SET next_pos1 = length(p_experiments) + 1;
         SET next_pos2 = length(p_variates) + 1;
         SET next_pos3 = length(p_values) + 1;
+        SET next_pos4 = length(p_cvalueIds) + 1;
         SET done = true;
     end if;
 
     set aexperiment = (select substring(p_experiments,current_pos1, next_pos1-current_pos1));
     set avariate = (select substring(p_variates,current_pos2, next_pos2-current_pos2));
     set avalue = (select substring(p_values,current_pos3, next_pos3-current_pos3));
+    set v_cvalue_id = (select substring(p_cvalueIds,current_pos4, next_pos4-current_pos4));
 
-    select cvterm_id into v_cvalue_id 
-    from cvterm ct
-    inner join cvterm_relationship cr ON cr.object_id = ct.cvterm_id AND cr.type_id = 1190 AND cr.subject_id = avariate
-    inner join cvterm_relationship cs ON cs.subject_id = cr.subject_id AND cs.type_id = 1044 and cs.object_id = 1048
-    where ct.name =  avalue;
+    -- select cvterm_id into v_cvalue_id 
+    -- from cvterm ct
+    -- inner join cvterm_relationship cr ON cr.object_id = ct.cvterm_id AND cr.type_id = 1190 AND cr.subject_id = avariate
+    -- inner join cvterm_relationship cs ON cs.subject_id = cr.subject_id AND cs.type_id = 1044 and cs.object_id = 1048
+    -- where ct.name =  avalue;
 
     insert into temptbl(phenotype_id, uniquename, `name`, observable_id, attr_id, `value`, cvalue_id, assay_id, nd_experiment_phenotype_id, nd_experiment_id) 
     values(
@@ -275,6 +279,7 @@ BEGIN
     set current_pos1 = next_pos1+length('$%^');
     set current_pos2 = next_pos2+length('$%^');
     set current_pos3 = next_pos3+length('$%^');
+    set current_pos4 = next_pos4+length('$%^');
 
   end LOOP;
 
@@ -481,5 +486,69 @@ BEGIN
     AND methodrel.object_id = methodid
   LIMIT 1
   ;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `getValidValueIds`$$
+
+CREATE PROCEDURE `getValidValueIds`(IN varId INT)
+BEGIN
+
+  SELECT object_id
+  FROM 
+    cvterm_relationship
+  WHERE type_id = 1190
+    AND subject_id = varId
+  ;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `getNameOfCvTerms`$$
+
+CREATE PROCEDURE `getNameOfCvTerms`(IN varIds VARCHAR(2000))
+BEGIN
+
+  SET @sql := CONCAT("SELECT cvterm_id, name ",
+  " FROM cvterm ",
+  " WHERE cvterm_id IN (", varIds, ")");
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `getNumericRange`$$
+
+CREATE PROCEDURE `getNumericRange`(IN varId INT, IN typeId INT)
+BEGIN
+
+  SELECT value
+  FROM cvtermprop
+  WHERE cvterm_id = varId
+  AND type_id = typeId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `getObjectInRelationship`$$
+
+CREATE PROCEDURE `getObjectInRelationship`(IN varId INT, IN typeId INT)
+BEGIN
+
+  SELECT object_id
+  FROM cvterm_relationship
+  WHERE subject_id = varId
+  AND type_id = typeId;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `getCvTermIdByName`$$
+
+CREATE PROCEDURE `getCvTermIdByName`(IN p_name VARCHAR(255), IN cvId INT)
+BEGIN
+
+  SELECT cvterm_id
+  FROM cvterm
+  WHERE name = p_name
+  AND cv_id = cvId;
 
 END$$

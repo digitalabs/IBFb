@@ -42,6 +42,9 @@ public class Scales extends BaseFilter implements Serializable {
     @Basic(optional = false)
     @Column(name = "dtype")
     private String dtype;
+    
+    @Transient
+    private Integer dtypeId;
 
     public Scales() {
         setDefault();
@@ -115,6 +118,14 @@ public class Scales extends BaseFilter implements Serializable {
 
     public void setDtype(String dtype) {
         this.dtype = dtype;
+    }
+
+    public Integer getDtypeId() {
+        return dtypeId;
+    }
+
+    public void setDtypeId(Integer dtypeId) {
+        this.dtypeId = dtypeId;
     }
 
     @Override

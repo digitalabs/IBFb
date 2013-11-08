@@ -336,7 +336,7 @@ public class ConverterDTOtoDomain {
                 variate.setScale(null);
             }
         variate.setDataType(variateDto.getDtype());
-        
+        variate.setDataTypeId(variateDto.getDtypeId());
 
         return variate;
     }

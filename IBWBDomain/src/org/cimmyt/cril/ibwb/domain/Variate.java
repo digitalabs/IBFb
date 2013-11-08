@@ -65,6 +65,8 @@ public class Variate extends BaseFilter implements Serializable {
     private String description;
     @Transient
     private Integer measuredinid;
+    @Transient
+    private Integer dtypeId;
 
     public Variate() {
         setDefault();
@@ -172,6 +174,14 @@ public class Variate extends BaseFilter implements Serializable {
 
     public void setVtype(String vtype) {
         this.vtype = vtype;
+    }
+
+    public Integer getDtypeId() {
+        return dtypeId;
+    }
+
+    public void setDtypeId(Integer dtypeId) {
+        this.dtypeId = dtypeId;
     }
 
     @Override

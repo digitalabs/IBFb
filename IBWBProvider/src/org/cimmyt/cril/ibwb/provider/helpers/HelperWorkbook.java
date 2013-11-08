@@ -40,6 +40,7 @@ import org.cimmyt.cril.ibwb.domain.Traits;
 import org.cimmyt.cril.ibwb.domain.Variate;
 import org.cimmyt.cril.ibwb.domain.Veffect;
 import org.cimmyt.cril.ibwb.domain.VeffectPK;
+import org.cimmyt.cril.ibwb.domain.util.ValidValuesCache;
 import org.cimmyt.cril.ibwb.provider.KeyCacheUtil;
 import org.cimmyt.cril.ibwb.provider.PhenotypeKey;
 import org.cimmyt.cril.ibwb.provider.StandardVariableCache;
@@ -1480,6 +1481,7 @@ public class HelperWorkbook {
         StringBuilder experiments = null;
         StringBuilder variates = null;
         StringBuilder values = null;
+        StringBuilder cvalues = null;
         
         for (Measurement measurement : workbook.getMeasurements()) {
         	obsunit = new Obsunit();
@@ -1530,6 +1532,13 @@ public class HelperWorkbook {
                         }
                         values.append(value);
 
+                        if (cvalues != null){
+                            cvalues.append(HelperWorkbook.DELIMITER);
+                        } else {
+                            cvalues = new StringBuilder();
+                        }
+                        cvalues.append(ValidValuesCache.getValueId(savedVariate.getMeasuredinid(), value));
+                        
                         //store as created in phenotype cache
                         StandardVariableCache.putPhenotypeKey(
                                 new PhenotypeKey(savedVariate.getVariatid(), obsunit.getOunitid()));
@@ -1538,9 +1547,9 @@ public class HelperWorkbook {
                 
             }            
         }
-        if (experiments != null && variates != null && values != null && 
-                experiments.length() > 0 && variates.length() > 0 && values.length() > 0){
-            localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString());
+        if (experiments != null && variates != null && values != null && cvalues != null &&
+                experiments.length() > 0 && variates.length() > 0 && values.length() > 0 && cvalues.length() > 0){
+            localServices.addPhenotypicData(experiments.toString(), variates.toString(), values.toString(), cvalues.toString());
         }
         System.out.println("Elapsed Time for saving phenotype: " + ((double) ((System.nanoTime()-startTime)/1000000000)) + " sec");
         return obsunits;
@@ -1585,6 +1594,7 @@ public class HelperWorkbook {
                 }
                 if (data.getValue() != null) {
                     if (dataC.getDvalue() != null && !dataC.getDvalue().trim().isEmpty()) {
+                        dataC.setCvalueId(ValidValuesCache.getValueId(savedVariate.getMeasuredinid(), dataC.getDvalue()));
                         localServices.addDataC(dataC);
                     }
                 }
@@ -1624,6 +1634,7 @@ public class HelperWorkbook {
                 String valueToAdd = HelperFactor.castingToString(constant.getValue());
                 if (valueToAdd != null && !valueToAdd.trim().isEmpty()) {
                     dataC.setDvalue(valueToAdd);
+                    dataC.setCvalueId(ValidValuesCache.getValueId(variateTemp.getMeasuredinid(), valueToAdd));
                     localServices.addDataC(dataC);
                 }
             }

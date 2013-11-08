@@ -6,6 +6,8 @@ import ibfb.domain.core.Workbook;
 import ibfb.query.core.QueryCenter;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
@@ -2326,4 +2328,9 @@ public interface AppServices {
     public Integer getStoredInId(int traitid, int scaleid, int methodid);
     public List<Factor> getFactorsByStudyId(int studyId);
     public boolean checkStudyName(String studyName);
+
+    public Map<String, Integer> getValidValues(Integer varId);
+    public Double[] getNumericRange(Integer varId);
+    public Integer getObjectInRelationship(Integer varId, Integer typeId);
+    public Integer getVariableIdByPSM(String property, String scale, String method);
 }

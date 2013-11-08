@@ -29,7 +29,9 @@ public class DataN extends BaseFilter implements Serializable {
     private Double dvalue;
     @Transient    
     private Integer phenotypeId;
-
+    @Transient
+    private Integer cvalueId;
+    
     public DataN() {
     	setDefault();
     }
@@ -138,6 +140,12 @@ public class DataN extends BaseFilter implements Serializable {
         return this.phenotypeId;
     }
 
-    
+    public Integer getCvalueId() {
+        return cvalueId;
+    }
+
+    public void setCvalueId(Integer cvalueId) {
+        this.cvalueId = cvalueId;
+    }
 
 }

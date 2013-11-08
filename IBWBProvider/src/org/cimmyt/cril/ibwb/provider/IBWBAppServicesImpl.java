@@ -6,8 +6,10 @@ import ibfb.query.core.QueryCenter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
@@ -3685,4 +3687,57 @@ public class IBWBAppServicesImpl implements AppServices {
         return isStudyFound;
     }
 
+    @Override
+    public Map<String, Integer> getValidValues(Integer varId) {
+        Map<String, Integer> validValues = new HashMap<String, Integer>();
+        Set<Integer> ids = serviciosCentral.getValidValueIds(varId);
+        ids.addAll(serviciosLocal.getValidValueIds(varId));
+        validValues.putAll(serviciosCentral.getNamesFromCvTerm(varId, ids));
+        validValues.putAll(serviciosLocal.getNamesFromCvTerm(varId, ids));
+        return validValues;
+    }
+    
+    @Override
+    public Double[] getNumericRange(Integer varId) {
+        Double minRange = serviciosLocal.getNumericRange(varId, 1113);
+        if (varId > 0 && minRange == null) {
+            minRange = serviciosCentral.getNumericRange(varId, 1113);
+        }
+        Double maxRange = serviciosLocal.getNumericRange(varId, 1115);
+        if (varId > 0 && maxRange == null) {
+            maxRange = serviciosCentral.getNumericRange(varId, 1115);
+        }
+        return new Double[] {minRange, maxRange};
+    }
+    
+    @Override
+    public Integer getObjectInRelationship(Integer varId, Integer typeId) {
+        Integer objectId = serviciosLocal.getObjectInRelationship(varId, typeId);
+        if (objectId == null && varId > 0) {
+            objectId = serviciosCentral.getObjectInRelationship(varId, typeId);
+        }
+        return objectId;
+    }
+    
+    private Integer getOntologyIdByName(String name, Integer typeId) {
+        Integer id = serviciosLocal.getCvTermIdByName(name, typeId);
+        if (id == null) {
+            id = serviciosCentral.getCvTermIdByName(name, typeId);
+        }
+        return id;
+    }
+    
+    @Override
+    public Integer getVariableIdByPSM(String property, String scale, String method) {
+        Integer propertyId = getOntologyIdByName(property, 1010);
+        Integer scaleId = getOntologyIdByName(scale, 1030);
+        Integer methodId = getOntologyIdByName(method, 1020);
+        
+        Measuredin filter = new Measuredin(propertyId, scaleId, methodId);
+        Measuredin measuredin = this.serviciosLocal.getMeasuredinByTraitidScaleidTmethid(filter);
+        if (measuredin == null) {
+            measuredin = serviciosCentral.getMeasuredinByTraitidScaleidTmethid(filter);
+        }
+        return measuredin != null ? measuredin.getMeasuredinid() : null;
+    }
 }

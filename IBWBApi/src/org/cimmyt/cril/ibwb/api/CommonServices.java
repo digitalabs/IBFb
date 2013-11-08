@@ -2,7 +2,10 @@ package org.cimmyt.cril.ibwb.api;
 
 import ibfb.domain.core.Measurement;
 import java.sql.ResultSet;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 //import javax.faces.view.Location;
 import org.cimmyt.cril.ibwb.domain.*;
 import org.cimmyt.cril.ibwb.domain.constants.TypeDB;
@@ -3776,7 +3779,12 @@ public interface CommonServices {
     public void addExperimentStocks(int experimentStockid, int experimentId, String stockIds);
     public void addExperimentProjects(int expProjectId, int projectId, String experimentIds);
     public void addStocks(int stockId, String uniquenames, String dbxrefs, String names, String values);
-    public void addPhenotypicData(String experiments, String variates, String values);
+    public void addPhenotypicData(String experiments, String variates, String values, String cvalues);
     public void addTreatmentFactor(Factor factor);
     public boolean checkStudyName(String studyName);
+    public Set<Integer> getValidValueIds(Integer varId);
+    public Map<String, Integer> getNamesFromCvTerm(Integer variateId, Collection<Integer> ids);
+    public Double getNumericRange(Integer varId, Integer typeId);
+    public Integer getObjectInRelationship(Integer varId, Integer typeId);
+    public Integer getCvTermIdByName(String name, Integer cvId);
 }

@@ -13,6 +13,7 @@ begin
 	,GROUP_CONCAT(if(relationship = 1225, ontology_id, NULL)) AS 'vtype' 
 	,GROUP_CONCAT(if(relationship = 1105, IF(ontology_id IN (1120, 1125, 1128, 1130), 'C', 'N'), NULL)) AS 'dtype' 
 	,GROUP_CONCAT(if(relationship = 1044, ontology_id, NULL)) AS 'tid' 
+        ,GROUP_CONCAT(if(relationship = 1105, ontology_id, NULL)) AS 'dtypeId'
 	FROM 
 	(SELECT pp.projectprop_id as variatid 
 	,label.value as vname 
@@ -120,6 +121,7 @@ BEGIN
         , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
         , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
         , vdesc.value AS description
+        , GROUP_CONCAT(IF(cvr.type_id = 1105, cvr.object_id, NULL)) AS dtypeId
         FROM
         projectprop pp
         INNER JOIN project_relationship pr ON pr.type_id = 1150 AND pr.subject_project_id = pp.project_id
@@ -165,6 +167,7 @@ BEGIN
         , GROUP_CONCAT(IF(cvr.type_id = 1225, obj.name, NULL)) AS vtype
         , GROUP_CONCAT(IF(cvr.type_id = 1044, cvr.object_id, NULL)) AS tid
         , vdesc.value AS description
+        , GROUP_CONCAT(IF(cvr.type_id = 1105, cvr.object_id, NULL)) AS dtypeId
       FROM
         projectprop pp
         INNER JOIN cvterm_relationship cvr ON cvr.subject_id = pp.value

@@ -37,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.*;
 import net.java.balloontip.BalloonTip;
@@ -55,6 +57,7 @@ import org.cimmyt.cril.ibwb.domain.GermplasmSearch;
 import org.cimmyt.cril.ibwb.domain.Names;
 import org.cimmyt.cril.ibwb.domain.Traits;
 import org.cimmyt.cril.ibwb.domain.inventory.InventoryData;
+import org.cimmyt.cril.ibwb.commongui.util.ValidValuesCacheUtil;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -183,6 +186,16 @@ public final class NurseryEditorTopComponent extends TopComponent {
         studyInfo = new Study();
         createBallonTips();
         posiciones = new ArrayList<Integer>();
+        
+/*        this.jTableObservations.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                ValidValuesCache.isValidValue(null, trialFile, AppServicesProxy.getDefault().appServices());
+            }
+            
+        });
+        */
     }
     private SelectCommand unselectedCommand = new SelectCommand() {
 
@@ -436,6 +449,7 @@ public final class NurseryEditorTopComponent extends TopComponent {
                     if (trait.getMeasuredin().getScales() != null) {
                         variate.setScale(trait.getMeasuredin().getScales().getScname());
                         variate.setDataType(trait.getMeasuredin().getScales().getDtype());
+                        variate.setDataTypeId(trait.getMeasuredin().getScales().getDtypeId());
                     }
                     if (trait.getMeasuredin().getTmsMethod() != null) {
                         variate.setMethod(trait.getMeasuredin().getTmsMethod().getTmname());

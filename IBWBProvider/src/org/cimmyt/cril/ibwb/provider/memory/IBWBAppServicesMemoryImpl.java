@@ -11,6 +11,8 @@ import ibfb.query.core.QueryCenter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.cimmyt.cril.ibwb.api.AppServices;
 import org.cimmyt.cril.ibwb.api.CommonServices;
 import org.cimmyt.cril.ibwb.domain.*;
@@ -1611,5 +1613,25 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     @Override
     public boolean checkStudyName(String studyName) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public Map<String, Integer> getValidValues(Integer varId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public Double[] getNumericRange(Integer varId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public Integer getObjectInRelationship(Integer varId, Integer typeId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Integer getVariableIdByPSM(String property, String scale, String method) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

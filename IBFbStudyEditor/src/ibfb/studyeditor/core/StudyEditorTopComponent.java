@@ -3913,6 +3913,7 @@ public final class StudyEditorTopComponent extends TopComponent {
                     if (trait.getMeasuredin().getScales() != null) {
                         variate.setScale(trait.getMeasuredin().getScales().getScname());
                         variate.setDataType(trait.getMeasuredin().getScales().getDtype());
+                        variate.setDataTypeId(trait.getMeasuredin().getScales().getDtypeId());
                     }
 
                     if (trait.getMeasuredin().getTmsMethod() != null) {

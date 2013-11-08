@@ -31,6 +31,8 @@ public class DataC extends BaseFilter implements Serializable {
     private String dvalue;
     @Transient    
     private Integer phenotypeId;
+    @Transient
+    private Integer cvalueId;
 
     public DataC() {
     	setDefault();
@@ -143,6 +145,14 @@ public class DataC extends BaseFilter implements Serializable {
     
     public Integer getPhenotypeId(){
         return this.phenotypeId;
+    }
+
+    public Integer getCvalueId() {
+        return cvalueId;
+    }
+
+    public void setCvalueId(Integer cvalueId) {
+        this.cvalueId = cvalueId;
     }
     
 
