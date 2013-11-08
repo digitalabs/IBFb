@@ -233,7 +233,7 @@ BEGIN
     set next_pos1 = locate('$%^', p_experiments, current_pos1);
     set next_pos2 = locate('$%^', p_variates, current_pos2);
     set next_pos3 = locate('$%^', p_values, current_pos3);
-    set next_pos4 = locate('$%^', p_cvalueIds, current_pos3);
+    set next_pos4 = locate('$%^', p_cvalueIds, current_pos4);
 
     -- uniquename is the only required field in stock. 
     -- So assumes there's always a delimited string of uniquenames.
