@@ -175,9 +175,8 @@ public class ObservationsTableModel extends AbstractTableModel {
             // DialogUtil.display(ObservationsTableModel.class, "observationstable.numericvaluerequired");
         }
 */
-            if (aValue == null || ((String) aValue).isEmpty()) {
-                //do nothing
-            } else if (((String) aValue).trim().isEmpty()) { //spaces
+            if (aValue == null || ((String) aValue).isEmpty()
+                    || ((String) aValue).trim().isEmpty()) { //spaces
                 columnList.set(columnIndex, "");
             } else {
                 if (!isValidValue(aValue, columnDataType, variate)) {

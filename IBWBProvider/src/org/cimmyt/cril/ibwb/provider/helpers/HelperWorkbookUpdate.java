@@ -499,7 +499,7 @@ public class HelperWorkbookUpdate {
                 DataC dataToSave = (DataC) data.getValue();
                 dataC.setDvalue(dataToSave.getDvalue());
                 dataC.setCvalueId(ValidValuesCache.getValueId(savedVariate.getMeasuredinid(), dataToSave.getDvalue()));
-                if (dataC.getDvalue() != null && !dataC.getDvalue().trim().isEmpty()) {
+                if (dataC.getDvalue() != null/* && !dataC.getDvalue().trim().isEmpty()*/) {
                     localServices.addOrUpdateDataC(dataC);
                 }
             }

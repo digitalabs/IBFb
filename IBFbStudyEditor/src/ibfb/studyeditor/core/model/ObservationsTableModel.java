@@ -251,9 +251,9 @@ public class ObservationsTableModel extends AbstractTableModel {
         } else {
             String columnDataType = ((Variate) columnObject).getDataType();
             Variate variate = (Variate) columnObject;
-            if (aValue == null || ((String) aValue).isEmpty()) {
-                //do nothing
-            } else if (((String) aValue).trim().isEmpty()) { //spaces
+            if (aValue == null || ((String) aValue).isEmpty()
+                    || ((String) aValue).trim().isEmpty()) { //spaces
+                
                 columnList.set(columnIndex, "");
             } else {
                 if (!isValidValue(aValue, columnDataType)) {
