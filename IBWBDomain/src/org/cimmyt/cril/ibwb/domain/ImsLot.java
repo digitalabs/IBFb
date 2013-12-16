@@ -19,9 +19,9 @@ import org.cimmyt.cril.ibwb.domain.filter.BaseFilter;
 @Entity
 @Table(name = "ims_lot")
 public class ImsLot extends BaseFilter implements Serializable {
-    public static final String ETYPE_GERMPLASM = "GERMPLASM";
-    public static final int LOT_STATUS_ACTIVE = 1;
-    public static final int LOT_STATUS_CLOSED = 0;
+    public static final String ETYPE_GERMPLASM = "GERMPLSM";
+    public static final int LOT_STATUS_ACTIVE = 0;
+    public static final int LOT_STATUS_CLOSED = 1;
    
     public static final int DEFAULT_SOURCE = 0;
     
