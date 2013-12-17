@@ -987,7 +987,7 @@ public class IBWBAppServicesImpl implements AppServices {
 //        measuredins.addAll(serviciosLocal.getListMeasuredin(filter, start, pageSize, paged));
 //        return measuredins;
          List<Measuredin> measuredins = serviciosLocal.getListMeasuredin(filter, start, pageSize, paged);
-         if (measuredins == null){
+         if (measuredins == null || measuredins.size() == 0){
              measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged);
          }
          return measuredins;
