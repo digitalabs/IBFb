@@ -1030,7 +1030,7 @@ public final class AdvanceLineTopComponent extends TopComponent {
      * @param listdata
      * @param gidIndex
      */
-    private void assignGpid1AndGpid2(Listdata listdata, int gidIndex) {
+    private void assignGpid1AndGpid2Old(Listdata listdata, int gidIndex) {
         Integer sourceGid = sourceGidList.get(gidIndex);
         boolean searchGermplasm = false;
 
@@ -1078,6 +1078,36 @@ public final class AdvanceLineTopComponent extends TopComponent {
         }
     }
 
+    private void assignGpid1AndGpid2(Listdata listdata, int gidIndex) {
+        Integer sourceGid = sourceGidList.get(gidIndex);
+        boolean searchGermplasm = false;
+
+        if (sourceGid.intValue() != currentSourceGid) {
+            searchGermplasm = true;
+        }
+
+        if (searchGermplasm) {
+            sourceGermplsm = AppServicesProxy.getDefault().appServices().getGermplsm(sourceGid);
+            currentSourceGid = sourceGid;
+        }
+
+        if (sourceGermplsm != null) {
+            Methods method = methodsMap.get(sourceGermplsm.getMethn());
+            String methodType = method.getMtype();
+            
+            if (methodType != null && "GEN".equalsIgnoreCase(methodType) 
+                    || listdata.getGnpgs() < 0 && sourceGermplsm.getGpid1() == 0 && sourceGermplsm.getGpid2() == 0) {
+                
+                listdata.setGpid1(sourceGid);
+            }
+            else {
+                listdata.setGpid1(sourceGermplsm.getGpid1());
+            }
+
+            listdata.setGpid2(sourceGid);
+        }
+    }
+    
     public List<Integer> getSourceGidList() {
         return sourceGidList;
     }

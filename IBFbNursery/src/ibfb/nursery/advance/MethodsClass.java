@@ -18,7 +18,7 @@ public class MethodsClass {
         this.convention = conv;
     }
 
-    public ArrayList<String> giveMeDataDerivative(String seed, int samples) {
+    public ArrayList<String> giveMeDataDerivativeOld(String seed, int samples) {
         ArrayList<String> data = new ArrayList<String>();
         String newSeed = "";
 
@@ -74,6 +74,82 @@ public class MethodsClass {
                     data.add(newSeed);
                 }
 
+
+                break;
+
+        }
+
+
+        return data;
+    }
+
+    public ArrayList<String> giveMeDataDerivative(String seed, int samples, boolean isBulk) {
+        ArrayList<String> data = new ArrayList<String>();
+        String newSeed = "";
+
+        switch (convention) {
+            case CIMMYT_WHEAT:
+                
+                if (samples == 0) {
+                    newSeed = seed + "-" + samples + suffix;
+                    data.add(newSeed);
+                }
+
+                if (samples < 0) {
+                    
+                    
+                    if(seed.endsWith("T")){
+                        
+                   // newSeed =  "0" + Math.abs(samples)+"TOP" + suffix;
+                    newSeed = seed + "-0" + Math.abs(samples)+"TOP" + suffix;
+
+                    data.add(newSeed);   
+                    }else{
+                    
+                    newSeed = seed + "-0" + Math.abs(samples) + suffix;
+                    data.add(newSeed);
+                    }
+                    
+                    
+                }
+
+
+                if (samples > 0) {
+                    if (isBulk) {
+                        newSeed = seed + "-" + samples + suffix;
+                        data.add(newSeed);
+                    }
+                    else {
+                        for (int i = 0; i < samples; i++) {
+                            newSeed = seed + "-" + (i + 1) + suffix;
+                            data.add(newSeed);
+                        }
+                    }
+                }
+
+                break;
+
+            case CIMMYT_MAIZE:
+
+                newSeed = seed + "-" + samples;
+                data.add(newSeed);
+
+
+                break;
+
+
+            case OTHER_CROPS:
+
+                if (isBulk) {
+                    newSeed = seed + "-" + samples + suffix;
+                    data.add(newSeed);
+                }
+                else {
+                    for (int i = 0; i < samples; i++) {
+                        newSeed = seed + "-" + (i + 1)+ suffix;
+                        data.add(newSeed);
+                    }
+                }
 
                 break;
 
