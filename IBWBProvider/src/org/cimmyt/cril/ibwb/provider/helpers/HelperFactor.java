@@ -171,11 +171,11 @@ public class HelperFactor {
         List<Traits> traitsList = appServices.getListTraitsOnly(traitsFilter, 0, 0, false);
         if (!traitsList.isEmpty()) {
             traits = traitsList.get(0);
-            traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
+            traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid(), false));
         } else {
             traits = ConverterDomainToDTO.getTraits(condition.getProperty());
             traits.setTraittype(String.valueOf(traitsType));
-            traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
+            traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid(), false));
             serviceLocal.addTraits(traits);
         }
 
@@ -188,7 +188,7 @@ public class HelperFactor {
         measuredinFilter.setTmethid(tmsMethod.getTmethid());
         measuredinFilter.setStoredinid(traits.getTid());
         measuredinFilter.setName(condition.getConditionName());
-        List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
+        List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false, false);
         if (!measuredinList.isEmpty()) {
             measuredin = measuredinList.get(0);
         } else {

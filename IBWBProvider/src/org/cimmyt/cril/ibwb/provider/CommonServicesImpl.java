@@ -1592,6 +1592,20 @@ public class CommonServicesImpl implements CommonServices {
     }
 
     @Override
+    public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged, boolean isVariate) {
+        if (isVariate) {
+            return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredInForVariates",
+                    new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
+                    new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","description"});
+        }
+        else {
+            return this.utilityDAO.callStoredProcedureForListPaged(filter, paged, start, pageSize, "getListMeasuredInForFactors",
+                    new String[]{"measuredinid", "traitid", "tmethid", "scaleid"},
+                    new String[]{"measuredinid", "traitid", "tmethid", "scaleid", "storedinid", "hasType","description"});
+        }
+    }
+
+    @Override
     public List<Measuredin> getMeasuredInListByTrait(Integer traitId) {
         // use filter to set getting by trait id
         Measuredin measuredIn = new Measuredin();
@@ -4657,14 +4671,8 @@ public class CommonServicesImpl implements CommonServices {
     }
  
     @Override
-    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
-        HashMap<String, Integer> input = new HashMap<String, Integer>();
-        input.put("traitid", traitid);
-        input.put("scaleid", scaleid);
-        input.put("methodid", methodid);
-        Integer id = utilityDAO.getStoredInId(traitid, scaleid, methodid);
-
-        return id;
+    public Integer getStoredInId(int traitid, int scaleid, int methodid, boolean isVariate) {
+        return utilityDAO.getStoredInId(traitid, scaleid, methodid, isVariate);
     }
     
     @Override

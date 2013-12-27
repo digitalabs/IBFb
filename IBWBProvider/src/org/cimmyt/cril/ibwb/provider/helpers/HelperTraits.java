@@ -20,7 +20,7 @@ public class HelperTraits {
         Measuredin measuredinT = new Measuredin(true);
         for (Traits traits : traitsList) {
             measuredinT.setTraitid(traits.getTid());
-            List<Measuredin> listMeasuredinResult = servicios.getListMeasuredin(measuredinT, 0, 0, false);
+            List<Measuredin> listMeasuredinResult = servicios.getListMeasuredin(measuredinT, 0, 0, false, false);
             if(! listMeasuredinResult.isEmpty() && listMeasuredinResult.size() == 1){
                 traits.setMeasuredin(HelperMeasuredin.getMeasuredinFull(listMeasuredinResult.get(0), servicios) );
             }else if(! listMeasuredinResult.isEmpty() && listMeasuredinResult.size() > 1){

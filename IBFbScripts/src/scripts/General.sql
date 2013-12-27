@@ -471,20 +471,36 @@ $$
 
 DROP PROCEDURE IF EXISTS `getStoredInId`$$
 
-CREATE PROCEDURE `getStoredInId`(IN traitid INT, IN scaleid INT, IN methodid INT)
+CREATE PROCEDURE `getStoredInId`(IN traitid INT, IN scaleid INT, IN methodid INT, IN isVariate INT)
 BEGIN
 
-  SELECT stinrel.object_id AS storedinid
-  FROM 
-    cvterm_relationship stinrel 
-    INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = stinrel.subject_id AND scalerel.type_id = 1220 
-    INNER JOIN cvterm_relationship methodrel ON methodrel.subject_id = stinrel.subject_id AND methodrel.type_id = 1210 
-    INNER JOIN cvterm_relationship traitrel ON traitrel.subject_id = stinrel.subject_id AND traitrel.type_id = 1200 
-  WHERE stinrel.type_id = 1044
-    AND traitrel.object_id = traitid
-    AND scalerel.object_id = scaleid
-    AND methodrel.object_id = methodid
-  LIMIT 1
+  IF (isVariate = 1) THEN
+    SELECT stinrel.object_id AS storedinid
+    FROM 
+      cvterm_relationship stinrel 
+      INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = stinrel.subject_id AND scalerel.type_id = 1220 
+      INNER JOIN cvterm_relationship methodrel ON methodrel.subject_id = stinrel.subject_id AND methodrel.type_id = 1210 
+      INNER JOIN cvterm_relationship traitrel ON traitrel.subject_id = stinrel.subject_id AND traitrel.type_id = 1200 
+    WHERE stinrel.type_id = 1044
+      AND traitrel.object_id = traitid
+      AND scalerel.object_id = scaleid
+      AND methodrel.object_id = methodid
+      AND stinrel.object_id IN (1043, 1048)
+    LIMIT 1;
+  ELSE
+    SELECT stinrel.object_id AS storedinid
+    FROM 
+      cvterm_relationship stinrel 
+      INNER JOIN cvterm_relationship scalerel ON scalerel.subject_id = stinrel.subject_id AND scalerel.type_id = 1220 
+      INNER JOIN cvterm_relationship methodrel ON methodrel.subject_id = stinrel.subject_id AND methodrel.type_id = 1210 
+      INNER JOIN cvterm_relationship traitrel ON traitrel.subject_id = stinrel.subject_id AND traitrel.type_id = 1200 
+    WHERE stinrel.type_id = 1044
+      AND traitrel.object_id = traitid
+      AND scalerel.object_id = scaleid
+      AND methodrel.object_id = methodid
+      AND stinrel.object_id NOT IN (1043, 1048)
+    LIMIT 1;
+  END IF
   ;
 
 END$$

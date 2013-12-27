@@ -51,6 +51,112 @@ begin
 
 end$$
 
+drop procedure if exists `getListMeasuredInForFactors`$$
+
+CREATE PROCEDURE `getListMeasuredInForFactors` (
+IN v_measuredinid int,
+IN v_traitid int,
+IN v_tmethid int,
+IN v_scaleid int)
+begin
+
+    -- DOES NOT CHECK v_is_local, no info needed from central db ontology
+    SET @sql := CONCAT("SELECT crp.subject_id AS measuredinid, ",
+                                            "crp.object_id AS traitid, ",
+                                            "crs.object_id AS scaleid, ",
+                                            "crm.object_id AS tmethid, ",
+                                            "crt.object_id AS storedinid, ",
+                                            "if(crt.object_id = 1120, 'C', 'N') AS hasType, ",
+                                            "cvt.definition as description "
+                                            "FROM cvterm_relationship crp ",
+                                            "INNER JOIN cvterm_relationship crm ON crm.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crs ON crs.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crt ON crt.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crh ON crh.subject_id = crp.subject_id ",
+                                            "LEFT JOIN cvterm cvt ON cvt.cvterm_id = crp.subject_id ", 
+                                            "WHERE crp.type_id = 1200 ",
+                                            "AND crm.type_id = 1210 ",
+                                            "AND crs.type_id = 1220 ",
+                                            "AND crt.type_id = 1044 ",
+                                            "AND crh.type_id = 1105 ",
+                                            " AND crt.object_id NOT IN (1043, 1048) ");
+
+    IF (v_measuredinid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crp.subject_id = ",v_measuredinid);
+    END IF;
+
+    IF (v_traitid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crp.object_id = ",v_traitid);
+    END IF;
+
+    IF (v_tmethid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crm.object_id = ",v_tmethid);
+    END IF;
+
+    IF (v_scaleid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
+    END IF;
+
+    SET @sql = CONCAT(@sql, " ORDER BY measuredinid; ");
+	
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+
+end$$
+
+drop procedure if exists `getListMeasuredInForVariates`$$
+
+CREATE PROCEDURE `getListMeasuredInForVariates` (
+IN v_measuredinid int,
+IN v_traitid int,
+IN v_tmethid int,
+IN v_scaleid int)
+begin
+
+    -- DOES NOT CHECK v_is_local, no info needed from central db ontology
+    SET @sql := CONCAT("SELECT crp.subject_id AS measuredinid, ",
+                                            "crp.object_id AS traitid, ",
+                                            "crs.object_id AS scaleid, ",
+                                            "crm.object_id AS tmethid, ",
+                                            "crt.object_id AS storedinid, ",
+                                            "if(crt.object_id = 1120, 'C', 'N') AS hasType, ",
+                                            "cvt.definition as description "
+                                            "FROM cvterm_relationship crp ",
+                                            "INNER JOIN cvterm_relationship crm ON crm.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crs ON crs.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crt ON crt.subject_id = crp.subject_id ",
+                                            "INNER JOIN cvterm_relationship crh ON crh.subject_id = crp.subject_id ",
+                                            "LEFT JOIN cvterm cvt ON cvt.cvterm_id = crp.subject_id ", 
+                                            "WHERE crp.type_id = 1200 ",
+                                            "AND crm.type_id = 1210 ",
+                                            "AND crs.type_id = 1220 ",
+                                            "AND crt.type_id = 1044 ",
+                                            "AND crh.type_id = 1105 ",
+                                            " AND crt.object_id IN (1043, 1048) ");
+
+    IF (v_measuredinid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crp.subject_id = ",v_measuredinid);
+    END IF;
+
+    IF (v_traitid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crp.object_id = ",v_traitid);
+    END IF;
+
+    IF (v_tmethid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crm.object_id = ",v_tmethid);
+    END IF;
+
+    IF (v_scaleid IS NOT NULL) THEN
+            SET @sql = CONCAT(@sql," AND crs.object_id = ",v_scaleid);
+    END IF;
+
+    SET @sql = CONCAT(@sql, " ORDER BY measuredinid; ");
+	
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+
+end$$
+
 drop procedure if exists `getMeasuredinByTraitidScaleidTmethid`$$
 
 CREATE PROCEDURE `getMeasuredinByTraitidScaleidTmethid`(IN traitId int, IN scaleId int, IN tmethId int)

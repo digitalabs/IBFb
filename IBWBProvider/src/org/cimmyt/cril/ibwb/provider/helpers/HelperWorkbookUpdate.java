@@ -559,11 +559,11 @@ public class HelperWorkbookUpdate {
                 List<Traits> traitsList = appServices.getListTraitsOnly(traitsFilter, 0, 0, false);
                 if (!traitsList.isEmpty()) {
                     traits = traitsList.get(0);
-                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
+                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid(), true));
                 } else {
                     traits = ConverterDomainToDTO.getTraits(variateDomain.getProperty());
                     traits.setTraittype(String.valueOf(traitsType));
-                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid()));
+                    traits.setTid(appServices.getStoredInId(traits.getTraitid(), scales.getScaleid(), tmsMethod.getTmethid(), true));
                     localServices.addTraits(traits);
                 }
                 //TODO agregar algoritmo para determinacion del standard scale
@@ -576,7 +576,7 @@ public class HelperWorkbookUpdate {
                 measuredinFilter.setName(variateDomain.getVariateName());
                 measuredinFilter.setTmethid(tmsMethod.getTmethid());
                 
-                List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false);
+                List<Measuredin> measuredinList = appServices.getListMeasuredin(measuredinFilter, 0, 0, false, true);
                 if (!measuredinList.isEmpty()) {
                     measuredin = measuredinList.get(0);
                 } else {

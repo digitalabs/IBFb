@@ -1705,6 +1705,7 @@ public interface CommonServices {
      * @return List
      */
     public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged);
+    public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged, boolean isVariate);
 
     /**
      * Gets a list of measured in list by trait id
@@ -3769,7 +3770,7 @@ public interface CommonServices {
     
     public void copyCvTermFromCentral(int cvTermId);
     
-    public Integer getStoredInId(int traitid, int scaleid, int methodid);
+    public Integer getStoredInId(int traitid, int scaleid, int methodid, boolean isVariate);
     public List<Factor> getFactorsByStudyId(int studyId);
     public List<Variate> getStudyConstants(int studyId);
     

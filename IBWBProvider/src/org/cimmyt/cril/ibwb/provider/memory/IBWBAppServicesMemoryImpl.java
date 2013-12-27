@@ -763,6 +763,10 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    @Override
+    public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged, boolean isVariate) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public List<Scales> getScalesList() {
@@ -1586,7 +1590,7 @@ public class IBWBAppServicesMemoryImpl implements AppServices {
     }
 
     @Override
-    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
+    public Integer getStoredInId(int traitid, int scaleid, int methodid, boolean isVariate) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
