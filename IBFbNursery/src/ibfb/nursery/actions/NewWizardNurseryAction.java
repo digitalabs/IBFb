@@ -32,14 +32,14 @@ import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@ActionID(category = "BreedingManager",
+/*@ActionID(category = "BreedingManager",
 id = "ibfb.nursery.actions.NewWizardNurseryAction")
 @ActionRegistration(iconBase = "ibfb/nursery/images/newNursery.png",
 displayName = "#CTL_NewWizardNurseryAction")
 @ActionReferences({
     @ActionReference(path = "Menu/BreedingManager", position = 400),
     @ActionReference(path = "Toolbars/BreedingManager", position = 400)
-})
+})*/
 public final class NewWizardNurseryAction extends SystemAction {//implements ActionListener {
 
     private ResourceBundle bundle = NbBundle.getBundle(NewWizardNurseryAction.class);
