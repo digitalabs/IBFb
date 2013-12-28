@@ -791,6 +791,7 @@ public interface AppServices {
      * @return List
      */
     public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged);
+    public List<Measuredin> getListMeasuredin(Measuredin measuredinFilter, int start, int pageSize, boolean paged, boolean isVariate);
 
     /**
      * Get a measuredin
@@ -2325,7 +2326,7 @@ public interface AppServices {
     public List <Udflds> getUdfldsList(final String tableName, final String fieldName);   
     
     
-    public Integer getStoredInId(int traitid, int scaleid, int methodid);
+    public Integer getStoredInId(int traitid, int scaleid, int methodid, boolean isVariate);
     public List<Factor> getFactorsByStudyId(int studyId);
     public boolean checkStudyName(String studyName);
 

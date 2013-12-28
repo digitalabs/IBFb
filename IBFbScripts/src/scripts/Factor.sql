@@ -401,6 +401,8 @@ DECLARE v_type_id int;
     FROM cvterm_relationship cvttrait
     INNER JOIN cvterm_relationship cvtscale ON cvtscale.subject_id = cvttrait.subject_id 
     INNER JOIN cvterm_relationship cvtmethod ON cvtmethod.subject_id = cvttrait.subject_id  
+    INNER JOIN cvterm_relationship storedin ON storedin.subject_id = cvttrait.subject_id
+        AND storedin.type_id = 1044 AND storedin.object_id NOT IN (1043, 1048)
 	WHERE cvttrait.object_id = v_traitid AND cvttrait.type_id = 1200
 	AND cvtscale.object_id = v_scaleid AND cvtscale.type_id = 1220 
 	AND cvtmethod.object_id = v_tmethid AND cvtmethod.type_id = 1210

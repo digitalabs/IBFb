@@ -672,9 +672,9 @@ public class UtilityDAO extends HibernateDaoSupport {
         return pattern.matcher(value).matches();
     }
 
-    public Integer getStoredInId(final int traitid, final int scaleid, final int methodid){
+    public Integer getStoredInId(final int traitid, final int scaleid, final int methodid, final boolean isVariate){
         //expects only 1, if returned more than 1, that's a data issue, and just get the first one.
-        final String sql = buildSQLQuery("getStoredInId", "traitid", "scaleid", "methodid");
+        final String sql = buildSQLQuery("getStoredInId", "traitid", "scaleid", "methodid", "isVariate");
                System.out.println("sql = " + sql);
                Object result = getHibernateTemplate().execute(new HibernateCallback() {
 
@@ -686,6 +686,7 @@ public class UtilityDAO extends HibernateDaoSupport {
                        query.setParameter("traitid", traitid);
                        query.setParameter("scaleid", scaleid);
                        query.setParameter("methodid", methodid);
+                       query.setParameter("isVariate", isVariate ? 1 : 0);
                        query.addScalar("storedinid", Hibernate.INTEGER);
                        return query.uniqueResult();
                    }

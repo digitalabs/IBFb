@@ -32,14 +32,14 @@ import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@ActionID(category = "IBFieldbookTools",
+/*@ActionID(category = "IBFieldbookTools",
 id = "ibfb.studyexplorer.actions.NewTrialAction")
 @ActionRegistration(iconBase = "ibfb/studyexplorer/images/newTrial16.png",
 displayName = "#CTL_NewTrialAction")
 @ActionReferences({
     @ActionReference(path = "Menu/IBFieldbookTools", position = 1250),
     @ActionReference(path = "Toolbars/IBFieldbookTools", position = -300)
-})
+})*/
 public final class NewTrialAction extends SystemAction {//implements ActionListener {
 
     public static Study studyOBJ = new Study();

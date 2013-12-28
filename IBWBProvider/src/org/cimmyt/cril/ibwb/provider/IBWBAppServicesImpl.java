@@ -1009,6 +1009,21 @@ public class IBWBAppServicesImpl implements AppServices {
 
         return measuredins;
     }
+    @Override
+    public List<Measuredin> getListMeasuredin(Measuredin filter, int start, int pageSize, boolean paged, boolean isVariate) {
+        List<Measuredin> measuredins = serviciosCentral.getListMeasuredin(filter, start, pageSize, paged, isVariate);
+        //copy all central to local if not found in local
+        if (measuredins != null && measuredins.size() > 0) {
+            for (Measuredin measuredin : measuredins) {
+                serviciosLocal.copyCvTermFromCentral(measuredin.getMeasuredinid());
+            }
+        }
+        
+        //query local, all central stuff should already be in local
+        measuredins = serviciosLocal.getListMeasuredin(filter, start, pageSize, paged, isVariate);
+
+        return measuredins;
+    }
 
     /**
      * Gets a list of measured in list by trait id
@@ -3659,10 +3674,10 @@ public class IBWBAppServicesImpl implements AppServices {
     
     
     @Override
-    public Integer getStoredInId(int traitid, int scaleid, int methodid) {
-        Integer id = serviciosCentral.getStoredInId(traitid, scaleid, methodid);
+    public Integer getStoredInId(int traitid, int scaleid, int methodid, boolean isVariate) {
+        Integer id = serviciosCentral.getStoredInId(traitid, scaleid, methodid, isVariate);
         if (id == null) {
-            id = serviciosLocal.getStoredInId(traitid, scaleid, methodid);
+            id = serviciosLocal.getStoredInId(traitid, scaleid, methodid, isVariate);
         }
         
         return id;

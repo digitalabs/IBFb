@@ -1935,6 +1935,7 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
 
                 int methodId = NbPreferences.forModule(AdvanceWizardPanel1.class).getInt("MethodId", 0);
+                boolean isBulk = (methodId == 206 || methodId == 207 || methodId == 507);
 
 
                 int locationId = NbPreferences.forModule(AdvanceWizardPanel1.class).getInt("LocationId", 0);
@@ -2081,9 +2082,9 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                                 Integer gidToSearch = ConvertUtils.getValueAsInteger(germplasmData.get(i).get(colGID));
                                 Names cimmytName = AppServicesProxy.getDefault().appServices().getCimmytWheatName(gidToSearch);
                                 if (cimmytName == null) {
-                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples);
+                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
                                 } else {
-                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples);
+                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
                                 }
 
                                 break;
@@ -2114,7 +2115,7 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
                             case 2: //OTHER CROPS
 
-                                data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples);
+                                data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
                                 break;
 
                         }
@@ -2146,9 +2147,9 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                                 Integer gidToSearch = ConvertUtils.getValueAsInteger(germplasmData.get(i).get(colGID).toString());
                                 Names cimmytName = AppServicesProxy.getDefault().appServices().getCimmytWheatName(gidToSearch);
                                 if (cimmytName != null) {
-                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples);
+                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
                                 } else {
-                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples);
+                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
                                 }
 
 
@@ -2192,7 +2193,7 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                                     continue;
                                 }
 
-                                data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples);
+                                data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
 
                                 break;
                         }

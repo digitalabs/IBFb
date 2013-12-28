@@ -19,13 +19,13 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 
-@ActionID(category = "BreedingManager",
+/*@ActionID(category = "BreedingManager",
 id = "ibfb.germplasmlist.importing.wizard.ImportGermplasmListAction")
 @ActionRegistration(iconBase="ibfb/germplasmlist/images/import.png", displayName = "#CTL_ImportGermplasmListAction")
 @ActionReferences({
     @ActionReference(path = "Menu/BreedingManager", position = 100),
     @ActionReference(path = "Toolbars/BreedingManager", position = 100)
-})
+})*/
 public class ImportGermplasmListAction implements ActionListener {
 
     private static boolean OPEN_GERMPLASM = true;
