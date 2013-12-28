@@ -602,3 +602,5 @@ BEGIN
     FROM project p
     WHERE p.name = v_sname;
 END$$
+
+delimiter ;

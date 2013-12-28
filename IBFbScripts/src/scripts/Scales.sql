@@ -135,3 +135,5 @@ begin
 	EXECUTE stmt;
 	
 end$$
+
+delimiter ;

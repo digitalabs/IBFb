@@ -79,3 +79,4 @@ project proj INNER JOIN project_relationship pr ON proj.project_id = pr.subject_
     EXECUTE stmt;
   END$$
 
+delimiter ;

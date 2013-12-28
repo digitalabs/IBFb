@@ -119,4 +119,4 @@ SELECT v_effectid;
 
 end$$
 
-
+delimiter ;

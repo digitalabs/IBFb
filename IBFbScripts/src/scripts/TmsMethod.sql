@@ -51,3 +51,5 @@ begin
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
 end$$
+
+delimiter ;

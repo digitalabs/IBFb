@@ -203,3 +203,5 @@ END IF;
 -- COMMIT;
 
 end$$
+
+delimiter delimiter;;

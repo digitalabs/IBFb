@@ -473,3 +473,5 @@ BEGIN
     SET @studyid = v_studyid;
     EXECUTE stmt USING @studyid;
 end$$ 
+
+delimiter ;

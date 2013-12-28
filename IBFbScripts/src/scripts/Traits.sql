@@ -110,3 +110,5 @@ begin
 
 	select v_newcvtermid;
 end$$
+
+delimiter ;

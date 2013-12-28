@@ -134,3 +134,4 @@ SET @mySQL := 'SELECT DISTINCT
 
 end$$
 
+delimiter ;

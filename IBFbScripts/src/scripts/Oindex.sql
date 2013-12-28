@@ -20,3 +20,5 @@ VALUES(v_nd_experiment_project_id,v_project_id,v_nd_experiment_id);
 -- COMMIT;
 
 end$$
+
+delimiter ;

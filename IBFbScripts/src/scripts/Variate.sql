@@ -192,3 +192,5 @@ BEGIN
     EXECUTE stmt USING @studyid;
 
 END$$
+
+delimiter ;

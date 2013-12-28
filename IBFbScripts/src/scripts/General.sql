@@ -552,3 +552,5 @@ BEGIN
   AND cv_id = cvId;
 
 END$$
+
+delimiter ;

@@ -57,3 +57,5 @@ from nd_experiment_project
 where project_id = v_studyid;
 
 end$$
+
+delimiter ;
