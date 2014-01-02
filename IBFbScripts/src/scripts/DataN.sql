@@ -105,11 +105,9 @@ else
 	and exists
 	(
 	select 1
-	from cvterm cvt1
-	inner join cvterm_relationship cvtr ON cvt1.cvterm_id = cvtr.subject_id
-	INNER JOIN cvterm cvt3 ON cvtr.object_id = cvt3.cvterm_id
-	where p.observable_id = cvt1.cvterm_id
-	and cvt3.cvterm_id = 1110
+	from cvterm_relationship cvtr 
+	where p.observable_id = cvtr.subject_id
+	and cvtr.object_id = 1110
 	)
 	INNER JOIN projectprop label ON label.rank = pp.rank and label.project_id = pp.project_id and label.type_id in(1043, 1048) 
 	inner join nd_experiment_phenotype nep on p.phenotype_id = nep.phenotype_id
