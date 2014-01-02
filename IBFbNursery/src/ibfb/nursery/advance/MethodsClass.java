@@ -116,7 +116,7 @@ public class MethodsClass {
 
                 if (samples > 0) {
                     if (isBulk) {
-                        newSeed = seed + "-" + samples + suffix;
+                        newSeed = seed + "-" + suffix;
                         data.add(newSeed);
                     }
                     else {
@@ -141,7 +141,7 @@ public class MethodsClass {
             case OTHER_CROPS:
 
                 if (isBulk) {
-                    newSeed = seed + "-" + samples + suffix;
+                    newSeed = seed + "-" + suffix;
                     data.add(newSeed);
                 }
                 else {
