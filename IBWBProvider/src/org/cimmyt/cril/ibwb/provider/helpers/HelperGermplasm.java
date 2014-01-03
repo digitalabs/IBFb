@@ -185,8 +185,8 @@ public class HelperGermplasm {
         if (listNames.isEmpty() || listNames.size() == 0) {
             // now try with standarized name
             names = new Names(true);
-            names.setNval(org.generationcp.middleware.manager.GermplasmDataManagerImpl.standardaizeName(nameGermplasm));
-            //names.setNval(nameGermplasm);
+            //names.setNval(org.generationcp.middleware.manager.GermplasmDataManagerImpl.standardaizeName(nameGermplasm));
+            names.setNval(nameGermplasm);
             listNames = appServices.getListNames(names, 0, 0, false);
             if (listNames.isEmpty() || listNames.size() == 0) {
                 return null;
@@ -282,8 +282,8 @@ public class HelperGermplasm {
 
         names.setNuid(userId);//nuid = numero de usuario tienen que pasar o 0
         //names.setNval(nameGermplasm);//nval = nombre del germoplasma
-        names.setNval(org.generationcp.middleware.manager.GermplasmDataManagerImpl.standardaizeName(nameGermplasm));//nval = nombre del germoplasma
-        //names.setNval(nameGermplasm);
+        //names.setNval(org.generationcp.middleware.manager.GermplasmDataManagerImpl.standardaizeName(nameGermplasm));//nval = nombre del germoplasma
+        names.setNval(nameGermplasm);
         names.setNlocn(0);//nlocn 0
         names.setNdate(UtilDate.getDateAsInteger(new Date()));//ndate añomesdia
         names.setNref(0);//nref 0
