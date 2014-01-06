@@ -10,7 +10,7 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-
+/*
 @ActionID(category = "File",
 id = "ibfb.germplasmlist.actions.CreateListAction")
 @ActionRegistration(iconBase = "ibfb/germplasmlist/images/germplasmIcon16.png",
@@ -18,7 +18,7 @@ displayName = "#CTL_CreateListAction")
 @ActionReferences({
     @ActionReference(path = "Menu/BreedingManager", position = 1262),
     @ActionReference(path = "Toolbars/BreedingManager", position = 200)
-})
+}) */
 public  class CreateListAction implements ActionListener {
 
     @Override
