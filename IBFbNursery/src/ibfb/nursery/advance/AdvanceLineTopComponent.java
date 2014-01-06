@@ -66,7 +66,7 @@ public final class AdvanceLineTopComponent extends TopComponent {
     private Listnms recentSavedList;
     private List<GermplasmSearch> listToSearchBCID;
     private int convection;
-    private String desigArray[] = {"DESIG", "CROSS", "CROSS NAME"};
+    private String desigArray[] = {"DESIG", "DESIGNATION", "CROSS", "CROSS NAME"};
     private String entryArray[] = {"ENTRY", "ENTRY NUMBER"};
     private String bcidArray[] = {"BCID", "CROSS", "CROSS NAME"};
     ObservationsTableModel modelo;
@@ -946,12 +946,29 @@ public final class AdvanceLineTopComponent extends TopComponent {
         for (int i = 0; i < germplasmList.getListEntries().size(); i++) {
             int GID = germplasmList.getListEntries().get(i).getGid();
             String desig = germplasmList.getListEntries().get(i).getDesignation();
+
+            setGidToRows(GID, modeloConGID, gidColumn, desig);
+            
+            /*
             int row = findRow(desig, modeloConGID);
             //System.out.println(germplasmList.getListEntries().get(i).getDesignation() +" /// " +germplasmList.getListEntries().get(i).getGid());
             modeloConGID.setValueAt(GID, row, gidColumn);
+            */
         }
 
 
+    }
+    
+    private void setGidToRows(int GID, 
+            GermplasmEntriesTableModel modeloConGID,
+            int gidColumn, String desig) {
+        
+        int desigColumn = findColumn(desigArray);
+        for (int i = 0; i < modeloConGID.getRowCount(); i++) {
+            if (modeloConGID.getValueAt(i, desigColumn).toString().equals(desig)) {
+                modeloConGID.setValueAt(GID, i, gidColumn);
+            }            
+        }        
     }
 
     private int findRow(String desig, GermplasmEntriesTableModel modeloConGID) {
