@@ -67,6 +67,8 @@ public class Variate extends BaseFilter implements Serializable {
     private Integer measuredinid;
     @Transient
     private Integer dtypeId;
+    @Transient
+    private boolean isStudy;
 
     public Variate() {
         setDefault();
@@ -338,4 +340,14 @@ public class Variate extends BaseFilter implements Serializable {
     public Integer getMeasuredinid() {
         return measuredinid;
     }
+
+    public boolean isIsStudy() {
+        return isStudy;
+    }
+
+    public void setIsStudy(boolean isStudy) {
+        this.isStudy = isStudy;
+    }
+    
+    
 }

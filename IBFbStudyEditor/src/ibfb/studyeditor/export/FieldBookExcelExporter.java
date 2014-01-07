@@ -781,7 +781,9 @@ public class FieldBookExcelExporter {
             }
 
 
-            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);
+            excelCell.setCellValue(constant.isIsStudy() ? "STUDY" : workbook.getTrialLabel());
+                    
             currentRow++;
         }
     }

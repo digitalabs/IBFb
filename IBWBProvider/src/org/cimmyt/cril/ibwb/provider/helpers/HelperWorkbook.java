@@ -331,7 +331,7 @@ public class HelperWorkbook {
         List<Obsunit> obsunits = saveObsunit(represtns, trialNdExperimentIds, allExperimentIds);
 
       
-       saveDataConstatnts(trialNdExperimentIds);
+       saveDataConstatnts(studyNdExperimentId, trialNdExperimentIds, allExperimentIds);
       
         
 
@@ -891,6 +891,7 @@ public class HelperWorkbook {
             //Verificar variate
             variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDescription(), constant.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
+            variate.setIsStudy(constant.isIsStudy());
 //            localServices.addVariate(variate);
 
             //Verificar dmsattr
@@ -1063,7 +1064,12 @@ public class HelperWorkbook {
         
         //save variates
         for (Variate variate : this.listConstantsVariates) {
-            variate.setStudyid(steffect.getEffectid());
+            if (!variate.isIsStudy()) {
+                variate.setStudyid(steffect.getEffectid());
+            }
+            else {
+                variate.setStudyid(this.study.getStudyid());
+            }
             localServices.addVariate(variate);
         }
  
@@ -1102,6 +1108,12 @@ public class HelperWorkbook {
         
                 
         //save variates
+        for (Variate variate : this.listConstantsVariates) {
+            if (!variate.isIsStudy()) {
+                variate.setStudyid(steffectt.getEffectid());
+                localServices.addVariate(variate);
+            }
+        }
         for (Variate variate : this.listVariatesPure) {
             variate.setStudyid(steffectt.getEffectid());
             localServices.addVariate(variate);
@@ -1602,7 +1614,8 @@ public class HelperWorkbook {
         }
     }
 
-    public void saveDataConstatnts(List<Integer> ndExperimentIds) {
+    private void saveDataConstatnts(Integer studyNdExperimentId, 
+            List<Integer> ndExperimentIds, List<Integer> allExperimentIds) {
 
         int instance = 0;
         instance--;
@@ -1620,15 +1633,28 @@ public class HelperWorkbook {
             if (variateTemp.getDtype().equals(NUMERIC_TYPE)) {
                 DataN dataN = new DataN();
                 DataNPK dataNPK = new DataNPK();
-                dataNPK.setOunitid(ndExperimentIds.get(instance));
+                if (variateTemp.isIsStudy()) {
+                    dataNPK.setOunitid(studyNdExperimentId);
+                }
+                else {
+                    dataNPK.setOunitid(ndExperimentIds.get(instance));
+                }
                 dataNPK.setVariatid(variateTemp.getVariatid());
                 dataN.setDataNPK(dataNPK);
                 dataN.setDvalue(HelperFactor.castingToDouble(constant.getValue()));
                 localServices.addDataN(dataN);
+                if (!variateTemp.isIsStudy()) {
+                    addToMeasurements(allExperimentIds, dataN);
+                }
             } else {
                 DataC dataC = new DataC();
                 DataCPK dataCPK = new DataCPK();
-                dataCPK.setOunitid(ndExperimentIds.get(instance));
+                if (variateTemp.isIsStudy()) {
+                    dataCPK.setOunitid(studyNdExperimentId);
+                }
+                else {
+                    dataCPK.setOunitid(ndExperimentIds.get(instance));
+                }
                 dataCPK.setVariatid(variateTemp.getVariatid());
                 dataC.setDataCPK(dataCPK);
                 String valueToAdd = HelperFactor.castingToString(constant.getValue());
@@ -1636,8 +1662,24 @@ public class HelperWorkbook {
                     dataC.setDvalue(valueToAdd);
                     dataC.setCvalueId(ValidValuesCache.getValueId(variateTemp.getMeasuredinid(), valueToAdd));
                     localServices.addDataC(dataC);
+                    if (!variateTemp.isIsStudy()) {
+                        addToMeasurements(allExperimentIds, dataC);
+                    }
                 }
             }
+        }
+    }
+    
+    private void addToMeasurements(List<Integer> ids, DataC data) {
+        for (Integer id : ids) {
+            data.setOunitid(id);
+            localServices.addDataC(data);
+        }
+    }
+    private void addToMeasurements(List<Integer> ids, DataN data) {
+        for (Integer id : ids) {
+            data.setOunitid(id);
+            localServices.addDataN(data);
         }
     }
 /*

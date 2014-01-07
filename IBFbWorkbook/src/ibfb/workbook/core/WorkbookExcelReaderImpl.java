@@ -495,6 +495,10 @@ public class WorkbookExcelReaderImpl implements WorkbookExcelReader {
             if (cellData != null) {
                 constant.setValue(getStringValueFromCell(cellData));
             }
+            
+            cellData = rowData.getCell(COL_LABEL);
+            constant.setIsStudy(getStringValueFromCell(cellData).toUpperCase().startsWith(STUDY_PREFIX));
+            
             log.info("Data for Constant: " + constant.toString());
             // add readed condition to list
             constants.add(constant);
