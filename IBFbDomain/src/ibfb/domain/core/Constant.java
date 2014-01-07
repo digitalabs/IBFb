@@ -20,6 +20,8 @@ public class Constant implements Serializable {
     private Integer variateId;
     private Integer studyId;
     private Integer ounitid;
+    
+    private boolean isStudy;
 
     public Constant() {}
 
@@ -138,4 +140,14 @@ public class Constant implements Serializable {
     public void setOunitid(Integer ounitid) {
         this.ounitid = ounitid;
     }
+
+    public boolean isIsStudy() {
+        return isStudy;
+    }
+
+    public void setIsStudy(boolean isStudy) {
+        this.isStudy = isStudy;
+    }
+    
+    
 }

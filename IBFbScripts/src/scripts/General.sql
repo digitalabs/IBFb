@@ -264,7 +264,7 @@ BEGIN
         , avariate
         , NULL
         , avalue
-        , if (v_cvalue_id = 'null' or v_cvalue_id = '' or v_cvalue_id = 0, null, v_cvalue_id)
+        , if (v_cvalue_id = 'null' or v_cvalue_id = 'NULL' or v_cvalue_id = '' or v_cvalue_id = 0, null, v_cvalue_id)
         , NULL
         , expPhenotypeId
         , aexperiment
