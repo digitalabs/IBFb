@@ -6,7 +6,7 @@
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/Database"/>
             <attr name="position" intvalue="200"/>
         </folder>
-        <folder name="BreedingManager_hidden">
+        <!-- folder name="BreedingManager_hidden">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/BreedingManager"/>
             <attr name="position" intvalue="300"/>
         </folder>
@@ -14,7 +14,7 @@
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/IBFieldbookTools"/>
             <attr name="position" intvalue="400"/>
             
-        </folder>    
+        </folder -->    
                 <folder name="nurseryManagerMenu_hidden">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
             <attr name="position" intvalue="800"/>
@@ -131,7 +131,7 @@
             <attr name="position" intvalue="300"/>
             <file name="ibfb-studyexplorer-explorer-listNames-GermplasmListAction.shadow_hidden"/>            
         </folder>
-        <folder name="IBFieldbookTools">
+        <!-- folder name="IBFieldbookTools">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/IBFieldbookTools"/>
             <attr name="position" intvalue="400"/>
             <file name="ibfb-studyexplorer-explorer-listNames-GermplasmListAction.shadow_hidden"/>            
@@ -139,7 +139,7 @@
                 <folder name="nurseryManagerMenu_hidden">
             <attr name="displayName" bundlevalue="ibfb.branding.core.Bundle#Menu/NurseryManager"/>
             <attr name="position" intvalue="800"/>
-        </folder>
+        </folder -->
 
         <file name="IBFLabels_hidden"/>
         <file name="IBF_hidden"/>
