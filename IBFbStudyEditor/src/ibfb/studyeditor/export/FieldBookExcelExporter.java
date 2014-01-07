@@ -647,29 +647,29 @@ public class FieldBookExcelExporter {
                     //if (!condition.getProperty().equalsIgnoreCase("STUDY") && !condition.getScale().equalsIgnoreCase("NAME")) {
                     excelRow = descriptionSheet.createRow(currentRow);
 
-                    excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getConditionName());
 
-                    excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getDescription());
 
-                    excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getProperty());
 
-                    excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getScale());
 
-                    excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getMethod());
 
-                    excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getDataType());
 
 
 
 
                     if (condition.getProperty().equals("TRIAL INSTANCE")) {
-                        excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);;
+                        excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);
                         excelCell.setCellValue(trial);
                     } else {
 
@@ -680,13 +680,13 @@ public class FieldBookExcelExporter {
 
                         //  if (condition.getValue() != null) {
                         if (!theValue.isEmpty()) {
-                            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);;
+                            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);
                             excelCell.setCellValue(theValue);
                         }
 
                     }
 
-                    excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);;
+                    excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);
                     excelCell.setCellValue(condition.getLabel());
 
                     currentRow++;
@@ -707,28 +707,29 @@ public class FieldBookExcelExporter {
         for (Factor factor : factorList) {
             excelRow = descriptionSheet.createRow(currentRow);
 
-            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getFactorName());
 
-            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getDescription());
 
-            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getProperty());
 
-            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getScale());
 
-            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getMethod());
 
-            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getDataType());
 
-            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);
+            excelCell.setCellValue("");
             //excelCell.setCellValue(factor.getValue().toString());
 
-            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(factor.getLabel());
 
             currentRow++;
@@ -746,25 +747,25 @@ public class FieldBookExcelExporter {
         HSSFCell excelCell;
         for (Constant constant : constantList) {
             excelRow = descriptionSheet.createRow(currentRow);
-            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getConstantName());
 
-            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getDescription());
 
-            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getProperty());
 
-            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getScale());
 
-            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getMethod());
 
-            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(constant.getDataType());
 
-            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);
 
 
 
@@ -799,29 +800,31 @@ public class FieldBookExcelExporter {
         HSSFCell excelCell;
         for (Variate variate : variateList) {
             excelRow = descriptionSheet.createRow(currentRow);
-            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(NAME, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getVariateName());
 
-            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DESCRIPTION, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getDescription());
 
-            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(PROPERTY, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getProperty());
 
-            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(SCALE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getScale());
 
-            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(METHOD, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getMethod());
 
-            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(DATA_TYPE, HSSFCell.CELL_TYPE_STRING);
             excelCell.setCellValue(variate.getDataType());
 
-            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(VALUE, HSSFCell.CELL_TYPE_STRING);
+            excelCell.setCellValue("");
             //excelCell.setCellValue(variate.getValue().toString());
 
 
-            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);;
+            excelCell = excelRow.createCell(LABEL, HSSFCell.CELL_TYPE_STRING);
+            excelCell.setCellValue(workbook.getPlotLabel());
             //excelCell.setCellValue(constant.getLabel());
 
             currentRow++;
