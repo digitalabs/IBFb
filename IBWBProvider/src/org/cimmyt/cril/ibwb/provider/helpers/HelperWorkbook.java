@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.cimmyt.cril.ibwb.api.AppServices;
@@ -152,7 +153,6 @@ public class HelperWorkbook {
      * Save all Study into database
      */
     public void saveStudy() {
-
         log.info("Savin study....");
         addStudyToDatabase();
         log.info("Savin study DONE!");
@@ -340,7 +340,6 @@ public class HelperWorkbook {
         //=======================
        oindexId = KeyCacheUtil.getKey(TableEnum.EXPERIMENT_PROJECT);
        saveOindex3(oindexId, obsunits, represtns, this.localServices, workbook.getMeasurements());
-
 
     }
 

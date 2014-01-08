@@ -2229,7 +2229,43 @@ public final class StudyEditorTopComponent extends TopComponent {
             DialogUtil.displayError(message);
             return;
         }
-
+        
+        //check conditions
+        if (masterWorkbook != null) {
+            if (masterWorkbook.getConditions() != null) {
+                for (Condition condition : masterWorkbook.getConditions()) {
+                    if (condition.getDescription() != null && condition.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the condition " + condition.getConditionName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (masterWorkbook.getConstants() != null ) {
+                for (Constant constant : masterWorkbook.getConstants()) {
+                    if (constant.getDescription() != null && constant.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the constant " + constant.getConstantName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (masterWorkbook.getFactors() != null) {
+                for (Factor factor : masterWorkbook.getFactors()) {
+                    if (factor.getDescription() != null && factor.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the factor " + factor.getFactorName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (masterWorkbook.getVariates() != null) {
+                for (Variate variate : masterWorkbook.getVariates()) {
+                    if (variate.getDescription() != null && variate.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the variate " + variate.getVariateName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+        }
+ 
         String studyName = jTextFieldStudy.getText();
         FieldbookCSVUtil fieldbookCSVUtil = new FieldbookCSVUtil(jTableObservations, studyName);
         fieldbookCSVUtil.saveToCsv();
