@@ -142,7 +142,8 @@ public class HelperWorkbookUpdate {
         String trialName = "TRIAL_"+ this.study.getStudy();
         Represtn effect = localServices.getReprestnForStudyId(this.study.getStudyid(), trialName);
         // get all variate from database marked as Traits
-        this.variatesDtoConstants = this.appServices.getListVariateConstants(effect.getEffectid());
+        this.variatesDtoConstants = this.appServices.getListVariateConstants(this.study.getStudyid());
+        this.variatesDtoConstants.addAll(this.appServices.getListVariateConstants(effect.getEffectid()));
 
         // fill all variate as traits
         for (Variate variateDTO : this.variatesDtoConstants) {
