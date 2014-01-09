@@ -2232,6 +2232,14 @@ public final class StudyEditorTopComponent extends TopComponent {
         
         //check conditions
         if (masterWorkbook != null) {
+            if (masterWorkbook.getStudyConditions() != null) {
+                for (Condition condition : masterWorkbook.getStudyConditions()) {
+                    if (condition.getDescription() != null && condition.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the condition " + condition.getConditionName() + " is too long ");
+                        return;
+                    }
+                }
+            }
             if (masterWorkbook.getConditions() != null) {
                 for (Condition condition : masterWorkbook.getConditions()) {
                     if (condition.getDescription() != null && condition.getDescription().length() > 255) {

@@ -1811,6 +1811,50 @@ public final class NurseryEditorTopComponent extends TopComponent {
             return;
         }
 
+        //check conditions
+        if (myWorkbook != null) {
+            if (myWorkbook.getStudyConditions() != null) {
+                for (Condition condition : myWorkbook.getStudyConditions()) {
+                    if (condition.getDescription() != null && condition.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the condition " + condition.getConditionName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (myWorkbook.getConditions() != null) {
+                for (Condition condition : myWorkbook.getConditions()) {
+                    if (condition.getDescription() != null && condition.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the condition " + condition.getConditionName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (myWorkbook.getConstants() != null ) {
+                for (Constant constant : myWorkbook.getConstants()) {
+                    if (constant.getDescription() != null && constant.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the constant " + constant.getConstantName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (myWorkbook.getFactors() != null) {
+                for (Factor factor : myWorkbook.getFactors()) {
+                    if (factor.getDescription() != null && factor.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the factor " + factor.getFactorName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+            if (myWorkbook.getVariates() != null) {
+                for (Variate variate : myWorkbook.getVariates()) {
+                    if (variate.getDescription() != null && variate.getDescription().length() > 255) {
+                        DialogUtil.displayError("The description for the variate " + variate.getVariateName() + " is too long ");
+                        return;
+                    }
+                }
+            }
+        }
+        
         String studyName = jTextFieldStudy.getText();
         FieldbookCSVUtil fieldbookCSVUtil = new FieldbookCSVUtil(jTableObservations, studyName);
         fieldbookCSVUtil.saveToCsv();
