@@ -891,6 +891,7 @@ public class HelperWorkbook {
             variate = ConverterDomainToDTO.getVariate(constant.getConstantName(), constant.getDescription(), constant.getDataType(), study, traits, tmsMethod);
             variate.setVtype(vtype);
             variate.setIsStudy(constant.isIsStudy());
+            variate.setMeasuredinid(measuredin.getMeasuredinid());
 //            localServices.addVariate(variate);
 
             //Verificar dmsattr
