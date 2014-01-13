@@ -574,6 +574,9 @@ public class GermplasmListReaderImpl implements GermplasmListReader {
         entryCodeHeaderIndex = columnMap.get(Workbook.GERMPLASM_ENTRY_CODE);
         designationHeaderIndex = columnMap.get(Workbook.GERMPLASM_ID_DBCV);
         crossHeaderIndex = columnMap.get(Workbook.CROSS_HISTORY_NAME);
+        if (crossHeaderIndex == null) {
+            crossHeaderIndex = columnMap.get("CROSSNAMENAME");
+        }
         sourceHeaderIndex = columnMap.get(Workbook.SEED_SOURCE_NAME);
         entryIdHeaderIndex = columnMap.get(Workbook.GERMPLASM_ENTRY_NUMBER);
     }
