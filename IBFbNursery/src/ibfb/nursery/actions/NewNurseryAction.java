@@ -28,7 +28,7 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@ActionID(category = "File",
+/*@ActionID(category = "File",
 id = "ibfb.nursery.actions.NewNurseryAction")
 @ActionRegistration(iconBase = "ibfb/nursery/images/newNursery16.png",
 displayName = "#CTL_NewNurseryAction")
@@ -36,7 +36,7 @@ displayName = "#CTL_NewNurseryAction")
 //    @ActionReference(path = "Menu/BreedingManager", position = 400),
 //    @ActionReference(path = "Toolbars/BreedingManager", position = 400)
 })
-
+*/
 public final class NewNurseryAction implements ActionListener {
 private ResourceBundle bundle = NbBundle.getBundle(NewNurseryAction.class);
     private final Study context;
