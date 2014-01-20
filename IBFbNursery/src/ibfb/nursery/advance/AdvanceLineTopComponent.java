@@ -592,7 +592,11 @@ public final class AdvanceLineTopComponent extends TopComponent {
         int desig = tableModel.getHeaderIndex(GermplasmEntriesTableModel.DESIG);//findColumn("DESIG");
         int entryCD = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY);// findColumn("ENTRY");
         int crossColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.CROSS);
-
+        //GCP-7198
+        if (crossColumn < 0) {
+            crossColumn = tableModel.getHeaderIndex("CROSSHISTORYPEDIGREESTRING");
+        }
+        
         currentSourceGid = 0;
         int counter = 1;
 
@@ -700,6 +704,10 @@ public final class AdvanceLineTopComponent extends TopComponent {
         int counter = 1;
         GermplasmEntriesTableModel tableModel = (GermplasmEntriesTableModel) jTableEntries.getModel();
         int crossColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.CROSSCIMMYTWHEAT);
+        //GCP-7198
+        if (crossColumn < 0) {
+            crossColumn = tableModel.getHeaderIndex("CROSSHISTORYPEDIGREESTRING");
+        }
 
         for (int indexRow = 0; indexRow < jTableEntries.getRowCount(); indexRow++) {
 
@@ -1159,6 +1167,12 @@ public final class AdvanceLineTopComponent extends TopComponent {
 //        } else {
         GermplasmEntriesTableModel tableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
         int entryCodeColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY_CODE);
+        
+        //GCP-7193 (b)
+        /*if (entryCodeColumn == -1) {
+            entryCodeColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY);
+        }*/
+        
         if (entryCodeColumn != -1) {
             String entryCodeToFind = jTableEntries.getValueAt(renglon, entryCodeColumn).toString();
             int entryRow = findEntry(entryCodeToFind);
@@ -1194,6 +1208,12 @@ public final class AdvanceLineTopComponent extends TopComponent {
         int entryRow = -1;
 
         int entryCodeColumnModel = modelo.getHeaderIndex(GermplasmEntriesTableModel.ENTRY_CODE);
+        
+        //GCP-7193 (b)
+        /*if (entryCodeColumnModel == -1) {
+            entryCodeColumnModel = modelo.getHeaderIndex(GermplasmEntriesTableModel.ENTRY);
+        }*/
+        
 
         for (int row = 0; row < modelo.getRowCount(); row++) {
             String modelEntryCode = modelo.getValueAt(row, entryCodeColumnModel).toString();
