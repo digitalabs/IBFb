@@ -77,6 +77,8 @@ public final class AdvanceVisualPanel1 extends JPanel {
      */
     private void disableOptionsForCimmytWheat() {
        boolean isCimmytWheat = AppServicesProxy.getDefault().appServices().getTypeDB().equals(TypeDB.IWIS);
+         //GCP-7109 GCP-7224
+         /*
          if (isCimmytWheat) {
             jComboBoxConvention.setSelectedIndex(0);
             jComboBoxMethods.setEnabled(false);
@@ -84,7 +86,7 @@ public final class AdvanceVisualPanel1 extends JPanel {
             jRadioButtonSameMethodYES.setEnabled(false);
             jPanelMethod.setEnabled(false);
             jPnlMethodSelected.setEnabled(false);
-        }
+        }*/
          jRadioButtonSameNumberNO.setSelected(selectFromEachPlot);
          this.jComboBoxSamplesPerPlot.setEnabled(!selectFromEachPlot );
          
