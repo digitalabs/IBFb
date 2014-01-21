@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hmef.attribute.MAPIAttribute;
 import org.cimmyt.cril.ibwb.api.AppServicesProxy;
 import org.cimmyt.cril.ibwb.commongui.ConvertUtils;
@@ -424,13 +425,18 @@ public final class AdvanceLineTopComponent extends TopComponent {
         });
     }
 
-    public void assignGermplasmEntries(List<Factor> factorHeaders, List<List<Object>> germplasmData) {
+    //GCP-7193 (b) - added a parameter holding the map of entryNo(advance list) and plantSelectedCount
+    public void assignGermplasmEntries(List<Factor> factorHeaders, List<List<Object>> germplasmData, Map<Integer, Integer> plantSelectedCountMap) {
 
         List<Factor> losFactores = factorHeaders;
 
         factores = losFactores;
         GermplasmEntriesTableModel tableModel = new GermplasmEntriesTableModel(losFactores, germplasmData);
         // tableModel.setIsForInventory(true);
+
+        //GCP-7193 (b)
+        tableModel.setPlantSelectedCountMap(plantSelectedCountMap);
+
         this.jTableEntries.setModel(tableModel);
         ajustaColumnsTable(this.jTableEntries);
 
@@ -1166,19 +1172,25 @@ public final class AdvanceLineTopComponent extends TopComponent {
 //            }
 //        } else {
         GermplasmEntriesTableModel tableModel = (GermplasmEntriesTableModel) this.jTableEntries.getModel();
-        int entryCodeColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY_CODE);
+
+        //GCP-7193 (b) - get plant selected count from the map instead of from the Measurements tab
+        //int entryCodeColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY_CODE);
+        Map<Integer, Integer> plantSelectedCountMap = tableModel.getPlantSelectedCountMap();
+        int entryNumberColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY);
+        String entryNumber = jTableEntries.getValueAt(renglon, entryNumberColumn).toString();
+        Integer plantSelectedCount = null;
+        if (entryNumber != null && StringUtils.isNumeric(entryNumber)) {
+            plantSelectedCount = plantSelectedCountMap.get(Integer.valueOf(entryNumber));
+        }
         
-        //GCP-7193 (b)
-        /*if (entryCodeColumn == -1) {
-            entryCodeColumn = tableModel.getHeaderIndex(GermplasmEntriesTableModel.ENTRY);
-        }*/
-        
-        if (entryCodeColumn != -1) {
-            String entryCodeToFind = jTableEntries.getValueAt(renglon, entryCodeColumn).toString();
-            int entryRow = findEntry(entryCodeToFind);
-            if (colSelection > 0 && modelo.getValueAt(entryRow, colSelection) != null) {
+        //if (entryCodeColumn != -1) {
+        if (plantSelectedCount != null) {
+            //String entryCodeToFind = jTableEntries.getValueAt(renglon, entryCodeColumn).toString();
+            //int entryRow = findEntry(entryCodeToFind);
+            //if (colSelection > 0 && modelo.getValueAt(entryRow, colSelection) != null) {
                 //int elMetodo = Integer.parseInt(modelo.getValueAt(renglon, colSelection).toString());
-                int elMetodo = ConvertUtils.getValueAsInteger(modelo.getValueAt(entryRow, colSelection));
+                //int elMetodo = ConvertUtils.getValueAsInteger(modelo.getValueAt(entryRow, colSelection));
+                int elMetodo = plantSelectedCount;
 
                 if (elMetodo > 0) {
                     return Methods.METHOD_SINGLE_PLANT;
@@ -1192,7 +1204,7 @@ public final class AdvanceLineTopComponent extends TopComponent {
                     return Methods.RANDOM_BULK_SF;
                 }
 //            }
-            }
+            //}
         }
 
 

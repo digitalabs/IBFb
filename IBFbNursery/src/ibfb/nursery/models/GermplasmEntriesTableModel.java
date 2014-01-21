@@ -5,6 +5,7 @@ import ibfb.domain.core.Workbook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
 public class GermplasmEntriesTableModel extends AbstractTableModel {
@@ -49,6 +50,10 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
      * Variates
      */
     private List<Object> headers;
+    
+    //GCP-6193 (b)
+    private Map<Integer, Integer> plantSelectedCountMap;
+    
 
     public static void setIsFromCrossInfo(boolean isFromCrossInfo) {
         GermplasmEntriesTableModel.isFromCrossInfo = isFromCrossInfo;
@@ -384,5 +389,13 @@ public class GermplasmEntriesTableModel extends AbstractTableModel {
 
         return columnIndex;
 
+    }
+
+    public Map<Integer, Integer> getPlantSelectedCountMap() {
+        return plantSelectedCountMap;
+    }
+
+    public void setPlantSelectedCountMap(Map<Integer, Integer> plantSelectedCountMap) {
+        this.plantSelectedCountMap = plantSelectedCountMap;
     }
 }

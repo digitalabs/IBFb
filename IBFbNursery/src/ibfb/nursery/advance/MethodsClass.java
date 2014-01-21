@@ -1,5 +1,6 @@
 package ibfb.nursery.advance;
 
+import ibfb.nursery.core.NurseryEditorTopComponent;
 import java.util.ArrayList;
 
 public class MethodsClass {
@@ -83,17 +84,70 @@ public class MethodsClass {
         return data;
     }
 
+    public ArrayList<NurseryEditorTopComponent.WheatGermplasmData> giveMeDataDerivativeForWheat(String seed, int samples, boolean isBulk) {
+        ArrayList<NurseryEditorTopComponent.WheatGermplasmData> data = new ArrayList<NurseryEditorTopComponent.WheatGermplasmData>();
+        String newSeed = "";
+
+        //GCP-7193 (a)
+        /*
+        if (samples == 0) {
+            newSeed = seed + "-" + samples + suffix;
+            data.add(newSeed);
+        }
+        */
+
+        if (samples < 0) {
+
+
+            if(seed.endsWith("T")){
+
+                // newSeed =  "0" + Math.abs(samples)+"TOP" + suffix;
+                 newSeed = seed + "-0" + Math.abs(samples)+"TOP" + suffix;
+
+                 //data.add(newSeed);   
+                 data.add(new NurseryEditorTopComponent.WheatGermplasmData(newSeed, Integer.valueOf(samples)));
+            }else{
+
+                newSeed = seed + "-0" + Math.abs(samples) + suffix;
+                //data.add(newSeed);
+                data.add(new NurseryEditorTopComponent.WheatGermplasmData(newSeed, samples));
+            }
+
+
+        }
+
+
+        if (samples > 0) {
+            if (isBulk) {
+                 newSeed = seed + "-" + suffix;
+                 //data.add(newSeed);
+                 data.add(new NurseryEditorTopComponent.WheatGermplasmData(newSeed, Integer.valueOf(samples)));
+            }
+            else {
+                for (int i = 0; i < samples; i++) {
+                    newSeed = seed + "-" + (i + 1) + suffix;
+                    //data.add(newSeed);
+                    data.add(new NurseryEditorTopComponent.WheatGermplasmData(newSeed, Integer.valueOf(samples)));
+                }
+            }
+        }
+        return data;
+    }
+    
     public ArrayList<String> giveMeDataDerivative(String seed, int samples, boolean isBulk) {
         ArrayList<String> data = new ArrayList<String>();
         String newSeed = "";
 
         switch (convention) {
             case CIMMYT_WHEAT:
-                
+
+                //GCP-7193
+                /*
                 if (samples == 0) {
                     newSeed = seed + "-" + samples + suffix;
                     data.add(newSeed);
                 }
+                */
 
                 if (samples < 0) {
                     

@@ -2101,7 +2101,10 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                 ArrayList<String> data = null;
                 ArrayList<MaizeEntry> dataMaize = null;
                 Integer sourceGid = 0;
-
+                
+                //GCP-7193 (b)
+                ArrayList<WheatGermplasmData> wList = new ArrayList<WheatGermplasmData>();
+                Map<Integer, Integer> plantSelectedCountMap = new HashMap<Integer, Integer>();
 
                 for (int i = 0; i < tableModel.getRowCount(); i++) {
 
@@ -2126,9 +2129,11 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                                 Integer gidToSearch = ConvertUtils.getValueAsInteger(germplasmData.get(i).get(colGID));
                                 Names cimmytName = AppServicesProxy.getDefault().appServices().getCimmytWheatName(gidToSearch);
                                 if (cimmytName == null) {
-                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
+                                    //data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
+                                    wList = metodos.giveMeDataDerivativeForWheat(nuevo[colDesig].toString(), samples, isBulk);
                                 } else {
-                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
+                                    //data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
+                                    wList = metodos.giveMeDataDerivativeForWheat(cimmytName.getNval(), samples, isBulk);
                                 }
 
                                 break;
@@ -2190,12 +2195,16 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
                                 Integer gidToSearch = ConvertUtils.getValueAsInteger(germplasmData.get(i).get(colGID).toString());
                                 Names cimmytName = AppServicesProxy.getDefault().appServices().getCimmytWheatName(gidToSearch);
+                                String desigName = null;
                                 if (cimmytName != null) {
-                                    data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
+                                    //data = metodos.giveMeDataDerivative(cimmytName.getNval(), samples, isBulk);
+                                    wList = metodos.giveMeDataDerivativeForWheat(cimmytName.getNval(), samples, isBulk);
+                                    desigName = cimmytName.getNval();
                                 } else {
-                                    data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
+                                    //data = metodos.giveMeDataDerivative(nuevo[colDesig].toString(), samples, isBulk);
+                                    wList = metodos.giveMeDataDerivativeForWheat(nuevo[colDesig].toString(), samples, isBulk);
+                                    desigName = nuevo[colDesig].toString();
                                 }
-
 
 
                                 break;
@@ -2251,7 +2260,9 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                     //ADD DATA TO NEW GERMPLASM MODEL (ADVANCE)
                     switch (convention) {
                         case 0: //WHEAT
-                            for (int j = 0; j < data.size(); j++) {
+                            //GCP-7193 (b)
+                            //for (int j = 0; j < data.size(); j++) {
+                            for (int j = 0; j < wList.size(); j++) {
                                 List<Object> newData = new ArrayList<Object>();
                                 // add each GID source from GRID
 
@@ -2259,12 +2270,20 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                                 Object[] temp = nuevo.clone();
                                 entrada++;
                                 temp[colEntry] = entrada;
-                                temp[colDesig] = data.get(j);
+                                
+                                //GCP-7193 (b)
+                                //temp[colDesig] = data.get(j);
+                                temp[colDesig] = wList.get(j).getDesigName();
+                                
                                 temp[colGID] = "Not assigned yet";
-
+                                
                                 for (int z = 0; z < temp.length; z++) {
                                     newData.add(z, temp[z]);
                                 }
+                                
+                                //GCP-7193 (b)
+                                plantSelectedCountMap.put(entrada, wList.get(j).getPlantSelected());
+                                
                                 //  newData.add(germplasmSearchs.get(i).getNames().getNval());//FOR INVENTORY   -  DESIG
                                 newData.add("");//FOR INVENTORY   -  DESIG
                                 newData.add("");//FOR INVENTORY   -  LOCATION
@@ -2341,7 +2360,9 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
                 advanceEditor.setSourceGidList(sourceGidList);
                 advanceEditor.setListToSearchBCID(listToSearchBCID);
 
-                advanceEditor.assignGermplasmEntries(factores, germplasmDataAdvance);
+                //GCP-7193 (b)
+                advanceEditor.assignGermplasmEntries(factores, germplasmDataAdvance, plantSelectedCountMap);
+                
                 advanceEditor.open();
                 //advanceEditor.setName(this.getName() + " F1");
                 advanceEditor.setName(this.getName() + " " + bundle.getString("NurseryTemplate.untitled"));
@@ -3444,4 +3465,33 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
     public javax.swing.JTextField jTextFieldTitle;
     private javax.swing.JPanel pnlSelectList;
     // End of variables declaration//GEN-END:variables
+
+    public static class WheatGermplasmData {
+        private String desigName;
+        private Integer plantSelected;
+        
+        public WheatGermplasmData(String desigName, Integer plantSelected) {
+            this.desigName = desigName;
+            this.plantSelected = plantSelected;
+        }
+
+        public String getDesigName() {
+            return desigName;
+        }
+
+        public void setDesigName(String desigName) {
+            this.desigName = desigName;
+        }
+
+        public Integer getPlantSelected() {
+            return plantSelected;
+        }
+
+        public void setPlantSelected(Integer plantSelected) {
+            this.plantSelected = plantSelected;
+        }
+        
+        
+    }
+
 }
