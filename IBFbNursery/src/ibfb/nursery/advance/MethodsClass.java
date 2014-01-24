@@ -88,6 +88,12 @@ public class MethodsClass {
         ArrayList<NurseryEditorTopComponent.WheatGermplasmData> data = new ArrayList<NurseryEditorTopComponent.WheatGermplasmData>();
         String newSeed = "";
 
+        //GCP-7193 (c)
+        if (seed != null && seed.toUpperCase().startsWith("LOCAL CHECK")) {
+            //do nothing, return empty list
+            return data;
+        }
+        
         //GCP-7193 (a)
         /*
         if (samples == 0) {
@@ -138,6 +144,12 @@ public class MethodsClass {
         ArrayList<String> data = new ArrayList<String>();
         String newSeed = "";
 
+        //GCP-7193 (c)
+        if (seed != null && seed.toUpperCase().startsWith("LOCAL CHECK")) {
+            //do nothing, return empty list
+            return data;
+        }
+        
         switch (convention) {
             case CIMMYT_WHEAT:
 
