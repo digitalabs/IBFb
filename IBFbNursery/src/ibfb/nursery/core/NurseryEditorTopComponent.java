@@ -2141,6 +2141,11 @@ private void jButtonSelectTraitsActionPerformed(java.awt.event.ActionEvent evt) 
 
                             case 1: //MAIZE                               
 
+                                //GCP-7193 (c)
+                                if (nuevo[colDesig].toString() != null && nuevo[colDesig].toString().toUpperCase().startsWith("LOCAL CHECK")) {
+                                    continue;
+                                }
+
                                 maizeMethod.setPolinizationNumber(i + 1);
 
                                 switch (maizeMtd) {
