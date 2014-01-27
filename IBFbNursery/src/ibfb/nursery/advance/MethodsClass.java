@@ -197,23 +197,27 @@ public class MethodsClass {
 
             case CIMMYT_MAIZE:
 
-                newSeed = seed + "-" + samples;
-                data.add(newSeed);
-
+                //GCP-7193 (a)
+                if (samples > 0) {
+                    newSeed = seed + "-" + samples;
+                    data.add(newSeed);
+                }
 
                 break;
 
 
             case OTHER_CROPS:
-
-                if (isBulk) {
-                    newSeed = seed + "-" + suffix;
-                    data.add(newSeed);
-                }
-                else {
-                    for (int i = 0; i < samples; i++) {
-                        newSeed = seed + "-" + (i + 1)+ suffix;
+                //GCP-7193 (a)
+                if (samples > 0) {
+                    if (isBulk) {
+                        newSeed = seed + "-" + suffix;
                         data.add(newSeed);
+                    }
+                    else {
+                        for (int i = 0; i < samples; i++) {
+                            newSeed = seed + "-" + (i + 1)+ suffix;
+                            data.add(newSeed);
+                        }
                     }
                 }
 
