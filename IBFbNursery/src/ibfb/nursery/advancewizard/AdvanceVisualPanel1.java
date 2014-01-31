@@ -57,6 +57,10 @@ public final class AdvanceVisualPanel1 extends JPanel {
 
     public AdvanceVisualPanel1(boolean selectFromEachPlot) {
         initComponents();
+        
+        //GCP-7193 do this before loading methods in combo
+        this.breedingMethod = AdvanceWizardIterator.breedingMethod;
+        
         loadMethodsIntoCombo();
         setDate();
         loadDefaultMethod();
@@ -64,7 +68,7 @@ public final class AdvanceVisualPanel1 extends JPanel {
         setDefaultLocation();
         fillNamingConvention();
         jComboBoxConvention.setSelectedIndex(2);
-        this.breedingMethod = AdvanceWizardIterator.breedingMethod;
+        //this.breedingMethod = AdvanceWizardIterator.breedingMethod;
         this.selectFromEachPlot = selectFromEachPlot;
        
         disableEnableMethodSelectedOptions();
@@ -711,7 +715,7 @@ public final class AdvanceVisualPanel1 extends JPanel {
         int counter = -1;
         String selectedMethodName = "";
 
-        if (breedingMethod == null) {
+        if (breedingMethod == null || breedingMethod.intValue() == 0) {
             breedingMethod = DEFAULT_METHOD;
         }
 

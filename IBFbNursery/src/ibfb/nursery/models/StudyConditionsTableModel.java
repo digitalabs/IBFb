@@ -12,7 +12,7 @@ import org.openide.util.NbBundle;
 public class StudyConditionsTableModel extends AbstractTableModel {
     private static final int  VALUE_COLUMN = 4;
     
-    public static final String PROPERTY_METHOD = "METHOD";
+    public static final String PROPERTY_METHOD = "BREEDINGMETHOD";
     public static final String SCALE_DBID = "DBID";
 
     private static final String CONDITION = NbBundle.getMessage(StudyConditionsTableModel.class, "header.condition");
