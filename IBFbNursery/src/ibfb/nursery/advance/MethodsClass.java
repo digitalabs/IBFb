@@ -84,6 +84,7 @@ public class MethodsClass {
         return data;
     }
 
+    //GCP-7193
     public ArrayList<NurseryEditorTopComponent.WheatGermplasmData> giveMeDataDerivativeForWheat(String seed, int samples, boolean isBulk) {
         ArrayList<NurseryEditorTopComponent.WheatGermplasmData> data = new ArrayList<NurseryEditorTopComponent.WheatGermplasmData>();
         String newSeed = "";
@@ -95,12 +96,12 @@ public class MethodsClass {
         }
         
         //GCP-7193 (a)
-        /*
         if (samples == 0) {
             newSeed = seed + "-" + samples + suffix;
-            data.add(newSeed);
+            //data.add(newSeed);
+            data.add(new NurseryEditorTopComponent.WheatGermplasmData(newSeed, samples));
         }
-        */
+        
 
         if (samples < 0) {
 
@@ -154,12 +155,12 @@ public class MethodsClass {
             case CIMMYT_WHEAT:
 
                 //GCP-7193
-                /*
+                
                 if (samples == 0) {
                     newSeed = seed + "-" + samples + suffix;
                     data.add(newSeed);
                 }
-                */
+                
 
                 if (samples < 0) {
                     

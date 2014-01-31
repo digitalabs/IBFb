@@ -1197,11 +1197,11 @@ public final class AdvanceLineTopComponent extends TopComponent {
                 }
 
                 if (elMetodo == 0) {
-                    return Methods.SELECTED_BULK_SF;
+                    return Methods.RANDOM_BULK_SF;
                 }
 
                 if (elMetodo < 0) {
-                    return Methods.RANDOM_BULK_SF;
+                    return Methods.SELECTED_BULK_SF;
                 }
 //            }
             //}

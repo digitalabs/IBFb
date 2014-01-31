@@ -67,7 +67,7 @@ public final class AdvanceVisualPanel1 extends JPanel {
         this.breedingMethod = AdvanceWizardIterator.breedingMethod;
         this.selectFromEachPlot = selectFromEachPlot;
        
-        disableOptionsForCimmytWheat();
+        disableEnableMethodSelectedOptions();
         
        
     }
@@ -75,18 +75,24 @@ public final class AdvanceVisualPanel1 extends JPanel {
     /**
      * Disable options not used when user selects CIMMYT Wheat
      */
-    private void disableOptionsForCimmytWheat() {
+    private void disableEnableMethodSelectedOptions() {
        boolean isCimmytWheat = AppServicesProxy.getDefault().appServices().getTypeDB().equals(TypeDB.IWIS);
-         //GCP-7109 GCP-7224
-         /*
-         if (isCimmytWheat) {
+         //GCP-7109 GCP-7224 (refer to GCP-7193) -if cimmyt wheat selection and wheat db
+         if (isCimmytWheat && jComboBoxConvention.getSelectedIndex() == 0) {
             jComboBoxConvention.setSelectedIndex(0);
             jComboBoxMethods.setEnabled(false);
             jRadioButtonSameMethodNO.setEnabled(false);
             jRadioButtonSameMethodYES.setEnabled(false);
             jPanelMethod.setEnabled(false);
             jPnlMethodSelected.setEnabled(false);
-        }*/
+         }
+         else {
+            jComboBoxMethods.setEnabled(true);
+            jRadioButtonSameMethodNO.setEnabled(true);
+            jRadioButtonSameMethodYES.setEnabled(true);
+            jPanelMethod.setEnabled(true);
+            jPnlMethodSelected.setEnabled(true);
+         }
          jRadioButtonSameNumberNO.setSelected(selectFromEachPlot);
          this.jComboBoxSamplesPerPlot.setEnabled(!selectFromEachPlot );
          
@@ -649,6 +655,9 @@ public final class AdvanceVisualPanel1 extends JPanel {
 
                     break;
             }
+
+            //GCP-7193 - disable if cimmyt wheat db and cimmyt wheat droplist
+            disableEnableMethodSelectedOptions();
 
         }
 
