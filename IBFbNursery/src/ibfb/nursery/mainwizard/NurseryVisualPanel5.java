@@ -237,8 +237,8 @@ public final class NurseryVisualPanel5 extends JPanel {
         jPanel3 = new javax.swing.JPanel();
         jRadioButtonPosition = new javax.swing.JRadioButton();
         jRadioButtonSequence = new javax.swing.JRadioButton();
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
+        label1 = new javax.swing.JLabel();
+        label2 = new javax.swing.JLabel();
         jSpinnerPosition = new javax.swing.JSpinner();
         jSpinnerFrequency = new javax.swing.JSpinner();
         jToolBar2 = new javax.swing.JToolBar();
@@ -1779,8 +1779,8 @@ public final class NurseryVisualPanel5 extends JPanel {
     private javax.swing.JTextField jTextFieldTotalEntries;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
+    private javax.swing.JLabel label1;
+    private javax.swing.JLabel label2;
     // End of variables declaration//GEN-END:variables
 
     boolean freqIsInvalid() {
