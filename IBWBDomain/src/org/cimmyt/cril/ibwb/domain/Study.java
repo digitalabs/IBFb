@@ -125,6 +125,9 @@ public class Study extends BaseFilter implements Serializable{
     }
 
     public Integer getPmkey() {
+        if (pmkey == null) {
+            return 0;
+        }
         return pmkey;
     }
 
