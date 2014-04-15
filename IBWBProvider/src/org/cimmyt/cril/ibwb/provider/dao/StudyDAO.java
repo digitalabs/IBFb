@@ -48,7 +48,9 @@ public class StudyDAO extends AbstractDAO<Study, Integer> {
         if (filtro.getGlobalsearch() == null) {
             setQuery("s.studyid", filtro.getStudyid());
             setQuery("s.sname", filtro.getSname());
-            setQuery("s.pmkey", filtro.getPmkey());
+            if (filtro.getPmkey() != null) {
+                setQuery("s.pmkey", filtro.getPmkey());
+            }
             setQuery("s.title", filtro.getTitle());
             setQuery("s.objectiv", filtro.getObjectiv());
             setQuery("s.investid", filtro.getInvestid());
